@@ -9,7 +9,7 @@ const validatePassword = (password, dbpassword) => {
 };
 
 function generateAccessToken(mobile_no) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
+  return jwt.sign(mobile_no, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
 }
 exports.addstaff = async (req, res) => {
   const {

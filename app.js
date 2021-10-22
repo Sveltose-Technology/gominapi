@@ -17,6 +17,10 @@ const productcategory = require("./routes/productcategory");
 const seller = require("./routes/seller");
 const productsubcategory = require("./routes/productsubcategory");
 const brand = require("./routes/brand");
+const banner = require("./routes/banner");
+const store = require("./routes/store");
+const store_request = require("./routes/store_request");
+const seller_contactform = require("./routes/seller_contactform");
 
 //use
 app.use("/api", user);
@@ -26,6 +30,10 @@ app.use("/api", seller);
 app.use("/api", staff);
 app.use("/api", productsubcategory);
 app.use("/api", brand);
+app.use("/api", banner);
+app.use("/api", store);
+app.use("/api", store_request);
+app.use("/api", seller_contactform);
 
 app.get("/api", (req, res) => {
   res.send("Hello World!!!!");

@@ -1,42 +1,42 @@
 const User = require("../models/user");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-const validatePassword = (password, dbpassword) => {
-  bcrypt.compareSync(password, dbpassword);
-  return true;
-};
+// const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt");
+// const saltRounds = 10;
+// const validatePassword = (password, dbpassword) => {
+//   bcrypt.compareSync(password, dbpassword);
+//   return true;
+// };
 
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
-}
+// function generateAccessToken(username) {
+//   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
+// }
 
 exports.adduser = async (req, res) => {
   const {
     //UserID,
     username,
-    password,
     user_email,
     mobile_no,
-    phone_no,
-    login_as,
-    register_at,
+    country,
+    state,
+    city,
+    password,
     sortorder,
     status,
   } = req.body;
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
-  const token = generateAccessToken({ username: username });
+  // const salt = bcrypt.genSaltSync(saltRounds);
+  // const hashpassword = bcrypt.hashSync(password, salt);
+  // const token = generateAccessToken({ username: username });
   const newUser = new User({
     //UserID: UserID,
     username: username,
-    password: hashpassword,
     user_email: user_email,
     mobile_no: mobile_no,
-    phone_no: phone_no,
-    login_as: login_as,
-    register_at: register_at,
+    country: country,
+    state: state,
+    city: city,
+    password: password,
     sortorder: sortorder,
     status: status,
   });
@@ -69,32 +69,117 @@ exports.adduser = async (req, res) => {
   }
 };
 
-exports.Adminlogin = async (req, res) => {
-  const { mobile_no, password } = req.body;
+// exports.Adminlogin = async (req, res) => {
+//   const { mobile_no, password } = req.body;
 
-  // Find user with requested email
-  User.findOne({ mobile_no: mobile_no }, function (err, user) {
-    if (user === null) {
-      return res.status(400).send({
-        message: "User not found.",
+//   // Find user with requested email
+//   User.findOne({ mobile_no: mobile_no }, function (err, user) {
+//     if (user === null) {
+//       return res.status(400).send({
+//         message: "User not found.",
+//       });
+//     } else {
+//       console.log(process.env.TOKEN_SECRET);
+//       if (validatePassword(password, user.password)) {
+//         const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
+//           expiresIn: "365d",
+//         });
+
+//         return res.status(201).send({
+//           message: "User Logged In",
+//           token: token,
+//           user: user,
+//         });
+//       } else {
+//         return res.status(400).send({
+//           message: "Wrong Password",
+//         });
+//       }
+//     }
+//   });
+// };
+
+exports.alluser = async (req, res) => {
+  const findall = await User.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.deleteuser = async (req, res) => {
+  try {
+    const deleteentry = await User.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};
+
+const defaultotp = 1234;
+exports.sendotp = async (req, res) => {
+  const { mobile_no } = req.body;
+  if (mobile_no) {
+    res.status(200).json({
+      status: true,
+      msg: "otp send successfully",
+      mobile: mobile_no,
+      otp: defaultotp,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "please send mobile number",
+    });
+  }
+};
+
+exports.verifyotp = async (req, res) => {
+  const { mobile_no, otp } = req.body;
+  if (otp == 1234) {
+    const findone = await User.findOne({ mobile_no: mobile_no });
+    if (findone) {
+      res.status(200).json({
+        status: true,
+        msg: "user already exist",
+        alreadyexist: true,
+        mobile: mobile_no,
+        otp: defaultotp,
       });
     } else {
-      console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, user.password)) {
-        const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-          expiresIn: "365d",
-        });
-
-        return res.status(201).send({
-          message: "User Logged In",
-          token: token,
-          user: user,
-        });
-      } else {
-        return res.status(400).send({
-          message: "Wrong Password",
-        });
-      }
+      res.status(200).json({
+        status: true,
+        msg: "otp verified please register ",
+        alreadyexist: false,
+        mobile: mobile_no,
+        otp: defaultotp,
+      });
     }
-  });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "Incorrect Otp",
+    });
+  }
 };
+
+// exports.login = async (req,res) =>{
+
+// }

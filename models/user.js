@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    UserID: {
-      type: String,
-      require: true,
-    },
+    // UserID: {
+    //   type: String,
+    //   require: true,
+    // },
     username: {
       type: String,
     },
@@ -20,15 +20,22 @@ const userSchema = new Schema(
     phone_no: {
       type: Number,
     },
+    country: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
     password: {
       type: String,
     },
-    login_as: {
-      type: String,
-    },
-    register_at: {
-      type: String,
-    },
+    // userImg: {
+    //   type: String,
+    // },
+
     sortorder: {
       type: Number,
     },

@@ -3,15 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 
-const {
-  addbrand,
-  editbrand,
-  viewonebrand,
-  allbrand,
-  deletebrand,
-  brand_img,
-  search_brand,
-} = require("../controller/brand");
+const { addbanner } = require("../controller/banner");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -41,13 +33,12 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 
-//Paths
-router.post("/admin/addbrand", uploads.single("brand_img"), addbrand);
-router.post("/admin/editbrand/:id", uploads.single("brand_img"), editbrand);
-router.get("/admin/viewonebrand/:id", viewonebrand);
-router.get("/admin/allbrand", allbrand);
-router.get("/admin/deletebrand/:id", deletebrand);
-router.get("/admin/search_brand", search_brand);
-//router.post("/admin/brandimage/:id", uploads.single("brand_img"), brand_img);
+router.post(
+  "/admin/up_bannerload_image",
+  uploads.single("banner_img"),
+  addbanner
+);
+
+router.post("/admin/addbanner", uploads.single("banner_img"), addbanner);
 
 module.exports = router;

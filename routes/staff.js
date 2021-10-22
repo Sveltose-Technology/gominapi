@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { addstaff } = require("../controller/staff");
+const { addstaff, Adminlogin } = require("../controller/staff");
 
 //Paths
-router.get("/admin/addstaff", addstaff);
+router.post("/admin/addstaff", addstaff);
+router.post("/admin/Adminlogin", Adminlogin);
 
 module.exports = router;
