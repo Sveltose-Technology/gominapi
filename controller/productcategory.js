@@ -104,8 +104,8 @@ exports.del_productcategory = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({
-      status: 400,
-      msg: "false",
+      status: false,
+      msg: "error",
       error: error,
     });
   }

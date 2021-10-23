@@ -35,7 +35,7 @@ app.use("/", store);
 app.use("/", store_request);
 app.use("/", seller_contactform);
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World!!!!");
 });
 
