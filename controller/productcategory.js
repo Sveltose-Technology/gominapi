@@ -94,7 +94,7 @@ exports.getproductCategory = async (req, res) => {
 
 exports.del_productcategory = async (req, res) => {
   try {
-    const deleteentry = await Productcategory.findOneAndDelete({
+    const deleteentry = await Productcategory.deleteOne({
       _id: req.params.id,
     });
     res.status(200).json({
