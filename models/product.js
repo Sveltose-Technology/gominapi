@@ -19,11 +19,11 @@ const productSchema = new Schema(
     // },
     code: {
       type: String,
-      require: true,
+      // require: true,
     },
     hsn_code: {
       type: String,
-      require: true,
+      //require: true,
     },
     productcategory: { type: Schema.Types.ObjectId, ref: "productcategory" },
     // productsubcategory: {
