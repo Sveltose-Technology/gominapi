@@ -7,9 +7,9 @@ const productSchema = new Schema(
       type: String,
       require: true,
     },
-    productId: {
-      type: Number,
-    },
+    // productId: {
+    //   type: Number,
+    // },
     short_desc: {
       type: String,
     },

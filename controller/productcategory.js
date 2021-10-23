@@ -92,6 +92,23 @@ exports.getproductCategory = async (req, res) => {
   }
 };
 
+exports.getone_productcategory = async (req, res) => {
+  const findone = await Productcategory.findOne({ _id: req.params.id });
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
 exports.del_productcategory = async (req, res) => {
   try {
     const deleteentry = await Productcategory.deleteOne({
