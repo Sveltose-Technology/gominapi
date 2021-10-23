@@ -26,10 +26,10 @@ const productSchema = new Schema(
       //require: true,
     },
     productcategory: { type: Schema.Types.ObjectId, ref: "productcategory" },
-    // productsubcategory: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "subproductcategory",
-    // },
+    productsubcategory: {
+      type: Schema.Types.ObjectId,
+      ref: "subproductcategory",
+    },
     make: {
       type: String,
     },
