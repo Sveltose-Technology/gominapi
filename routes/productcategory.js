@@ -6,10 +6,10 @@ const cloudinary = require("cloudinary").v2;
 
 const {
   addproductcategory,
-  //   editproductsubcategory,
+  getproductCategory,
   //   viewoneproductsubcategory,
   //   allproductsubcategory,
-  //   deleteproductsubcategory,
+  del_productcategory,
   //   getsubcategory,
 } = require("../controller/productcategory");
 
@@ -47,14 +47,10 @@ router.post(
   uploads.single("product_img"),
   addproductcategory
 );
-// router.post(
-//   "/admin/editproductsubcategory/:id",
-//   uploads.array("product_img"),
-//   editproductsubcategory
-// );
+router.get("/admin/getproductCategory", getproductCategory);
 // router.get("/admin/viewoneproductsubcategory/:id", viewoneproductsubcategory);
 // router.get("/admin/allproductsubcategory", allproductsubcategory);
-// router.get("/admin/deleteproductsubcategory/:id", deleteproductsubcategory);
+router.get("/admin/del_productcategory/:id", del_productcategory);
 // //get subcategories of passed category
 // router.get("/admin/getsubcategory/:id", getsubcategory);
 
