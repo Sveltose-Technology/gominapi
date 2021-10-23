@@ -23,17 +23,17 @@ const store_request = require("./routes/store_request");
 const seller_contactform = require("./routes/seller_contactform");
 
 //use
-app.use("/api", user);
-app.use("/api", product);
-app.use("/api", productcategory);
-app.use("/api", seller);
-app.use("/api", staff);
-app.use("/api", productsubcategory);
-app.use("/api", brand);
-app.use("/api", banner);
-app.use("/api", store);
-app.use("/api", store_request);
-app.use("/api", seller_contactform);
+app.use("/", user);
+app.use("/", product);
+app.use("/", productcategory);
+app.use("/", seller);
+app.use("/", staff);
+app.use("/", productsubcategory);
+app.use("/", brand);
+app.use("/", banner);
+app.use("/", store);
+app.use("/", store_request);
+app.use("/", seller_contactform);
 
 app.get("/api", (req, res) => {
   res.send("Hello World!!!!");
