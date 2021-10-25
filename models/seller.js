@@ -13,7 +13,7 @@ const sellerSchema = new Schema(
       type: String,
     },
     sortorder: {
-      type: String,
+      type: Number,
     },
   },
   { timestamps: true }
