@@ -13,6 +13,9 @@ const userSchema = new Schema(
     user_email: {
       type: String,
     },
+    userImage: {
+      type: String,
+    },
     mobile_no: {
       type: Number,
       require: true,
@@ -32,9 +35,9 @@ const userSchema = new Schema(
     password: {
       type: String,
     },
-    // userImg: {
-    //   type: String,
-    // },
+    role: {
+      type: String,
+    },
 
     sortorder: {
       type: Number,

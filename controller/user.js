@@ -1,4 +1,7 @@
 const User = require("../models/user");
+const cloudinary = require("cloudinary").v2;
+const dotenv = require("dotenv");
+const fs = require("fs");
 // const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcrypt");
 // const saltRounds = 10;
@@ -17,10 +20,12 @@ exports.adduser = async (req, res) => {
     username,
     user_email,
     mobile_no,
+    userImg,
     country,
     state,
     city,
     password,
+    role,
     sortorder,
     status,
   } = req.body;
@@ -32,40 +37,79 @@ exports.adduser = async (req, res) => {
     //UserID: UserID,
     username: username,
     user_email: user_email,
+    userImg: userImg,
     mobile_no: mobile_no,
     country: country,
     state: state,
     city: city,
     password: password,
+    role: role,
     sortorder: sortorder,
     status: status,
   });
 
-  const findexist = await User.findOne({ mobile_no: mobile_no });
-  if (findexist) {
-    res.status(400).json({
-      status: false,
-      msg: "Already Exists",
-      data: {},
-    });
-    console.log(data);
-  } else {
-    newUser
-      .save()
-      .then((data) => {
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: data,
-        });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
+  if (req.file) {
+    const findexist = await User.findOne({ mobile_no: mobile_no });
+    if (findexist) {
+      res.status(400).json({
+        status: false,
+        msg: "Already Exists",
+        data: {},
       });
+    } else {
+      const resp = await cloudinary.uploader.upload(req.file.path);
+      if (resp) {
+        newUser.userImage = resp.secure_url;
+        fs.unlinkSync(req.file.path);
+        newUser
+          .save()
+          .then((data) => {
+            res.status(200).json({
+              status: true,
+              msg: "success",
+              data: data,
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              status: false,
+              msg: "error",
+              error: error,
+            });
+          });
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "img not uploaded",
+        });
+      }
+    }
+  } else {
+    const findexist = await User.findOne({ mobile_no: mobile_no });
+    if (findexist) {
+      res.status(400).json({
+        status: false,
+        msg: "Already Exists",
+        data: {},
+      });
+    } else {
+      newUser
+        .save()
+        .then((data) => {
+          res.status(200).json({
+            status: true,
+            msg: " success",
+            data: data,
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            status: false,
+            msg: "error",
+            error: error,
+          });
+        });
+    }
   }
 };
 
