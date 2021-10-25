@@ -12,7 +12,7 @@ const sellerSchema = new Schema(
     status: {
       type: String,
     },
-    action: {
+    sortorder: {
       type: String,
     },
   },

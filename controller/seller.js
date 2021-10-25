@@ -1,13 +1,13 @@
 const Seller = require("../models/seller");
 
 exports.add_seller = async (req, res) => {
-  const { seller_name, Description, status, action } = req.body;
+  const { seller_name, Description, status, sortorder } = req.body;
 
   const newSeller = new Seller({
     seller_name: seller_name,
     Description: Description,
-    action: action,
     status: status,
+    sortorder: sortorder,
   });
 
   const findexist = await Seller.findOne({ seller_name: seller_name });
