@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary").v2;
 
 const {
   addproductsubcategory,
-  //   editproductsubcategory,
+  getproductsubcategory,
   //   viewoneproductsubcategory,
   //   allproductsubcategory,
   //   deleteproductsubcategory,
@@ -47,5 +47,6 @@ router.post(
   uploads.single("product_img"),
   addproductsubcategory
 );
+router.get("/admin/getproductsubcategory", getproductsubcategory);
 
 module.exports = router;

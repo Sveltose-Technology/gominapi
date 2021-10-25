@@ -77,3 +77,20 @@ exports.addproductsubcategory = async (req, res) => {
     }
   }
 };
+
+exports.getproductsubcategory = async (req, res) => {
+  const findall = await Productsubcategory.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "error",
+      data: "error",
+    });
+  }
+};
