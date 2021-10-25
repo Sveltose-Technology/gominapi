@@ -43,7 +43,6 @@ exports.getseller = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "success",
-      error: "error",
       data: findall,
     });
   } else {
