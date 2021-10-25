@@ -6,9 +6,34 @@ const sellerSchema = new Schema(
     seller_name: {
       type: String,
     },
-    Description: {
+    sellerId: {
       type: String,
     },
+    selleremail: {
+      type: String,
+    },
+    mobile_no: {
+      type: Number,
+    },
+    seller_img: {
+      type: String,
+    },
+    business_name: {
+      type: String,
+    },
+    business_type: {
+      type: String,
+    },
+    store_name: {
+      type: String,
+    },
+    store_address: {
+      type: String,
+    },
+    gstin_no: {
+      type: Number,
+    },
+
     status: {
       type: String,
     },
