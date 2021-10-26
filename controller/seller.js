@@ -9,11 +9,13 @@ exports.add_seller = async (req, res) => {
     sellerId,
     selleremail,
     mobile_no,
-    seller_img,
+    store_img,
     business_type,
     store_name,
     store_address,
     gstin_no,
+    state,
+    city,
     status,
     sortorder,
   } = req.body;
@@ -24,11 +26,13 @@ exports.add_seller = async (req, res) => {
     sellerId: sellerId,
     selleremail: selleremail,
     mobile_no: mobile_no,
-    seller_img: seller_img,
+    store_img: store_img,
     business_type: business_type,
     store_name: store_name,
     store_address: store_address,
     gstin_no: gstin_no,
+    state: state,
+    city: city,
     status: status,
     sortorder: sortorder,
   });
@@ -44,7 +48,7 @@ exports.add_seller = async (req, res) => {
     } else {
       const resp = await cloudinary.uploader.upload(req.file.path);
       if (resp) {
-        newSeller.seller_img = resp.secure_url;
+        newSeller.store_img = resp.secure_url;
         fs.unlinkSync(req.file.path);
         newSeller
           .save()

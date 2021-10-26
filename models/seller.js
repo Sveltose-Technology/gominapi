@@ -15,7 +15,7 @@ const sellerSchema = new Schema(
     mobile_no: {
       type: Number,
     },
-    seller_img: {
+    store_img: {
       type: String,
     },
     business_name: {
@@ -33,7 +33,12 @@ const sellerSchema = new Schema(
     gstin_no: {
       type: Number,
     },
-
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
     status: {
       type: String,
     },
