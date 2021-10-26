@@ -6,11 +6,14 @@ exports.addorder = async (req, res) => {
     user,
     product,
     order_type,
+    orderId,
+    qty,
     customer_name,
     purchaseprice,
-    reachedlocation,
-    shippingdate,
-    deliverdondate,
+    delivery_address,
+    order_date,
+    // shippingdate,
+    // deliverdondate,
     status,
   } = req.body;
 
@@ -19,11 +22,13 @@ exports.addorder = async (req, res) => {
     product: product,
     order_type: order_type,
     orderId: uuidv4(),
+    qty: qty,
     customer_name: customer_name,
     purchaseprice: purchaseprice,
-    reachedlocation: reachedlocation,
-    shippingdate: shippingdate,
-    deliverdondate: deliverdondate,
+    delivery_address: delivery_address,
+    order_date: order_date,
+    // shippingdate: shippingdate,
+    // deliverdondate: deliverdondate,
     status: status,
   });
   newOrderproduct.save(function (err, data) {
@@ -41,4 +46,21 @@ exports.addorder = async (req, res) => {
       });
     }
   });
+};
+
+exports.getorder = async (req, res) => {
+  const findall = await Orderproduct.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: true,
+      msg: "error",
+      error: "error",
+    });
+  }
 };

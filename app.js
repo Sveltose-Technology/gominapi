@@ -22,6 +22,7 @@ const banner = require("./routes/banner");
 const store = require("./routes/store");
 const store_request = require("./routes/store_request");
 const seller_contactform = require("./routes/seller_contactform");
+const orderproduct = require("./routes/orderproduct");
 
 //use
 app.use("/", user);
@@ -35,6 +36,7 @@ app.use("/", banner);
 app.use("/", store);
 app.use("/", store_request);
 app.use("/", seller_contactform);
+app.use("/", orderproduct);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
