@@ -77,7 +77,7 @@ exports.add_seller = async (req, res) => {
 };
 
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find({ sortorder: 1 });
+  const findall = await Seller.find().sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
