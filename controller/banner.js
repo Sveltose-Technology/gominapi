@@ -48,33 +48,22 @@ exports.addbanner = async (req, res) => {
         });
       }
     }
-  } else {
-    const findexist = await Addbanner.findOne({
-      banner_title: banner_title,
+  }
+};
+
+exports.getbanner = async (req, res) => {
+  const findall = await Addbanner.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
     });
-    if (findexist) {
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
-      });
-    } else {
-      newAddbanner
-        .save()
-        .then(
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: newAddbanner,
-          })
-        )
-        .catch((error) => {
-          res.status(400).json({
-            status: false,
-            msg: "error",
-            error: error,
-          });
-        });
-    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
   }
 };
