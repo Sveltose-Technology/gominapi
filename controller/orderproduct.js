@@ -64,3 +64,63 @@ exports.getorder = async (req, res) => {
     });
   }
 };
+
+exports.pending_order = async (req, res, next) => {
+  const datas = await Orderproduct.find({ status: "Pending" })
+    .populate("user")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
+
+exports.delivery_order = async (req, res, next) => {
+  const datas = await Orderproduct.find({ status: "Delivery" })
+    .populate("user")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
+
+exports.cancelled_order = async (req, res, next) => {
+  const datas = await Orderproduct.find({ status: "Cancel" })
+    .populate("user")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
