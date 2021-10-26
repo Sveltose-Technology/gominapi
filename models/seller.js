@@ -31,7 +31,7 @@ const sellerSchema = new Schema(
       type: String,
     },
     gstin_no: {
-      type: Number,
+      type: String,
     },
     state: {
       type: String,
