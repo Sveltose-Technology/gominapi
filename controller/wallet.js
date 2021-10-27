@@ -2,32 +2,33 @@ const Wallet = require("../models/wallet");
 const { v4: uuidv4 } = require("uuid");
 
 exports.addwallet = async (req, res) => {
-  const { first_name, last_name, wallet_balance } = req.body;
+  const { first_name, last_name, userId, amount } = req.body;
 
   const newWallet = new Wallet({
     first_name: first_name,
     last_name: last_name,
+    userId: userId,
     walletId: uuidv4(),
-    wallet_balance: wallet_balance,
+    amount: amount,
   });
 
-  newWallet
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: result,
-      });
-    })
-    .catch((error) => {
+  newWallet.save(function (err, data) {
+    if (err) {
       res.status(400).json({
         status: false,
-        msg: "error",
-        error: "error",
+        msg: "error occured",
+        error: err,
       });
-    });
+    } else {
+      res.status(200).json({
+        status: true,
+        msg: "Amount added to wallet",
+        data: newWallet,
+      });
+    }
+  });
 };
+
 //   (function (err, data) {
 //     if (err) {
 //       res.status(400).json({

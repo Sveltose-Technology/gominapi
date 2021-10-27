@@ -19,9 +19,9 @@ const orderproductSchema = new mongoose.Schema(
     orderId: {
       type: String,
     },
-    customer_name: {
-      type: String,
-    },
+    // customer_name: {
+    //   type: String,
+    // },
     qty: {
       type: Number,
     },
