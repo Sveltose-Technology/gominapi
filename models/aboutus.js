@@ -13,10 +13,10 @@ const aboutusSchema = new Schema(
       type: Number,
     },
     status: {
-      type: "Active",
+      type: String,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("about", aboutusSchema);
+module.exports = mongoose.model("aboutus", aboutusSchema);

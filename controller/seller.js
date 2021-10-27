@@ -38,6 +38,7 @@ exports.add_seller = async (req, res) => {
   });
 
   if (req.file) {
+    console.log(req.file);
     const findexist = await Seller.findOne({ sellerId: sellerId });
     if (findexist) {
       res.status(400).json({
