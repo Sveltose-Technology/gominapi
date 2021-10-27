@@ -33,9 +33,9 @@ const productSchema = new Schema(
     make: {
       type: String,
     },
-    unit: {
-      type: String,
-    },
+    // unit: {
+    //   type: String,
+    // },
     alt_unit: {
       type: String,
     },
@@ -43,7 +43,7 @@ const productSchema = new Schema(
       type: String,
     },
 
-    // unit: { type: Schema.Types.ObjectId, ref: "unit" },
+    unit: { type: Schema.Types.ObjectId, ref: "unit" },
     //alt_unit: { type: Schema.Types.ObjectId, ref: "altunit" },
     // gst_rate: { type: Schema.Types.ObjectId, ref: "gst_rate" },
     type_of_supply: {
@@ -61,7 +61,7 @@ const productSchema = new Schema(
     stock_clearance_limit: {
       type: Number,
     },
-    //rate: { type: Schema.Types.ObjectId, ref: "rate" },
+
     rate: {
       type: Number,
     },
@@ -77,8 +77,7 @@ const productSchema = new Schema(
     barcode: {
       type: Number,
     },
-    brand: { type: String },
-    //{ type: Schema.Types.ObjectId, ref: "brand" },
+    brand: { type: Schema.Types.ObjectId, ref: "brand" },
     std_package: {
       type: String,
     },
@@ -97,35 +96,6 @@ const productSchema = new Schema(
     status: {
       type: String,
       default: "Active",
-    },
-    dealer: {
-      type: Number, //20
-    },
-    manufacturer: {
-      type: Number,
-    },
-    stocklist: {
-      type: Number,
-    },
-
-    distributer: {
-      type: Number,
-    },
-    sretailer: {
-      type: Number,
-    },
-
-    rate_retailer: {
-      type: Number,
-    },
-    rate_builder_contractor: {
-      type: Number,
-    },
-    newlaunch: {
-      type: Boolean, //true,false
-    },
-    customer: {
-      type: Number,
     },
   },
   { timestamps: true }

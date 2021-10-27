@@ -38,16 +38,6 @@ exports.addproduct = async (req, res) => {
     rate,
     sortorder,
     status,
-    // dealer,
-    // manufacturer,
-    // stocklist,
-    // distributer,
-    // sretailer,
-    // rate_retailer,
-    // rate_builder_contractor,
-    // customer,
-
-    newlaunch,
   } = req.body;
 
   const newProduct = new Product({
@@ -76,15 +66,6 @@ exports.addproduct = async (req, res) => {
     sortorder: sortorder,
     status: status,
     rate: rate,
-    // dealer: dealer,
-    // manufacturer: manufacturer,
-    // stocklist: stocklist,
-    // distributer: distributer,
-    // sretailer: sretailer,
-    // rate_retailer: rate_retailer,
-    // rate_builder_contractor: rate_builder_contractor,
-    // customer: customer,
-    // newlaunch: newlaunch,
   });
 
   if (req.files) {

@@ -25,6 +25,7 @@ const seller_contactform = require("./routes/seller_contactform");
 const orderproduct = require("./routes/orderproduct");
 const wallet = require("./routes/wallet");
 const aboutus = require("./routes/aboutus");
+const unit = require("./routes/unit");
 
 //use
 app.use("/", user);
@@ -41,6 +42,7 @@ app.use("/", seller_contactform);
 app.use("/", orderproduct);
 app.use("/", wallet);
 app.use("/", aboutus);
+app.use("/", unit);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
