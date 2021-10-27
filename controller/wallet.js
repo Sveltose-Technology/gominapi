@@ -11,7 +11,8 @@ exports.addwallet = async (req, res) => {
     wallet_balance: wallet_balance,
   });
 
-  newWallet.save
+  newWallet
+    .save()
     .then((result) => {
       res.status(200).json({
         status: true,
