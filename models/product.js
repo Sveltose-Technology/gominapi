@@ -13,14 +13,14 @@ const productSchema = new Schema(
     short_desc: {
       type: String,
     },
-    // desc: {
-    //   type: String,
-    //   require: true,
-    // },
-    code: {
+    desc: {
       type: String,
-      // require: true,
+      require: true,
     },
+    // code: {
+    //   type: String,
+    //   // require: true,
+    // },
     hsn_code: {
       type: String,
       //require: true,
@@ -33,25 +33,18 @@ const productSchema = new Schema(
     make: {
       type: String,
     },
-    // unit: {
-    //   type: String,
-    // },
-    alt_unit: {
-      type: String,
-    },
+
     gst_rate: {
       type: String,
     },
 
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
-    //alt_unit: { type: Schema.Types.ObjectId, ref: "altunit" },
-    // gst_rate: { type: Schema.Types.ObjectId, ref: "gst_rate" },
+    alt_unit: { type: Schema.Types.ObjectId, ref: "altunit" },
+
     type_of_supply: {
       type: String,
     }, //goods && service
-    varient: {
-      type: String,
-    }, //user input
+
     material: {
       type: String,
     }, //user input
@@ -84,12 +77,7 @@ const productSchema = new Schema(
     inc_duty_tax: {
       type: Number,
     },
-    // product_title: {
-    //   type: String,
-    // },
-    // productImg: {
-    //   type: Array,
-    // },
+
     sortorder: {
       type: Number,
     },
