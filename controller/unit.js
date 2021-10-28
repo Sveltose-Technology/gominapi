@@ -70,29 +70,29 @@ exports.viewallunits = async (req, res) => {
     });
   }
 };
-// exports.editunits = async (req, res) => {
-//   const findandUpdateEntry = await Units.findOneAndUpdate(
-//     {
-//       _id: req.params.id,
-//     },
-//     { $set: req.body },
-//     { new: true }
-//   );
+exports.editunits = async (req, res) => {
+  const findandUpdateEntry = await Units.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    { $set: req.body },
+    { new: true }
+  );
 
-//   if (findandUpdateEntry) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findandUpdateEntry,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       status: "error",
-//       error: "error",
-//     });
-//   }
-// };
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
 
 exports.delunits = async (req, res) => {
   try {

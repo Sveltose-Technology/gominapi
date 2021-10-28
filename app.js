@@ -26,7 +26,7 @@ const orderproduct = require("./routes/orderproduct");
 const wallet = require("./routes/wallet");
 const aboutus = require("./routes/aboutus");
 const unit = require("./routes/unit");
-
+const privacypolicy = require("./routes/privacypolicy");
 //use
 app.use("/", user);
 app.use("/", product);
@@ -43,6 +43,7 @@ app.use("/", orderproduct);
 app.use("/", wallet);
 app.use("/", aboutus);
 app.use("/", unit);
+app.use("/", privacypolicy);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");

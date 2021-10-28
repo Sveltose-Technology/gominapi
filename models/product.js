@@ -74,9 +74,9 @@ const productSchema = new Schema(
     product_img: {
       type: Array,
     },
-    barcode: {
-      type: Number,
-    },
+    // barcode: {
+    //   type: Number,
+    // },
     brand: { type: Schema.Types.ObjectId, ref: "brand" },
     std_package: {
       type: String,
