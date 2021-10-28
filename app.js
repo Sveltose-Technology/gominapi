@@ -28,6 +28,7 @@ const aboutus = require("./routes/aboutus");
 const unit = require("./routes/unit");
 const altunit = require("./routes/altunit");
 const privacypolicy = require("./routes/privacypolicy");
+const cart = require("./routes/cart");
 //use
 app.use("/", user);
 app.use("/", product);
@@ -46,6 +47,7 @@ app.use("/", aboutus);
 app.use("/", unit);
 app.use("/", altunit);
 app.use("/", privacypolicy);
+app.use("/", cart);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
