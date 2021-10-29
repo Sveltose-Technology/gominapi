@@ -71,9 +71,6 @@ const productSchema = new Schema(
     //   type: Number,
     // },
     brand: { type: Schema.Types.ObjectId, ref: "brand" },
-    std_package: {
-      type: String,
-    },
     inc_duty_tax: {
       type: Number,
     },
