@@ -29,6 +29,7 @@ const unit = require("./routes/unit");
 const altunit = require("./routes/altunit");
 const privacypolicy = require("./routes/privacypolicy");
 const cart = require("./routes/cart");
+const contact_form = require("./routes/contact_form");
 
 //use
 app.use("/", user);
@@ -49,6 +50,7 @@ app.use("/", unit);
 app.use("/", altunit);
 app.use("/", privacypolicy);
 app.use("/", cart);
+app.use("/", contact_form);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
