@@ -18,10 +18,7 @@ exports.addstore = async (req, res) => {
     email,
     mobile,
     address,
-    varified_store,
     owner_name,
-    store_request,
-    request_for,
     sortorder,
     status,
   } = req.body;
@@ -33,10 +30,7 @@ exports.addstore = async (req, res) => {
     email: email,
     mobile: mobile,
     address: address,
-    varified_store: varified_store,
     owner_name: owner_name,
-    store_request: store_request,
-    request_for: request_for,
     sortorder: sortorder,
     status: status,
   });

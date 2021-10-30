@@ -23,19 +23,12 @@ const storeSchema = new Schema(
     address: {
       type: String,
     },
-    varified_store: {
-      type: String,
-    },
+
     store_owner: {
       type: String,
       require: true,
     },
-    store_request: {
-      type: Boolean, //yes,no
-    },
-    request_for: {
-      type: String,
-    }, // Received/not Received
+
     sortorder: {
       type: Number,
     },
