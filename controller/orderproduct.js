@@ -49,7 +49,10 @@ exports.addorder = async (req, res) => {
 };
 
 exports.getorder = async (req, res) => {
-  const findall = await Orderproduct.find().sort({ sortorder: 1 });
+  const findall = await Orderproduct.find()
+    .sort({ sortorder: 1 })
+    .populate("user")
+    .populate("product");
   if (findall) {
     res.status(200).json({
       status: true,
