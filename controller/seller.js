@@ -58,6 +58,7 @@ exports.add_seller = async (req, res) => {
     sortorder: sortorder,
   });
 
+  //console.log(req.body)
   if (req.file) {
     const findexist = await Seller.findOne({ sellerId: sellerId });
     if (findexist) {
