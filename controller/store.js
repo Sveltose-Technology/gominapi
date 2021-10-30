@@ -19,6 +19,9 @@ exports.addstore = async (req, res) => {
     mobile,
     address,
     owner_name,
+    country,
+    state,
+    city,
     sortorder,
     status,
   } = req.body;
@@ -31,6 +34,9 @@ exports.addstore = async (req, res) => {
     mobile: mobile,
     address: address,
     owner_name: owner_name,
+    country: country,
+    state: state,
+    city: city,
     sortorder: sortorder,
     status: status,
   });

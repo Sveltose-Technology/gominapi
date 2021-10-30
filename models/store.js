@@ -23,7 +23,15 @@ const storeSchema = new Schema(
     address: {
       type: String,
     },
-
+    country: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
     owner_name: {
       type: String,
       require: true,
