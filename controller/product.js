@@ -32,7 +32,7 @@ exports.addproduct = async (req, res) => {
     product_img,
     //barcode,
     brand,
-    inc_duty_tax,
+    //inc_duty_tax,
     rate,
     sortorder,
     status,
@@ -55,7 +55,6 @@ exports.addproduct = async (req, res) => {
     product_img: product_img,
     //barcode: barcode,
     brand: brand,
-
     sortorder: sortorder,
     status: status,
     rate: rate,
