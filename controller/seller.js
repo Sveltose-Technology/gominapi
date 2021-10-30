@@ -24,7 +24,7 @@ exports.add_seller = async (req, res) => {
     email,
     mobile_no,
     password,
-    store_img,
+    seller_img,
     business_type,
     store_name,
     store_address,
@@ -47,7 +47,7 @@ exports.add_seller = async (req, res) => {
     email: email,
     mobile_no: mobile_no,
     password: hashpassword,
-    store_img: store_img,
+    seller_img: seller_img,
     business_type: business_type,
     store_name: store_name,
     store_address: store_address,
@@ -70,7 +70,7 @@ exports.add_seller = async (req, res) => {
       console.log(req.file);
       const resp = await cloudinary.uploader.upload(req.file.path);
       if (resp) {
-        newSeller.store_img = resp.secure_url;
+        newSeller.seller_img = resp.secure_url;
         fs.unlinkSync(req.file.path);
         newSeller
           .save()

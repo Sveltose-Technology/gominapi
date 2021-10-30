@@ -15,12 +15,12 @@ const sellerSchema = new Schema(
     mobile_no: {
       type: Number,
     },
-    store_img: {
+    seller_img: {
       type: String,
     },
-    business_name: {
-      type: String,
-    },
+    // business_name: {
+    //   type: String,
+    // },
     business_type: {
       type: String,
     },
