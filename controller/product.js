@@ -179,4 +179,3 @@ exports.del_product = async (req, res) => {
     });
   }
 };
-//console.log()
