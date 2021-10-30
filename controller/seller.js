@@ -21,7 +21,7 @@ exports.add_seller = async (req, res) => {
   const {
     seller_name,
     sellerId,
-    email,
+    selleremail,
     mobile_no,
     password,
     seller_img,
@@ -44,7 +44,7 @@ exports.add_seller = async (req, res) => {
   const newSeller = new Seller({
     seller_name: seller_name,
     sellerId: sellerId,
-    email: email,
+    selleremail: selleremail,
     mobile_no: mobile_no,
     password: hashpassword,
     seller_img: seller_img,
