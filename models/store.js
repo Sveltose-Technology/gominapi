@@ -24,7 +24,7 @@ const storeSchema = new Schema(
       type: String,
     },
 
-    store_owner: {
+    owner_name: {
       type: String,
       require: true,
     },
