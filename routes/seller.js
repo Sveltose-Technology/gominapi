@@ -3,7 +3,12 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 
-const { add_seller, getseller } = require("../controller/seller");
+const {
+  add_seller,
+  getseller,
+  login,
+  Adminlogin,
+} = require("../controller/seller");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -35,5 +40,7 @@ let uploads = multer({ storage: storage });
 //Paths
 router.post("/admin/add_seller", uploads.single("store_img"), add_seller);
 router.get("/admin/getseller", getseller);
+router.post("/admin/login", login);
+router.post("/admin/Adminlogin", Adminlogin);
 
 module.exports = router;

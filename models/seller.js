@@ -9,7 +9,7 @@ const sellerSchema = new Schema(
     sellerId: {
       type: String,
     },
-    selleremail: {
+    email: {
       type: String,
     },
     mobile_no: {
@@ -37,6 +37,9 @@ const sellerSchema = new Schema(
       type: String,
     },
     city: {
+      type: String,
+    },
+    password: {
       type: String,
     },
     status: {

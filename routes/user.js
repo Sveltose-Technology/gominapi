@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const crypto = require("crypto");
+const { verifytoken } = require("../functions/verifytoken");
 
 const {
   adduser,

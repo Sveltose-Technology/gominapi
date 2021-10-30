@@ -3,13 +3,8 @@ const router = express.Router();
 
 const {
   addtocartproduct,
-  productsummary,
-  addToOrder,
   getallcart,
-  editorder,
   removecart,
-  updateorder,
-  productorder,
 } = require("../controller/cart");
 
 //path
