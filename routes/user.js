@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
-const crypto = require("crypto");
-const { verifytoken } = require("../functions/verifytoken");
+//const crypto = require("crypto");
+//const { verifytoken } = require("../functions/verifytoken");
 
 const {
   adduser,
   sendotp,
   alluser,
   deleteuser,
+  edituser,
   verifyotp,
 } = require("../controller/user");
 
@@ -42,9 +43,12 @@ let uploads = multer({ storage: storage });
 
 //Paths
 router.post("/user/signup", uploads.single("userImage"), adduser);
-//router.post("/user/Adminlogin", Adminlogin);
+//router.post("/user/edituser/:id", uploads.single("userImage"), edituser);
+//router.post("/user/edituser/:id", uploads.single("userImage"), edituser);
+//router.post("/user/edituser/:id", uploads.single("userImage"), edituser);
 router.get("/user/alluser", alluser);
 router.get("/user/deleteuser/:id", deleteuser);
 router.post("/user/sendotp", sendotp);
 router.post("/user/verifyotp", verifyotp);
+
 module.exports = router;

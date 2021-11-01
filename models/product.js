@@ -51,9 +51,6 @@ const productSchema = new Schema(
     stock_qty: {
       type: Number,
     },
-    stock_clearance_limit: {
-      type: Number,
-    },
 
     rate: {
       type: Number,

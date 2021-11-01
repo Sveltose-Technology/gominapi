@@ -20,7 +20,7 @@ exports.adduser = async (req, res) => {
     username,
     user_email,
     mobile_no,
-    userImg,
+    userImage,
     country,
     state,
     city,
@@ -37,7 +37,7 @@ exports.adduser = async (req, res) => {
     //UserID: UserID,
     username: username,
     user_email: user_email,
-    userImg: userImg,
+    userImage: userImage,
     mobile_no: mobile_no,
     country: country,
     state: state,
@@ -109,6 +109,85 @@ exports.adduser = async (req, res) => {
             error: error,
           });
         });
+    }
+  }
+};
+
+exports.edit_store = async (req, res) => {
+  const {
+    username,
+    user_email,
+    mobile_no,
+    password,
+    role,
+    country,
+    state,
+    city,
+    sortorder,
+    status,
+  } = req.body;
+
+  data = {};
+  if (username) {
+    data.username = username;
+  }
+  if (user_email) {
+    data.user_email = user_email;
+  }
+  if (mobile_no) {
+    data.mobile_no = mobile_no;
+  }
+  if (password) {
+    data.password = password;
+  }
+  if (role) {
+    data.role = role;
+  }
+
+  if (country) {
+    data.country = country;
+  }
+  if (state) {
+    data.state = state;
+  }
+  if (city) {
+    data.city = city;
+  }
+
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  //console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.userImage = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  //console.log(data);
+  if (data) {
+    const findandUpdateEntry = await User.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    );
+
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
     }
   }
 };
