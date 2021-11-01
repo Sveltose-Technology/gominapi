@@ -130,7 +130,12 @@ exports.addproduct = async (req, res) => {
 };
 
 exports.getproduct = async (req, res) => {
-  const findall = await Product.find().sort({ sortorder: 1 });
+  const findall = await Product.find()
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -147,7 +152,11 @@ exports.getproduct = async (req, res) => {
 };
 
 exports.getoneproduct = async (req, res) => {
-  const findone = await Product.findOne({ _id: req.params.id });
+  const findone = await Product.findOne({ _id: req.params.id })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand");
   if (findone) {
     res.status(200).json({
       status: true,
