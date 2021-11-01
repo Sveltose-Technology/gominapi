@@ -127,3 +127,23 @@ exports.cancelled_order = async (req, res, next) => {
       });
     });
 };
+
+exports.complete_order = async (req, res, next) => {
+  const datas = await Orderproduct.find({ status: "Complete" })
+    .populate("user")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
