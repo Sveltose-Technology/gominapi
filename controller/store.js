@@ -96,6 +96,88 @@ exports.addstore = async (req, res) => {
   }
 };
 
+exports.edit_store = async (req, res) => {
+  const {
+    storeID,
+    store_name,
+    email,
+    mobile,
+    address,
+    owner_name,
+    country,
+    state,
+    city,
+    sortorder,
+    status,
+  } = req.body;
+
+  data = {};
+  if (storeID) {
+    data.storeID = storeID;
+  }
+  if (store_name) {
+    data.store_name = store_name;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  if (address) {
+    data.address = address;
+  }
+  if (owner_name) {
+    data.owner_name = owner_name;
+  }
+  if (country) {
+    data.country = country;
+  }
+  if (state) {
+    data.state = state;
+  }
+  if (city) {
+    data.city = city;
+  }
+
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  //console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.store_logo = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  //console.log(data);
+  if (data) {
+    const findandUpdateEntry = await Store.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    );
+
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    }
+  }
+};
+
 exports.allstore = async (req, res) => {
   const findall = await Store.find().sort({ sortorder: 1 });
   if (findall) {
