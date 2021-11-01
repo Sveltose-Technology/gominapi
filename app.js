@@ -53,7 +53,7 @@ app.use("/", altunit);
 app.use("/", privacypolicy);
 app.use("/", cart);
 app.use("/", contact_form);
-// app.use("/", termsandcondition);
+app.use("/", termsandcondition);
 // app.use("/", user_address);
 
 app.get("/", (req, res) => {
