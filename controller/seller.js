@@ -192,3 +192,93 @@ exports.login = async (req, res) => {
 //     }
 //   });
 // };
+
+exports.edit_seller = async (req, res) => {
+  const {
+    seller_name,
+    sellerId,
+    selleremail,
+    mobile_no,
+    password,
+    business_type,
+    store_address,
+    store_name,
+    gstin_no,
+    state,
+    city,
+    sortorder,
+    status,
+  } = req.body;
+
+  data = {};
+  if (seller_name) {
+    data.seller_name = seller_name;
+  }
+  if (sellerId) {
+    data.sellerId = sellerId;
+  }
+  if (selleremail) {
+    data.selleremail = selleremail;
+  }
+  if (mobile_no) {
+    data.mobile_no = mobile_no;
+  }
+  if (password) {
+    data.password = password;
+  }
+  if (business_type) {
+    data.business_type = business_type;
+  }
+  if (store_address) {
+    data.store_address = store_address;
+  }
+  if (store_name) {
+    data.store_name = store_name;
+  }
+  if (gstin_no) {
+    data.gstin_no = gstin_no;
+  }
+  if (state) {
+    data.state = state;
+  }
+  if (city) {
+    data.city = city;
+  }
+
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  //console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.seller_img = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  //console.log(data);
+  if (data) {
+    const findandUpdateEntry = await Seller.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    );
+
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    }
+  }
+};

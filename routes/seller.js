@@ -7,7 +7,7 @@ const {
   add_seller,
   getseller,
   login,
-  Adminlogin,
+  edit_seller,
 } = require("../controller/seller");
 
 const storage = multer.diskStorage({
@@ -41,6 +41,10 @@ let uploads = multer({ storage: storage });
 router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
 router.get("/admin/getseller", getseller);
 router.post("/admin/login", login);
-//router.post("/admin/Adminlogin", Adminlogin);
+router.post(
+  "/admin/edit_seller/:id",
+  uploads.single("seller_img"),
+  edit_seller
+);
 
 module.exports = router;
