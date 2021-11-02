@@ -8,6 +8,7 @@ const {
   delivery_order,
   cancelled_order,
   complete_order,
+  del_order,
 } = require("../controller/orderproduct");
 
 // PATHS
@@ -18,5 +19,6 @@ router.get("/admin/pending_order", pending_order);
 router.get("/admin/delivery_order", delivery_order);
 router.get("/admin/cancel_order", cancelled_order);
 router.get("/admin/complete_order", complete_order);
+router.get("/admin/del_order", del_order);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const {
   add_seller,
   getseller,
   login,
+  del_seller,
   edit_seller,
 } = require("../controller/seller");
 
@@ -46,5 +47,7 @@ router.post(
   uploads.single("seller_img"),
   edit_seller
 );
+
+router.post("/admin/delSeller/:id", del_seller);
 
 module.exports = router;

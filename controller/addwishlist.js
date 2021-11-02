@@ -1,42 +1,31 @@
-// const Wishlist = require("../models/cart");
+const Addwishlist = require("../models/addwishlist");
+const { v4: uuidv4 } = require("uuid");
 
-// exports.addwishlist = async (req, res) => {
-//   const { user, product } = req.body;
+exports.addwishlist = async (req, res) => {
+  const { user, product } = req.body;
 
-//   const newWishlist = new Wishlist({
-//     user: user,
-//     product: product,
-//   });
+  const newAddwishlist = new Addwishlist({
+    user: user,
+    product: product,
+  });
+  newAddwishlist.save(function (err, data) {
+    if (err) {
+      res.status(400).json({
+        status: false,
+        msg: "Error Occured",
+        error: err,
+      });
+    } else {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    }
+  });
+};
 
-//   const findexist = await Cart.findOne({
-//     $and: [{ orderby: orderby }, { product: product }],
-//   });
-//   if (findexist) {
-//     res.status(400).json({
-//       status: false,
-//       msg: "Already exist",
-//       data: {},
-//     });
-//   } else {
-//     addtoCart.save(function (err, data) {
-//       if (err) {
-//         res.status(400).json({
-//           status: false,
-//           msg: "Error Occured",
-//           error: err,
-//         });
-//       } else {
-//         res.status(200).json({
-//           status: false,
-//           msg: "Product added to cart",
-//           data: data,
-//         });
-//       }
-//     });
-//   }
-// };
-
-// exports.getallcart = async (req, res) => {
+// exports.getallwishlist = async (req, res) => {
 //   const findall = await Cart.find().sort({ sortorder: 1 });
 //   if (findall) {
 //     res.status(200).json({

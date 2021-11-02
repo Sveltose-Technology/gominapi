@@ -11,4 +11,4 @@ const AddwishlistSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Cart", AddwishlistSchema);
+module.exports = mongoose.model("addwishlist", AddwishlistSchema);
