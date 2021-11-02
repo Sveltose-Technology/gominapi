@@ -33,7 +33,7 @@ const contact_form = require("./routes/contact_form");
 //const termsandcondition = require("./routes/termsandcondition");
 //const termsandcondition = require("./routes/termsandcondition");
 //const user_address = require("./routes/user_address");
-//const addwishlist = require("./routes/addwishlist");
+const addwishlist = require("./routes/addwishlist");
 
 //use
 app.use("/", user);
@@ -57,7 +57,7 @@ app.use("/", cart);
 app.use("/", contact_form);
 //app.use("/", termsandcondition);
 // app.use("/", user_address);
-//app.use("/", addwishlist);
+app.use("/", addwishlist);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
