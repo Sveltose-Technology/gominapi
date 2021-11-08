@@ -97,6 +97,57 @@ exports.getproductsubcategory = async (req, res) => {
   }
 };
 
+exports.editproductsubcategory = async (req, res) => {
+  const { name, productcategory, product_img, desc, sortorder, status } =
+    req.body;
+
+  data = {};
+  if (name) {
+    data.name = name;
+  }
+  if (productcategory) {
+    data.productcategory = productcategory;
+  }
+  if (desc) {
+    data.desc = desc;
+  }
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.product_img = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  console.log(req.file);
+  if (data) {
+    const findandUpdateEntry = await Productsubcategory.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    )
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  }
+};
+
 exports.viewoneproductsubcategory = async (req, res) => {
   const findone = await Productsubcategory.findOne({
     _id: req.params.id,

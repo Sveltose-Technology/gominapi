@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 //const cors = require("cors");
 
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //require
@@ -19,7 +19,7 @@ const seller = require("./routes/seller");
 const productsubcategory = require("./routes/productsubcategory");
 const brand = require("./routes/brand");
 const banner = require("./routes/banner");
-const store = require("./routes/store");
+//const store = require("./routes/store");
 const store_request = require("./routes/store_request");
 const seller_contactform = require("./routes/seller_contactform");
 const orderproduct = require("./routes/orderproduct");
@@ -44,7 +44,7 @@ app.use("/", staff);
 app.use("/", productsubcategory);
 app.use("/", brand);
 app.use("/", banner);
-app.use("/", store);
+//app.use("/", store);
 app.use("/", store_request);
 app.use("/", seller_contactform);
 app.use("/", orderproduct);
