@@ -9,7 +9,7 @@ const {
   getproductsubcategory,
   viewoneproductsubcategory,
   editproductsubcategory,
-  //   deleteproductsubcategory,
+  deleteproductsubcategory,
   //   getsubcategory,
 } = require("../controller/productsubcategory");
 
@@ -55,5 +55,7 @@ router.post(
   uploads.array("product_img"),
   editproductsubcategory
 );
+
+router.get("/admin/deleteproductsubcategory/:id", deleteproductsubcategory);
 
 module.exports = router;
