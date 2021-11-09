@@ -98,27 +98,29 @@ exports.editproductcategory = async (req, res) => {
     data.product_img = response.secure_url;
     fs.unlinkSync(req.file.path);
   }
-  //console.log(data);
+  console.log(req.file);
   if (data) {
     const findandUpdateEntry = await Productcategory.findOneAndUpdate(
-      { _id: req.params.id },
+      {
+        _id: req.params.id,
+      },
       { $set: data },
       { new: true }
-    );
-
-    if (findandUpdateEntry) {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: findandUpdateEntry,
+    )
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
       });
-    } else {
-      res.status(400).json({
-        status: false,
-        msg: "error",
-        error: "error",
-      });
-    }
   }
 };
 

@@ -3,74 +3,67 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
-    item_name: {
+    product_name: {
       type: String,
       require: true,
     },
     // productId: {
     //   type: Number,
     // },
+    sku_no: {
+      type: String,
+    },
+    hsn_sac_no: {
+      type: String,
+    },
     short_desc: {
       type: String,
     },
-    desc: {
+    long_desc: {
       type: String,
       require: true,
     },
-    // code: {
-    //   type: String,
-    //   // require: true,
-    // },
-    hsn_code: {
+    brand: {
       type: String,
-      //require: true,
     },
     productcategory: { type: Schema.Types.ObjectId, ref: "productcategory" },
     productsubcategory: {
       type: Schema.Types.ObjectId,
       ref: "subproductcategory",
     },
-    make: {
+    colour: {
       type: String,
-    },
-
-    gst_rate: {
-      type: String,
-    },
-
-    unit: { type: Schema.Types.ObjectId, ref: "unit" },
-    alt_unit: { type: Schema.Types.ObjectId, ref: "altunit" },
-
-    type_of_supply: {
-      type: String,
-    }, //goods && service
-
-    material: {
-      type: String,
-    }, //user input
-    stock_qty: {
-      type: Number,
-    },
-
-    rate: {
-      type: Number,
     },
     size: {
       type: String,
     },
-    colour: {
+    material: {
+      type: String,
+    }, //user input
+
+    stock: {
+      type: Boolean,
+    },
+    qty: {
       type: String,
     },
-    product_img: {
-      type: Array,
+    reorder_level: {
+      type: String,
     },
-    // barcode: {
-    //   type: Number,
-    // },
-    brand: { type: Schema.Types.ObjectId, ref: "brand" },
-    inc_duty_tax: {
+
+    unit: { type: Schema.Types.ObjectId, ref: "unit" },
+    cost_price: {
       type: Number,
     },
+    sell_price: {
+      type: Number,
+    },
+    gst: {
+      type: String,
+    },
+    images_upload: {
+      type: String,
+    }, //goods && service
 
     sortorder: {
       type: Number,

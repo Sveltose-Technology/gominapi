@@ -6,10 +6,13 @@ const sellerSchema = new Schema(
     seller_name: {
       type: String,
     },
-    sellerId: {
+    seller_email: {
       type: String,
     },
-    selleremail: {
+    password: {
+      type: String,
+    },
+    confirm_password: {
       type: String,
     },
     mobile_no: {

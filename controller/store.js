@@ -41,7 +41,6 @@
 //     sortorder,
 //     status,
 //   } = req.body;
-//   console.log(req.body);
 
 //   const newStore = new Store({
 //     store_name: store_name,
@@ -73,7 +72,7 @@
 //     sortorder: sortorder,
 //     status: status,
 //   });
-//   if (req.file) {
+//   if (req.files) {
 //     const findexist = await Store.findOne({ phone_no: phone_no });
 //     if (findexist) {
 //       res.status(400).json({
@@ -81,54 +80,176 @@
 //         msg: "Already Exist",
 //         data: {},
 //       });
-//     } else {
-//       const resp = await cloudinary.uploader.upload(req.file.path);
-//       if (resp) {
-//         newStore.storeImg = resp.secure_url;
-
-//         fs.unlinkSync(req.file.path);
-//         newStore.save().then((data) => {
-//           res.status(200).json({
-//             status: true,
-//             msg: "success",
-//             data: data,
-//           });
-//         });
-//       } else {
-//         res.status(200).json({
-//           status: false,
-//           msg: "img not uploaded",
-//         });
-//       }
 //     }
-//   } else {
-//     const findexist = await Store.findOne({ phone_no: phone_no });
-//     if (findexist) {
-//       res.status(400).json({
-//         status: false,
-//         msg: "Already Exists",
-//         data: {},
-//       });
-//     } else {
-//       newStore
-//         .save()
-//         .then((data) => {
-//           res.status(400).json({
-//             status: true,
-//             msg: "success",
-//             data: data,
+//     if (req.files.shoplogo_img[0].path) {
+//       console.log(req.files);
+//       const resps = await cloudinary.uploader.upload(
+//         req.files.shoplogo_img[0].path
+//       );
+//       if (resps) {
+//         newStore.shoplogo_img = resps.secure_url;
+//         fs.unlinkSync(req.files.shoplogo_img[0].path);
+//         newStore
+//           .save()
+//           .then((data) => {
+//             res.status(200).json({
+//               status: true,
+//               msg: "success",
+//               data: data,
+//             });
+//           })
+//           .catch((error) => {
+//             res.status(200).json({
+//               status: false,
+//               msg: "error occured",
+//               error: error,
+//             });
 //           });
-//         })
-//         .catch((error) => {
-//           res.status(400).json({
-//             status: false,
-//             msg: "error",
-//             error: error,
-//           });
-//         });
+//       }
+//       if (req.files.storeImg[0].path) {
+//         console.log(req.files);
+//         const resps = await cloudinary.uploader.upload(
+//           req.files.storeImg[0].path
+//         );
+//         if (resp) {
+//           newStore.storeImg = resp.secure_url;
+//           fs.unlinkSync(req.files.storeImg[0].path);
+//           newStore
+//             .save()
+//             .then((data) => {
+//               res.status(200).json({
+//                 status: true,
+//                 msg: "success",
+//                 data: data,
+//               });
+//             })
+//             .catch((error) => {
+//               res.status(200).json({
+//                 status: false,
+//                 msg: "error occured",
+//                 error: error,
+//               });
+//             });
+//         }
+//       }
 //     }
 //   }
 // };
+
+// //   else {
+// //    // console.log(req.files);
+// //     if (req.files.storeImg[0].path) {
+// //       const resp = await cloudinary.uploader.upload(
+// //         req.files.storeImg[0].path
+// //       );
+// //       if (resp) {
+// //         newStore.storeImg = resp.secure_url;
+// //         fs.unlinkSync(req.files.storeImg[0].path);
+// //         newStore.save().then((data) => {
+// //           res.status(200).json({
+// //             status: true,
+// //             msg: "success",
+// //             data: data,
+// //           });
+// //         });
+// //       } else {
+// //         res.status(200).json({
+// //           status: false,
+// //           msg: "img not uploaded",
+// //         });
+// //       }
+// //     } else if (req.files.shoplogo_img[0].path) {
+// //       const resp = await cloudinary.uploader.upload(
+// //         req.files.shoplogo_img[0].path
+// //       );
+// //       if (resp) {
+// //         newStore.shoplogo_img = resp.secure_url;
+// //         fs.unlinkSync(req.files.shoplogo_img[0].path);
+// //         newStore.save().then((data) => {
+// //           res.status(200).json({
+// //             status: true,
+// //             msg: "success",
+// //             data: data,
+// //           });
+// //         });
+// //       } else {
+// //         res.status(200).json({
+// //           status: false,
+// //           msg: "img not uploaded",
+// //         });
+// //       }
+// //     } else if (req.files.gstImg[0].path) {
+// //       const resp = await cloudinary.uploader.upload(req.files.gstImg[0].path);
+// //       if (resp) {
+// //         newStore.gstImg = resp.secure_url;
+// //         fs.unlinkSync(req.files.gstImg[0].path);
+// //         newStore.save().then((data) => {
+// //           res.status(200).json({
+// //             status: true,
+// //             msg: "success",
+// //             data: data,
+// //           });
+// //         });
+// //       } else {
+// //         res.status(200).json({
+// //           status: false,
+// //           msg: "img not uploaded",
+// //         });
+// //       }
+// //     }
+// //   }
+// // }
+// /////////////////////
+
+// //   const resp = await cloudinary.uploader.upload(req.files.storeImg[0].path);
+// //   if (resp) {
+// //     newStore.storeImg = resp.secure_url;
+// //     fs.unlinkSync(req.files.storeImg[0].path);
+// //     newStore.save().then((data) => {
+// //       res.status(200).json({
+// //         status: true,
+// //         msg: "success",
+// //         data: data,
+// //       });
+// //     });
+// //   } else {
+// //     res.status(200).json({
+// //       status: false,
+// //       msg: "img not uploaded",
+// //     });
+// //   }
+// // }
+// //}
+
+// //////////////////
+// //   else {
+// //     const findexist = await Store.findOne({ phone_no: phone_no });
+// //     if (findexist) {
+// //       res.status(400).json({
+// //         status: false,
+// //         msg: "Already Exists",
+// //         data: {},
+// //       });
+// //     } else {
+// //       newStore
+// //         .save()
+// //         .then((data) => {
+// //           res.status(400).json({
+// //             status: true,
+// //             msg: "success",
+// //             data: data,
+// //           });
+// //         })
+// //         .catch((error) => {
+// //           res.status(400).json({
+// //             status: false,
+// //             msg: "error",
+// //             error: error,
+// //           });
+// //         });
+// //     }
+// //   }
+// // };
 
 // exports.edit_store = async (req, res) => {
 //   const {

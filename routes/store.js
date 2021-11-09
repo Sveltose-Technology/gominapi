@@ -39,19 +39,22 @@
 
 // let uploads = multer({ storage: storage });
 // let multipleUpload = uploads.fields([
-//   { name: "storeImg", maxCount: 1 },
+//   { name: "storeImg", maxCount: 2 },
 //   { name: "shoplogo_img", maxCount: 1 },
-//   { name: "gstImg", maxCount: 1 },
+//   { name: "gstImg", maxCount: 2 },
 //   { name: "storepan_img", maxCount: 1 },
 //   { name: "tradelicence_img", maxCount: 1 },
 // ]);
+
 // //Paths
-// router.post("/admin/addstore", multipleUpload, (req, res) => {
-//   if (req.files) {
-//     console.log("files uploaded");
-//     console.log(req.files);
-//   }
-// });
+// // router.post("/admin/addstore", multipleUpload, (req, res) => {
+// //   if (req.files) {
+// //     console.log("files uploaded");
+// //     console.log(req.files);
+// //   }
+// // });
+
+// router.post("/admin/addstore", multipleUpload, addstore);
 // router.get("/admin/allstore", allstore);
 // router.get("/admin/viewonestore/:id", viewonestore);
 // router.get("/admin/del_store/:id", del_store);
