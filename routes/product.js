@@ -7,6 +7,7 @@ const multer = require("multer");
 const {
   addproduct,
   getproduct,
+  editproduct,
   getoneproduct,
   del_product,
 } = require("../controller/product");
@@ -40,11 +41,11 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 //Paths
 router.post("/admin/addproduct", uploads.array("product_img"), addproduct);
-// router.post(
-//   "/admin/editproduct/:id",
-//   uploads.array("product_img"),
-//   editproduct
-// );
+router.post(
+  "/admin/editproduct/:id",
+  uploads.array("product_img"),
+  editproduct
+);
 router.get("/admin/getproduct", getproduct);
 router.get("/admin/getoneproduct/:id", getoneproduct);
 router.get("/admin/del_product/:id", del_product);

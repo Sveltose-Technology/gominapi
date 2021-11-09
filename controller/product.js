@@ -131,6 +131,126 @@ exports.addproduct = async (req, res) => {
   }
 };
 
+exports.editproduct = async (req, res) => {
+  const {
+    product_name,
+    sku_no,
+    hsn_sac_no,
+    short_desc,
+    long_desc,
+    productcategory,
+    productsubcategory,
+    brand,
+    colour,
+    size,
+    material,
+    stock,
+    qty,
+    reorder_level,
+    unit,
+    cost_price,
+    sell_price,
+    gst,
+    product_img,
+    sortorder,
+    status,
+  } = req.body;
+
+  data = {};
+  if (product_name) {
+    data.product_name = product_name;
+  }
+  if (sku_no) {
+    data.sku_no = sku_no;
+  }
+  if (hsn_sac_no) {
+    data.hsn_sac_no = hsn_sac_no;
+  }
+  if (short_desc) {
+    data.short_desc = short_desc;
+  }
+  if (long_desc) {
+    data.long_desc = long_desc;
+  }
+  if (productcategory) {
+    data.productcategory = productcategory;
+  }
+
+  if (productsubcategory) {
+    data.productsubcategory = productsubcategory;
+  }
+  if (brand) {
+    data.brand = brand;
+  }
+  if (colour) {
+    data.colour = colour;
+  }
+  if (size) {
+    data.size = size;
+  }
+  if (material) {
+    data.material = material;
+  }
+  if (stock) {
+    data.stock = stock;
+  }
+  if (qty) {
+    data.qty = qty;
+  }
+  if (reorder_level) {
+    data.reorder_level = reorder_level;
+  }
+  if (unit) {
+    data.unit = unit;
+  }
+  if (cost_price) {
+    data.cost_price = cost_price;
+  }
+  if (sell_price) {
+    data.sell_price = sell_price;
+  }
+  if (gst) {
+    data.gst = gst;
+  }
+
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  console.log(data);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.product_img = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  console.log(req.file);
+  if (data) {
+    const findandUpdateEntry = await Product.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    )
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  }
+};
+
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })

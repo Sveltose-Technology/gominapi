@@ -52,7 +52,7 @@ router.get("/admin/viewoneproductsubcategory/:id", viewoneproductsubcategory);
 
 router.post(
   "/admin/editproductsubcategory/:id",
-  uploads.array("product_img"),
+  uploads.single("product_img"),
   editproductsubcategory
 );
 
