@@ -23,9 +23,7 @@ const productSchema = new Schema(
       type: String,
       require: true,
     },
-    brand: {
-      type: String,
-    },
+    brand: { type: Schema.Types.ObjectId, ref: "brand" },
     productcategory: { type: Schema.Types.ObjectId, ref: "productcategory" },
     productsubcategory: {
       type: Schema.Types.ObjectId,

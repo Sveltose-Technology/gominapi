@@ -5,7 +5,6 @@ const subproductcategorySchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
     },
     desc: {
       type: String,
