@@ -9,7 +9,6 @@ const subproductcategorySchema = new Schema(
     },
     desc: {
       type: String,
-      require: true,
     },
     product_img: {
       type: String,
@@ -17,7 +16,6 @@ const subproductcategorySchema = new Schema(
     productcategory: {
       type: Schema.Types.ObjectId,
       ref: "productcategory",
-      require: true,
     },
     sortorder: {
       type: Number,

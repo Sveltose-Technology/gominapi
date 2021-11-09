@@ -5,17 +5,14 @@ const productcategorySchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
     },
 
     product_img: {
       type: String,
-      //require: true,
     },
 
     desc: {
       type: String,
-      require: true,
     },
     sortorder: {
       type: Number,
