@@ -92,3 +92,59 @@ exports.add_specialoffer = async (req, res) => {
     }
   }
 };
+
+exports.viewonespecialoffer = async (req, res) => {
+  //const getuser = await User.findOne({ _id: req.userId });
+  const findone = await Specialoffer.findOne({ _id: req.params.id }).populate(
+    "product"
+  );
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.Getoffer = async (req, res) => {
+  const findall = await Specialoffer.find()
+    .populate("product")
+    .sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.del_offer = async (req, res) => {
+  try {
+    const deleteentry = await Specialoffer.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};

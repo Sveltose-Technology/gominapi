@@ -40,7 +40,7 @@ const productSchema = new Schema(
     }, //user input
 
     stock: {
-      type: Boolean,
+      type: String,
     },
     qty: {
       type: String,
