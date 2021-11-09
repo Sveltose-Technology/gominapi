@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //require
-const user = require("./routes/user");
+const customer = require("./routes/customer");
 const staff = require("./routes/staff");
 const product = require("./routes/product");
 const productcategory = require("./routes/productcategory");
@@ -36,7 +36,7 @@ const contact_form = require("./routes/contact_form");
 const addwishlist = require("./routes/addwishlist");
 
 //use
-app.use("/", user);
+app.use("/", customer);
 app.use("/", product);
 app.use("/", productcategory);
 app.use("/", seller);
