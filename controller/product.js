@@ -57,14 +57,14 @@ exports.addproduct = async (req, res) => {
     cost_price: cost_price,
     sell_price: sell_price,
     gst: gst,
-    images_upload: images_upload,
+    product_img: images_upload,
     sortorder: sortorder,
     status: status,
   });
 
   if (req.files) {
     const findexist = await Product.findOne({
-      item_name: item_name,
+      product_name: product_name,
     });
     if (findexist) {
       res.status(400).json({
@@ -102,7 +102,7 @@ exports.addproduct = async (req, res) => {
   } else {
     // console.log("changed node");
     const findexist = await Product.findOne({
-      item_name: item_name,
+      product_name: product_name,
     });
     if (findexist) {
       res.status(400).json({

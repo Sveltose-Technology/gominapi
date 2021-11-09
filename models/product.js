@@ -61,8 +61,8 @@ const productSchema = new Schema(
     gst: {
       type: String,
     },
-    images_upload: {
-      type: String,
+    product_img: {
+      type: Array,
     }, //goods && service
 
     sortorder: {
