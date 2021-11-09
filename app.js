@@ -36,6 +36,7 @@ const contact_form = require("./routes/contact_form");
 //const user_address = require("./routes/user_address");
 const addwishlist = require("./routes/addwishlist");
 const employee = require("./routes/employee");
+const supplier = require("./routes/supplier");
 
 //use
 app.use("/", customer);
@@ -62,6 +63,7 @@ app.use("/", contact_form);
 // app.use("/", user_address);
 app.use("/", addwishlist);
 app.use("/", employee);
+app.use("/", supplier);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
