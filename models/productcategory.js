@@ -10,7 +10,7 @@ const productcategorySchema = new Schema(
 
     product_img: {
       type: String,
-      require: true,
+      //require: true,
     },
 
     desc: {

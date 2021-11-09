@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const Image = require("../models/product");
+//const Image = require("../models/product");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -32,7 +32,7 @@ exports.addproduct = async (req, res) => {
     cost_price,
     sell_price,
     gst,
-    images_upload,
+    product_img,
     sortorder,
     status,
   } = req.body;
@@ -57,7 +57,7 @@ exports.addproduct = async (req, res) => {
     cost_price: cost_price,
     sell_price: sell_price,
     gst: gst,
-    product_img: images_upload,
+    product_img: product_img,
     sortorder: sortorder,
     status: status,
   });

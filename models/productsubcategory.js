@@ -13,7 +13,6 @@ const subproductcategorySchema = new Schema(
     },
     product_img: {
       type: String,
-      require: true,
     },
     productcategory: {
       type: Schema.Types.ObjectId,
