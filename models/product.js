@@ -21,7 +21,7 @@ const productSchema = new Schema(
     },
     long_desc: {
       type: String,
-      require: true,
+      //require: true,
     },
     brand: { type: Schema.Types.ObjectId, ref: "brand" },
     productcategory: { type: Schema.Types.ObjectId, ref: "productcategory" },
@@ -41,6 +41,8 @@ const productSchema = new Schema(
 
     stock: {
       type: String,
+      avalaible: "Available",
+      unavailable: " Unavailable",
     },
     qty: {
       type: String,
