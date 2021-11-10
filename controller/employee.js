@@ -5,6 +5,7 @@ const fs = require("fs");
 
 exports.addemployee = async (req, res) => {
   const {
+    employeeId,
     employee_name,
     phone_no,
     email,
@@ -18,6 +19,7 @@ exports.addemployee = async (req, res) => {
   } = req.body;
 
   const newEmployee = new Employee({
+    employeeId: employeeId,
     employee_name: employee_name,
     phone_no: phone_no,
     email: email,
@@ -31,7 +33,7 @@ exports.addemployee = async (req, res) => {
   });
 
   if (req.file) {
-    const findexist = await Employee.findOne({ phone_no: phone_no });
+    const findexist = await Employee.findOne({ employeeId: employeeId });
     if (findexist) {
       res.status(400).json({
         status: false,
