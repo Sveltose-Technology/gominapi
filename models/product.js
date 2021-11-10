@@ -42,7 +42,7 @@ const productSchema = new Schema(
     stock: {
       type: String,
       avalaible: "Available",
-      unavailable: " Unavailable",
+      unavailable: " UnAvailable",
     },
     qty: {
       type: String,
