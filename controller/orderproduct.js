@@ -51,7 +51,7 @@ exports.addorder = async (req, res) => {
 exports.getorder = async (req, res) => {
   const findall = await Orderproduct.find()
     .sort({ sortorder: 1 })
-    .populate("user")
+    .populate("customer")
     .populate("product");
   if (findall) {
     res.status(200).json({
@@ -70,7 +70,7 @@ exports.getorder = async (req, res) => {
 
 exports.pending_order = async (req, res, next) => {
   const datas = await Orderproduct.find({ status: "Pending" })
-    .populate("user")
+    .populate("customer")
     .populate("product")
     .then((result) => {
       res.status(200).json({
@@ -90,7 +90,7 @@ exports.pending_order = async (req, res, next) => {
 
 exports.delivery_order = async (req, res, next) => {
   const datas = await Orderproduct.find({ status: "Delivery" })
-    .populate("user")
+    .populate("customer")
     .populate("product")
     .then((result) => {
       res.status(200).json({
@@ -110,7 +110,7 @@ exports.delivery_order = async (req, res, next) => {
 
 exports.cancelled_order = async (req, res, next) => {
   const datas = await Orderproduct.find({ status: "Cancel" })
-    .populate("user")
+    .populate("customer")
     .populate("product")
     .then((result) => {
       res.status(200).json({
@@ -130,7 +130,7 @@ exports.cancelled_order = async (req, res, next) => {
 
 exports.complete_order = async (req, res, next) => {
   const datas = await Orderproduct.find({ status: "Complete" })
-    .populate("user")
+    .populate("customer")
     .populate("product")
     .then((result) => {
       res.status(200).json({
