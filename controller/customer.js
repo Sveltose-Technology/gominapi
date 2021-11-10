@@ -2,6 +2,7 @@ const Customer = require("../models/customer");
 
 exports.addcustomer = async (req, res) => {
   const {
+    customerId,
     first_name,
     last_name,
     customer_email,
@@ -11,6 +12,7 @@ exports.addcustomer = async (req, res) => {
   } = req.body;
 
   const newCustomer = new Customer({
+    customerId: customerId,
     first_name: first_name,
     last_name: last_name,
     customer_email: customer_email,
@@ -19,7 +21,7 @@ exports.addcustomer = async (req, res) => {
     status: status,
   });
 
-  const findexist = await Customer.findOne({ mobile_no: mobile_no });
+  const findexist = await Customer.findOne({ customerId: customerId });
   if (findexist) {
     res.status(400).json({
       status: false,

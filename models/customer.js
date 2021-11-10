@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const customerSchema = new Schema(
   {
+    customerId: {
+      type: String,
+    },
     first_name: {
       type: String,
     },
