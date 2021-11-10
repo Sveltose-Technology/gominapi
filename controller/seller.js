@@ -1,9 +1,9 @@
 const Seller = require("../models/seller");
-const cloudinary = require("cloudinary").v2;
-const dotenv = require("dotenv");
-const fs = require("fs");
+// const cloudinary = require("cloudinary").v2;
+// const dotenv = require("dotenv");
+// const fs = require("fs");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 const validatePassword = (password, dbpassword) => {
@@ -11,26 +11,18 @@ const validatePassword = (password, dbpassword) => {
   return true;
 };
 
-function generateAccessToken(seller_name) {
-  return jwt.sign(seller_name, process.env.TOKEN_SECRET, {
-    expiresIn: "1800h",
-  });
-}
+// function generateAccessToken(seller_name) {
+//   return jwt.sign(seller_name, process.env.TOKEN_SECRET, {
+//     expiresIn: "1800h",
+//   });
+// }
 
 exports.add_seller = async (req, res) => {
   const {
     seller_name,
-    sellerId,
-    selleremail,
-    mobile_no,
+    seller_email,
     password,
-    seller_img,
-    business_type,
-    store_name,
-    store_address,
-    gstin_no,
-    state,
-    city,
+    confirm_password,
     status,
     sortorder,
   } = req.body;
@@ -39,66 +31,44 @@ exports.add_seller = async (req, res) => {
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
 
-  const token = generateAccessToken({ mobile_no: mobile_no });
+  // const token = generateAccessToken({ mobile_no: mobile_no });
 
   const newSeller = new Seller({
     seller_name: seller_name,
-    sellerId: sellerId,
-    selleremail: selleremail,
-    mobile_no: mobile_no,
+    seller_email: seller_email,
     password: hashpassword,
-    seller_img: seller_img,
-    business_type: business_type,
-    store_name: store_name,
-    store_address: store_address,
-    gstin_no: gstin_no,
-    state: state,
-    city: city,
+    confirm_password: hashpassword,
     status: status,
     sortorder: sortorder,
   });
 
   //console.log(req.body)
-  if (req.file) {
-    const findexist = await Seller.findOne({ sellerId: sellerId });
-    if (findexist) {
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
-      });
-    } else {
-      console.log(req.file);
-      const resp = await cloudinary.uploader.upload(req.file.path);
-      if (resp) {
-        newSeller.seller_img = resp.secure_url;
-        fs.unlinkSync(req.file.path);
-        newSeller
-          .save()
-          .then((data) => {
-            res.status(200).json({
-              status: true,
-              msg: "success",
-              data: data,
-            });
-          })
-          .catch((error) => {
-            res.status(400).json({
-              status: false,
-              msg: "error",
-              error: error,
-            });
-          });
-      } else {
+  const findexist = await Seller.findOne({ seller_email: seller_email });
+  if (findexist) {
+    res.status(400).json({
+      status: false,
+      msg: "Already Exists",
+      data: {},
+    });
+  } else {
+    newSeller
+      .save()
+      .then((data) => {
         res.status(200).json({
-          status: false,
-          msg: "img not uploaded",
+          status: true,
+          msg: "success",
+          data: data,
         });
-      }
-    }
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
   }
 };
-
 exports.getseller = async (req, res) => {
   const findall = await Seller.find().sort({ sortorder: 1 });
   if (findall) {

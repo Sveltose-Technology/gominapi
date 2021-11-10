@@ -39,7 +39,7 @@
 
 // let uploads = multer({ storage: storage });
 // let multipleUpload = uploads.fields([
-//   { name: "storeImg", maxCount: 2 },
+//   { name: "storeImg", maxCount: 5 },
 //   { name: "shoplogo_img", maxCount: 1 },
 //   { name: "gstImg", maxCount: 2 },
 //   { name: "storepan_img", maxCount: 1 },
