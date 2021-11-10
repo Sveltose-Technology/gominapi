@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 exports.addorder = async (req, res) => {
   const {
-    user,
+    customer,
     product,
     order_type,
     orderId,
@@ -18,7 +18,7 @@ exports.addorder = async (req, res) => {
   } = req.body;
 
   const newOrderproduct = new Orderproduct({
-    user: user,
+    customer: customer,
     product: product,
     order_type: order_type,
     orderId: uuidv4(),

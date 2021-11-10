@@ -81,14 +81,14 @@
 //         data: {},
 //       });
 //     }
-//     if (req.files.shoplogo_img[0].path) {
+//     if (req.files.storeImg[0].path) {
 //       console.log(req.files);
 //       const resps = await cloudinary.uploader.upload(
-//         req.files.shoplogo_img[0].path
+//         req.files.storeImg[0].path
 //       );
 //       if (resps) {
-//         newStore.shoplogo_img = resps.secure_url;
-//         fs.unlinkSync(req.files.shoplogo_img[0].path);
+//         newStore.storeImg = resps.secure_url;
+//         fs.unlinkSync(req.files.storeImg[0].path);
 //         newStore
 //           .save()
 //           .then((data) => {
