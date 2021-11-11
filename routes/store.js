@@ -33,17 +33,19 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 
-// let multipleUpload = uploads.fields([
-//   { name: "storeImg", maxCount: 5 },
-//   { name: "shoplogo_img", maxCount: 1 },
-//   { name: "gstImg", maxCount: 2 },
-//   { name: "storepan_img", maxCount: 1 },
-//   { name: "tradelicence_img", maxCount: 1 },
-// ]);
+let multipleUpload = uploads.fields([
+  { name: "storeImg", maxCount: 5 },
+  { name: "shoplogo_img", maxCount: 1 },
+  { name: "gstImg", maxCount: 1 },
+  { name: "storepan_img", maxCount: 1 },
+  { name: "tradelicence_img", maxCount: 1 },
+  { name: "companypan_img", maxCount: 1 },
+  { name: "address_proof_img", maxCount: 1 },
+]);
 
 //Paths
-router.post("/admin/addstore", uploads.array("storeImg"), addstore);
+//router.post("/admin/addstore", uploads.array("storeImg"), addstore);
 
-//router.post("/admin/addstore", multipleUpload, addstore);
+router.post("/admin/addstore", multipleUpload, addstore);
 
 module.exports = router;

@@ -74,18 +74,24 @@ const storeSchema = new Schema(
       type: String,
     },
     shoplogo_img: {
-      type: String,
+      type: Array,
       //require: true,
     },
     gstImg: {
-      type: String,
+      type: Array,
       //require: true,
     },
     storepan_img: {
-      type: String,
+      type: Array,
     },
     tradelicence_img: {
-      type: String,
+      type: Array,
+    },
+    companypan_img: {
+      type: Array,
+    },
+    address_proof_img: {
+      type: Array,
     },
     sortorder: {
       type: Number,
