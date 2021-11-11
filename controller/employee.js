@@ -2,6 +2,7 @@ const Employee = require("../models/employee");
 const cloudinary = require("cloudinary").v2;
 const dotenv = require("dotenv");
 const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 
 exports.addemployee = async (req, res) => {
   const {
@@ -19,7 +20,7 @@ exports.addemployee = async (req, res) => {
   } = req.body;
 
   const newEmployee = new Employee({
-    employeeId: employeeId,
+    employeeId: uuidv4(),
     employee_name: employee_name,
     phone_no: phone_no,
     email: email,

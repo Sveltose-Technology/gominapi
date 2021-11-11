@@ -1,4 +1,5 @@
 const Customer = require("../models/customer");
+const { v4: uuidv4 } = require("uuid");
 
 exports.addcustomer = async (req, res) => {
   const {
@@ -12,7 +13,7 @@ exports.addcustomer = async (req, res) => {
   } = req.body;
 
   const newCustomer = new Customer({
-    customerId: customerId,
+    customerId: uuidv4(),
     first_name: first_name,
     last_name: last_name,
     customer_email: customer_email,
