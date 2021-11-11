@@ -21,15 +21,13 @@ const employeeSchema = new Schema(
     },
     designation: {
       type: String,
-      active: "Active",
-      deactive: "Inactive",
     },
     verification: {
       type: String,
     },
-    owner: {
-      type: String,
-    }, //manager , employee
+    // owner: {
+    //   type: String,
+    // }, //manager , employee
     upload_picture: {
       type: String,
     },
@@ -38,7 +36,8 @@ const employeeSchema = new Schema(
     },
     status: {
       type: String,
-      default: "Active",
+      active: "Active",
+      deactive: "Inactive",
     },
   },
   { timestamps: true }

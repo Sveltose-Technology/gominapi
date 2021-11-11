@@ -102,26 +102,8 @@
 //         res.status(200).json({
 //           status: false,
 //           msg: "img not uploaded",
-//         });
-//       }
-//     }
-//   }
-// };
-// //   } else {
-// //     // console.log("changed node");
-// //     const findexist = await Store.findOne({
-// //       phone_no: phone_no,
-// //     });
-// //     if (findexist) {
-// //       res.status(400).json({
-// //         status: false,
-// //         msg: "Already Exists",
-// //         data: {},
-// //       });
-// //     } else {
-// //       newStore
-// //         .save()
-// //         .then((data) => {
+
+//         .then((data) => {
 // //           res.status(200).json({
 // //             status: true,
 // //             msg: "success",
