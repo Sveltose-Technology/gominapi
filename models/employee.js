@@ -22,6 +22,11 @@ const employeeSchema = new Schema(
     designation: {
       type: String,
     },
+    role: {
+      type: mongoose.Schema.Types.ObjectId,
+      require: true,
+      ref: "role",
+    },
 
     // owner: {
     //   type: String,

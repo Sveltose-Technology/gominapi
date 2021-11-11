@@ -19,7 +19,7 @@ const seller = require("./routes/seller");
 const productsubcategory = require("./routes/productsubcategory");
 const brand = require("./routes/brand");
 const banner = require("./routes/banner");
-//const store = require("./routes/store");
+const store = require("./routes/store");
 const store_request = require("./routes/store_request");
 const special_offer = require("./routes/special_offer");
 const seller_contactform = require("./routes/seller_contactform");
@@ -37,6 +37,7 @@ const contact_form = require("./routes/contact_form");
 const addwishlist = require("./routes/addwishlist");
 const employee = require("./routes/employee");
 const supplier = require("./routes/supplier");
+const role = require("./routes/role");
 
 //use
 app.use("/", customer);
@@ -47,7 +48,7 @@ app.use("/", staff);
 app.use("/", productsubcategory);
 app.use("/", brand);
 app.use("/", banner);
-//app.use("/", store);
+app.use("/", store);
 app.use("/", store_request);
 app.use("/", special_offer);
 app.use("/", seller_contactform);
@@ -64,6 +65,7 @@ app.use("/", contact_form);
 app.use("/", addwishlist);
 app.use("/", employee);
 app.use("/", supplier);
+app.use("/", role);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");

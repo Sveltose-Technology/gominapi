@@ -1,125 +1,121 @@
-// const Store = require("../models/store");
+const Store = require("../models/store");
 
-// const cloudinary = require("cloudinary").v2;
-// const fs = require("fs");
-// const dotenv = require("dotenv");
-// dotenv.config();
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
+const dotenv = require("dotenv");
+dotenv.config();
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// exports.addstore = async (req, res) => {
-//   const {
-//     store_name,
-//     storeImg,
-//     store_desc,
-//     websiteUrl,
-//     store_email,
-//     phone_no,
-//     altphone_no,
-//     altphone_no2,
-//     day,
-//     startTym,
-//     endTym,
-//     address_line1,
-//     address_line2,
-//     landmark,
-//     state,
-//     city,
-//     pincode,
-//     gst_no,
-//     business_type,
-//     pan_no,
-//     company_panno,
-//     address_proof,
-//     shoplogo_img,
-//     gstImg,
-//     storepan_img,
-//     tradelicence_img,
-//     sortorder,
-//     status,
-//   } = req.body;
+exports.addstore = async (req, res) => {
+  const {
+    store_name,
+    storeImg,
+    store_desc,
+    websiteUrl,
+    store_email,
+    phone_no,
+    altphone_no,
+    altphone_no2,
+    day,
+    startTym,
+    endTym,
+    address_line1,
+    address_line2,
+    landmark,
+    state,
+    city,
+    pincode,
+    gst_no,
+    business_type,
+    pan_no,
+    company_panno,
+    address_proof,
+    shoplogo_img,
+    gstImg,
+    storepan_img,
+    tradelicence_img,
+    sortorder,
+    status,
+  } = req.body;
 
-//   const newStore = new Store({
-//     store_name: store_name,
-//     storeImg: storeImg,
-//     store_desc: store_desc,
-//     websiteUrl: websiteUrl,
-//     store_email: store_email,
-//     phone_no: phone_no,
-//     altphone_no: altphone_no,
-//     altphone_no2: altphone_no2,
-//     day: day,
-//     startTym: startTym,
-//     endTym: endTym,
-//     address_line1: address_line1,
-//     address_line2: address_line2,
-//     landmark: landmark,
-//     state: state,
-//     city: city,
-//     pincode: pincode,
-//     gst_no: gst_no,
-//     business_type: business_type,
-//     pan_no: pan_no,
-//     company_panno: company_panno,
-//     address_proof: address_proof,
-//     shoplogo_img: shoplogo_img,
-//     gstImg: gstImg,
-//     storepan_img: storepan_img,
-//     tradelicence_img: tradelicence_img,
-//     sortorder: sortorder,
-//     status: status,
-//   });
-//   if (req.files) {
-//     const findexist = await Store.findOne({ phone_no: phone_no });
-//     if (findexist) {
-//       res.status(400).json({
-//         status: false,
-//         msg: "Already Exist",
-//         data: {},
-//       });
-//     } else {
-//       alluploads = [];
-//       for (let i = 0; i < req.files.length; i++) {
-//         const resp = await cloudinary.uploader.upload(req.files[i].path);
-//         fs.unlinkSync(req.files[i].path);
-//         alluploads.push(resp.secure_url);
-//       }
-//       //console.log(alluploads);
+  const newStore = new Store({
+    store_name: store_name,
+    storeImg: storeImg,
+    store_desc: store_desc,
+    websiteUrl: websiteUrl,
+    store_email: store_email,
+    phone_no: phone_no,
+    altphone_no: altphone_no,
+    altphone_no2: altphone_no2,
+    day: day,
+    startTym: startTym,
+    endTym: endTym,
+    address_line1: address_line1,
+    address_line2: address_line2,
+    landmark: landmark,
+    state: state,
+    city: city,
+    pincode: pincode,
+    gst_no: gst_no,
+    business_type: business_type,
+    pan_no: pan_no,
+    company_panno: company_panno,
+    address_proof: address_proof,
+    shoplogo_img: shoplogo_img,
+    gstImg: gstImg,
+    storepan_img: storepan_img,
+    tradelicence_img: tradelicence_img,
+    sortorder: sortorder,
+    status: status,
+  });
+  if (req.files) {
+    const findexist = await Store.findOne({ phone_no: phone_no });
+    if (findexist) {
+      res.status(400).json({
+        status: false,
+        msg: "Already Exist",
+        data: {},
+      });
+    } else {
+      alluploads = [];
+      for (let i = 0; i < req.files.length; i++) {
+        const resp = await cloudinary.uploader.upload(req.files[i].path);
+        fs.unlinkSync(req.files[i].path);
+        alluploads.push(resp.secure_url);
+      }
+      //console.log(alluploads);
 
-//       if (alluploads.length !== 0) {
-//         newStore.storeImg = alluploads;
-//         newStore.save().then((result) => {
-//           res.status(200).json({
-//             status: true,
-//             msg: "success",
-//             data: result,
-//           });
-//         });
-//       } else {
-//         res.status(200).json({
-//           status: false,
-//           msg: "img not uploaded",
-
-//         .then((data) => {
-// //           res.status(200).json({
-// //             status: true,
-// //             msg: "success",
-// //             data: data,
-// //           });
-// //         })
-// //         .catch((error) => {
-// //           res.status(400).json({
-// //             status: false,
-// //             msg: "error",
-// //             error: error,
-// //           });
-// //         });
-// //     }
-// //   }
-// // };
+      if (alluploads.length !== 0) {
+        newStore.storeImg = alluploads;
+        newStore
+          .save()
+          .then((result) => {
+            res.status(200).json({
+              status: true,
+              msg: "success",
+              data: result,
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              status: false,
+              msg: "error",
+              error: error,
+            });
+          });
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "img not uploaded",
+        });
+      }
+    }
+  }
+};
 
 // exports.edit_store = async (req, res) => {
 //   const {

@@ -12,6 +12,7 @@ exports.addemployee = async (req, res) => {
     email,
     password,
     designation,
+    role,
     image,
     sortorder,
     status,
@@ -24,13 +25,14 @@ exports.addemployee = async (req, res) => {
     email: email,
     password: password,
     designation: designation,
+    role: role,
     image: image,
     sortorder: sortorder,
     status: status,
   });
 
   if (req.file) {
-    const findexist = await Employee.findOne({ employeeId: employeeId });
+    const findexist = await Employee.findOne({ phone_no: phone_no });
     if (findexist) {
       res.status(400).json({
         status: false,
