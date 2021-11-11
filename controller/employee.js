@@ -12,8 +12,7 @@ exports.addemployee = async (req, res) => {
     email,
     password,
     designation,
-    verification,
-    upload_picture,
+    image,
     sortorder,
     status,
   } = req.body;
@@ -25,8 +24,7 @@ exports.addemployee = async (req, res) => {
     email: email,
     password: password,
     designation: designation,
-    verification: verification,
-    upload_picture: upload_picture,
+    image: image,
     sortorder: sortorder,
     status: status,
   });
@@ -42,7 +40,7 @@ exports.addemployee = async (req, res) => {
     } else {
       const resp = await cloudinary.uploader.upload(req.file.path);
       if (resp) {
-        newEmployee.upload_picture = resp.secure_url;
+        newEmployee.image = resp.secure_url;
         fs.unlinkSync(req.file.path);
         newEmployee
           .save()

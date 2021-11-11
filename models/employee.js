@@ -22,13 +22,11 @@ const employeeSchema = new Schema(
     designation: {
       type: String,
     },
-    verification: {
-      type: String,
-    },
+
     // owner: {
     //   type: String,
     // }, //manager , employee
-    upload_picture: {
+    image: {
       type: String,
     },
     sortorder: {
