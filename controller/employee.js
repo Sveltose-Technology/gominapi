@@ -71,7 +71,7 @@ exports.addemployee = async (req, res) => {
 };
 
 exports.Getemployee = async (req, res) => {
-  const findall = await Employee.find().sort({ sortorder: 1 });
+  const findall = await Employee.find().sort({ sortorder: 1 }).populate("role");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -89,7 +89,9 @@ exports.Getemployee = async (req, res) => {
 
 exports.del_employee = async (req, res) => {
   try {
-    const deleteentry = await Employee.deleteOne({ _id: req.params.id });
+    const deleteentry = await Employee.deleteOne({
+      _id: req.params.id,
+    }).populate("role");
     res.status(200).json({
       status: true,
       msg: "success",
