@@ -78,7 +78,7 @@ exports.getseller = async (req, res) => {
       data: findall,
     });
   } else {
-    res.status(200).json({
+    res.status(400).json({
       status: false,
       msg: "error",
       error: "error",
