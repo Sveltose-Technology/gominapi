@@ -35,7 +35,7 @@ const storeSchema = new Schema(
       type: String,
     },
     startTym: {
-      typw: String,
+      type: String,
     },
     endTym: {
       type: String,

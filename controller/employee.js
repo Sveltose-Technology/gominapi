@@ -18,6 +18,9 @@ exports.addemployee = async (req, res) => {
     status,
   } = req.body;
 
+  //const no = Employee.find(max(employeeId)).then(
+  //if
+  //)
   const newEmployee = new Employee({
     employeeId: uuidv4(),
     employee_name: employee_name,
