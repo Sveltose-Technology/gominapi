@@ -2,7 +2,7 @@ const Employee = require("../models/employee");
 const cloudinary = require("cloudinary").v2;
 const dotenv = require("dotenv");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+//const { v4: uuidv4 } = require("uuid");
 
 exports.addemployee = async (req, res) => {
   const {
@@ -18,11 +18,22 @@ exports.addemployee = async (req, res) => {
     status,
   } = req.body;
 
-  //const no = Employee.find(max(employeeId)).then(
-  //if
-  //)
+  //console.log
+  create_random_string(6);
+  function create_random_string(string_length) {
+    (random_string = ""),
+      (characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+    for (var i, i = 0; i < string_length; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return random_string;
+  }
+
   const newEmployee = new Employee({
-    employeeId: uuidv4(),
+    employeeId: random_string,
     employee_name: employee_name,
     phone_no: phone_no,
     email: email,
