@@ -36,7 +36,7 @@ exports.addstore = async (req, res) => {
     address_proof,
     shoplogo_img,
     gstImg,
-    personalpan_img,
+    storepan_img,
     tradelicence_img,
     companypan_img,
     address_proof_img,
@@ -141,26 +141,26 @@ exports.addstore = async (req, res) => {
       newStore.gstImg = gstImg_arry;
       //console.log(newStore);
     }
-    if (req.files.personalpan_img[0].path) {
+    if (req.files.storepan_img[0].path) {
       //console.log(req.files.storepan_img);
-      personalpan_img_arry = [];
+      storepan_img_arry = [];
       //console.log(req.files.storepan_img.length);
-      for (let i = 0; i < req.files.personalpan_img.length; i++) {
+      for (let i = 0; i < req.files.storepan_img.length; i++) {
         //console.log(i);
         // const resp = await cloudinary.uploader.upload(
         //   req.files.shoplogo_img[i].path
         // );
         const resp = await cloudinary.uploader.upload(
-          req.files.personalpan_img[i].path,
+          req.files.storepan_img[i].path,
           function (cb) {
             // console.log(cb);
           }
         );
         //console.log(resp);
-        fs.unlinkSync(req.files.personalpan_img[i].path);
-        personalpan_img_arry.push(resp.secure_url);
+        fs.unlinkSync(req.files.storepan_img[i].path);
+        storepan_img_arry.push(resp.secure_url);
       }
-      newStore.personalpan_img = personalpan_img_arry;
+      newStore.storepan_img = storepan_img_arry;
       //console.log(newStore);
     }
     if (req.files.tradelicence_img[0].path) {

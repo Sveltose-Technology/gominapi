@@ -81,7 +81,7 @@ const storeSchema = new Schema(
       type: Array,
       //require: true,
     },
-    personalpan_img: {
+    storepan_img: {
       type: Array,
     },
     tradelicence_img: {
