@@ -1,5 +1,5 @@
 const Customer = require("../models/customer");
-const { v4: uuidv4 } = require("uuid");
+//const { v4: uuidv4 } = require("uuid");
 
 exports.addcustomer = async (req, res) => {
   const {
@@ -12,8 +12,21 @@ exports.addcustomer = async (req, res) => {
     status,
   } = req.body;
 
+  create_random_string(6);
+  function create_random_string(string_length) {
+    (random_string = ""),
+      (characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+    for (var i, i = 0; i < string_length; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return random_string;
+  }
+
   const newCustomer = new Customer({
-    customerId: uuidv4(),
+    customerId: random_string,
     first_name: first_name,
     last_name: last_name,
     customer_email: customer_email,
@@ -22,7 +35,7 @@ exports.addcustomer = async (req, res) => {
     status: status,
   });
 
-  const findexist = await Customer.findOne({ customerId: customerId });
+  const findexist = await Customer.findOne({ mobile_no: mobile_no });
   if (findexist) {
     res.status(400).json({
       status: false,
