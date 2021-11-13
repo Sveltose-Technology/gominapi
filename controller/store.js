@@ -36,7 +36,7 @@ exports.addstore = async (req, res) => {
     address_proof,
     shoplogo_img,
     gstImg,
-    storepan_img,
+    personalpan_img,
     tradelicence_img,
     companypan_img,
     address_proof_img,
