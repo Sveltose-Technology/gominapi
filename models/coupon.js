@@ -17,7 +17,7 @@ const CouponSchema = new mongoose.Schema(
       type: String,
       default: once,
     },
-    expireDate: {
+    expirationTime: {
       type: String,
       require: true,
       default: "",

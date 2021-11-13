@@ -5,12 +5,19 @@ exports.addcoupon = async (req, res) => {
     customer_name,
     contact_no,
     offer_code,
-    duration,
-    expireDate,
+    //duration,
+    expirationTime,
     amount,
-    isPercent,
+    //isPercent,
+    discount,
     isActive,
   } = req.body;
+
+  // if(discount && expirationTime ) {
+  //   try {
+  //     const{price} = await
+  //   }
+  // }
 
   const newCoupon = new Coupon({
     customer_name: customer_name,
