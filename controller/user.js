@@ -2,17 +2,17 @@ const User = require("../models/user");
 const cloudinary = require("cloudinary").v2;
 const dotenv = require("dotenv");
 const fs = require("fs");
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
-// const saltRounds = 10;
-// const validatePassword = (password, dbpassword) => {
-//   bcrypt.compareSync(password, dbpassword);
-//   return true;
-// };
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const validatePassword = (password, dbpassword) => {
+  bcrypt.compareSync(password, dbpassword);
+  return true;
+};
 
-// function generateAccessToken(username) {
-//   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
-// }
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
+}
 
 exports.adduser = async (req, res) => {
   const {
@@ -30,9 +30,9 @@ exports.adduser = async (req, res) => {
     status,
   } = req.body;
 
-  // const salt = bcrypt.genSaltSync(saltRounds);
-  // const hashpassword = bcrypt.hashSync(password, salt);
-  // const token = generateAccessToken({ username: username });
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt);
+  const token = generateAccessToken({ username: username });
   const newUser = new User({
     //UserID: UserID,
     username: username,
@@ -42,7 +42,7 @@ exports.adduser = async (req, res) => {
     country: country,
     state: state,
     city: city,
-    password: password,
+    password: hashpassword,
     role: role,
     sortorder: sortorder,
     status: status,

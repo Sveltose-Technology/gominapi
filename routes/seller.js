@@ -9,6 +9,8 @@ const {
   login,
   del_seller,
   edit_seller,
+  getoneseller,
+  //storebyseller,
 } = require("../controller/seller");
 
 const storage = multer.diskStorage({
@@ -49,5 +51,7 @@ router.post(
 );
 
 router.post("/admin/delSeller/:id", del_seller);
+//router.get("/admin/storebyseller/:id", storebyseller);
+router.post("/admin/getoneseller/:id", getoneseller);
 
 module.exports = router;

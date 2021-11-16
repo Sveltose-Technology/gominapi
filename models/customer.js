@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const customerSchema = new Schema(
   {
-    customerId: {
+    //   customerId: {
+    //     type: String,
+    //   },
+    customername: {
       type: String,
     },
-    first_name: {
-      type: String,
-    },
-    last_name: {
+    password: {
       type: String,
     },
     customer_email: {

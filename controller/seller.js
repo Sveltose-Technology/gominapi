@@ -3,7 +3,7 @@ const Seller = require("../models/seller");
 // const dotenv = require("dotenv");
 // const fs = require("fs");
 const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 
 const validatePassword = (password, dbpassword) => {
@@ -11,11 +11,11 @@ const validatePassword = (password, dbpassword) => {
   return true;
 };
 
-// function generateAccessToken(seller_name) {
-//   return jwt.sign(seller_name, process.env.TOKEN_SECRET, {
-//     expiresIn: "1800h",
-//   });
-// }
+function generateAccessToken(seller_name) {
+  return jwt.sign(seller_name, process.env.TOKEN_SECRET, {
+    expiresIn: "1800h",
+  });
+}
 
 exports.add_seller = async (req, res) => {
   const {
@@ -104,10 +104,10 @@ exports.getoneseller = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { mobile_no, password } = req.body;
+  const { seller_email, password } = req.body;
 
   // Find user with requested email
-  Seller.findOne({ mobile_no: mobile_no }, function (err, user) {
+  Seller.findOne({ seller_email: seller_email }, function (err, user) {
     if (user === null) {
       return res.status(400).send({
         message: "Seller not found.",
@@ -269,3 +269,22 @@ exports.del_seller = async (req, res) => {
     });
   }
 };
+
+// exports.storebyseller = async (req, res) => {
+//   const findone = await Seller.find({ store: req.params.id }).sort({
+//     sortorder: 1,
+//   });
+//   if (findone) {
+//     res.status(200).json({
+//       status: true,
+//       msg: " success",
+//       data: findone,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: " error",
+//     });
+//   }
+// };

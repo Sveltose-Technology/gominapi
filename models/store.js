@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const storeSchema = new Schema(
   {
+    seller: { type: Schema.Types.ObjectId, ref: "seller" },
     store_name: {
       type: String,
     },

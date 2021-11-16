@@ -79,6 +79,47 @@ exports.Getsupplier = async (req, res) => {
   }
 };
 
+exports.getonesupplier = async (req, res) => {
+  const findone = await Supplier.findOne({ _id: req.params.id });
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.edit_supplier = async (req, res) => {
+  const findandUpdateEntry = await Supplier.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    { $set: req.body },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
+
 exports.del_supplier = async (req, res) => {
   try {
     const deleteentry = await Supplier.deleteOne({ _id: req.params.id });

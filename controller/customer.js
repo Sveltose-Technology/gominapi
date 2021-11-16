@@ -1,16 +1,32 @@
 const Customer = require("../models/customer");
-//const { v4: uuidv4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
+const validatePassword = (password, dbpassword) => {
+  bcrypt.compareSync(password, dbpassword);
+  return true;
+};
+
+function generateAccessToken(username) {
+  return jwt.sign(customername, process.env.TOKEN_SECRET, {
+    expiresIn: "1800h",
+  });
+}
 
 exports.addcustomer = async (req, res) => {
   const {
     customerId,
-    first_name,
-    last_name,
+    customername,
+    password,
     customer_email,
     mobile_no,
     sortorder,
     status,
   } = req.body;
+
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt);
 
   create_random_string(6);
   function create_random_string(string_length) {
@@ -27,8 +43,8 @@ exports.addcustomer = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
-    first_name: first_name,
-    last_name: last_name,
+    customername: customername,
+    password: hashpassword,
     customer_email: customer_email,
     mobile_no: mobile_no,
     sortorder: sortorder,
@@ -60,6 +76,36 @@ exports.addcustomer = async (req, res) => {
         });
       });
   }
+};
+
+exports.login = async (req, res) => {
+  const { customer_email, password } = req.body;
+
+  // Find user with requested email
+  Customer.findOne({ customer_email: customer_email }, function (err, user) {
+    if (user === null) {
+      return res.status(400).send({
+        message: "User not found.",
+      });
+    } else {
+      // console.log(process.env.TOKEN_SECRET);
+      if (validatePassword(password, user.password)) {
+        const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
+          expiresIn: "365d",
+        });
+
+        return res.status(201).send({
+          message: "User Logged In",
+          token: token,
+          user: user,
+        });
+      } else {
+        return res.status(400).send({
+          message: "Wrong Password",
+        });
+      }
+    }
+  });
 };
 
 exports.editcustomer = async (req, res) => {

@@ -101,6 +101,46 @@ exports.Getemployee = async (req, res) => {
   }
 };
 
+exports.getoneemployee = async (req, res) => {
+  const findone = await Employee.findOne({ _id: req.params.id });
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.edit_employee = async (req, res) => {
+  const findandUpdateEntry = await Employee.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    { $set: req.body },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
+
 exports.del_employee = async (req, res) => {
   try {
     const deleteentry = await Employee.deleteOne({

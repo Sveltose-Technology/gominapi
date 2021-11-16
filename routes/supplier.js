@@ -7,6 +7,8 @@ const {
   addsupplier,
   del_supplier,
   Getsupplier,
+  edit_supplier,
+  getonesupplier,
 } = require("../controller/supplier");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -40,5 +42,8 @@ let uploads = multer({ storage: storage });
 router.post("/admin/addsupplier", addsupplier);
 router.get("/admin/Getsupplier", Getsupplier);
 router.get("/admin/del_supplier/:id", del_supplier);
+router.get("/admin/edit_supplier/:id", edit_supplier);
+
+router.get("/admin/getonesupplier/:id", getonesupplier);
 
 module.exports = router;
