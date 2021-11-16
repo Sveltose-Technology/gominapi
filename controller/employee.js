@@ -118,26 +118,72 @@ exports.getoneemployee = async (req, res) => {
   }
 };
 exports.edit_employee = async (req, res) => {
-  const findandUpdateEntry = await Employee.findOneAndUpdate(
-    {
-      _id: req.params.id,
-    },
-    { $set: req.body },
-    { new: true }
-  );
+  const {
+    employee_name,
+    phone_no,
+    email,
+    password,
+    designation,
+    role,
+    image,
+    sortorder,
+    status,
+  } = req.body;
 
-  if (findandUpdateEntry) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findandUpdateEntry,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      status: "error",
-      error: "error",
-    });
+  data = {};
+  if (employee_name) {
+    data.employee_name = employee_name;
+  }
+  if (phone_no) {
+    data.phone_no = phone_no;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (password) {
+    data.password = password;
+  }
+  if (designation) {
+    data.designation = designation;
+  }
+  if (role) {
+    data.role = role;
+  }
+  if (sortorder) {
+    data.sortorder = sortorder;
+  }
+  if (status) {
+    data.status = status;
+  }
+  //console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.image = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  console.log(data);
+  if (data) {
+    const findandUpdateEntry = await Employee.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    );
+
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    }
   }
 };
 
