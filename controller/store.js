@@ -267,9 +267,9 @@ exports.getstore = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "success",
-      token: token,
+      // token: token,
       data: findall,
-      store: findall.get_store,
+      // store: findall.get_store,
       //usertype: getuser.usertype,
     });
   } else {
