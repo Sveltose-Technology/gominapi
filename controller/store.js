@@ -262,7 +262,7 @@ exports.addstore = async (req, res) => {
 
 exports.getstore = async (req, res) => {
   //const getuser = await Customer.findOne({ _id: req.userId });
-  const findall = await Store.find().populate("seller").sort({ sortorder: 1 });
+  const findall = await Store.find().sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
