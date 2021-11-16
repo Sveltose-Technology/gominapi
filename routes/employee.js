@@ -42,7 +42,7 @@ let uploads = multer({ storage: storage });
 router.post("/admin/addemployee", uploads.single("image"), addemployee);
 router.get("/admin/Getemployee", Getemployee);
 router.get("/admin/getoneemployee/:id", getoneemployee);
-router.get("/admin/edit_employee", edit_employee);
+router.post("/admin/edit_employee/:id", edit_employee);
 router.get("/admin/del_employee/:id", del_employee);
 
 module.exports = router;
