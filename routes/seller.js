@@ -45,7 +45,7 @@ router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
 router.get("/admin/getseller", getseller);
 router.post("/admin/login", login);
 
-router.get("/admin/editseller/:id", editseller);
+router.post("/admin/editseller/:id", editseller);
 
 router.post("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
