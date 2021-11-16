@@ -8,7 +8,7 @@ const {
   getseller,
   login,
   del_seller,
-  edit_seller,
+  editseller,
   getoneseller,
   //storebyseller,
 } = require("../controller/seller");
@@ -44,14 +44,12 @@ let uploads = multer({ storage: storage });
 router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
 router.get("/admin/getseller", getseller);
 router.post("/admin/login", login);
-router.post(
-  "/admin/edit_seller/:id",
-  uploads.single("seller_img"),
-  edit_seller
-);
+
+router.get("/admin/editseller/:id", editseller);
 
 router.post("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", getoneseller);
 
 module.exports = router;
+editseller;
