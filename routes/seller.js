@@ -47,7 +47,7 @@ router.post("/admin/login", login);
 
 router.post("/admin/editseller/:id", editseller);
 
-router.post("/admin/delSeller/:id", del_seller);
+router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", getoneseller);
 

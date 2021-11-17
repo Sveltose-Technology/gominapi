@@ -8,6 +8,7 @@ const {
   getbanner,
   viewonebanner,
   delbanner,
+  getbannerbytype,
 } = require("../controller/banner");
 
 const storage = multer.diskStorage({
@@ -44,8 +45,9 @@ let uploads = multer({ storage: storage });
 //   addbanner
 // );
 
-router.post("/admin/addbanner", uploads.single("banner_img"), addbanner);
+router.post("/admin/addbanner", uploads.array("banner_img"), addbanner);
 router.get("/admin/getbanner", getbanner);
 router.get("/admin/viewonebanner/:id", viewonebanner);
 router.get("/admin/delbanner/:id", delbanner);
+router.get("/admin/bannerbytype/:id", getbannerbytype);
 module.exports = router;

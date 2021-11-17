@@ -7,6 +7,9 @@ const bannerSchema = new Schema(
       type: String,
     },
     banner_img: {
+      type: Array,
+    },
+    bannertype: {
       type: String,
     },
     status: {

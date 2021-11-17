@@ -54,10 +54,10 @@ let multipleUpload = uploads.fields([
 //router.post("/admin/addstore", uploads.array("storeImg"), addstore);
 
 router.post("/admin/addstore", multipleUpload, addstore);
-// router.get("/admin/getstore", verifytoken, getstore);
+router.get("/admin/getstore", getstore);
 router.get("/admin/getstore", getstore);
 router.get("/admin/getonestore/:id", getonestore);
-router.get("/admin/storebyseller/:id", storebyseller);
+//router.get("/admin/storebyseller/:id", verifytoken, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload, editstore);
 
 module.exports = router;

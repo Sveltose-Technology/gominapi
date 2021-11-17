@@ -11,15 +11,17 @@ cloudinary.config({
 });
 
 exports.addbanner = async (req, res) => {
-  const { banner_title, banner_img, status } = req.body;
+  //console.log(req.body);
+  const { banner_title, banner_img, bannertype, status } = req.body;
 
   const newAddbanner = new Addbanner({
     banner_title: banner_title,
     banner_img: banner_img,
+    bannertype: bannertype,
     status: status,
   });
 
-  if (req.file) {
+  if (req.files) {
     const findexist = await Addbanner.findOne({
       banner_title: banner_title,
     });
@@ -30,17 +32,30 @@ exports.addbanner = async (req, res) => {
         data: {},
       });
     } else {
-      const resp = await cloudinary.uploader.upload(req.file.path);
-      if (resp) {
-        newAddbanner.banner_img = resp.secure_url;
-        fs.unlinkSync(req.file.path);
-        newAddbanner.save().then(
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: newAddbanner,
+      alluploads = [];
+      for (let i = 0; i < req.files.length; i++) {
+        const resp = await cloudinary.uploader.upload(req.files[i].path);
+        fs.unlinkSync(req.files[i].path);
+        alluploads.push(resp.secure_url);
+      }
+      if (alluploads.length !== 0) {
+        newAddbanner.banner_img = alluploads;
+        newAddbanner
+          .save()
+          .then((data) => {
+            res.status(200).json({
+              status: true,
+              msg: "success",
+              data: data,
+            });
           })
-        );
+          .catch((error) => {
+            res.status(200).json({
+              status: false,
+              msg: "error",
+              error: error,
+            });
+          });
       } else {
         res.status(200).json({
           status: false,
@@ -50,7 +65,6 @@ exports.addbanner = async (req, res) => {
     }
   }
 };
-
 exports.getbanner = async (req, res) => {
   const findall = await Addbanner.find().sort({ sortorder: 1 });
   if (findall) {
@@ -98,6 +112,25 @@ exports.delbanner = async (req, res) => {
       status: false,
       msg: "error",
       error: error,
+    });
+  }
+};
+
+exports.getbannerbytype = async (req, res) => {
+  const findall = await Addbanner.find({ bannertype: req.params.id }).sort({
+    sortorder: 1,
+  });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
     });
   }
 };

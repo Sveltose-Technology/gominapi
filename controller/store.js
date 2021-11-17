@@ -1,6 +1,6 @@
 const Store = require("../models/store");
 // const jwt = require("jsonwebtoken");
-// const Customer = require("../models/customer");
+//const Customer = require("../models/customer");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -267,7 +267,6 @@ exports.getstore = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "success",
-      // token: token,
       data: findall,
       // store: findall.get_store,
       //usertype: getuser.usertype,
@@ -299,14 +298,15 @@ exports.getonestore = async (req, res) => {
 };
 
 exports.storebyseller = async (req, res) => {
-  const findone = await Store.find({ seller: req.params.id }).populate(
-    "seller"
-  );
-  if (findone) {
+  const getuser = await Customer.findOne({ _id: req.userId });
+
+  const findone = await Store.find({ sortorder: 1 }).populate("seller");
+  if (getuser) {
     res.status(200).json({
       status: true,
       msg: "success",
-      data: findone,
+      data: getuser,
+      usertype: getuser.usertype,
     });
   } else {
     res.status(400).json({
