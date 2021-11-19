@@ -10,7 +10,7 @@ const {
   editproduct,
   getoneproduct,
   productbycategory,
-  productsubcategory,
+  productbysubcategory,
   productbybrand,
   del_product,
 } = require("../controller/product");
@@ -54,7 +54,7 @@ router.get("/admin/getoneproduct/:id", getoneproduct);
 router.get("/admin/productbycategory/:id", productbycategory);
 router.get("/admin/productbybrand/:id", productbybrand);
 
-router.get("/admin/productsubcategory/:id", productsubcategory);
+router.get("/admin/productbysubcategory/:id", productbysubcategory);
 
 router.get("/admin/del_product/:id", del_product);
 

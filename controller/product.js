@@ -355,7 +355,7 @@ exports.productbybrand = async (req, res) => {
   }
 };
 
-exports.productsubcategory = async (req, res) => {
+exports.productbysubcategory = async (req, res) => {
   const findall = await Product.find({ productsubcategory: req.params.id })
     .sort({ sortorder: 1 })
     .populate("productcategory")
