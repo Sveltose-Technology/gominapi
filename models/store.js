@@ -97,9 +97,13 @@ const storeSchema = new Schema(
     sortorder: {
       type: Number,
     },
+    verifystore: {
+      type: String,
+      default: "NotVerified",
+    },
     status: {
       type: String,
-      default: "Active",
+      default: "Inactive",
     },
   },
   { timestamps: true }

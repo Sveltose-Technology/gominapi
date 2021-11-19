@@ -2,13 +2,13 @@ const Coupon = require("../models/coupon");
 
 exports.addcoupon = async (req, res) => {
   const {
-    customer_name,
-    contact_no,
     offer_code,
-    //duration,
-    expirationTime,
+    description,
+    startDate,
+    endDate,
+    usage_limit,
     amount,
-    //isPercent,
+    isPercent,
     discount,
     isActive,
   } = req.body;

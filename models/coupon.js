@@ -2,34 +2,28 @@ const mongoose = require("mongoose");
 
 const CouponSchema = new mongoose.Schema(
   {
-    customer_name: {
-      type: String,
-    },
-    contact_no: {
-      type: Number,
-    },
     offer_code: {
       type: String,
       require: true,
-      unique: true,
+      // unique: true,
     },
-    duration: {
+    description: {
       type: String,
-      default: once,
     },
-    expirationTime: {
+    startDate: {
       type: String,
-      require: true,
-      default: "",
     },
-    amount: {
+    endDate: {
+      type: String,
+    },
+    usage_limit: {
       type: Number,
-      required: true,
+    },
+    discount: {
+      type: String,
     },
     isPercent: {
-      type: Boolean,
-      require: true,
-      default: true,
+      type: Number,
     },
     isActive: {
       type: Boolean,

@@ -310,3 +310,47 @@ exports.del_product = async (req, res) => {
     });
   }
 };
+
+exports.productbycategory = async (req, res) => {
+  const findall = await Product.find({ productcategory: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand");
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.productsubcategory = async (req, res) => {
+  const findall = await Product.find({ productsubcategory: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand");
+  if (findall) {
+    req.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    req.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};

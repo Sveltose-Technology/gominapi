@@ -1,6 +1,6 @@
 const Store = require("../models/store");
 // const jwt = require("jsonwebtoken");
-//const Customer = require("../models/customer");
+const Seller = require("../models/seller");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -14,7 +14,7 @@ cloudinary.config({
 
 exports.addstore = async (req, res) => {
   const {
-    //seller,
+    seller,
     store_name,
     storeImg,
     store_desc,
@@ -45,10 +45,11 @@ exports.addstore = async (req, res) => {
     address_proof_img,
     sortorder,
     status,
+    verifystore,
   } = req.body;
 
   const newStore = new Store({
-    //seller: seller,
+    seller: seller,
     store_name: store_name,
     store_desc: store_desc,
     websiteUrl: websiteUrl,
@@ -77,6 +78,7 @@ exports.addstore = async (req, res) => {
     // address_proof_img: address_proof_img,
     sortorder: sortorder,
     status: status,
+    verifystore: verifystore,
   });
 
   const findexist = await Store.findOne({ phone_no: phone_no });
@@ -92,7 +94,8 @@ exports.addstore = async (req, res) => {
       for (let i = 0; i < req.files.storeImg.length; i++) {
         // console.log(i);
         const resp = await cloudinary.uploader.upload(
-          req.files.storeImg[i].path
+          req.files.storeImg[i].path,
+          { use_filename: true, unique_filename: false }
         );
         fs.unlinkSync(req.files.storeImg[i].path);
         alluploads.push(resp.secure_url);
@@ -111,6 +114,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.shoplogo_img[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -134,6 +138,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.gstImg[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -156,6 +161,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.storepan_img[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -178,6 +184,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.tradelicence_img[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -201,6 +208,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.companypan_img[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -224,6 +232,7 @@ exports.addstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.address_proof_img[i].path,
+          { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
           }
@@ -261,15 +270,13 @@ exports.addstore = async (req, res) => {
 };
 
 exports.getstore = async (req, res) => {
-  //const getuser = await Customer.findOne({ _id: req.userId });
-  const findall = await Store.find().sort({ sortorder: 1 });
+  //const getseller = await Seller.findOne({ _id: req.sellerId });
+  const findall = await Store.find().sort({ sortorder: 1 }).populate("seller");
   if (findall) {
     res.status(200).json({
       status: true,
       msg: "success",
       data: findall,
-      // store: findall.get_store,
-      //usertype: getuser.usertype,
     });
   } else {
     res.status(400).json({
@@ -281,7 +288,9 @@ exports.getstore = async (req, res) => {
 };
 
 exports.getonestore = async (req, res) => {
-  const findone = await Store.findOne({ _id: req.params.id });
+  const findone = await Store.findOne({ _id: req.params.id }).populate(
+    "seller"
+  );
   if (findone) {
     res.status(200).json({
       status: true,
@@ -298,15 +307,17 @@ exports.getonestore = async (req, res) => {
 };
 
 exports.storebyseller = async (req, res) => {
-  const getuser = await Customer.findOne({ _id: req.userId });
+  const getseller = await Seller.findOne({ _id: req.sellerId });
 
-  const findone = await Store.find({ sortorder: 1 }).populate("seller");
-  if (getuser) {
+  const findone = await Store.findOne({ seller: req.sellerId }).populate(
+    "seller"
+  );
+  if (getseller) {
     res.status(200).json({
       status: true,
       msg: "success",
-      data: getuser,
-      usertype: getuser.usertype,
+      data: getseller,
+      store: findone,
     });
   } else {
     res.status(400).json({
@@ -426,12 +437,13 @@ exports.editstore = async (req, res) => {
     data.status = status;
   }
   if (req.files) {
-    if (req.files.storeImg[0].path) {
+    if (req.files.storeImg) {
       alluploads = [];
       for (let i = 0; i < req.files.storeImg.length; i++) {
         // console.log(i);
         const resp = await cloudinary.uploader.upload(
-          req.files.storeImg[i].path
+          req.files.storeImg[i].path,
+          { use_filename: true, unique_filename: false }
         );
         fs.unlinkSync(req.files.storeImg[i].path);
         alluploads.push(resp.secure_url);
@@ -440,7 +452,7 @@ exports.editstore = async (req, res) => {
       data.storeImg = alluploads;
     }
 
-    if (req.files.shoplogo_img[0].path) {
+    if (req.files.shoplogo_img) {
       // console.log(req.files.shoplogo_img);
       shoplogo_arry = [];
       //console.log(req.files.shoplogo_img.length);
@@ -451,9 +463,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.shoplogo_img[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          // function (cb) {
+          // console.log(cb);
+          //}
         );
         // console.log(resp);
         fs.unlinkSync(req.files.shoplogo_img[i].path);
@@ -463,7 +477,7 @@ exports.editstore = async (req, res) => {
       // console.log(newStore);
     }
 
-    if (req.files.gstImg[0].path) {
+    if (req.files.gstImg) {
       //console.log(req.files.gstImg);
       gstImg_arry = [];
       // console.log(req.files.gstImg.length);
@@ -474,9 +488,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.gstImg[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          //function (cb) {
+          // console.log(cb);
+          //}
         );
         // console.log(resp);
         fs.unlinkSync(req.files.gstImg[i].path);
@@ -485,7 +501,7 @@ exports.editstore = async (req, res) => {
       data.gstImg = gstImg_arry;
       //console.log(newStore);
     }
-    if (req.files.storepan_img[0].path) {
+    if (req.files.storepan_img) {
       //console.log(req.files.storepan_img);
       storepan_img_arry = [];
       //console.log(req.files.storepan_img.length);
@@ -496,9 +512,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.storepan_img[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          //function (cb) {
+          // console.log(cb);
+          //}
         );
         //console.log(resp);
         fs.unlinkSync(req.files.storepan_img[i].path);
@@ -507,7 +525,7 @@ exports.editstore = async (req, res) => {
       data.storepan_img = storepan_img_arry;
       //console.log(newStore);
     }
-    if (req.files.tradelicence_img[0].path) {
+    if (req.files.tradelicence_img) {
       // console.log(req.files.tradelicence_img);
       tradelicence_img_arry = [];
       //console.log(req.files.tradelicence_img.length);
@@ -518,9 +536,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.tradelicence_img[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          //function (cb) {
+          // console.log(cb);
+          // }
         );
         //console.log(resp);
         fs.unlinkSync(req.files.tradelicence_img[i].path);
@@ -530,7 +550,7 @@ exports.editstore = async (req, res) => {
       //console.log(newStore);
     }
 
-    if (req.files.companypan_img[0].path) {
+    if (req.files.companypan_img) {
       //console.log(req.files.companypan_img);
       companypan_img_arry = [];
       // console.log(req.files.companypan_img.length);
@@ -541,9 +561,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.companypan_img[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          //function (cb) {
+          // console.log(cb);
+          //}
         );
         //console.log(resp);
         fs.unlinkSync(req.files.companypan_img[i].path);
@@ -553,7 +575,7 @@ exports.editstore = async (req, res) => {
       // console.log(newStore);
     }
 
-    if (req.files.address_proof_img[0].path) {
+    if (req.files.address_proof_img) {
       // console.log(req.files.address_proof_img);
       address_proof_img_arry = [];
       //console.log(req.files.address_proof_img.length);
@@ -564,9 +586,11 @@ exports.editstore = async (req, res) => {
         // );
         const resp = await cloudinary.uploader.upload(
           req.files.address_proof_img[i].path,
-          function (cb) {
-            // console.log(cb);
-          }
+          { use_filename: true, unique_filename: false }
+
+          //function (cb) {
+          // console.log(cb);
+          //}
         );
         // console.log(resp);
         fs.unlinkSync(req.files.address_proof_img[i].path);
@@ -575,29 +599,64 @@ exports.editstore = async (req, res) => {
       data.address_proof_img = address_proof_img_arry;
       //console.log(newStore);
     }
-
-    if (data) {
-      const findandUpdateEntry = await Store.findOneAndUpdate(
-        {
-          _id: req.params.id,
-        },
-        { $set: data },
-        { new: true }
-      );
-
-      if (findandUpdateEntry) {
+  }
+  //console.log(data);
+  if (data) {
+    const findandUpdateEntry = await Store.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: data },
+      { new: true }
+    )
+      .then((data) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: findandUpdateEntry,
+          data: data,
         });
-      } else {
+      })
+      .catch((error) => {
         res.status(400).json({
           status: false,
           msg: "error",
-          error: "error",
+          error: error,
         });
-      }
-    }
+      });
+  }
+};
+
+exports.store_req = async (req, res) => {
+  const datas = await Store.find({ verifystore: "NotVerified" })
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
+
+exports.del_store = async (req, res) => {
+  try {
+    const deleteentry = await Store.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
   }
 };

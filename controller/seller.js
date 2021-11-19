@@ -107,22 +107,26 @@ exports.login = async (req, res) => {
   const { seller_email, password } = req.body;
 
   // Find user with requested email
-  Seller.findOne({ seller_email: seller_email }, function (err, user) {
-    if (user === null) {
+  Seller.findOne({ seller_email: seller_email }, function (err, seller) {
+    if (seller === null) {
       return res.status(400).send({
         message: "Seller not found.",
       });
     } else {
       // console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, user.password)) {
-        const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-          expiresIn: "365d",
-        });
+      if (validatePassword(password, seller.password)) {
+        const token = jwt.sign(
+          { sellerId: seller._id },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: "365d",
+          }
+        );
 
         return res.status(201).send({
           message: "Successfully Logged In",
           token: token,
-          user: user,
+          seller: seller,
         });
       } else {
         return res.status(400).send({
