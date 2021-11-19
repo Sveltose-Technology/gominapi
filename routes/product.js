@@ -11,6 +11,7 @@ const {
   getoneproduct,
   productbycategory,
   productsubcategory,
+  productbybrand,
   del_product,
 } = require("../controller/product");
 
@@ -51,6 +52,8 @@ router.post(
 router.get("/admin/getproduct", getproduct);
 router.get("/admin/getoneproduct/:id", getoneproduct);
 router.get("/admin/productbycategory/:id", productbycategory);
+router.get("/admin/productbybrand/:id", productbybrand);
+
 router.get("/admin/productsubcategory/:id", productsubcategory);
 
 router.get("/admin/del_product/:id", del_product);

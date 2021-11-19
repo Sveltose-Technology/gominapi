@@ -333,24 +333,63 @@ exports.productbycategory = async (req, res) => {
   }
 };
 
-exports.productsubcategory = async (req, res) => {
-  const findall = await Product.find({ productsubcategory: req.params.id })
+exports.productbybrand = async (req, res) => {
+  const findall = await Product.find({ brand: req.params.id })
     .sort({ sortorder: 1 })
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand");
   if (findall) {
-    req.status(200).json({
+    res.status(200).json({
       status: true,
       msg: "success",
       data: findall,
     });
   } else {
-    req.status(400).json({
+    res.status(400).json({
       status: false,
       msg: "error",
-      error: error,
+      error: "error",
     });
   }
 };
+
+exports.productsubcategory = async (req, res) => {
+  const findall = await Product.find({ productsubcategory: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .sort({ sortorder: 1 })
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+//   if (findall) {
+//     req.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findall,
+//     });
+//   } else {
+//     req.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: error,
+//     });
+//   }
+// };
