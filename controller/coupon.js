@@ -8,7 +8,7 @@ exports.createoffer = async (req, res) => {
     endDate,
     usage_limit,
     amount,
-    isPercent,
+    discount,
     //discount,
     isActive,
   } = req.body;
@@ -34,8 +34,7 @@ exports.createoffer = async (req, res) => {
     endDate: endDate,
     usage_limit: usage_limit,
     amount: amount,
-    isPercent: isPercent,
-    // discount: discount,
+    discount: discount,
     isActive: isActive,
   });
   newCoupon

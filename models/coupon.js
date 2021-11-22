@@ -22,7 +22,7 @@ const CouponSchema = new mongoose.Schema(
     amount: {
       type: Number,
     },
-    isPercent: {
+    discount: {
       type: String,
     },
     isActive: {
