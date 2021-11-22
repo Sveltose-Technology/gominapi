@@ -38,6 +38,7 @@ const addwishlist = require("./routes/addwishlist");
 const employee = require("./routes/employee");
 const supplier = require("./routes/supplier");
 const role = require("./routes/role");
+const coupon = require("./routes/coupon");
 
 //use
 app.use("/", customer);
@@ -66,6 +67,7 @@ app.use("/", addwishlist);
 app.use("/", employee);
 app.use("/", supplier);
 app.use("/", role);
+app.use("/", coupon);
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");

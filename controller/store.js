@@ -45,7 +45,7 @@ exports.addstore = async (req, res) => {
     address_proof_img,
     sortorder,
     status,
-    verifystore,
+    //verifystore,
   } = req.body;
 
   const newStore = new Store({
@@ -78,7 +78,7 @@ exports.addstore = async (req, res) => {
     // address_proof_img: address_proof_img,
     sortorder: sortorder,
     status: status,
-    verifystore: verifystore,
+    //verifystore: verifystore,
   });
 
   const findexist = await Store.findOne({ phone_no: phone_no });
@@ -627,7 +627,7 @@ exports.editstore = async (req, res) => {
 };
 
 exports.store_req = async (req, res) => {
-  const datas = await Store.find({ verifystore: "NotVerified" })
+  const datas = await Store.find({ status: "Inactive" })
     .then((result) => {
       res.status(200).json({
         status: true,

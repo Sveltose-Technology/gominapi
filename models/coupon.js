@@ -4,7 +4,7 @@ const CouponSchema = new mongoose.Schema(
   {
     offer_code: {
       type: String,
-      require: true,
+      // require: true,
       // unique: true,
     },
     description: {
@@ -19,16 +19,14 @@ const CouponSchema = new mongoose.Schema(
     usage_limit: {
       type: Number,
     },
-    discount: {
+    amount: {
       type: String,
     },
     isPercent: {
       type: Number,
     },
     isActive: {
-      type: Boolean,
-      require: true,
-      default: true,
+      type: String,
     },
   },
   { timestamps: true }
