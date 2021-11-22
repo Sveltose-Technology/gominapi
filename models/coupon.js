@@ -20,7 +20,7 @@ const CouponSchema = new mongoose.Schema(
       type: Number,
     },
     amount: {
-      type: String,
+      type: Number,
     },
     isPercent: {
       type: Number,
