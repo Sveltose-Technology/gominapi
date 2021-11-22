@@ -51,7 +51,7 @@ exports.createoffer = async (req, res) => {
       res.status(200).json({
         status: false,
         msg: "coupon created",
-        data: newCoupon,
+        data: error,
       });
     });
 };
