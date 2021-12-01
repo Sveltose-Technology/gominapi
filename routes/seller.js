@@ -10,6 +10,7 @@ const {
   del_seller,
   editseller,
   getoneseller,
+  totalseller
   //storebyseller,
 } = require("../controller/seller");
 
@@ -50,6 +51,7 @@ router.post("/admin/editseller/:id", editseller);
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", getoneseller);
-
+router.get("/admin/totalseller", totalseller);
 module.exports = router;
-editseller;
+
+ 

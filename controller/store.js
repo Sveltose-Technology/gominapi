@@ -137,7 +137,7 @@ exports.addstore = async (req, res) => {
         //   req.files.shoplogo_img[i].path
         // );
         const resp = await cloudinary.uploader.upload(
-          req.files.gstImg[i].path,
+          req.files.gstImg[i].path,  
           { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
@@ -659,4 +659,23 @@ exports.del_store = async (req, res) => {
       error: error,
     });
   }
+};
+
+
+//get counts
+exports.totalstore = async (req, res) => {
+  await Store.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
 };

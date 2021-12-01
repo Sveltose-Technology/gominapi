@@ -303,6 +303,18 @@ exports.verifyotp = async (req, res) => {
   }
 };
 
-// exports.login = async (req,res) =>{
-
-// }
+exports.totausers = async(req,res)=>{
+ await User.countDocuments().then((data)=>{
+  res.status(200).json({
+    status: true,
+    data: data,
+  });
+})
+.catch((error) => {
+  res.status(400).json({
+    status: false,
+    msg: "error",
+    error: error,
+  });
+ })
+}

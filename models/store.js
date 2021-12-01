@@ -105,8 +105,12 @@ const storeSchema = new Schema(
       type: String,
       default: "Inactive",
     },
+    purchaseby :{type : Schema.Types.ObjectId,ref :"orderproduct"
+
+    } 
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("store", storeSchema);
+  

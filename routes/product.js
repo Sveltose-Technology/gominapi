@@ -13,6 +13,7 @@ const {
   productbysubcategory,
   productbybrand,
   del_product,
+  totalproduct
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -57,5 +58,6 @@ router.get("/admin/productbybrand/:id", productbybrand);
 router.get("/admin/productbysubcategory/:id", productbysubcategory);
 
 router.get("/admin/del_product/:id", del_product);
-
+router.get("/admin/totalproduct", totalproduct);
 module.exports = router;
+ 

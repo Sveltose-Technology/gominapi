@@ -226,3 +226,20 @@ exports.del_seller = async (req, res) => {
 //     });
 //   }
 // };
+
+
+exports.totalseller = async(req,res) =>{
+  await Seller.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}

@@ -1,4 +1,5 @@
 const Coupon = require("../models/coupon");
+const store = require("../models/store");
 
 exports.createoffer = async (req, res) => {
   const {
@@ -27,7 +28,6 @@ exports.createoffer = async (req, res) => {
   }
 
   const newCoupon = new Coupon({
-    // customer_name: customer_name,
     offer_code: random_string,
     description: description,
     startDate: startDate,
@@ -55,19 +55,47 @@ exports.createoffer = async (req, res) => {
     });
 };
 
-//   (function (err, data) {
-//     if (err) {
-//       res.status(400).json({
-//         status: false,
-//         msg: "error occured",
-//         error: err,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: true,
-//         msg: "coupon created",
-//         data: newCoupon,
-//       });
-//     }
-//   });
+// exports.getoffer = async (req, res) => {
+//   const findall = await Coupon.find().sort({ sortorder: 1 });
+//   if (findall) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findall,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   }
 // };
+
+// exports.delOffer = async(req,res)=>{
+//   try{
+//     const delete
+//   }
+// }
+
+exports.get_coupon = async (req, res, next) => {
+  try {
+    const find_offer = await Coupon.find({});
+    if (!find_offer) {
+      return res.status(400).json({
+        success: true,
+        code: 400,
+        msg: "Ooops! an error occur",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        code: 200,
+        msg: "success",
+        data: find_offer,
+      });
+    }
+  } catch (e) {
+    return res.status(500);
+  }
+};

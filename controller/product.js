@@ -393,3 +393,20 @@ exports.productbysubcategory = async (req, res) => {
 //     });
 //   }
 // };
+
+
+exports.totalproduct = async(req,res) =>{
+  await Product.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}

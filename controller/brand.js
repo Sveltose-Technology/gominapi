@@ -222,3 +222,20 @@ exports.search_brand = (req, res) => {
     res.send(data);
   });
 };
+
+
+exports.totalbrand = async(req,res) => {
+  await Brand.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
