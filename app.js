@@ -31,8 +31,7 @@ const altunit = require("./routes/altunit");
 const privacypolicy = require("./routes/privacypolicy");
 const cart = require("./routes/cart");
 const contact_form = require("./routes/contact_form");
-//const termsandcondition = require("./routes/termsandcondition");
-//const termsandcondition = require("./routes/termsandcondition");
+ const termsandconditions = require("./routes/termsandconditions")
 //const user_address = require("./routes/user_address");
 const addwishlist = require("./routes/addwishlist");
 const employee = require("./routes/employee");
@@ -61,7 +60,7 @@ app.use("/", altunit);
 app.use("/", privacypolicy);
 app.use("/", cart);
 app.use("/", contact_form);
-//app.use("/", termsandcondition);
+app.use("/", termsandconditions);
 // app.use("/", user_address);
 app.use("/", addwishlist);
 app.use("/", employee);
