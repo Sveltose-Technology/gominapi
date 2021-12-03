@@ -5,7 +5,7 @@ const termsandconditionSchema = new Schema(
   {
     description: {
       type: String,
-      require: true,
+      //require: true,
     },
   },
   { timestamps: true }

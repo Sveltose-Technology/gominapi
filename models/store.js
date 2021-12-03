@@ -35,10 +35,10 @@ const storeSchema = new Schema(
     day: {
       type: String,
     },
-    startTym: {
+    openingTym: {
       type: String,
     },
-    endTym: {
+    closingTym: {
       type: String,
     },
     address_line1: {
