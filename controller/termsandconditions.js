@@ -43,3 +43,25 @@ exports.gettermsconditions = async(req,res)=>{
         
     }
 }
+
+
+
+exports.deltermcondition = async (req, res) => {
+    try {
+      const deleteentry = await Termsandcondition.deleteOne({
+        _id: req.params.id,
+      })
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: deleteentry,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    }
+  };
+  
