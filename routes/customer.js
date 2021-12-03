@@ -8,6 +8,7 @@ const {
   delcustomer,
   editcustomer,
   login,
+  totalcustomer
 } = require("../controller/customer");
 
 router.post("/user/customersignup", addcustomer);
@@ -16,5 +17,6 @@ router.get("/user/getonecustomer/:id", getonecustomer);
 router.post("/user/editcustomer/:id", editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
+router.get("/user/totalcustomer", totalcustomer);
 
 module.exports = router;

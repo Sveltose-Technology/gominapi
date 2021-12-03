@@ -182,3 +182,20 @@ exports.delcustomer = async (req, res) => {
     });
   }
 };
+
+
+exports.totalcustomer = async(req,res) =>{
+  await Customer.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}

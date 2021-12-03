@@ -12,7 +12,7 @@ const {
   deleteuser,
   edituser,
   verifyotp,
-  totausers
+  totalusers
 } = require("../controller/user");
 
 const storage = multer.diskStorage({
@@ -51,6 +51,7 @@ router.get("/user/alluser", alluser);
 router.get("/user/deleteuser/:id", deleteuser);
 router.post("/user/sendotp", sendotp);
 router.post("/user/verifyotp", verifyotp);
-router.get("/user/totausers", totausers);
+//router.get("/user/totalusers", totalusers);
+router.get("/user/totalusers",totalusers)
 module.exports = router;
  
