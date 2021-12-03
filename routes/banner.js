@@ -9,6 +9,7 @@ const {
   viewonebanner,
   delbanner,
   getbannerbytype,
+  totalbanner
 } = require("../controller/banner");
 
 const storage = multer.diskStorage({
@@ -50,4 +51,6 @@ router.get("/admin/getbanner", getbanner);
 router.get("/admin/viewonebanner/:id", viewonebanner);
 router.get("/admin/delbanner/:id", delbanner);
 router.get("/admin/bannerbytype/:id", getbannerbytype);
+router.get("/admin/totalbanner", totalbanner);
+
 module.exports = router;

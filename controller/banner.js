@@ -134,3 +134,22 @@ exports.getbannerbytype = async (req, res) => {
     });
   }
 };
+
+
+
+exports.totalbanner = async (req, res) => {
+  await Addbanner.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
