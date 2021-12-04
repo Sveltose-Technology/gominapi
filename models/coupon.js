@@ -24,7 +24,8 @@ const CouponSchema = new mongoose.Schema(
       type : Number
     },
     isActive: {
-      type: String,
+      type: Boolean,
+      default : true
     },
   },
   { timestamps: true }
