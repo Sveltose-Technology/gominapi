@@ -23,9 +23,9 @@ const CouponSchema = new mongoose.Schema(
     amount : {
       type : Number
     },
-    isActive: {
-      type: Boolean,
-      default : true
+    status: {
+      type: String,
+     default : "Active"
     },
   },
   { timestamps: true }

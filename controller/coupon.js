@@ -10,7 +10,7 @@ exports.addcoupon = async (req, res) => {
     usage_limit,
     amount,
     //discount,
-    isActive,
+    status,
   } = req.body;
 
   create_random_string(6);
@@ -33,7 +33,7 @@ exports.addcoupon = async (req, res) => {
     expireOn: expireOn,
     usage_limit: usage_limit,
     amount: amount,
-    isActive: isActive,
+    status: status,
   });
   newCoupon
     .save()
