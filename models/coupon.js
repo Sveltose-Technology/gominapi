@@ -13,17 +13,15 @@ const CouponSchema = new mongoose.Schema(
     startDate: {
       type: String,
     },
-    endDate: {
+    expireOn: {
       type: String,
     },
     usage_limit: {
       type: Number,
     },
-    amount: {
-      type: Number,
-    },
-    discount: {
-      type: String,
+   
+    amount : {
+      type : Number
     },
     isActive: {
       type: String,

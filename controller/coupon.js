@@ -6,10 +6,9 @@ exports.addcoupon = async (req, res) => {
     offer_code,
     description,
     startDate,
-    endDate,
+    expireOn,
     usage_limit,
     amount,
-    discount,
     //discount,
     isActive,
   } = req.body;
@@ -31,10 +30,9 @@ exports.addcoupon = async (req, res) => {
     offer_code: random_string,
     description: description,
     startDate: startDate,
-    endDate: endDate,
+    expireOn: expireOn,
     usage_limit: usage_limit,
     amount: amount,
-    discount: discount,
     isActive: isActive,
   });
   newCoupon
