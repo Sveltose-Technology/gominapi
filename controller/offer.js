@@ -63,7 +63,6 @@ exports.viewoneoffer = async (req, res) => {
 
 exports.Getoffer = async (req, res) => {
   const findall = await Offer.find()
-    .populate("product")
     .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
