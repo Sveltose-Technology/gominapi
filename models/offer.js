@@ -9,7 +9,7 @@ const offerSchema = new mongoose.Schema(
     percentageOff : {
       type : String
     },
-    sellerId : { type : Schema.Types.ObjectId
+    sellerId : { type : Schema.Types.ObjectId,ref :"seller"
 
     },
     status: {

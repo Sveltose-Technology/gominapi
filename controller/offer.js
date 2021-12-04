@@ -16,7 +16,7 @@ exports.addOffer = async (req, res) => {
     status: status,
     sortorder: sortorder,
   });
-const findexist = await Offer.findone({percentageOff : percentageOff})
+const findexist = await Offer.findOne({productId : productId})
   if(findexist){
 res.status(400).json({
       status: false,
