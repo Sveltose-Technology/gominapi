@@ -12,7 +12,7 @@ app.use(cors());
 
 //require
 const customer = require("./routes/customer");
-const staff = require("./routes/staff");
+//const staff = require("./routes/staff");
 const product = require("./routes/product");
 const productcategory = require("./routes/productcategory");
 const seller = require("./routes/seller");
@@ -44,7 +44,7 @@ app.use("/", customer);
 app.use("/", product);
 app.use("/", productcategory);
 app.use("/", seller);
-app.use("/", staff);
+//app.use("/", staff);
 app.use("/", productsubcategory);
 app.use("/", brand);
 app.use("/", banner);
