@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const offerSchema = new mongoose.Schema(
   {
-    productId : {
+    product : {
       type: Schema.Types.ObjectId, ref :"product"
     },
     percentageOff : {
       type : String
     },
-    sellerId : { type : Schema.Types.ObjectId,ref :"seller"
+    seller : { type : Schema.Types.ObjectId,ref :"seller"
 
     },
     status: {

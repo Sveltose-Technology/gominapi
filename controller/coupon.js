@@ -4,6 +4,8 @@ const Coupon = require("../models/coupon");
 exports.addcoupon = async (req, res) => {
   const {
     offer_code,
+    product,
+    seller,
     description,
     startDate,
     expireOn,
@@ -28,6 +30,8 @@ exports.addcoupon = async (req, res) => {
 
   const newCoupon = new Coupon({
     offer_code: random_string,
+    product : product,
+    seller : seller,
     description: description,
     startDate: startDate,
     expireOn: expireOn,

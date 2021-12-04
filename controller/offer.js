@@ -2,21 +2,21 @@ const Offer = require("../models/offer");
  
 exports.addOffer = async (req, res) => {
   const {
-    productId,
-    sellerId,
+    product,
+    seller,
     percentageOff,
     status,
     sortorder,
   } = req.body;
 
   const newOffer = new Offer({
-    productId : productId,
-    sellerId : sellerId,
+    product : product,
+    seller : seller,
     percentageOff: percentageOff,
     status: status,
     sortorder: sortorder,
   });
-const findexist = await Offer.findOne({productId : productId})
+const findexist = await Offer.findOne({product : product})
   if(findexist){
 res.status(400).json({
       status: false,
