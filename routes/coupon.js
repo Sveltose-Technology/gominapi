@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { createoffer, get_coupon } = require("../controller/coupon");
+const { addcoupon, getcoupon,delcoupon } = require("../controller/coupon");
 
-router.post("/admin/createoffer", createoffer);
-router.get("/admin/get_coupon", get_coupon);
+router.post("/admin/addcoupon", addcoupon);
+router.get("/admin/getcoupon", getcoupon);
+router.get("/admin/delcoupon/:id", delcoupon);
 
 module.exports = router;

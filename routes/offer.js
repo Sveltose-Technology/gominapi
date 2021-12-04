@@ -3,14 +3,14 @@
 const router =express.Router()
 
 
-const {addOffer}   = require("../controller/offer")
+const {addOffer,Getoffer,deloffer}   = require("../controller/offer")
 
 
 //path
 
-router.get ("/admin/addOffer",addOffer)
-
-
+router.post ("/admin/addOffer",addOffer)
+router.get ("/admin/Getoffer",Getoffer)
+router.get ("/admin/deloffer/:id",deloffer)
 
 
 

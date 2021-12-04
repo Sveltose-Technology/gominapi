@@ -80,7 +80,7 @@ exports.Getoffer = async (req, res) => {
   }
 };
 
-exports.del_offer = async (req, res) => {
+exports.deloffer = async (req, res) => {
   try {
     const deleteentry = await Offer.deleteOne({ _id: req.params.id });
     res.status(200).json({

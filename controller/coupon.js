@@ -1,7 +1,7 @@
 const Coupon = require("../models/coupon");
-const store = require("../models/store");
+//const store = require("../models/store");
 
-exports.createoffer = async (req, res) => {
+exports.addcoupon = async (req, res) => {
   const {
     offer_code,
     description,
@@ -55,30 +55,26 @@ exports.createoffer = async (req, res) => {
     });
 };
 
-// exports.getoffer = async (req, res) => {
-//   const findall = await Coupon.find().sort({ sortorder: 1 });
-//   if (findall) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
+exports.getcoupon = async (req, res) => {
+  const findall = await Coupon.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
-// exports.delOffer = async(req,res)=>{
-//   try{
-//     const delete
-//   }
-// }
+ 
 
-exports.get_coupon = async (req, res, next) => {
+exports.delcoupon = async (req, res, next) => {
   try {
     const find_offer = await Coupon.find({});
     if (!find_offer) {
