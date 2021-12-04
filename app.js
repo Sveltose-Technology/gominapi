@@ -21,7 +21,7 @@ const brand = require("./routes/brand");
 const banner = require("./routes/banner");
 const store = require("./routes/store");
 const store_request = require("./routes/store_request");
-const special_offer = require("./routes/special_offer");
+const offer = require("./routes/offer");
 const seller_contactform = require("./routes/seller_contactform");
 const orderproduct = require("./routes/orderproduct");
 const wallet = require("./routes/wallet");
@@ -50,7 +50,7 @@ app.use("/", brand);
 app.use("/", banner);
 app.use("/", store);
 app.use("/", store_request);
-app.use("/", special_offer);
+app.use("/", offer);
 app.use("/", seller_contactform);
 app.use("/", orderproduct);
 app.use("/", wallet);
@@ -77,7 +77,7 @@ mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
     // useFindAndModify: false,
-    useNewUrlParser: true,
+    useNewUrlParser: true,                 
     useUnifiedTopology: true,
     //useFindAndModify: false,
   })
