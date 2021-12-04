@@ -1,10 +1,8 @@
  const express = require("express")
-
 const router =express.Router()
 
 
-const {addOffer,Getoffer,deloffer}   = require("../controller/offer")
-
+const { addOffer, Getoffer,deloffer } = require("../controller/offer");
 
 //path
 
