@@ -95,3 +95,20 @@ exports.deloffer = async (req, res) => {
     });
   }
 };
+
+
+exports.totalOffer = async(req,res) =>{
+  await Offer.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
