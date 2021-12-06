@@ -9,11 +9,11 @@ const AdminloginSchema = new mongoose.Schema(
     },
     email : {
       type :String,
-      default : admin1232gmail.com
+      default : "admin1232gmail.com"
     },
     password : {
       type : String,
-      default : admin123
+      default : "admin123"
     },
     status: {
       type: String,

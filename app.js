@@ -38,6 +38,8 @@ const employee = require("./routes/employee");
 const supplier = require("./routes/supplier");
 const role = require("./routes/role");
 const coupon = require("./routes/coupon");
+const adminlogin = require("./routes/adminlogin");
+
 
 //use
 app.use("/", customer);
@@ -67,6 +69,8 @@ app.use("/", employee);
 app.use("/", supplier);
 app.use("/", role);
 app.use("/", coupon);
+app.use("/", adminlogin);
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");

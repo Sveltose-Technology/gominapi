@@ -103,7 +103,7 @@ exports.getoneseller = async (req, res) => {
   }
 };
 
-exports.adminlogin = async (req, res) => {
+exports.Adminlogin = async (req, res) => {
   const {email,password } = req.body;
 
   // Find user with requested email

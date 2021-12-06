@@ -12,7 +12,7 @@ exports.addOffer = async (req, res) => {
 
   const newOffer = new Offer({
     product : product,
-    //seller : seller,
+    //seller : req.sellerId,
     offerTitle : offerTitle,
     percentageOff: percentageOff,
     status: status,
@@ -67,7 +67,7 @@ exports.viewoneoffer = async (req, res) => {
 exports.Getoffer = async (req, res) => {
  
   const findall = await Offer.find().populate("product")
-  //.populate("seller")
+  .populate("seller")
     .sort({ sortorder: 1 }).then((data)=>{
       res.status(200).json({
         status: true,
