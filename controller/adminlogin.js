@@ -17,8 +17,8 @@ exports.createadmin = async(req,res) =>{
        }else{
         res.status(200).json({
             status: true,
-            msg: "Amount added to wallet",
-            data: newWallet,
+            msg : "suucess",
+            data: newAdminlogin,
           });
         }
        
@@ -28,7 +28,7 @@ exports.createadmin = async(req,res) =>{
 exports.adminlogin = async (req, res) => {
     const {email,phone_no,password } = req.body;
   
-    // Find user with requested email
+    // Find user with requested phone no.
     Adminlogin.findOne(
       {phone_no : phone_no},
       function (err, user) {
