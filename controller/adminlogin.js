@@ -1,8 +1,30 @@
 const Adminlogin = require("../models/adminlogin");
 
+exports.createadmin = async(req,res) =>{
+   const {phone_no,password} = req.body
+     
+   const newAdminlogin = new Adminlogin({
+    phone_no :phone_no,
+    password :password
+   })
+   newAdminlogin.save(function(err,data){
+       if(err){
+           res.status(400).json({
+               status :false,
+               msg : "error occured",
+               errro : err
+           })
+       }else{
+        res.status(200).json({
+            status: true,
+            msg: "Amount added to wallet",
+            data: newWallet,
+          });
+        }
+       
+   })
 
-
-
+}
 exports.adminlogin = async (req, res) => {
     const {email,phone_no,password } = req.body;
   
