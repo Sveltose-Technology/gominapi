@@ -32,7 +32,7 @@ exports.adminlogin = async (req, res) => {
       function (err, user) {
         if (user === null) {
           return res.status(400).send({
-            message: "User not found.",
+            message: "User not Exist.",
           });
         } else if(true) {
             res.status(201).send({

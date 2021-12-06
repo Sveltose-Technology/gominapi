@@ -682,42 +682,4 @@ exports.totalstore = async (req, res) => {
 
 
 
-exports.allblockedusersbyme = async (req, res) => {
-  const myuser = await UserDetails.findOne({ _id: req.userId });
-
-  const query = new Query();
-  console.log("line 909:" + myuser.blockedby);
-  if (myuser && myuser.blockedby.length !== 0) {
-    query.addMultiSelectFilter("_id", myuser.blockedby);
-  }
-
-  // const queryStr = query.toQueryString();
-
-  // console.log(query);
-  const queryStr = query.toQueryString();
-  console.log(query.toQueryString());
-  console.log(JSON.parse(queryStr));
-
-  // if (myuser) {
-  //   const newarr = [];
-  //   const blockedusers = myuser.blockedby;
-  //   for (let i = 0; i < blockedusers.length; i++) {
-  //     i = blockedusers[i];
-  //     newarr[i] = await UserDetails.find({ _id: i });
-  //   }
-  //   console.log(newarr);
-  //   if (newarr) {
-  //     res.status(200).json({
-  //       status: true,
-  //       msg: "success",
-  //       blockedusers: newarr,
-  //       myuser: myuser,
-  //     });
-  //   } else {
-  //     res.status(400).json({
-  //       status: false,
-  //       msg: "error",
-  //       error: "error",
-  //     });
-  //   }
-   }
+ 

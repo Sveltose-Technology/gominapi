@@ -90,3 +90,19 @@ const Subscription = require ("../models/subscription")
   
 
 
+  exports.total_sub = async (req, res) => {
+    await Subscription.countDocuments()
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  };
