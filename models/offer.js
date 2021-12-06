@@ -6,6 +6,9 @@ const offerSchema = new mongoose.Schema(
     product : {
       type: Schema.Types.ObjectId, ref :"product"
     },
+    offerTitle : {
+      type :String
+    },
     percentageOff : {
       type : String
     },

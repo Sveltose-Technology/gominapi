@@ -192,7 +192,7 @@ exports.edit_store = async (req, res) => {
   }
 };
 
-// exports.Adminlogin = async (req, res) => {
+// exports.login = async (req, res) => {
 //   const { mobile_no, password } = req.body;
 
 //   // Find user with requested email

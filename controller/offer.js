@@ -3,7 +3,8 @@ const Offer = require("../models/offer");
 exports.addOffer = async (req, res) => {
   const {
     product,
-    seller,
+    //seller,
+    offerTitle,
     percentageOff,
     status,
     sortorder,
@@ -11,7 +12,8 @@ exports.addOffer = async (req, res) => {
 
   const newOffer = new Offer({
     product : product,
-    seller : seller,
+    //seller : seller,
+    offerTitle : offerTitle,
     percentageOff: percentageOff,
     status: status,
     sortorder: sortorder,
