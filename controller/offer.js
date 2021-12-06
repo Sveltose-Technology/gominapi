@@ -43,6 +43,7 @@ res.status(400).json({
   }
 }
 
+//console.log()
 
    
 exports.viewoneoffer = async (req, res) => {
