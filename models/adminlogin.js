@@ -15,12 +15,7 @@ const AdminloginSchema = new mongoose.Schema(
       type : String,
       default : "admin123"
     },
-    status: {
-      type: String,
-    },
-    sortorder: {
-      type: Number,
-    },
+    
   },
   { timestamps: true }
 );

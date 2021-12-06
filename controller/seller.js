@@ -103,44 +103,44 @@ exports.getoneseller = async (req, res) => {
   }
 };
 
-exports.Adminlogin = async (req, res) => {
-  const {email,password } = req.body;
+// exports.Adminlogin = async (req, res) => {
+//   const {email,password } = req.body;
 
-  // Find user with requested email
-  Seller.findOne(
-    {
-      $or: [
+//   // Find user with requested email
+//   Seller.findOne(
+//     {
+//       $or: [
       
-        { email: email },
-        { password: password },
-      ],
-    },
-    function (err, user) {
-      if (user === null) {
-        return res.status(400).send({
-          message: "User not found.",
-        });
-      } else {
-        if (validatePassword(password, user.password)) {
-          const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
-            expiresIn: "365d",
-          });
+//         { email: email },
+//         { password: password },
+//       ],
+//     },
+//     function (err, user) {
+//       if (user === null) {
+//         return res.status(400).send({
+//           message: "User not found.",
+//         });
+//       } else {
+//         if (validatePassword(password, user.password)) {
+//           const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+//             expiresIn: "365d",
+//           });
 
-          return res.status(201).send({
-            message: "User Logged In",
-            token: token,
-            user: user,
-            usertype : "Admin"
-          });
-        } else {
-          return res.status(400).send({
-            message: "Wrong Password",
-          });
-        }
-      }
-    }
-  );
-};
+//           return res.status(201).send({
+//             message: "User Logged In",
+//             token: token,
+//             user: user,
+//             usertype : "Admin"
+//           });
+//         } else {
+//           return res.status(400).send({
+//             message: "Wrong Password",
+//           });
+//         }
+//       }
+//     }
+//   );
+// };
 
 exports.sellerlogin = async (req, res) => {
   const { email, password } = req.body;
@@ -162,6 +162,7 @@ exports.sellerlogin = async (req, res) => {
           message: "User Logged In",
           token: token,
           user: user,
+          usertype : "Seller"
 
         });
       } else {
