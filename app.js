@@ -39,6 +39,8 @@ const supplier = require("./routes/supplier");
 const role = require("./routes/role");
 const coupon = require("./routes/coupon");
 const adminlogin = require("./routes/adminlogin");
+const subscription = require("./routes/subscription");
+
 
 
 //use
@@ -70,6 +72,8 @@ app.use("/", supplier);
 app.use("/", role);
 app.use("/", coupon);
 app.use("/", adminlogin);
+app.use("/", subscription);
+
 
 
 app.get("/", (req, res) => {

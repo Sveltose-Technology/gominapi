@@ -38,7 +38,7 @@ exports.adminlogin = async (req, res) => {
             res.status(201).send({
               message: "User Logged In",
               user: user,
-              usertype : "Admin"
+             // usertype : "Admin"
             });
           } else {
             return res.status(400).send({
