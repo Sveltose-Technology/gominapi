@@ -10,7 +10,8 @@ const {
   del_seller,
   editseller,
   getoneseller,
-  totalseller
+  totalseller,
+  sellerlogin
   //storebyseller,
 } = require("../controller/seller");
 
@@ -45,6 +46,7 @@ let uploads = multer({ storage: storage });
 router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
 router.get("/admin/getseller", getseller);
 router.post("/admin/login", login);
+router.post("/admin/sellerlogin", sellerlogin);
 
 router.post("/admin/editseller/:id", editseller);
 

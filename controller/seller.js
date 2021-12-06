@@ -20,7 +20,7 @@ function generateAccessToken(seller_name) {
 exports.add_seller = async (req, res) => {
   const {
     seller_name,
-    seller_email,
+    email,
     password,
     confirm_password,
     status,
@@ -35,7 +35,7 @@ exports.add_seller = async (req, res) => {
 
   const newSeller = new Seller({
     seller_name: seller_name,
-    seller_email: seller_email,
+    email:email,
     password: hashpassword,
     confirm_password: hashpassword,
     status: status,
@@ -104,29 +104,65 @@ exports.getoneseller = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  const {seller_email,password } = req.body;
+
+  // Find user with requested email
+  Seller.findOne(
+    {
+      $or: [
+      
+        { seller_email: seller_email },
+        { password: password },
+      ],
+    },
+    function (err, user) {
+      if (user === null) {
+        return res.status(400).send({
+          message: "User not found.",
+        });
+      } else {
+        if (validatePassword(password, user.password)) {
+          const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+            expiresIn: "365d",
+          });
+
+          return res.status(201).send({
+            message: "User Logged In",
+            token: token,
+            user: user,
+            usertype : "Admin"
+          });
+        } else {
+          return res.status(400).send({
+            message: "Wrong Password",
+          });
+        }
+      }
+    }
+  );
+};
+
+exports.sellerlogin = async (req, res) => {
   const { seller_email, password } = req.body;
 
   // Find user with requested email
-  Seller.findOne({ seller_email: seller_email }, function (err, seller) {
-    if (seller === null) {
+  Seller.findOne({ seller_email: seller_email }, function (err, user) {
+    if (user === null) {
       return res.status(400).send({
-        message: "Seller not found.",
+        message: "User not found.",
       });
     } else {
-      // console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, seller.password)) {
-        const token = jwt.sign(
-          { sellerId: seller._id },
-          process.env.TOKEN_SECRET,
-          {
-            expiresIn: "365d",
-          }
-        );
+      console.log(process.env.TOKEN_SECRET);
+      if (validatePassword(password, user.password)) {
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+          expiresIn: "365d",
+        });
 
         return res.status(201).send({
-          message: "Successfully Logged In",
+          message: "User Logged In",
           token: token,
-          seller: seller,
+          user: user,
+
         });
       } else {
         return res.status(400).send({
@@ -136,36 +172,6 @@ exports.login = async (req, res) => {
     }
   });
 };
-
-// exports.Adminlogin = async (req, res) => {
-//   const { mobile_no, password } = req.body;
-
-//   // Find user with requested email
-//   Seller.findOne({ mobile_no: mobile_no }, function (err, user) {
-//     if (user === null) {
-//       return res.status(400).send({
-//         message: "User not found.",
-//       });
-//     } else {
-//       console.log(process.env.TOKEN_SECRET);
-//       if (validatePassword(password, user.password)) {
-//         const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-//           expiresIn: "365d",
-//         });
-
-//         return res.status(201).send({
-//           message: "User Logged In",
-//           token: token,
-//           user: user,
-//         });
-//       } else {
-//         return res.status(400).send({
-//           message: "Wrong Password",
-//         });
-//       }
-//     }
-//   });
-// };
 
 exports.editseller = async (req, res) => {
   const findandUpdateEntry = await Seller.findOneAndUpdate(

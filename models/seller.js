@@ -6,7 +6,7 @@ const sellerSchema = new Schema(
     seller_name: {
       type: String,
     },
-    seller_email: {
+    email: {
       type: String,
     },
     password: {
