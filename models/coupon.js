@@ -8,6 +8,9 @@ const CouponSchema = new mongoose.Schema(
       // require: true,
       // unique: true,
     },
+    CouponTitle: {
+      type:String
+    },
     product : {
       type: Schema.Types.ObjectId, ref :"product"
     },
