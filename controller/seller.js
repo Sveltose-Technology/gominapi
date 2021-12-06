@@ -104,14 +104,14 @@ exports.getoneseller = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const {seller_email,password } = req.body;
+  const {email,password } = req.body;
 
   // Find user with requested email
   Seller.findOne(
     {
       $or: [
       
-        { seller_email: seller_email },
+        { email: email },
         { password: password },
       ],
     },
@@ -143,10 +143,10 @@ exports.login = async (req, res) => {
 };
 
 exports.sellerlogin = async (req, res) => {
-  const { seller_email, password } = req.body;
+  const { email, password } = req.body;
 
   // Find user with requested email
-  Seller.findOne({ seller_email: seller_email }, function (err, user) {
+  Seller.findOne({ email: email }, function (err, user) {
     if (user === null) {
       return res.status(400).send({
         message: "User not found.",
