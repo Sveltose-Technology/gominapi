@@ -43,7 +43,7 @@ res.status(400).json({
   }
 }
 
-//console.log()
+ 
 
    
 exports.viewoneoffer = async (req, res) => {
@@ -65,25 +65,24 @@ exports.viewoneoffer = async (req, res) => {
 };
 
 exports.Getoffer = async (req, res) => {
-  const {seller}  = req.body
+ 
   const findall = await Offer.find().populate("product")
   //.populate("seller")
-    .sort({ sortorder: 1 });
-  if (findall) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
+    .sort({ sortorder: 1 }).then((data)=>{
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    })
   }
-};
-
+   
 exports.deloffer = async (req, res) => {
   try {
     const deleteentry = await Offer.deleteOne({ _id: req.params.id });
