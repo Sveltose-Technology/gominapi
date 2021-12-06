@@ -43,7 +43,7 @@ exports.add_seller = async (req, res) => {
   });
 
   //console.log(req.body)
-  const findexist = await Seller.findOne({ seller_email: seller_email });
+  const findexist = await Seller.findOne({ email: email });
   if (findexist) {
     res.status(400).json({
       status: false,
