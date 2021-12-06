@@ -6,7 +6,7 @@ const fs = require("fs");
 const {
   add_seller,
   getseller,
-  login,
+  adminlogin,
   del_seller,
   editseller,
   getoneseller,
@@ -45,7 +45,7 @@ let uploads = multer({ storage: storage });
 //Paths
 router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
 router.get("/admin/getseller", getseller);
-router.post("/admin/login", login);
+router.post("/admin/adminlogin", adminlogin);
 router.post("/admin/sellerlogin", sellerlogin);
 
 router.post("/admin/editseller/:id", editseller);
