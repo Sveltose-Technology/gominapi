@@ -3,17 +3,17 @@ const Schema = mongoose.Schema;
 
 const AdminloginSchema = new mongoose.Schema(
   {
-    phone_no : {
+    mobile : {
       type: Number,
-      default : 9893245678
+      //default : 9893245678
     },
     email : {
       type :String,
-      default : "admin1232gmail.com"
+     // default : "admin1232gmail.com"
     },
     password : {
       type : String,
-      default : "admin123"
+      //default : "admin123"
     },
     
   },
