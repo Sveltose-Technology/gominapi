@@ -9,16 +9,20 @@ const validatePassword = (password, dbpassword) => {
   return true;
 };
 
-function generateAccessToken(username) {
+function generateAccessToken(mobile) {
   return jwt.sign(mobile, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
 }
 
 exports.createadmin = async(req,res) =>{
    const {mobile,password} = req.body
      
+   const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt);
+  const token = generateAccessToken({ mobile: mobile });
+
    const newAdminlogin = new Adminlogin({
     mobile :mobile,
-    password :password
+    password :hashpassword
    })
    newAdminlogin.save()
    .then((data) => {
@@ -75,6 +79,7 @@ exports.createadmin = async(req,res) =>{
 
 exports.adminlogin = async (req, res) => {
   const { mobile, password } = req.body;
+  
 
   //Find user with requested email
   Adminlogin.findOne({ mobile: mobile }, function (err, user) {
@@ -143,4 +148,25 @@ exports.adminlogin = async (req, res) => {
 //       error: "error",
 //     });
 //   }
+// };
+
+
+
+
+
+// exports.setting = async (req, res) => {
+//   const updatedChange = await Adminlogin.findOneAndUpdate(
+//     { _id: req.userId },
+//     { $set: req.body },
+//     { new: true }
+//   )
+//     .then((updateddetails) => {
+//       res.json({
+//         msg: "changes successful",
+//         updateddetails,
+//       });
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
 // };
