@@ -17,8 +17,9 @@ function generateAccessToken(username) {
 exports.addcustomer = async (req, res) => {
   const {
     customerId,
-    customername,
-    password,
+    first_name,
+    last_name,
+    //password,
     customer_email,
     mobile_no,
     sortorder,
@@ -43,8 +44,9 @@ exports.addcustomer = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
-    customername: customername,
-    password: hashpassword,
+    first_name: first_name,
+    last_name : last_name,
+   // password: hashpassword,
     customer_email: customer_email,
     mobile_no: mobile_no,
     sortorder: sortorder,
@@ -90,7 +92,7 @@ exports.login = async (req, res) => {
     } else {
       // console.log(process.env.TOKEN_SECRET);
       if (validatePassword(password, user.password)) {
-        const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
+        const token = jwt.sign({ customerId: user._id }, process.env.TOKEN_SECRET, {
           expiresIn: "365d",
         });
 

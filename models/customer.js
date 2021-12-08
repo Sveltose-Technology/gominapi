@@ -6,8 +6,11 @@ const customerSchema = new Schema(
     customerId: {
       type: String,
     },
-    customername: {
+    first_name: {
       type: String,
+    },
+    last_name: {
+      type : String
     },
     password: {
       type: String,
