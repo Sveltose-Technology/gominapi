@@ -1,12 +1,12 @@
 const Customer = require("../models/customer");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+//const bcrypt = require("bcrypt");
+//const saltRounds = 10;
 
-const validatePassword = (password, dbpassword) => {
-  bcrypt.compareSync(password, dbpassword);
-  return true;
-};
+// const validatePassword = (password, dbpassword) => {
+//   bcrypt.compareSync(password, dbpassword);
+//   return true;
+// };
 
 function generateAccessToken(username) {
   return jwt.sign(customername, process.env.TOKEN_SECRET, {
@@ -26,8 +26,8 @@ exports.addcustomer = async (req, res) => {
     status,
   } = req.body;
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
+  // const salt = bcrypt.genSaltSync(saltRounds);
+  // const hashpassword = bcrypt.hashSync(password, salt);
 
   create_random_string(6);
   function create_random_string(string_length) {
