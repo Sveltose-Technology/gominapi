@@ -78,25 +78,20 @@ exports.getcoupon = async (req, res) => {
 
  
 
-exports.delcoupon = async (req, res, next) => {
+exports.delcoupon = async (req, res) => {
   try {
-    const find_offer = await Coupon.find({});
-    if (!find_offer) {
-      return res.status(400).json({
-        success: true,
-        code: 400,
-        msg: "Ooops! an error occur",
-      });
-    } else {
-      return res.status(200).json({
-        success: true,
-        code: 200,
-        msg: "success",
-        data: find_offer,
-      });
-    }
-  } catch (e) {
-    return res.status(500);
+    const deleteentry = await Coupon.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
   }
 };
 
