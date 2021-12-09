@@ -40,6 +40,8 @@ const role = require("./routes/role");
 const coupon = require("./routes/coupon");
 const adminlogin = require("./routes/adminlogin");
 const subscription = require("./routes/subscription");
+const cus_slider = require("./routes/cus_slider");
+
 
 
 
@@ -73,6 +75,8 @@ app.use("/", role);
 app.use("/", coupon);
 app.use("/", adminlogin);
 app.use("/", subscription);
+app.use("/", cus_slider);
+
 
 
 

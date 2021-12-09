@@ -8,7 +8,10 @@ const {
   delcustomer,
   editcustomer,
   login,
-  totalcustomer
+  totalcustomer,
+  sendotp,
+  verifyotp,
+
 } = require("../controller/customer");
 
 router.post("/user/customersignup", addcustomer);
@@ -18,5 +21,7 @@ router.post("/user/editcustomer/:id", editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
 router.get("/user/totalcustomer", totalcustomer);
+router.post("/user/sendotp", sendotp);
+router.post("/user/verifyotp", verifyotp);
 
 module.exports = router;

@@ -358,10 +358,11 @@ exports.productbybrand = async (req, res) => {
 exports.productbysubcategory = async (req, res) => {
   const findall = await Product.find({ productsubcategory: req.params.id })
     .sort({ sortorder: 1 })
-    .populate("productcategory")
-    .populate("productsubcategory")
-    .populate("unit")
-    .populate("brand")
+     .populate("product")
+    //.populate("productcategory")
+    //.populate("productsubcategory")
+    //.populate("unit")
+   // .populate("brand")
     .sort({ sortorder: 1 })
     .then((data) => {
       res.status(200).json({

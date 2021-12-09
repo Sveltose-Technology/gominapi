@@ -201,3 +201,54 @@ exports.totalcustomer = async(req,res) =>{
     });
   })
 }
+
+
+
+const defaultotp = 1234;
+exports.sendotp = async (req, res) => {
+  const { mobile_no } = req.body;
+  //console.log(mobile_no.length);
+  if (mobile_no) {
+    res.status(200).json({
+      status: true,
+      msg: "otp send successfully",
+      mobile: mobile_no,
+      otp: defaultotp,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "please send mobile number",
+    });
+  }
+};
+
+exports.verifyotp = async (req, res) => {
+  const { mobile_no, otp } = req.body;
+
+  if (otp == 1234) {
+    const findone = await Customer.findOne({ mobile_no: mobile_no });
+    if (findone) {
+      res.status(200).json({
+        status: true,
+        msg: "user already exist",
+        alreadyexist: true,
+        mobile: mobile_no,
+        otp: defaultotp,
+      });
+    } else {
+      res.status(200).json({
+        status: true,
+        msg: "otp verified please register",
+        alreadyexist: false,
+        mobile: mobile_no,
+        otp: defaultotp,
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "Incorrect otp",
+    });
+  }
+};
