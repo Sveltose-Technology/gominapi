@@ -148,6 +148,7 @@ exports.complete_order = async (req, res, next) => {
     });
 };
 
+
 exports.del_order = async (req, res) => {
   try {
     const deleteentry = await Orderproduct.deleteOne({ _id: req.params.id });
