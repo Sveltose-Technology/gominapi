@@ -223,32 +223,32 @@ exports.sendotp = async (req, res) => {
   }
 };
 
-const mailer = (email,otp) =>{
-const nodemailer = require("nodemailer");
-var smtptransporter = nodemailer.createTransport({
-  service: "gmail",
+// // const mailer = (email,otp) =>{
+// // const nodemailer = require("nodemailer");
+// // var smtptransporter = nodemailer.createTransport({
+// //   service: "gmail",
 
-  auth: {
-    user: "98710priya@gmail.com",
-    pass: "INSTAFB00123",
-  },
-});
-var mailOptions = {
-  from: "98710priya@gmail.com",
-  to: "guptapratima98710@gmail.com",
-  subject: "Sending mail using node js",
-  text: "hii",
-};
+// //   auth: {
+// //     user: "98710priya@gmail.com",
+// //     pass: "INSTAFB00123",
+// //   },
+// // });
+// // var mailOptions = {
+// //   from: "98710priya@gmail.com",
+// //   to: "guptapratima98710@gmail.com",
+// //   subject: "Sending mail using node js",
+// //   text: "hii",
+// // };
 
-smtptransporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    //console.log(error);
-  } else {
-    // console.log("Email.sent" + info.response);
-  }
-  smtptransporter.close();
-});
-}
+// smtptransporter.sendMail(mailOptions, function (error, info) {
+//   if (error) {
+//     //console.log(error);
+//   } else {
+//     // console.log("Email.sent" + info.response);
+//   }
+//   smtptransporter.close();
+// });
+// }
 
 
 exports.emailSend = async (req, res) => {
