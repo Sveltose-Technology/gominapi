@@ -310,4 +310,15 @@ exports.verifyotp = async (req, res) => {
 
 // exports.changePassword = async (req,res) =>{
 //   let data = await Customer.findOne({customer_email : req.body.customer_email,code : req.body.otpCode})
+// const response = {}
+// if(data) {
+//   let currentTime = new Date().getTime()
+//   let diff = data.expireIn - currentTime
+//   if(diff){
+//     response.message = "Token Expire",
+//     response.statusText ="errro"
+//   }else {
+//     let customer = await Customer.findOne({})
+//   }
+// }    
 // }
