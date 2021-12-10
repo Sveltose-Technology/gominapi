@@ -5,6 +5,7 @@ exports.addorder = async (req, res) => {
   const {
     customer,
     product,
+    order_type,
     payment_type,
     orderId,
     qty,
@@ -20,6 +21,7 @@ exports.addorder = async (req, res) => {
   const newOrderproduct = new Orderproduct({
     customer: customer,
     product: product,
+    order_type : order_type,
     payment_type: payment_type,
     orderId: uuidv4(),
     qty: qty,

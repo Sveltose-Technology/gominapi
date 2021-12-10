@@ -22,6 +22,13 @@ const customerSchema = new Schema(
       type: Number,
       require: true,
     },
+    expireIn: {
+      type: Number,
+    },
+     code: {
+     type: String,
+    //   default: 1234,
+    },
     sortorder: {
       type: Number,
     },

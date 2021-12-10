@@ -10,6 +10,7 @@ const {
   login,
   totalcustomer,
   sendotp,
+  emailSend,
   verifyotp,
 
 } = require("../controller/customer");
@@ -22,6 +23,7 @@ router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
 router.get("/user/totalcustomer", totalcustomer);
 router.post("/user/sendotp", sendotp);
+router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
 
 module.exports = router;
