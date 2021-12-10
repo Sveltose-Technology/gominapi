@@ -207,8 +207,9 @@ exports.totalcustomer = async(req,res) =>{
 const defaultotp = 1234;
 exports.sendotp = async (req, res) => {
   const { mobile_no } = req.body;
+  const finddetails  = await Customer.findOne({mobile_no : mobile_no})
   //console.log(mobile_no.length);
-  if (mobile_no) {
+  if (finddetails) {
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
@@ -218,7 +219,7 @@ exports.sendotp = async (req, res) => {
   } else {
     res.status(400).json({
       status: false,
-      msg: "please send mobile number",
+      msg: "error occured",
     });
   }
 };
@@ -307,3 +308,6 @@ exports.verifyotp = async (req, res) => {
   }
 };
 
+// exports.changePassword = async (req,res) =>{
+//   let data = await Customer.findOne({customer_email : req.body.customer_email,code : req.body.otpCode})
+// }
