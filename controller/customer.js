@@ -223,7 +223,36 @@ exports.sendotp = async (req, res) => {
   }
 };
 
+// const nodemailer = require("nodemailer");
+
+// var smtptransporter = nodemailer.createTransport({
+//   service: "gmail",
+
+//   auth: {
+//     user: "test12@gmail.com",
+//     pass: "pass@123",
+//   },
+// });
+// var mailOptions = {
+//   from: "test12@gmail.com",
+//   to: "guptapratima98710@gmail.com",
+//   subject: "Sending mail using node js",
+//   text: "hii",
+// };
+
+// smtptransporter.sendMail(mailOptions, function (error, info) {
+//   if (error) {
+//     //console.log(error);
+//   } else {
+//     // console.log("Email.sent" + info.response);
+//   }
+//   smtptransporter.close();
+// });
+
+
 exports.emailSend = async (req,res) =>{
+    console.log(req.body.customer_email);
+
   let data = await Customer.findOne({customer_email : req.body.customer_email})
 
   const responseType = {};
@@ -237,6 +266,7 @@ exports.emailSend = async (req,res) =>{
     })
     let otpResponse = await otpData.save();
     responseType.statusText = "success";
+   //smtptransporter(1234,"guptapratima98710@gmail.com")
     responseType.message ="please check your email id"
   }else{
     responseType.statusText = "error";
@@ -245,32 +275,7 @@ exports.emailSend = async (req,res) =>{
   res.status(200).json(responseType)
 }
 
-const nodemailer = require("nodemailer");
-var smtptransporter = nodemailer.createTransport({
-  service: "gmail",
-
-  auth: {
-    user: "test12@gmail.com",
-    pass: "pass@123",
-  },
-});
-var mailOptions = {
-  from: "test12@gmail.com",
-  to: "guptapratima98710@gmail.com",
-  subject: "Sending mail using node js",
-  text: "hii",
-};
-
-smtptransporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    //console.log(error);
-  } else {
-    // console.log("Email.sent" + info.response);
-  }
-  smtptransporter.close();
-});
-
-
+ 
 exports.verifyotp = async (req, res) => {
   const { mobile_no, otp } = req.body;
 
