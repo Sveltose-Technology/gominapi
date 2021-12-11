@@ -680,6 +680,6 @@ exports.totalstore = async (req, res) => {
     });
 };
 
-
-
- 
+// exports.browsebytreading_store = async (req,res) =>{
+//  const finddetails = await 
+// }

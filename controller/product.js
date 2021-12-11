@@ -13,7 +13,7 @@ cloudinary.config({
 
 exports.addproduct = async (req, res) => {
   const {
-    //productId,
+    storeID,
     product_name,
     sku_no,
     hsn_sac_no,
@@ -33,12 +33,13 @@ exports.addproduct = async (req, res) => {
     sell_price,
     gst,
     product_img,
+    offer_aplicable,
     sortorder,
     status,
   } = req.body;
 
   const newProduct = new Product({
-    // productId: productId,
+    storeID: storeID,
     product_name: product_name,
     sku_no: sku_no,
     hsn_sac_no: hsn_sac_no,
@@ -58,6 +59,7 @@ exports.addproduct = async (req, res) => {
     sell_price: sell_price,
     gst: gst,
     product_img: product_img,
+    offer_aplicable :offer_aplicable,
     sortorder: sortorder,
     status: status,
   });

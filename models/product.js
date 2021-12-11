@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
+    storeID :{
+       type : Schema.Types.ObjectId, ref: "store"
+    },
     product_name: {
       type: String,
       require: true,
@@ -41,8 +44,9 @@ const productSchema = new Schema(
 
     stock: {
       type: String,
-      avalaible: "Available",
-      unavailable: " UnAvailable",
+      // avalaible: "Available",
+      // unavailable: " UnAvailable",
+      default : "UnAvailable"
     },
     qty: {
       type: String,
@@ -64,8 +68,11 @@ const productSchema = new Schema(
     product_img: {
       type: Array,
     }, //goods && service
-
-    sortorder: {
+    offer_aplicable : {
+       type : String,
+       default : false
+    },
+     sortorder: {
       type: Number,
     },
     status: {

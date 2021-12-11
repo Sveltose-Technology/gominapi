@@ -157,7 +157,7 @@ exports.sellerlogin = async (req, res) => {
         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
           expiresIn: "365d",
         });
-
+              
         return res.status(201).send({
           message: "User Logged In",
           token: token,
