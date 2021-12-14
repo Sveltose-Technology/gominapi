@@ -1,5 +1,8 @@
 const Product = require("../models/product");
 //const Image = require("../models/product");
+const Productcategory = require("../models/productcategory");
+const Brand = require("../models/brand");
+const Store = require("../models/store");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -13,7 +16,7 @@ cloudinary.config({
 
 exports.addproduct = async (req, res) => {
   const {
-    storeID,
+    store,
     product_name,
     sku_no,
     hsn_sac_no,
@@ -39,7 +42,7 @@ exports.addproduct = async (req, res) => {
   } = req.body;
 
   const newProduct = new Product({
-    storeID: storeID,
+    store: store,
     product_name: product_name,
     sku_no: sku_no,
     hsn_sac_no: hsn_sac_no,
@@ -256,6 +259,7 @@ exports.editproduct = async (req, res) => {
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -280,7 +284,8 @@ exports.getoneproduct = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
+    .populate("brand")
+    .populate("store")
   if (findone) {
     res.status(200).json({
       status: true,
@@ -316,6 +321,7 @@ exports.del_product = async (req, res) => {
 exports.productbycategory = async (req, res) => {
   const findall = await Product.find({ productcategory: req.params.id })
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -338,6 +344,7 @@ exports.productbycategory = async (req, res) => {
 exports.productbybrand = async (req, res) => {
   const findall = await Product.find({ brand: req.params.id })
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -360,11 +367,11 @@ exports.productbybrand = async (req, res) => {
 exports.productbysubcategory = async (req, res) => {
   const findall = await Product.find({ productsubcategory: req.params.id })
     .sort({ sortorder: 1 })
-     .populate("product")
-    //.populate("productcategory")
-    //.populate("productsubcategory")
-    //.populate("unit")
-   // .populate("brand")
+     .populate("store")
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
     .sort({ sortorder: 1 })
     .then((data) => {
       res.status(200).json({
@@ -382,20 +389,6 @@ exports.productbysubcategory = async (req, res) => {
     });
 };
 
-//   if (findall) {
-//     req.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     req.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: error,
-//     });
-//   }
-// };
 
 
 exports.totalproduct = async(req,res) =>{
@@ -413,3 +406,127 @@ exports.totalproduct = async(req,res) =>{
     });
   })
 }
+
+
+
+// exports.searchItem = async (req,res) =>{
+//  // const {item} = req.body
+//   const item = new RegExp(req.params.name ,'i')
+//           await Product.find({
+//     $or : [
+//       { "product" :{$regex : item, $options : "i"} },
+//       {"name" : {$regex : item ,$options : "i"}},
+//       {"category" : {$regex : item,$options : "i"}},
+//       {"brand"  : {$regex : item,$options : "i" }},
+//       {"store" : {$regex : item , $options : "i"}}
+//     ]
+//   }).then((regex) =>{
+//     res.status(200).json({
+//      status : true,
+//      msg : "success",
+//     data : regex
+//     })
+//   }).catch((error)=>{
+//     res.status(400).json({
+//       status : false,
+//       msg : "error",
+//       error : error
+//     })
+//   })
+  
+// }
+
+
+// exports.searchItem = async(req,res) =>{
+//   const findall = await Product.find({ : req.params.name })
+// }
+
+// var re = new RegExp(req.params.search, 'i');
+
+// await Product.find().$or([{ 'firstName': { $regex: re }}, { 'lastName': { $regex: re }}]).sort('title', 1).exec(function(err, users) {
+//     res.json(JSON.stringify(users));
+// });
+
+// exports.searchItem = async(req,res)=>{
+//   const item = new RegExp(req.params.search, 'i')
+//   await Product.find({
+//     $or : [
+//       {name : {$regex: item}}
+//     ]
+//   })
+// }
+
+
+// exports.searchItem = async (req,res) => {
+//   const {item}  = req.body
+//   const data = await Product.find({
+//     "$or" : [
+//       {"name" : {$regex:req.params.item,$options : "i"}},
+//       {"brand" : {$regex:req.params.item,$options : "i"}}
+//     ]
+//   })
+//   resp.send("search done")
+// }
+
+// exports.searchItem = async(req, res) => {
+//   //const inputsearch = req.body.search;
+//   const inputsearch = new RegExp(req.params.search, 'i')
+//   Product.find({ name: { $regex: inputsearch, $options: "5" } }).then((data) => {
+//     res.send(200).json({
+//       status : true,
+//       msg : "success",
+//       data : data
+//     });
+//   }).catch((error)=>{
+//     res.send(400).json({
+//       status : false,
+//       msg : "error",
+//       data : error
+//     })
+//   })
+// };
+//{ MatriID: { $regex: oneinput, $options: "i" } },
+
+/////////////////
+
+// exports.searchItem = async(req,res) => {
+//   //const {item}  = req.params.id
+//  const  oneinput = req.body
+   
+//   await Product.find({
+//     $or :[
+//       {product_name:{$regex : oneinput, $options : "5"} },
+//       {brand:{$regex : oneinput, $options : "5"} }
+//     ]
+//   }).populate("product_name").populate("product_name")
+  
+//   .then((regex) =>{
+//         res.status(200).json({
+//          status : true,
+//          msg : "success",
+//         data : regex 
+
+//         })
+//       }).catch((error)=>{
+//         res.status(400).json({
+//           status : false,
+//           msg : "error",
+//           error : error
+//         })
+//       })
+      
+//     }
+  ////////////////////
+    // exports.searchItem = async (req,res)=>{
+    //   const regex = (req.body.search,'i')
+       
+    //   await Product.find({
+        
+    //       $or: [
+    //           {product : regex}
+    //       ]
+        
+    //   })
+
+    // }
+  

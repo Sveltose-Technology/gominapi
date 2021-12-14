@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
-    storeID :{
+    store :{
        type : Schema.Types.ObjectId, ref: "store"
     },
     product_name: {
@@ -70,11 +70,12 @@ const productSchema = new Schema(
     }, //goods && service
     offer_aplicable : {
        type : String,
-       default : false
+       default: "Inactive"
     },
      sortorder: {
       type: Number,
     },
+    
     status: {
       type: String,
       default: "Active",
