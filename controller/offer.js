@@ -48,7 +48,7 @@ res.status(400).json({
    
 exports.viewoneoffer = async (req, res) => {
   //const getuser = await User.findOne({ _id: req.userId });
-  const findone = await Offer.findOne({ _id: req.params.id })
+  const findone = await Offer.findOne({ _id: req.params.id }).populate("product").populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,

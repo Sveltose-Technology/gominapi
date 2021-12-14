@@ -14,7 +14,7 @@ const {
   productbybrand,
   del_product,
   totalproduct,
-  searchItem
+  //searchItem
 } = require("../controller/product");
 
 const storage = multer.diskStorage({

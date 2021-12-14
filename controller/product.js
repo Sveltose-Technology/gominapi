@@ -516,7 +516,7 @@ exports.totalproduct = async(req,res) =>{
 //       })
       
 //     }
-  ////////////////////
+  
     // exports.searchItem = async (req,res)=>{
     //   const regex = (req.body.search,'i')
        
