@@ -14,8 +14,8 @@ const CouponSchema = new mongoose.Schema(
     product : {
       type: Schema.Types.ObjectId, ref :"product"
     },
-    seller : {
-      type : Schema.Types.ObjectId,ref :"seller"
+  
+      seller : { type : Schema.Types.ObjectId,ref :"seller"
 
     },
     description: {

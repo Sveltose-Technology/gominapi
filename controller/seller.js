@@ -153,6 +153,7 @@ exports.sellerlogin = async (req, res) => {
       });
     } else {
       console.log(process.env.TOKEN_SECRET);
+      
       if (validatePassword(password, user.password)) {
         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
           expiresIn: "365d",

@@ -62,7 +62,7 @@ exports.addproduct = async (req, res) => {
     sell_price: sell_price,
     gst: gst,
     product_img: product_img,
-    offer_aplicable :offer_aplicable,
+    offer_aplicable: offer_aplicable,
     sortorder: sortorder,
     status: status,
   });
@@ -367,7 +367,7 @@ exports.productbybrand = async (req, res) => {
 exports.productbysubcategory = async (req, res) => {
   const findall = await Product.find({ productsubcategory: req.params.id })
     .sort({ sortorder: 1 })
-     .populate("store")
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -391,142 +391,70 @@ exports.productbysubcategory = async (req, res) => {
 
 
 
-exports.totalproduct = async(req,res) =>{
-  await Product.countDocuments().then((data)=>{
+exports.totalproduct = async (req, res) => {
+  await Product.countDocuments().then((data) => {
     res.status(200).json({
       status: true,
       data: data,
     });
   })
-  .catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error,
-    });
-  })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    })
 }
 
 
+ 
+exports.searchItem = async (req, res) => {
+  //const {item}  = req.params.id
+  const { oneinput } = req.body
+let allproducts = []
+let errors = []
+  const findbybrand = await Brand.find({name:{$regex: oneinput,$options:"i"}}).then((data)=>{
+    let allitems  = []
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i]._id; 
+      //console.log(element)
+      allitems.push(element);
+    }
 
-// exports.searchItem = async (req,res) =>{
-//  // const {item} = req.body
-//   const item = new RegExp(req.params.name ,'i')
-//           await Product.find({
-//     $or : [
-//       { "product" :{$regex : item, $options : "i"} },
-//       {"name" : {$regex : item ,$options : "i"}},
-//       {"category" : {$regex : item,$options : "i"}},
-//       {"brand"  : {$regex : item,$options : "i" }},
-//       {"store" : {$regex : item , $options : "i"}}
-//     ]
-//   }).then((regex) =>{
-//     res.status(200).json({
-//      status : true,
-//      msg : "success",
-//     data : regex
-//     })
-//   }).catch((error)=>{
-//     res.status(400).json({
-//       status : false,
-//       msg : "error",
-//       error : error
-//     })
-//   })
-  
-// }
-
-
-// exports.searchItem = async(req,res) =>{
-//   const findall = await Product.find({ : req.params.name })
-// }
-
-// var re = new RegExp(req.params.search, 'i');
-
-// await Product.find().$or([{ 'firstName': { $regex: re }}, { 'lastName': { $regex: re }}]).sort('title', 1).exec(function(err, users) {
-//     res.json(JSON.stringify(users));
-// });
-
-// exports.searchItem = async(req,res)=>{
-//   const item = new RegExp(req.params.search, 'i')
-//   await Product.find({
-//     $or : [
-//       {name : {$regex: item}}
-//     ]
-//   })
-// }
-
-
-// exports.searchItem = async (req,res) => {
-//   const {item}  = req.body
-//   const data = await Product.find({
-//     "$or" : [
-//       {"name" : {$regex:req.params.item,$options : "i"}},
-//       {"brand" : {$regex:req.params.item,$options : "i"}}
-//     ]
-//   })
-//   resp.send("search done")
-// }
-
-// exports.searchItem = async(req, res) => {
-//   //const inputsearch = req.body.search;
-//   const inputsearch = new RegExp(req.params.search, 'i')
-//   Product.find({ name: { $regex: inputsearch, $options: "5" } }).then((data) => {
-//     res.send(200).json({
-//       status : true,
-//       msg : "success",
-//       data : data
-//     });
-//   }).catch((error)=>{
-//     res.send(400).json({
-//       status : false,
-//       msg : "error",
-//       data : error
-//     })
-//   })
-// };
-//{ MatriID: { $regex: oneinput, $options: "i" } },
-
-/////////////////
-
-// exports.searchItem = async(req,res) => {
-//   //const {item}  = req.params.id
-//  const  oneinput = req.body
-   
-//   await Product.find({
-//     $or :[
-//       {product_name:{$regex : oneinput, $options : "5"} },
-//       {brand:{$regex : oneinput, $options : "5"} }
-//     ]
-//   }).populate("product_name").populate("product_name")
-  
-//   .then((regex) =>{
-//         res.status(200).json({
-//          status : true,
-//          msg : "success",
-//         data : regex 
-
-//         })
-//       }).catch((error)=>{
-//         res.status(400).json({
-//           status : false,
-//           msg : "error",
-//           error : error
-//         })
-//       })
+    // let createquery = allitems.
+    for (let j = 0; j < allitems.length; j++) {
+      allitems[key] = allitems[j];
       
-//     }
-  
-    // exports.searchItem = async (req,res)=>{
-    //   const regex = (req.body.search,'i')
-       
-    //   await Product.find({
-        
-    //       $or: [
-    //           {product : regex}
-    //       ]
-        
-    //   })
+    }
+    console.log(allitems)
+    const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
+    console.log(obj)
+    res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data
+        })
+  }).catch((error)=>{
+    res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error
+        })
+  })
 
-    // }
-  
+  // await Product.find({$or:[{ product_name: { $regex: oneinput, $options: "i" } },{brand: element}]}).populate('brand').then((data)=>{
+  //   res.status(200).json({
+  //     status: true,
+  //     msg: "success",
+  //     data: data
+  //   })
+  // }).catch((error)=>{
+  //   res.status(400).json({
+  //     status: false,
+  //     msg: "error",
+  //     error: error
+  //   })
+  // })
+
+}

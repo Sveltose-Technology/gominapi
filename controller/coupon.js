@@ -1,12 +1,12 @@
 const Coupon = require("../models/coupon");
-//const store = require("../models/store");
+//const seller = require("../models/seller");
 
 exports.addcoupon = async (req, res) => {
   const {
     offer_code,
     CouponTitle,
     product,
-    seller,
+    //seller,
     description,
     startDate,
     expireOn,
@@ -33,7 +33,7 @@ exports.addcoupon = async (req, res) => {
     offer_code: random_string,
     CouponTitle : CouponTitle,
     product : product,
-    seller : seller,
+    //seller : seller,
     description: description,
     startDate: startDate,
     expireOn: expireOn,
@@ -60,7 +60,7 @@ exports.addcoupon = async (req, res) => {
 };
 
 exports.getcoupon = async (req, res) => {
-  const findall = await Coupon.find().populate("product").populate("seller").sort({ sortorder: 1 });
+  const findall = await Coupon.find({seller:req.sellerId}).populate("product").populate("seller").sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -94,7 +94,6 @@ exports.delcoupon = async (req, res) => {
     });
   }
 };
-
 
 exports.totalCoupon = async(req,res) =>{
   await Coupon.countDocuments().then((data)=>{

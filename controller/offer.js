@@ -1,4 +1,6 @@
 const Offer = require("../models/offer");
+const Seller = require("../models/seller");
+
  
 exports.addOffer = async (req, res) => {
   const {
@@ -18,7 +20,7 @@ exports.addOffer = async (req, res) => {
     status: status,
     sortorder: sortorder,
   });
-const findexist = await Offer.findOne({product : product})
+const findexist = await Offer.findOne({offerTitle : offerTitle})
   if(findexist){
 res.status(400).json({
       status: false,
@@ -43,17 +45,39 @@ res.status(400).json({
   }
 }
 
- 
-
+exports.edit_offer = async (req, res) => {
+  const findandUpdateEntry = await Offer.findOneAndUpdate(
+      {
+          _id: req.params.id,
+      },
+      { $set: req.body },
+      { new: true }
+  );
+  if (findandUpdateEntry) {
+      res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findandUpdateEntry,
+      });
+  } else {
+      res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+      });
+  }
+};
    
 exports.viewoneoffer = async (req, res) => {
-  //const getuser = await User.findOne({ _id: req.userId });
-  const findone = await Offer.findOne({ _id: req.params.id }).populate("product").populate("seller")
+  //const getoneseller = await Seller.findOne({_id : req.sellerId})
+   const findone = await Offer.findOne({ seller:req.sellerId }).populate("product")
+ .populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
+
     });
   } else {
     res.status(400).json({
@@ -65,13 +89,14 @@ exports.viewoneoffer = async (req, res) => {
 };
 
 exports.Getoffer = async (req, res) => {
- 
-  const findall = await Offer.find().populate("product")
+  //const getseller= await Seller.findOne({ _id: req.sellerId });
+
+  const findall = await Offer.find({seller:req.sellerId}).populate("product")
   .populate("seller")
     .sort({ sortorder: 1 }).then((data)=>{
       res.status(200).json({
         status: true,
-        data: data,
+        data: data
       });
     })
     .catch((error) => {

@@ -10,12 +10,13 @@ cloudinary.config({
 });
 
 exports.addproductcategory = async (req, res) => {
-  const { name, product_img, desc, sortorder, status } = req.body;
+  const { name, product_img,price, desc, sortorder, status } = req.body;
 
   const newProductcategory = new Productcategory({
     name: name,
     product_img: product_img,
     desc: desc,
+    price : price,
     sortorder: sortorder,
     status: status,
   });
