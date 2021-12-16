@@ -51,6 +51,9 @@ const productSchema = new Schema(
     qty: {
       type: String,
     },
+    rating :{
+      type : Number
+    },
     reorder_level: {
       type: String,
     },

@@ -41,6 +41,7 @@ const coupon = require("./routes/coupon");
 const adminlogin = require("./routes/adminlogin");
 const subscription = require("./routes/subscription");
 const cus_slider = require("./routes/cus_slider");
+const warehouse = require("./routes/warehouse");
 
 
 
@@ -76,9 +77,10 @@ app.use("/", coupon);
 app.use("/", adminlogin);
 app.use("/", subscription);
 app.use("/", cus_slider);
+app.use("/", warehouse);
 
 
-
+ 
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");
