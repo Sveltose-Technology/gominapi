@@ -84,3 +84,21 @@ exports.getonewarehouse = async (req,res)=>{
         })
     })
 }
+
+exports.del_warehouse = async (req, res) => {
+    try {
+      const deleteentry = await Warehouse.deleteOne({ _id: req.params.id });
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: deleteentry,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    }
+  };
+  
