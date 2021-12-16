@@ -325,20 +325,20 @@ exports.productbycategory = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
-  if (findall) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
+    .populate("brand")
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
     });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
-  }
 };
 
 exports.productbybrand = async (req, res) => {

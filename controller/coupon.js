@@ -1,12 +1,12 @@
 const Coupon = require("../models/coupon");
-//const seller = require("../models/seller");
+const Seller = require("../models/seller");
 
 exports.addcoupon = async (req, res) => {
   const {
     offer_code,
     CouponTitle,
     product,
-    //seller,
+    seller,
     description,
     startDate,
     expireOn,
@@ -15,7 +15,7 @@ exports.addcoupon = async (req, res) => {
     //discount,
     status,
   } = req.body;
-
+ 
   create_random_string(6);
   function create_random_string(string_length) {
     (random_string = ""),
@@ -33,7 +33,7 @@ exports.addcoupon = async (req, res) => {
     offer_code: random_string,
     CouponTitle : CouponTitle,
     product : product,
-    //seller : seller,
+    seller : req.sellerId,
     description: description,
     startDate: startDate,
     expireOn: expireOn,
@@ -59,6 +59,28 @@ exports.addcoupon = async (req, res) => {
     });
 };
 
+exports.editcoupon = async(req,res)=>{
+  const findandupdate  = await Coupon.findOneAndUpdate(
+  {_id : req.params.id},
+  {$set : req.body},
+  {
+    new :true
+  })
+  if(findandupdate){
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : findandupdate
+    })
+  }else {
+    res.status(400).json({
+      status : false,
+      error : "error",
+      error : error
+    })
+  }
+}
+
 exports.getcoupon = async (req, res) => {
   const findall = await Coupon.find({seller:req.sellerId}).populate("product").populate("seller").sort({ sortorder: 1 });
   if (findall) {
@@ -76,6 +98,22 @@ exports.getcoupon = async (req, res) => {
   }
 };
 
+exports.getonecoupon  = async(req,res) =>{
+  const findone = await Coupon.findOne({seller:req.sellerId}).populate("seller").populate("product")
+   if(findone){
+     res.status(200).json({
+       status : true,
+       msg : "success",
+       data : findone
+     })
+   }else{
+     res.status(400).json({
+       status :false,
+       msg : "error",
+       error : error
+     })
+   }
+}
  
 
 exports.delcoupon = async (req, res) => {

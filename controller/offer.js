@@ -12,9 +12,10 @@ exports.addOffer = async (req, res) => {
     sortorder,
   } = req.body;
 
+
   const newOffer = new Offer({
     product : product,
-    //seller : req.sellerId,
+    seller : req.sellerId,
     offerTitle : offerTitle,
     percentageOff: percentageOff,
     status: status,
