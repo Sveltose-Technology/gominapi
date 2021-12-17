@@ -7,13 +7,13 @@ const { addOffer, Getoffer,viewoneoffer,deloffer,totalOffer,edit_offer } = requi
 
 //path
 
-router.post ("/admin/addOffer",tokenverify,addOffer)
-router.get ("/admin/Getoffer",tokenverify,Getoffer)
-router.get ("/admin/viewoneoffer/:id",tokenverify,viewoneoffer)
+router.post ("/admin/addOffer",addOffer)
+router.get ("/admin/Getoffer",Getoffer)
+router.get ("/admin/viewoneoffer/:id",viewoneoffer)
 
 router.get ("/admin/deloffer/:id",deloffer)
 router.get ("/admin/totalOffer",totalOffer)
-router.post("/admin/edit_offer/:id",tokenverify,edit_offer)
+router.post("/admin/edit_offer/:id",edit_offer)
 
 
 
