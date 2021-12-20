@@ -43,7 +43,9 @@ const subscription = require("./routes/subscription");
 const cus_slider = require("./routes/cus_slider");
 const warehouse = require("./routes/warehouse");
 const material = require("./routes/material");
+const stocktransfer = require("./routes/stocktransfer");
 
+ 
 
 
 
@@ -81,6 +83,8 @@ app.use("/", subscription);
 app.use("/", cus_slider);
 app.use("/", warehouse);
 app.use("/", material);
+app.use("/", stocktransfer);
+
 
 
 

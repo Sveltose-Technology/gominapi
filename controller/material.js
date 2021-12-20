@@ -36,7 +36,7 @@ exports.addmaterial = async (req, res) => {
 
 
 exports.editmaterial = async (req,res) =>{
-  const findandUpdateEntry = await Material.findByIdAndUpdate(
+  const findandUpdateEntry = await Material.findOneAndUpdate(
     {
       _id: req.params.id,
   },{
