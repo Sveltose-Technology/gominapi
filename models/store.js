@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const storeSchema = new Schema(
   {
     store: { type: Schema.Types.ObjectId, ref: "store" },
+    seller: { type: Schema.Types.ObjectId, ref: "seller" },
+
     store_name: {
       type: String,
     },
