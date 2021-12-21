@@ -6,7 +6,7 @@ const { addstocktransfer,delstocktransfer,getstocktransfer } = require("../contr
 //Paths
 router.post("/admin/addstocktransfer", addstocktransfer);
 router.get("/admin/delstocktransfer/:id", delstocktransfer);
-router.get("/admin/getstocktransfer/:id", getstocktransfer);
+router.get("/admin/getstocktransfer", getstocktransfer);
 
 
 //router.post("/admin/Adminlogin", Adminlogin);
