@@ -307,7 +307,7 @@ exports.getonestore = async (req, res) => {
 };
 
 exports.storebyseller = async (req, res) => {
-  const getseller = await Seller.findOne({ _id: req.sellerId });
+  //const getseller = await Seller.findOne({ _id: req.sellerId });
 
   const findone = await Store.findOne({ seller: req.sellerId }).populate(
     "seller"
