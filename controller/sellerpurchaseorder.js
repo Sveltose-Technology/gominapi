@@ -34,25 +34,25 @@ exports.addpurchaseorder = async (req, res) => {
    
 };
 
-// exports.getorder = async (req, res) => {
-//     const findall = await Purchaseorder.find()
-//       .sort({ sortorder: 1 })
-//       .populate("seller")
-//       .populate("product");
-//     if (findall) {
-//       res.status(200).json({
-//         status: true,
-//         msg: "success",
-//         data: findall,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: false,
-//         msg: "error",
-//         error: "error",
-//       });
-//     }
-//   };
+exports.getpurchaseorder = async (req, res) => {
+    const findall = await Purchaseorder.find()
+      .sort({ sortorder: 1 }).populate("product")
+      .populate("seller").then((data)=>{
+          res.status(200).json({
+              status : true,
+              msg : "success",
+              data : data
+              
+          })
+      }).catch((error)=>{
+          res.status(400).json({
+              status : false,
+              msg : "error",
+              error : error
+          })
+      })
+     
+  };
   
 
 
