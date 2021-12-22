@@ -17,24 +17,43 @@ exports.addpurchaseorder = async (req, res) => {
     qty: qty,
     purchaseprice: purchaseprice,
    });
-   newpurchaseorder.save(function (err, data) {
-    if (err) {
-      res.status(400).json({
-        status: false,
-        msg: "Error Occured",
-        error: err,
-      });
-    } else {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
-    }
-  });
+   newpurchaseorder.save().then((data)=>{
+       res.status(200).json({
+           status : true,
+           msg : "successfully Order",
+           data : data
+       })
+   })
+   .catch((error)=>{
+       res.status(400).json({
+           status : false,
+           msg : "error",
+           error : error
+       })
+   })
+   
 };
 
-
+// exports.getorder = async (req, res) => {
+//     const findall = await Purchaseorder.find()
+//       .sort({ sortorder: 1 })
+//       .populate("seller")
+//       .populate("product");
+//     if (findall) {
+//       res.status(200).json({
+//         status: true,
+//         msg: "success",
+//         data: findall,
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         msg: "error",
+//         error: "error",
+//       });
+//     }
+//   };
+  
 
 
 
