@@ -30,7 +30,7 @@ exports.addorder = async (req, res) => {
     delivery_address: delivery_address,
     order_date: order_date,
     // shippingdate: shippingdate,
-    // deliverdondate: deliverdondate,
+    // deliverdondate: deliverdondate, 
     status: status,
   });
   newOrderproduct.save(function (err, data) {
