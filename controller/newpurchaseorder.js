@@ -15,7 +15,7 @@ exports.addnewpurchaseorder = async (req, res) => {
   } = req.body;
 
   const newpurchaseorder = new Purchaseorder({
-    seller: req.sellerId,
+    seller: seller,
     supplier : supplier,
     product: product,
     stock_due :stock_due,
@@ -41,9 +41,9 @@ exports.addnewpurchaseorder = async (req, res) => {
 };
 
 exports.getpurchaseorder = async (req, res) => {
-    const findall = await Purchaseorder.find({seller:req.sellerId})
+    const findall = await Purchaseorder.find().populate("seller")
       .sort({ sortorder: 1 }).populate("product")
-      .populate("seller").then((data)=>{
+      .populate("supplier").then((data)=>{
           res.status(200).json({
               status : true,
               msg : "success",

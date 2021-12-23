@@ -13,11 +13,11 @@ const newpurchaseorderSchema = new mongoose.Schema(
  required : true
     },
   
-    product: {
+    product: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "product",
      // required: true,
-    },
+    }],
     stock_due: {
       type: Number,
     },
