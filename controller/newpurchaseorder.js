@@ -1,8 +1,7 @@
 const Purchaseorder = require("../models/newpurchaseorder");
 const Seller = require("../models/seller");
 
-const { v4: uuidv4 } = require("uuid");
-
+ 
 exports.addnewpurchaseorder = async (req, res) => {
   const {
     seller,
@@ -11,8 +10,24 @@ exports.addnewpurchaseorder = async (req, res) => {
     stock_due,
     gstIn,
     payment_due,
-    orderId
+    orderId,
+    status,
+    action
   } = req.body;
+
+  create_randomString(12);
+  function create_randomString(string_length) {
+    (randomString = ""),
+      (characters =
+        "1234567890");
+    for (var i, i = 0; i < string_length; i++) {
+      randomString += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return randomString;
+  }
+
 
   const newpurchaseorder = new Purchaseorder({
     seller: seller,
@@ -21,7 +36,10 @@ exports.addnewpurchaseorder = async (req, res) => {
     stock_due :stock_due,
     gstIn :gstIn,
     payment_due:payment_due,
-    orderId: uuidv4()
+    orderId: randomString,
+    status :   status,
+     action :  action
+
     });
    newpurchaseorder.save().then((data)=>{
        res.status(200).json({
@@ -48,7 +66,7 @@ exports.getpurchaseorder = async (req, res) => {
               status : true,
               msg : "success",
               
-              data : data
+              data : data  
               
           })
       }).catch((error)=>{

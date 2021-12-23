@@ -31,7 +31,12 @@ const newpurchaseorderSchema = new mongoose.Schema(
     orderId: {
         type: String,
       },
-     
+     status : {
+       type : String
+     },
+     action :{
+       type : String
+     }
   },
   { timestamps: true }
 );
