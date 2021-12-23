@@ -1,22 +1,28 @@
-const Purchaseorder = require("../models/sellerpurchaseorder");
+const Purchaseorder = require("../models/newpurchaseorder");
+const Seller = require("../models/seller");
+
 const { v4: uuidv4 } = require("uuid");
 
-exports.addpurchaseorder = async (req, res) => {
+exports.addnewpurchaseorder = async (req, res) => {
   const {
     seller,
+    supplier,
     product,
-    qty,
-    orderId,
-    purchaseprice,
+    stock_due,
+    gstIn,
+    payment_due,
+    orderId
   } = req.body;
 
   const newpurchaseorder = new Purchaseorder({
-    seller: seller,
+    seller: req.sellerId,
+    supplier : supplier,
     product: product,
-    orderId: uuidv4(),
-    qty: qty,
-    purchaseprice: purchaseprice,
-   });
+    stock_due :stock_due,
+    gstIn :gstIn,
+    payment_due:payment_due,
+    orderId: uuidv4()
+    });
    newpurchaseorder.save().then((data)=>{
        res.status(200).json({
            status : true,
@@ -41,6 +47,7 @@ exports.getpurchaseorder = async (req, res) => {
           res.status(200).json({
               status : true,
               msg : "success",
+              
               data : data
               
           })
@@ -54,6 +61,7 @@ exports.getpurchaseorder = async (req, res) => {
      
   };
   
+
 
 
 

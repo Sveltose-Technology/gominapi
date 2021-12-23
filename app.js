@@ -47,7 +47,7 @@ const stocktransfer = require("./routes/stocktransfer");
 const stockadjustment = require("./routes/stockadjustment");
  
 const trendingstore = require("./routes/trendingstore");
-const sellerpurchaseorder = require("./routes/sellerpurchaseorder");
+const newpurchaseorder = require("./routes/newpurchaseorder");
 
 
  
@@ -91,7 +91,7 @@ app.use("/", material);
 app.use("/", stocktransfer);
 app.use("/", stockadjustment);
 app.use("/", trendingstore);
-app.use("/", sellerpurchaseorder);
+app.use("/", newpurchaseorder);
 
 
 

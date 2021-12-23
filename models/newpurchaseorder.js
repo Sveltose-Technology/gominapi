@@ -1,21 +1,30 @@
 const mongoose = require("mongoose");
 
-const sellerpurchaseorderSchema = new mongoose.Schema(
+const newpurchaseorderSchema = new mongoose.Schema(
   {
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
-     // required: true,
+      required: true,
     },
+    supplier : {
+ type :  mongoose.Schema.Types.ObjectId,
+ ref : "supplier",
+ required : true
+    },
+  
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "product",
      // required: true,
     },
-    qty: {
+    stock_due: {
       type: Number,
     },
-    purchaseprice: {
+    gstIn : {
+      type : String
+    },
+    payment_due: {
       type: Number,
       required: true,
     },
@@ -27,4 +36,4 @@ const sellerpurchaseorderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("sellerpurchaseorder", sellerpurchaseorderSchema);
+module.exports = mongoose.model("newpurchaseorder", newpurchaseorderSchema);
