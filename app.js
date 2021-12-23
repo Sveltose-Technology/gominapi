@@ -45,9 +45,9 @@ const warehouse = require("./routes/warehouse");
 const material = require("./routes/material");
 const stocktransfer = require("./routes/stocktransfer");
 const stockadjustment = require("./routes/stockadjustment");
- 
 const trendingstore = require("./routes/trendingstore");
 const newpurchaseorder = require("./routes/newpurchaseorder");
+const gstrate = require("./routes/gstrate");
 
 
  
@@ -92,6 +92,8 @@ app.use("/", stocktransfer);
 app.use("/", stockadjustment);
 app.use("/", trendingstore);
 app.use("/", newpurchaseorder);
+app.use("/", gstrate);
+
 
 
 
