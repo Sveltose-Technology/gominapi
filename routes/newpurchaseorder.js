@@ -4,14 +4,14 @@ const { tokenverify } = require("../functions/tokenverify");
 
 
 const {
-    addnewpurchaseorder,getpurchaseorder
+    addnewpurchaseorder,
    
 } = require("../controller/newpurchaseorder");
 
 // PATHS
 
 router.post("/admin/addnewpurchaseorder",tokenverify, addnewpurchaseorder);
-router.get("/admin/getpurchaseorder", getpurchaseorder);
+//router.get("/admin/getpurchaseorder", getpurchaseorder);
 
  
 
