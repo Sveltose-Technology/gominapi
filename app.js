@@ -49,6 +49,7 @@ const trendingstore = require("./routes/trendingstore");
 const newpurchaseorder = require("./routes/newpurchaseorder");
 const gstrate = require("./routes/gstrate");
 const size = require("./routes/size");
+const color = require("./routes/color");
 
  
 
@@ -94,6 +95,7 @@ app.use("/", trendingstore);
 app.use("/", newpurchaseorder);
 app.use("/", gstrate);
 app.use("/", size);
+app.use("/", color);
 
 
 
