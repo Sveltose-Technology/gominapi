@@ -1,19 +1,19 @@
-// const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
  
-// const sizeSchema = new Schema(
-//   {
+const sizeSchema = new Schema(
+  {
   
-//      size_name : {
-//          type : String
-//      },
-//      status :{
-//          type :String
-//      }
+     size_name : {
+         type : String
+     },
+     status :{
+         type :String
+     }
    
   
-//    },
-//   { timestamps: true }
-// );
+   },
+  { timestamps: true }
+);
  
-// module.exports = mongoose.model("size", sizeSchema);
+module.exports = mongoose.model("size", sizeSchema);

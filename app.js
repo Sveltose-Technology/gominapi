@@ -48,7 +48,7 @@ const stockadjustment = require("./routes/stockadjustment");
 const trendingstore = require("./routes/trendingstore");
 const newpurchaseorder = require("./routes/newpurchaseorder");
 const gstrate = require("./routes/gstrate");
-
+const size = require("./routes/size");
 
  
 
@@ -93,6 +93,7 @@ app.use("/", stockadjustment);
 app.use("/", trendingstore);
 app.use("/", newpurchaseorder);
 app.use("/", gstrate);
+app.use("/", size);
 
 
 
