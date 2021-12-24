@@ -10,7 +10,7 @@ const colorSchema = new Schema(
      status :{
          type :String
      }
-   
+      
   
    },
   { timestamps: true }
