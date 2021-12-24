@@ -7,36 +7,42 @@ const newpurchaseorderSchema = new mongoose.Schema(
       ref: "seller",
       required: true,
     },
-    supplier : {
- type :  mongoose.Schema.Types.ObjectId,
- ref : "supplier",
- required : true
+    supplier: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "supplier",
+      required: true
     },
-  
+
     product: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "product",
-     // required: true,
+      // required: true,
     }],
     stock_due: {
       type: Number,
     },
-    gstIn : {
-      type : String
+    gstIn: {
+      type: String
     },
     payment_due: {
       type: Number,
       required: true,
     },
     orderId: {
-        type: String,
-      },
-     status : {
-       type : String
-     },
-     action :{
-       type : String
-     }
+      type: String,
+    },
+    invoiceNo: {
+      type: String
+    },
+    invoice_date: {
+      type: String
+    },
+    status: {
+      type: String
+    },
+    action: {
+      type: String
+    }
   },
   { timestamps: true }
 );
