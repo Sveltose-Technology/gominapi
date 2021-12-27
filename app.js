@@ -50,6 +50,8 @@ const newpurchaseorder = require("./routes/newpurchaseorder");
 const gstrate = require("./routes/gstrate");
 const size = require("./routes/size");
 const color = require("./routes/color");
+const billinginvoice = require("./routes/billinginvoice");
+
 
  
 
@@ -96,6 +98,7 @@ app.use("/", newpurchaseorder);
 app.use("/", gstrate);
 app.use("/", size);
 app.use("/", color);
+app.use("/", billinginvoice);
 
 
 
