@@ -12,7 +12,7 @@ const {
 
 //Paths
 router.post("/admin/addbillinginvoice", addbillinginvoice);
-router.post("/admin/getbillinglist", getbillinglist);
+router.get("/admin/getbillinglist", getbillinglist);
 
  
 
