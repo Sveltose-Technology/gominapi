@@ -51,9 +51,8 @@ exports.addbillinginvoice = async (req, res) => {
 };
 
 exports.getbillinglist = async (req, res) => {
-  const findall = await Billinginvoice.find().populate("seller")
-    .sort({ sortorder: 1 }).populate("product")
-    .populate("supplier").then((data) => {
+  const findall = await Billinginvoice.find()
+    .sort({ sortorder: 1 }).then((data) => {
       res.status(200).json({
         status: true,
         msg: "success",
