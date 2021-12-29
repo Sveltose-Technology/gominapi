@@ -4,7 +4,7 @@ exports.addtocartproduct = async (req, res) => {
   const { orderby, product, product_price, product_qty } = req.body;
 
   const addtoCart = new Cart({
-    orderby: orderby,
+    customer: customer,
     product: product,
     product_price: product_price,
     product_qty: product_qty,
