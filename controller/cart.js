@@ -1,7 +1,7 @@
 const Cart = require("../models/cart");
 
 exports.addtocartproduct = async (req, res) => {
-  const { orderby, product, product_price, product_qty } = req.body;
+  const { customer, product, product_price, product_qty } = req.body;
 
   const addtoCart = new Cart({
     customer: customer,
@@ -11,7 +11,7 @@ exports.addtocartproduct = async (req, res) => {
   });
 
   const findexist = await Cart.findOne({
-    $and: [{ orderby: orderby }, { product: product }],
+    $and: [{ customer: customer }, { product: product }],
   });
   if (findexist) {
     res.status(400).json({
