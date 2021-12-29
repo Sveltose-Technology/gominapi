@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CartSchema = new mongoose.Schema(
   {
-    orderby: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    orderby: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
     product_price: {
       type: Number,

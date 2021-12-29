@@ -52,6 +52,7 @@ const size = require("./routes/size");
 const color = require("./routes/color");
 const billinginvoice = require("./routes/billinginvoice");
 const review = require("./routes/review");
+const mail = require("./routes/mail");
 
 
  
@@ -101,6 +102,7 @@ app.use("/", size);
 app.use("/", color);
 app.use("/", billinginvoice);
 app.use("/", review);
+app.use("/", mail);
 
 
 

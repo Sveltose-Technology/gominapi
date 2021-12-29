@@ -1,4 +1,6 @@
-const Orderproduct = require("../models/orderproduct");
+const Orderproduct = require("../models/orderproduct")
+const Coupon = require("../models/coupon");
+
 const { v4: uuidv4 } = require("uuid");
 
 exports.addorder = async (req, res) => {
@@ -17,6 +19,9 @@ exports.addorder = async (req, res) => {
     // deliverdondate,
     status,
   } = req.body;
+
+  // const verifycoupon = await Coupon.find({CouponTitle:})
+
 
   const newOrderproduct = new Orderproduct({
     customer: customer,
