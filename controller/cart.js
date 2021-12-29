@@ -39,7 +39,7 @@ exports.addtocartproduct = async (req, res) => {
 };
 
 exports.getallcart = async (req, res) => {
-  const findall = await Cart.find().sort({ sortorder: 1 });
+  const findall = await Cart.find().sort({ sortorder: 1 }).populate("customer").populate("product")
   if (findall) {
     res.status(200).json({
       status: true,
