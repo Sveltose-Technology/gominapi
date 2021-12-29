@@ -6,19 +6,15 @@ const billingInvoiceSchema = new Schema(
     orderId: {
       type: String,
     },
-
-customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
-quantity: {
-      type: Number,
-      require: true,
-    },
-    total_amount: {
-      type: Number,
-    },
-    action: {
-      type: String,
-
-    },
+    customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
+    customer_name: { type: String, },
+    customer_phone: { type: Number, },
+    customer_email: { type: String, },
+    total_qty: { type: String, },
+    total_amount: { type: String, },
+    product: [{
+      type: Object
+    }]
   },
   { timestamps: true }
 );

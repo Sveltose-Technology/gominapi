@@ -13,7 +13,8 @@ const {
   del_store,
   storebyseller,
   store_req,
-  totalstore
+  totalstore,
+  searchstore
 } = require("../controller/store");
 
 const storage = multer.diskStorage({
@@ -72,5 +73,6 @@ router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload, editstore);
 router.get("/admin/store_req", store_req);
 router.get("/admin/totalstore", totalstore)
+router.post("/admin/searchstore", searchstore)
 
 module.exports = router;

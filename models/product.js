@@ -16,6 +16,9 @@ const productSchema = new Schema(
     sku_no: {
       type: String,
     },
+    discount_perc: {
+      type: Number,
+    },
     hsn_sac_no: {
       type: String,
     },
@@ -78,7 +81,6 @@ const productSchema = new Schema(
      sortorder: {
       type: Number,
     },
-    
     status: {
       type: String,
       default: "Active",

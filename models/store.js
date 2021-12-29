@@ -21,7 +21,6 @@ const storeSchema = new Schema(
       type: String,
       //require: true,
     },
-
     store_email: {
       type: String,
     },

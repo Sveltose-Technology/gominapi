@@ -680,6 +680,25 @@ exports.totalstore = async (req, res) => {
     });
 };
 
+
+exports.searchstore = async (req, res) => {
+  const { oneinput } = req.body;
+  await Store.find({store_name:{$regex: oneinput,$options:"i"}})
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
 // exports.browsebytreading_store = async (req,res) =>{
 //  const finddetails = await Store.find()
 // }

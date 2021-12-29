@@ -51,6 +51,7 @@ const gstrate = require("./routes/gstrate");
 const size = require("./routes/size");
 const color = require("./routes/color");
 const billinginvoice = require("./routes/billinginvoice");
+const review = require("./routes/review");
 
 
  
@@ -99,6 +100,7 @@ app.use("/", gstrate);
 app.use("/", size);
 app.use("/", color);
 app.use("/", billinginvoice);
+app.use("/", review);
 
 
 

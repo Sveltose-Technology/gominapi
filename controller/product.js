@@ -17,6 +17,7 @@ cloudinary.config({
 exports.addproduct = async (req, res) => {
   const {
     store,
+    discount_perc,
     product_name,
     sku_no,
     hsn_sac_no,
@@ -45,6 +46,7 @@ exports.addproduct = async (req, res) => {
   const newProduct = new Product({
     store: store,
     product_name: product_name,
+    discount_perc: discount_perc,
     sku_no: sku_no,
     hsn_sac_no: hsn_sac_no,
     short_desc: short_desc,
@@ -57,7 +59,7 @@ exports.addproduct = async (req, res) => {
     material: material,
     stock: stock,
     qty: qty,
-    rating : rating,
+    rating: rating,
     reorder_level: reorder_level,
     unit: unit,
     cost_price: cost_price,
@@ -410,53 +412,108 @@ exports.totalproduct = async (req, res) => {
 }
 
 
- 
+
 exports.searchItem = async (req, res) => {
-  //const {item}  = req.params.id
   const { oneinput } = req.body
-let allproducts = []
-let errors = []
-  const findbybrand = await Brand.find({name:{$regex: oneinput,$options:"i"}}).then((data)=>{
-    let allitems  = []
-    for (let i = 0; i < data.length; i++) {
-      const element = data[i]._id; 
-      //console.log(element)
-      allitems.push(element);
-    }
+  let allproducts = []
+  let errors = []
+  await Brand.find({ name: { $regex: oneinput, $options: "i" } }).then((data) => {
+    // let allitems  = []
+    // for (let i = 0; i < data.length; i++) {
+    //   const element = data[i]._id;  
+    //   allitems.push(element);
+    // }
+    // for (let j = 0; j < allitems.length; j++) {
+    //   allitems[key] = allitems[j];
+    // }
+    // console.log(allitems)
+    // const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
+    // console.log(obj)
 
-    // let createquery = allitems.
-    for (let j = 0; j < allitems.length; j++) {
-      allitems[key] = allitems[j];
-      
-    }
-    console.log(allitems)
-    const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
-    console.log(obj)
+    //view all products of brands
+    // if(data){
+    //   for (let i = 0; i < data.length; i++) {
+    //     const element = data[i]._id;
+    //     await Product.find({brand:element}).then((product)=>{
+    //       console.log(product)
+    //     }).catch((error)=>{
+    //       console.log(error)
+    //     })
+    //   }
+    // }
+
+    //store done
+    //product and category done 
+    //brand
+
+
     res.status(200).json({
-          status: true,
-          msg: "success",
-          data: data
-        })
-  }).catch((error)=>{
+      status: true,
+      msg: "success",
+      data: data
+    })
+  }).catch((error) => {
     res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error
-        })
+      status: false,
+      msg: "error",
+      error: error
+    })
   })
-
-  // await Product.find({$or:[{ product_name: { $regex: oneinput, $options: "i" } },{brand: element}]}).populate('brand').then((data)=>{
-  //   res.status(200).json({
-  //     status: true,
-  //     msg: "success",
-  //     data: data
-  //   })
-  // }).catch((error)=>{
-  //   res.status(400).json({
-  //     status: false,
-  //     msg: "error",
-  //     error: error
-  //   })
-  // })
-
 }
+
+
+exports.searchinputproduct = async (req, res) => {
+  const { oneinput } = req.body;
+  await Product.find({ product_name: { $regex: oneinput, $options: "i" } })
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+exports.searchinputbycategory = async (req, res) => {
+
+
+  const { oneinput } = req.body;
+  const findbycategory = await Productcategory.find({ name: { $regex: oneinput, $options: "i" } });
+
+  const findbybrand = await Brand.find({ name: { $regex: oneinput, $options: "i" } })
+
+  const findbyproduct = await Product.find({ product_name: { $regex: oneinput, $options: "i" } })
+
+  if(findbycategory && findbybrand){
+    let somearray = []
+    findbycategory.forEach(i=>{
+          somearray.indexOf(i._id) === -1 ? somearray.push(i._id):console.log("already exists");
+        })
+
+        let somebrand = []
+        findbybrand.forEach(i=>{
+          somebrand.indexOf(i._id) === -1 ? somebrand.push(i._id):console.log("already exists");
+        })
+
+        let findproducts =async()=>{
+          await Product.find({$or:[{brand:{$in:somebrand}},{productcategory:{$in:somearray}},{ product_name: { $regex: oneinput, $options: "i" } }]}).populate('productcategory').populate('brand').then((data1)=>{
+            res.status(200).json({
+              status: true,
+              data: data1,
+            });
+          })
+        }
+        findproducts();
+  }else{
+      res.status(400).json({
+        status: false,
+        data: findbyproduct,
+      });
+  }
+};

@@ -32,7 +32,7 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.match("png") ) {
+    if (!file.mimetype.match(".png",".jpeg",".jpg") ) {
       cb(new Error("file is not supported"), false);
       return;
     }
@@ -53,25 +53,9 @@ const fileFilter = (req, file, cb) => {
 };
 
 
-//console.log("")
 
 
-// let uploads = multer({ storage: storage });
-
-// router.post(
-//   "/admin/up_bannerload_image",
-//   uploads.single("banner_img"),
-//   addbanner
-// );
-
-
-
-// const multerMid = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 2 * 1024 * 1024, //5mb
-//   },
-// });
+ 
 // const maxSize = 2 * 1024 * 1024
 // var upload = multer ({
 //   storage : storage,
