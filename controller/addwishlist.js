@@ -25,21 +25,42 @@ exports.addwishlist = async (req, res) => {
   });
 };
 
+// exports.getallwishlist = async (req, res) => {
+//   const findall = await Addwishlist.find().sort({ sortorder: 1 }).populate("customer").populate("product")
+//   .then((result) => {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: result,
+//     });
+//   })
+//   .catch((error) => {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   });
+
+// }
+
+
 exports.getallwishlist = async (req, res) => {
-  const findall = await Cart.find().sort({ sortorder: 1 }).populate("customer").populate("product")
-  if (findall) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
-    });
-  } else {
-    res.status(400).json({
-      status: true,
-      msg: "error",
-      error: "error",
-    });
-  }
+  const findall = await Addwishlist.find().sort({ sortorder: 1 }).populate("customer").populate("product")
+  .then((result) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: result,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      });
 };
 
 // exports.editcart = async (req, res) => {
