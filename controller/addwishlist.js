@@ -2,10 +2,10 @@ const Addwishlist = require("../models/addwishlist");
 const { v4: uuidv4 } = require("uuid");
 
 exports.addwishlist = async (req, res) => {
-  const { user, product } = req.body;
+  const { customer, product } = req.body;
 
   const newAddwishlist = new Addwishlist({
-    user: user,
+    customer: customer,
     product: product,
   });
   newAddwishlist.save(function (err, data) {
@@ -25,22 +25,22 @@ exports.addwishlist = async (req, res) => {
   });
 };
 
-// exports.getallwishlist = async (req, res) => {
-//   const findall = await Cart.find().sort({ sortorder: 1 });
-//   if (findall) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: true,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
+exports.getallwishlist = async (req, res) => {
+  const findall = await Cart.find().sort({ sortorder: 1 }).populate("customer").populate("product")
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: true,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
 // exports.editcart = async (req, res) => {
 //   const editorder = req.body;
