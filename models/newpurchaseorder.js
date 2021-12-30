@@ -35,11 +35,17 @@ const newpurchaseorderSchema = new mongoose.Schema(
     invoice_date: {
       type: String
     },
-    status: {
-      type: String
+    transportation_cost: {
+      type: Number
     },
-    action: {
-      type: String
+    grand_total :{
+ type : Number
+    },
+    instructions : {
+      type : String
+    },
+    amount: {
+      type: Number
     }
   },
   { timestamps: true }

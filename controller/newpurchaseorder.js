@@ -13,8 +13,10 @@ exports.addnewpurchaseorder = async (req, res) => {
     orderId,
     invoiceNo,
     invoice_date,
-    status,
-    action
+    amount,
+    transportation_cost,
+    grand_total,
+    instructions
   } = req.body;
 
   create_randomString(12);
@@ -71,9 +73,10 @@ exports.addnewpurchaseorder = async (req, res) => {
    orderId: randomString,
     invoiceNo: randomString,
     invoice_date: invoiceDate,
-    status: status,
-    action: action
-
+    amount: amount,
+    transportation_cost: transportation_cost,
+    grand_total : grand_total,
+    instructions : instructions
   });
   newpurchaseorder.save().then((data) => {
     res.status(200).json({

@@ -101,3 +101,24 @@ exports.removecart = async (req, res) => {
 
 
  //CARTBY // USERID
+// exports.cartbyshow = async(req,res) =>{
+//   const 
+// }
+
+
+// exports.viewonewebpagebypath = async (req, res) => {
+//   const findone = await Webpage.findOne({ path: req.params.id });
+//   if (findone) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findone,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   }
+// };
