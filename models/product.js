@@ -35,9 +35,9 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "subproductcategory",
     },
-    colour: [{
+    color: [{
       type: Schema.Types.ObjectId,
-      ref: "colour"
+      ref: "color"
     }],
     size: [{
       type: Schema.Types.ObjectId,
