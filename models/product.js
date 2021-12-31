@@ -36,14 +36,17 @@ const productSchema = new Schema(
       ref: "subproductcategory",
     },
     colour: [{
-      type: Object
+      type: Schema.Types.ObjectId,
+      ref: "colour"
     }],
     size: [{
-      type: Object
+      type: Schema.Types.ObjectId,
+      ref: "size"
     }],
     
     material: [{
-      type: Object
+      type: Schema.Types.ObjectId,
+      ref: "material"
     }],
 
     stock: {
