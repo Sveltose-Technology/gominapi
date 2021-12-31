@@ -14,6 +14,7 @@ const {
   storebyseller,
   store_req,
   totalstore,
+  browsebytreading_store,
   searchstore
 } = require("../controller/store");
 
@@ -74,5 +75,6 @@ router.post("/admin/editstore/:id", multipleUpload, editstore);
 router.get("/admin/store_req", store_req);
 router.get("/admin/totalstore", totalstore)
 router.post("/admin/searchstore", searchstore)
+router.get("/admin/browsebytreading_store",  browsebytreading_store);
 
 module.exports = router;

@@ -106,6 +106,10 @@ const storeSchema = new Schema(
       type: String,
       default: "Inactive",
     },
+    trendingPoint :{
+      type : Number,
+      default:0
+    },
     purchaseby :{type : Schema.Types.ObjectId,ref :"orderproduct"
 
     } 

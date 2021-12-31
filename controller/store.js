@@ -5,6 +5,7 @@ const Seller = require("../models/seller");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const dotenv = require("dotenv");
+const product = require("../models/product");
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -43,6 +44,7 @@ exports.addstore = async (req, res) => {
     tradelicence_img,
     companypan_img,
     address_proof_img,
+    trendingPoint,
     sortorder,
     status,
     //verifystore,
@@ -71,6 +73,7 @@ exports.addstore = async (req, res) => {
     pan_no: pan_no,
     company_panno: company_panno,
     address_proof: address_proof,
+    trendingPoint : trendingPoint,
     //gstImg: gstImg,
     // storepan_img: storepan_img,
     // tradelicence_img: tradelicence_img,
@@ -699,7 +702,20 @@ exports.searchstore = async (req, res) => {
     });
 };
 
-// exports.browsebytreading_store = async (req,res) =>{
-//  const finddetails = await Store.find()
-// }
-//console.log(req.body)
+ exports.browsebytreading_store = async (req,res) =>{
+   const findall = await Store.find().sort({trendingPoint : -1}).limit(5) .then((data) => {
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  });
+};
+
+ 
