@@ -35,19 +35,9 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "subproductcategory",
     },
-    color: [{
-      type: Schema.Types.ObjectId,
-      ref: "color"
-    }],
-    size: [{
-      type: Schema.Types.ObjectId,
-      ref: "size"
-    }],
-    
-    material: [{
-      type: Schema.Types.ObjectId,
-      ref: "material"
-    }],
+    material: {
+      type: String,
+    }, //user input
 
     stock: {
       type: String,
@@ -64,7 +54,9 @@ const productSchema = new Schema(
     reorder_level: {
       type: String,
     },
-
+    variation:[{
+      type: Object
+    }],
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
     cost_price: {
       type: Number,
