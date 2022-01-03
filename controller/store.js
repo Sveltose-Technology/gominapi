@@ -702,7 +702,7 @@ exports.searchstore = async (req, res) => {
     });
 };
 
- exports.browsebytreading_store = async (req,res) =>{
+ exports.browsebytrending_store = async (req,res) =>{
    const findall = await Store.find().sort({trendingPoint : -1}).limit(5) .then((data) => {
     res.status(200).json({
       status: true,
