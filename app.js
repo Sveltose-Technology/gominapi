@@ -53,6 +53,10 @@ const varient = require("./routes/varient");
 const billinginvoice = require("./routes/billinginvoice");
 const review = require("./routes/review");
 //const mail = require("./routes/mail");
+ 
+const color = require("./routes/color");
+const size = require("./routes/size");
+
 
 
  
@@ -102,6 +106,9 @@ app.use("/", varient);
 app.use("/", billinginvoice);
 app.use("/", review);
 //app.use("/", mail);
+app.use("/", color);
+app.use("/", size);
+
 
 
 

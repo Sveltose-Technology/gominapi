@@ -54,10 +54,14 @@ const productSchema = new Schema(
     reorder_level: {
       type: String,
     },
-    variation:[{
-      type: Object
-    }],
+    // variation:[{
+    //   type: Object
+    // }],
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
+    color: { type: Schema.Types.ObjectId, ref: "color" },
+    size: { type: Schema.Types.ObjectId, ref: "size" },
+
+
     cost_price: {
       type: Number,
     },

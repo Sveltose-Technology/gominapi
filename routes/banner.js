@@ -26,22 +26,11 @@ const storage = multer.diskStorage({
   },
 });
 
-
-
 const upload = multer({
   storage: storage,
   limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.match(".png",".jpeg",".jpg") ) {
-      cb(new Error("file is not supported"), false);
-      return;
-    }
-    cb(null, true);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (
+    if (
     file.mimetype.includes("jpeg") ||
     file.mimetype.includes("png") ||
     file.mimetype.includes("jpg")
@@ -50,29 +39,10 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(null, false);
   }
-};
+}
+});
 
-
-
-
- 
-// const maxSize = 2 * 1024 * 1024
-// var upload = multer ({
-//   storage : storage,
-//   fileFilter : (req,file,cb) =>{
-// if(file.mimetype == "png" ){
-//   cb(null,true)
-// }else{
-//   cb(null,false)
-// return cb (new Error ('only .png ,jpg'))
-  
-// }
-
-//   },
-//   limits : {fileSize : maxSize}
-  
-// })
-
+// PATHS
 router.post("/admin/addbanner", upload.array("banner_img"), addbanner);
 router.get("/admin/getbanner", getbanner);
 router.get("/admin/viewonebanner/:id", viewonebanner);

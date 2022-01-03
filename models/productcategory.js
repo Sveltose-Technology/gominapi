@@ -16,6 +16,10 @@ const productcategorySchema = new Schema(
     desc: {
       type: String,
     },
+    trendingcatpoint : {
+  type : Number,
+  default : 0
+    },
     sortorder: {
       type: Number,
     },

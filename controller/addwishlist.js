@@ -90,19 +90,19 @@ exports.getallwishlist = async (req, res) => {
 //   }
 // };
 
-// exports.removecart = async (req, res) => {
-//   try {
-//     const deleteentry = await Cart.deleteOne({ _id: req.params.id });
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: deleteentry,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: error,
-//     });
-//   }
-// };
+exports.deletewishlist = async (req, res) => {
+  try {
+    const deleteentry = await Addwishlist.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};
