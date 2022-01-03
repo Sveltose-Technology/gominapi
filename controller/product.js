@@ -266,8 +266,6 @@ exports.getproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-    .populate("color")
-    .populate("size")
     .populate("material");
   if (findall) {
     res.status(200).json({
