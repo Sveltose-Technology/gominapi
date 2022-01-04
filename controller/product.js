@@ -26,7 +26,8 @@ exports.addproduct = async (req, res) => {
     productcategory,
     productsubcategory,
     brand,
-    //variation,
+    size,
+    color,
     material,
     stock,
     qty,
@@ -53,7 +54,8 @@ exports.addproduct = async (req, res) => {
     productcategory: productcategory,
     productsubcategory: productsubcategory,
     brand: brand,
-    //variation : variation,
+    size : size,
+    color : color,
     material: material,
     stock: stock,
     qty: qty,
@@ -148,7 +150,7 @@ exports.editproduct = async (req, res) => {
     productcategory,
     productsubcategory,
     brand,
-    colour,
+    color,
     size,
     material,
     stock,
@@ -189,8 +191,8 @@ exports.editproduct = async (req, res) => {
   if (brand) {
     data.brand = brand;
   }
-  if (colour) {
-    data.colour = colour;
+  if (color) {
+    data.color = color;
   }
   if (size) {
     data.size = size;
