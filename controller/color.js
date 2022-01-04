@@ -93,7 +93,7 @@ exports.getcolor = async (req, res) => {
 
 exports.deletecolor = async (req, res) => {
   try {
-    const deleteentry = await fillColor.deleteOne({ _id: req.params.id });
+    const deleteentry = await Color.deleteOne({ _id: req.params.id });
     res.status(200).json({
       status: true,
       msg: "success",

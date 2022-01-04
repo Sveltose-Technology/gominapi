@@ -8,7 +8,7 @@ const {
 
 
 // Paths
-router.post("/admin/addVarient", addVarient);
+//router.post("/admin/addVarient", addVarient);
 // router.get("/admin/viewonecolor/:id", viewonecolor);
 // router.get("/admin/viewallcolor", viewallcolor);
 // router.get("/admin/delcolor/:id", delcolor);

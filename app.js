@@ -49,7 +49,7 @@ const trendingstore = require("./routes/trendingstore");
 const newpurchaseorder = require("./routes/newpurchaseorder");
 const gstrate = require("./routes/gstrate");
 
-const varient = require("./routes/varient");
+//const varient = require("./routes/varient");
 const billinginvoice = require("./routes/billinginvoice");
 const review = require("./routes/review");
 //const mail = require("./routes/mail");
@@ -102,7 +102,7 @@ app.use("/", stockadjustment);
 app.use("/", trendingstore);
 app.use("/", newpurchaseorder);
 app.use("/", gstrate);
-app.use("/", varient);
+//app.use("/", varient);
 app.use("/", billinginvoice);
 app.use("/", review);
 //app.use("/", mail);
