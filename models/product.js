@@ -35,9 +35,11 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "subproductcategory",
     },
-    material: {
-      type: String,
-    }, //user input
+    
+    material: { type: Schema.Types.ObjectId, ref: "material" },
+
+    
+    //user input
 
     stock: {
       type: String,

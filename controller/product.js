@@ -271,6 +271,8 @@ exports.getproduct = async (req, res) => {
     .populate("material")
     .populate("color")
     .populate("size")
+    .populate("material")
+
   if (findall) {
     res.status(200).json({
       status: true,
@@ -295,6 +297,8 @@ exports.getoneproduct = async (req, res) => {
     .populate("store")
     .populate("color")
     .populate("size")
+    .populate("material")
+
   if (findone) {
     res.status(200).json({
       status: true,
@@ -524,10 +528,17 @@ exports.searchinputbycategory = async (req, res) => {
 };
 
 
-exports.productbyseller = async (req, res) => {
+exports.productbystore = async (req, res) => {
   const findall = await Product.find({ store: req.params.id })
     .sort({ sortorder: 1 })
     .populate("productcategory")
+     .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+     .populate("color")
+    .populate("size")
+    .populate("material")
+
   
   if (findall) {
     res.status(200).json({
