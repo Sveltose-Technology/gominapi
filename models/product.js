@@ -56,14 +56,15 @@ const productSchema = new Schema(
     },
      
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
-    // color: { type: Schema.Types.ObjectId, ref: "color" },
-    // size: { type: Schema.Types.ObjectId, ref: "size" },
-  color : [{
-    type :Object
-  }],
-  size : [{
-    type :Object
-  }],
+     color: [{ type: Schema.Types.ObjectId, ref: "color" }],
+     size: [{ type: Schema.Types.ObjectId, ref: "size" }],
+
+   // color : [{
+  //   type :Object
+  // }],
+  // size : [{
+  //   type :Object
+  // }],
 
     cost_price: {
       type: Number,
