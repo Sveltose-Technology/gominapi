@@ -263,7 +263,7 @@ exports.editproduct = async (req, res) => {
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })
-   .populate("gstrate")
+   //.populate("gstrate")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -294,7 +294,7 @@ exports.getoneproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-    .populate("gstrate")
+ //   .populate("gstrate")
     .populate("color")
     .populate("size")
     
@@ -556,4 +556,3 @@ exports.productbystore = async (req, res) => {
 };
 
 
-//console.log()

@@ -75,7 +75,7 @@ const productSchema = new Schema(
       type: Number,
     },
     gst: 
-      { type: Schema.Types.ObjectId, ref: "gstrate" },
+      { type: Schema.Types.ObjectId, ref: "Gstrate" },
   
     product_img: {
       type: Array,
