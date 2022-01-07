@@ -9,8 +9,7 @@ const {
 router.post("/admin/addreview", addreview);
 router.get("/admin/getallreview", getallreview);
 router.get("/admin/totalcomment", totalcomment);
-//router.get("/admin/getavgrating", getavgrating);
-
+ 
  
 
 

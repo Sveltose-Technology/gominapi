@@ -3,7 +3,7 @@ const router = express.Router();
   
 
 const {
-    addbillinginvoice,getbillinglist
+    addbillinginvoice,getbillinglist,viewonebilling
 } = require("../controller/billinginvoice");
 
   
@@ -13,6 +13,8 @@ const {
 //Paths
 router.post("/admin/addbillinginvoice", addbillinginvoice);
 router.get("/admin/getbillinglist", getbillinglist);
+router.get("/admin/viewonebilling/:id", viewonebilling);
+
 
  
 

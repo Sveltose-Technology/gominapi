@@ -82,6 +82,21 @@ exports.getbillinglist = async (req, res) => {
 };
 
 
-
+exports.viewonebilling = async (req, res) => {
+  const findone = await Billinginvoice.findOne({ _id: req.params.id }).populate("product")
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
 
