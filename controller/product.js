@@ -268,7 +268,7 @@ exports.getproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-    .populate("material")
+     
     .populate("color")
     .populate("size")
     .populate("material")
@@ -297,7 +297,7 @@ exports.getoneproduct = async (req, res) => {
    // .populate("store")
     .populate("color")
     .populate("size")
-   .populate("material")
+    
 
   if (findone) {
     res.status(200).json({
