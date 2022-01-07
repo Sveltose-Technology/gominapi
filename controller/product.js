@@ -28,7 +28,7 @@ exports.addproduct = async (req, res) => {
     brand,
     size,
     color,
-   // material,
+   material,
     stock,
     qty,
     //rating,
@@ -56,7 +56,7 @@ exports.addproduct = async (req, res) => {
     brand: brand,
     size : size,
     color : color,
-  //  material: material,
+    material: material,
     stock: stock,
     qty: qty,
     //rating: rating,
@@ -268,7 +268,7 @@ exports.getproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-   // .populate("material")
+    .populate("material")
     .populate("color")
     .populate("size")
     .populate("material")
@@ -297,7 +297,7 @@ exports.getoneproduct = async (req, res) => {
    // .populate("store")
     .populate("color")
     .populate("size")
-  //  .populate("material")
+   .populate("material")
 
   if (findone) {
     res.status(200).json({
