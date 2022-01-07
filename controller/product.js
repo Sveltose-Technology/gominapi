@@ -538,7 +538,7 @@ exports.productbystore = async (req, res) => {
      .populate("color")
     .populate("size")
     .populate("material")
-
+    .populate("store")
   
   if (findall) {
     res.status(200).json({
