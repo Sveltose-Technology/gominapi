@@ -54,7 +54,7 @@ const productSchema = new Schema(
     //   type : Number
     // },
     reorder_level: {
-      type: String,
+      type: Number,
     },
      
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
@@ -85,7 +85,7 @@ const productSchema = new Schema(
        default: "Inactive"
     },
      sortorder: {
-       
+
       type: Number,
     },
     status: {
