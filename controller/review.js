@@ -11,7 +11,7 @@ exports.addreview = async(req,res)=>{
         comment :comment
         
     })
-    const alreadyReviewed = await Review.findOne({ comment: comment });
+    const alreadyReviewed = await Review.findOne({ product: product });
     if (alreadyReviewed) {
       res.status(400).json({
         status: false,
