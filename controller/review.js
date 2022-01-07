@@ -58,7 +58,7 @@ exports.addreview = async(req,res)=>{
   }
 
 exports.getallreview =async(req,res)=>{
-    const findall =await Review.find().sort({sortorder:1})
+    const findall =await Review.find().sort({sortorder:1}).populate("customer").populate("product")
     if(findall){
         res.status(200).json({
             status:true,
