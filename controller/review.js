@@ -75,6 +75,20 @@ exports.getallreview =async(req,res)=>{
 
 }
 
- 
+//  exports.getavgrating  = async (req,res) =>{
+//    const onestar = req.body.onestar;
+//    const twostar  = req.body.twostar;
+//    const threestar = req.body.threestar;
+//    const fourstar  = req.body.fourstar;
+//    const fivestar = req.body.fivestar
 
-//console.log()
+//      const  overallrating =  1*onestar + 2*twostar + 3*threestar + 4*fourstar +  5*fivestar
+//     const totalrating = onestar + twostar + threestar + fourstar + fivestar
+
+//    res.status(200).json({
+//      output : overallrating / totalrating   + "k"
+//    //output  =totalrating/
+//    })
+
+//  }
+
