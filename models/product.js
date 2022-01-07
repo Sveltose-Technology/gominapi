@@ -74,9 +74,9 @@ const productSchema = new Schema(
     sell_price: {
       type: Number,
     },
-    gst: {
-      type: String,
-    },
+    gst: 
+      { type: Schema.Types.ObjectId, ref: "gstrate" },
+  
     product_img: {
       type: Array,
     }, //goods && service
