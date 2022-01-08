@@ -14,7 +14,7 @@ exports.addtocartproduct = async (req, res) => {
     $and: [{ customer: customer }, { product: product }],
   });
   if (findexist) {
-    res.status(400).json({
+    res.status(200).json({
       status: false,
       msg: "Already exist",
       data: {},
