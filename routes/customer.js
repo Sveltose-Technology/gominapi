@@ -27,3 +27,4 @@ router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
 
 module.exports = router;
+//console.log()
