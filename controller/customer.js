@@ -2,6 +2,7 @@ const Customer = require("../models/customer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const nodemailer = require("nodemailer")
 
 const validatePassword = (password, dbpassword) => {
   bcrypt.compareSync(password, dbpassword);

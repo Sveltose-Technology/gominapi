@@ -1,4 +1,5 @@
 const Seller = require("../models/seller");
+ 
 // const cloudinary = require("cloudinary").v2;
 // const dotenv = require("dotenv");
 // const fs = require("fs");
@@ -163,8 +164,7 @@ exports.sellerlogin = async (req, res) => {
           message: "User Logged In",
           token: token,
           user: user,
-          usertype : "Seller"
-
+ 
         });
       } else {
         return res.status(400).send({

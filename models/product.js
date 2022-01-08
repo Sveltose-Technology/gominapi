@@ -74,8 +74,8 @@ const productSchema = new Schema(
     sell_price: {
       type: Number,
     },
-    gst: 
-      { type: Schema.Types.ObjectId, ref: "Gstrate" },
+    gstrate: 
+      { type: Schema.Types.ObjectId, ref: "gstrate" },
   
     product_img: {
       type: Array,
@@ -83,6 +83,9 @@ const productSchema = new Schema(
     offer_aplicable : {
        type : String,
        default: "Inactive"
+    },
+    tag : {
+      type : String
     },
      sortorder: {
 

@@ -26,9 +26,10 @@ exports.addproduct = async (req, res) => {
     productcategory,
     productsubcategory,
     brand,
+    tag,
     size,
     color,
-   material,
+    material,
     stock,
     qty,
     //rating,
@@ -36,7 +37,7 @@ exports.addproduct = async (req, res) => {
     unit,
     cost_price,
     sell_price,
-    gst,
+    gstrate,
     product_img,
     offer_aplicable,
     sortorder,
@@ -54,6 +55,7 @@ exports.addproduct = async (req, res) => {
     productcategory: productcategory,
     productsubcategory: productsubcategory,
     brand: brand,
+    tag : tag,
     size : size,
     color : color,
     material: material,
@@ -64,7 +66,7 @@ exports.addproduct = async (req, res) => {
     unit: unit,
     cost_price: cost_price,
     sell_price: sell_price,
-    gst: gst,
+    gstrate: gstrate,
     product_img: product_img,
     offer_aplicable: offer_aplicable,
     sortorder: sortorder,
@@ -263,7 +265,7 @@ exports.editproduct = async (req, res) => {
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })
-   //.populate("gstrate")
+   .populate("gstrate")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -556,3 +558,22 @@ exports.productbystore = async (req, res) => {
 };
 
 
+exports.getproductbytagname = async (req,res) => {
+  const findall = await Product.find({tag : req.params.id}).sort({sortorder : 1})
+  .then((data)=>{
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status : false,
+      error : "error",
+       error : error
+ 
+    })
+  })
+}
+
+  

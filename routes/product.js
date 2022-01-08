@@ -17,7 +17,8 @@ const {
   searchItem,
   searchinputproduct,
   searchinputbycategory,
-  productbystore
+  productbystore,
+  getproductbytagname
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -67,6 +68,9 @@ router.post("/admin/searchItem", searchItem);
 router.post("/admin/searchinputproduct", searchinputproduct);
 router.post("/admin/searchinputbycategory", searchinputbycategory);
 router.get("/admin/productbystore/:id", productbystore);
+router.get("/admin/getproductbytagname/:id", getproductbytagname);
+
 
 
 module.exports = router;
+ 
