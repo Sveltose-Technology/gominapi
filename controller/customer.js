@@ -12,11 +12,11 @@ const validatePassword = (password, dbpassword) => {
   return true;
 };
 
-function generateAccessToken(username) {
-  return jwt.sign(customername, process.env.TOKEN_SECRET, {
-    expiresIn: "1800h",
-  });
-}
+// function generateAccessToken(username) {
+//   return jwt.sign(customername, process.env.TOKEN_SECRET, {
+//     expiresIn: "1800h",
+//   });
+// }
 
 exports.addcustomer = async (req, res) => {
   const {
@@ -30,8 +30,8 @@ exports.addcustomer = async (req, res) => {
     status,
   } = req.body;
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
+  // const salt = bcrypt.genSaltSync(saltRounds);
+  //  const hashpassword = bcrypt.hashSync(password, salt);
 
   create_random_string(6);
   function create_random_string(string_length) {
@@ -93,27 +93,27 @@ exports.login = async (req, res) => {
       return res.status(400).send({
         message: "User not found.",
       });
-    } else {
-      // console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, user.password)) {
-        const token = jwt.sign({ customerId: user._id }, process.env.TOKEN_SECRET, {
-          expiresIn: "365d",
-        });
+    // } else {
+    //   // console.log(process.env.TOKEN_SECRET);
+    //   if (validatePassword(password, user.password)) {
+    //     const token = jwt.sign({ customerId: user._id }
+    //       // , process.env.TOKEN_SECRET, {
+    //       // expiresIn: "365d",
+    //     //}
+    //     );
 
         return res.status(201).send({
           message: "User Logged In",
-          token: token,
-          user: user,
+        //  token: token,
+         // user: user,
         });
       } else {
         return res.status(400).send({
           message: "Wrong Password",
         });
       }
-    }
-  });
-};
-
+    })
+  }
 exports.editcustomer = async (req, res) => {
   const findandUpdateEntry = await Customer.findOneAndUpdate(
     {
@@ -262,6 +262,7 @@ exports.sendotp = async (req, res) => {
   }
 };
 
+
 // // const mailer = (email,otp) =>{
 // // const nodemailer = require("nodemailer");
 // // var smtptransporter = nodemailer.createTransport({
@@ -361,3 +362,48 @@ exports.verifyotp = async (req, res) => {
 // }    
 // }
 
+
+
+// exports.login = async (req, res) => {
+//   const { customer_email, password } = req.body;
+
+//   const finddetails = await Customer.findOne({
+//     $or: [{ Mobile: Mobile }, { ConfirmEmail: Email }],
+//   });
+//   if (finddetails) {
+//     const validPass = await bcrypt.compare(
+//       password,
+//       finddetails.ConfirmPassword
+//     );
+//     // if (validPass) {
+//     //   const token = jwt.sign(
+//     //     {
+//     //       staffId: finddetails._id,
+//     //     },
+//     //     key,
+//     //     {
+//     //       expiresIn: 86400000,
+//     //     }
+//     //   );
+//     //   res.header("auth-adtoken", token).status(200).send({
+//     //     status: true,
+//     //     token: token,
+//     //     msg: "success",
+//     //     user: finddetails,
+//     //     user_type: "user",
+//     //   });
+//     } else {
+//       res.status(400).json({
+//         status: false,
+//         msg: "Incorrect Password",
+//         error: "error",
+//       });
+//     } 
+//   // else {
+//   //   res.status(400).json({
+//   //     status: false,
+//   //     msg: "User Doesnot Exist",
+//   //     error: "error",
+//   //   });
+//   // }
+// }
