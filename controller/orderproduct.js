@@ -156,6 +156,28 @@ exports.complete_order = async (req, res, next) => {
     });
 };
 
+exports.salesbyseller = async (req,res)=>{
+  const findall = await Orderproduct.find({ $and: [{ seller: req.params.id }, { status: "Complete" }]})
+  .populate("customer")
+  .populate("product")
+  
+  .then((data)=>{
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status : false,
+      error : "error",
+       error : error
+ 
+    })
+  })
+
+}
+
 
 exports.del_order = async (req, res) => {
   try {
@@ -190,3 +212,5 @@ exports.totalorder = async(req,res) =>{
     });
   })
 }
+
+ 

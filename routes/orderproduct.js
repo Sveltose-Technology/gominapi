@@ -9,7 +9,9 @@ const {
   cancelled_order,
   complete_order,
   del_order,
-  totalorder
+  totalorder,
+  salesbyseller
+  
 } = require("../controller/orderproduct");
 
 // PATHS
@@ -22,6 +24,8 @@ router.get("/admin/cancel_order", cancelled_order);
 router.get("/admin/complete_order", complete_order);
 router.get("/admin/del_order", del_order);
 router.get("/admin/totalorder", totalorder);
+router.get("/admin/salesbyseller/:id", salesbyseller);
+
 
 
 module.exports = router;

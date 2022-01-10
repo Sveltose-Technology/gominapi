@@ -142,6 +142,7 @@ exports.addproduct = async (req, res) => {
   }
 };
 
+
 exports.editproduct = async (req, res) => {
   const {
     product_name,
@@ -575,5 +576,7 @@ exports.getproductbytagname = async (req,res) => {
     })
   })
 }
+
+
 
   

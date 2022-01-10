@@ -207,7 +207,6 @@ exports.totalcustomer = async(req,res) =>{
 }
 
 
-
 exports.sendotp = async (req, res) => {
   const defaultotp = Math.ceil(Math.random()*999999);
   const { mobile_no } = req.body;

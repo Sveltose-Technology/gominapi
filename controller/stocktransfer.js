@@ -67,5 +67,3 @@ exports.getstocktransfer = async (req, res) => {
   }
 };
 
-
-
