@@ -2,11 +2,13 @@ const Addwishlist = require("../models/addwishlist");
 const { v4: uuidv4 } = require("uuid");
 
 exports.addwishlist = async (req, res) => {
-  const { customer, product } = req.body;
+  const { customer, product,color,size } = req.body;
 
   const newAddwishlist = new Addwishlist({
     customer: customer,
     product: product,
+    color : color,
+    size : size
   });
   newAddwishlist.save(function (err, data) {
     if (err) {
@@ -64,31 +66,29 @@ exports.getallwishlist = async (req, res) => {
 
 
 
-// exports.editcart = async (req, res) => {
-//   const editorder = req.body;
-//   console.log(editorder);
-//   const findandUpdateEntry = await Cart.findOneAndUpdate(
-//     {
-//       _id: req.params.id,
-//     },
-//     { $set: req.body },
-//     { new: true }
-//   );
+exports.editwishlist = async (req, res) => {
+  const findandUpdateEntry = await Addwishlist.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    { $set: req.body },
+    { new: true }
+  );
 
-//   if (findandUpdateEntry) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findandUpdateEntry,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       status: "error",
-//       error: "error",
-//     });
-//   }
-// };
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
 
 exports.deletewishlist = async (req, res) => {
   try {

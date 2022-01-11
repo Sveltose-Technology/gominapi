@@ -10,6 +10,12 @@ const CartSchema = new mongoose.Schema(
     product_qty: {
       type: Number,
     },
+    color : {
+      type : String
+    },
+    size : {
+      type : String
+    }
   },
   { timestamps: true }
 );

@@ -4,6 +4,12 @@ const AddwishlistSchema = new mongoose.Schema(
   {
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+    color :{
+ type : String
+    },
+    size : {
+      type : String
+    },
   },
   { timestamps: true }
 );

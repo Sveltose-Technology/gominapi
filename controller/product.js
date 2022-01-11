@@ -557,6 +557,41 @@ exports.productbystore = async (req, res) => {
     });
   }
 };
+exports.productsearchgetstore = async (req, res) => {
+  const { oneinput } = req.body;
+  const findall = await Product.find({ product_name: { $regex: oneinput, $options: "i" }})
+  
+  if (findall) {
+    let somearray = []
+    findall.forEach(i=>{
+          somearray.indexOf(i.store) === -1 ? somearray.push(i.store):console.log("already exists");
+          //console.log(i)
+        })
+        console.log(somearray)
+
+        let getstore =async()=>{
+          await Store.find({_id:{$in:somearray}}).then((data1)=>{
+            res.status(200).json({
+              status: true,
+              data: data1,
+            });
+          })
+        }
+        getstore();
+
+    // res.status(200).json({
+    //   status: true,
+    //   msg: "success",
+    //   data: findall,
+    // });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
 
 exports.getproductbytagname = async (req,res) => {
