@@ -3,16 +3,16 @@ const Cart = require("../models/cart");
 exports.addtocartproduct = async (req, res) => {
   const { customer, product, product_price, product_qty,color,size } = req.body;
 
-  let total_qty = 0;
-  for (let i = 0; i < product.length; i++) {
-    total_qty = total_qty + product[i].qty;
-  }
+  // let total_qty = 0;
+  // for (let i = 0; i < product.length; i++) {
+  //   total_qty = total_qty + product[i].qty;
+  // }
 
-  let total_amount = 0;
-  for (let i = 0; i < product.length; i++) {
-    total_amount =total_amount + product[i].amount;
+  // let total_amount = 0;
+  // for (let i = 0; i < product.length; i++) {
+  //   total_amount =total_amount + product[i].amount;
    
-  }
+  // }
 
 
   const addtoCart = new Cart({
