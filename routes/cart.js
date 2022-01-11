@@ -5,7 +5,7 @@ const {
   addtocartproduct,
   getallcart,
   removecart,
-  cartbyshow,
+  cartbycustomer,
   editcart
 } = require("../controller/cart");
 
@@ -13,7 +13,7 @@ const {
 router.post("/admin/add_ToCart", addtocartproduct);
 router.get("/admin/get_allcart", getallcart);
 router.get("/admin/remove_cart/:id", removecart);
-router.get("/admin/cartbyshow/:id", cartbyshow);
+router.get("/admin/cartbycustomer/:id", cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
 
 

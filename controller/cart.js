@@ -132,7 +132,7 @@ exports.removecart = async (req, res) => {
 // }
 
 
-exports.cartbyshow = async (req, res) => {
+exports.cartbycustomer = async (req, res) => {
   const findone = await Cart.find({ customer: req.params.id }).populate("customer").populate("product")
   if (findone) {
 
