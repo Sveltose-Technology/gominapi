@@ -7,22 +7,22 @@ const roleSchema = new Schema(
       type: String,
       require: true,
     },
-    store_add: {
+    storePermission: {
       type: Boolean,
       default: false,
-    },
-    store_edit: {
-      type: Boolean,
-      default: false,
-    },
-    store_view: {
-      type: Boolean,
-      default: false,
-    },
-    store_delete: {
-      type: Boolean,
-      default: false,
-    },
+     },
+    // store_edit: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // store_view: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // store_delete: {
+    //   type: Boolean,
+    //   default: false,
+    // },
 
     customer_add: {
       type: Boolean,

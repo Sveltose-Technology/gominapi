@@ -54,11 +54,21 @@ exports.add_seller = async (req, res) => {
   } else {
     newSeller
       .save()
-      .then((data) => {
-        res.status(200).json({
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            sellerId: result._id,
+          },
+          process.env.TOKEN_SECRET ,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("auth-adtoken", token).status(200).json({
           status: true,
+          token: token,
           msg: "success",
-          data: data,
+          user: result,
         });
       })
       .catch((error) => {
