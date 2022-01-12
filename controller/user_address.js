@@ -28,7 +28,7 @@ exports.addcus_address = async (req, res) => {
     if (err) {
       res.status(400).json({
         status: false,
-        msg: "Error",
+        msg: "error",
         error: err,
       });
     } else {
