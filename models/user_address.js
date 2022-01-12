@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const useraddressSchema = new Schema(
   {
+    customer : {
+      type :mongoose.Schema.Types.ObjectId,ref : "customer"
+    },
     user_name: {
       type: String,
       //require: true,

@@ -538,7 +538,7 @@ exports.productbystore = async (req, res) => {
      .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-     .populate("color")
+     .populate("color")           
     .populate("size")
     .populate("material")
     .populate("store")

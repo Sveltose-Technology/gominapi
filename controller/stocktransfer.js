@@ -46,7 +46,7 @@ exports.delstocktransfer = async(req,res) =>{
             error : error
         })
     }
-}
+} 
 
 
  

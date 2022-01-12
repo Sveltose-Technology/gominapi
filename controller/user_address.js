@@ -2,6 +2,7 @@ const Useraddress = require("../models/user_address");
 
 exports.addcus_address = async (req, res) => {
   const {
+    customer,
     user_name,
     phone_no,
     address,
@@ -13,6 +14,7 @@ exports.addcus_address = async (req, res) => {
   } = req.body;
 
   const newUseraddress = new Useraddress({
+    customer :customer,
     user_name: user_name,
     phone_no: phone_no,
     address: address,
