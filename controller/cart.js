@@ -5,13 +5,22 @@ exports.addtocartproduct = async (req, res) => {
 
   // let total_qty = 0;
   // for (let i = 0; i < product.length; i++) {
-  //   total_qty = total_qty + product[i].qty;
+  //   total_qty = total_qty + product[i].product_qty;
   // }
 
   // let total_amount = 0;
   // for (let i = 0; i < product.length; i++) {
-  //   total_amount =total_amount + product[i].amount;
+  //   total_amount =total_amount + product[i].product_price;
    
+  // }
+
+  
+  // let sum = 0
+  // for (let i = 0; i < findone.length; i++) {
+  //   let element_price = findone[i].product_price;
+  //   let element_qty = findone[i].product_qty;
+  //   sum =sum+ element_price*element_qty;
+    
   // }
 
 
@@ -55,10 +64,13 @@ exports.addtocartproduct = async (req, res) => {
           error: err,
         });
       } else {
+    
         res.status(200).json({
           status: false,
           msg: "Product added to cart",
           data: data,
+          total_qty : product_qty,
+           
         });
       }
     });
@@ -149,7 +161,7 @@ exports.cartbycustomer = async (req, res) => {
       status: true,
       msg: "success",
       data: findone,
-      total: sum
+       total: sum
     });
   } else {
     res.status(400).json({

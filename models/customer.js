@@ -36,6 +36,9 @@ const customerSchema = new Schema(
       type: String,
     
     },
+    otp : {
+      type : Number
+    }
   },
   { timestamps: true }
 );
