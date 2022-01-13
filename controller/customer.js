@@ -331,7 +331,7 @@ exports.verifyotp = async (req, res) => {
       res.status(200).json({
         status: true,
         msg: "otp verified",
-        
+        data : findone
           
       });
     } else {
