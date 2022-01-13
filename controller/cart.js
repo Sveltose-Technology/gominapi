@@ -15,13 +15,7 @@ exports.addtocartproduct = async (req, res) => {
   // }
 
   
-  // let sum = 0
-  // for (let i = 0; i < findone.length; i++) {
-  //   let element_price = findone[i].product_price;
-  //   let element_qty = findone[i].product_qty;
-  //   sum =sum+ element_price*element_qty;
-    
-  // }
+  
 
 
   const addtoCart = new Cart({

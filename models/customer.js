@@ -25,10 +25,10 @@ const customerSchema = new Schema(
     expireIn: {
       type: Number,
     },
-     code: {
-     type: String,
+    //  code: {
+    //  type: String,
     //   default: 1234,
-    },
+    // },
     sortorder: {
       type: Number,
     },
