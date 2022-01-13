@@ -334,7 +334,7 @@ exports.verifyotp = async (req, res) => {
       });
     })
     .catch((error) => {
-      res.status(400).json({
+      res.status(200).json({
         status: false,
         msg: "Incorrect Otp",
         error: error,
