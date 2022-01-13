@@ -208,7 +208,7 @@ exports.totalcustomer = async(req,res) =>{
 
 
 exports.sendotp = async (req, res) => {
-  const defaultotp = Math.ceil(Math.random()*999999);
+  const defaultotp = Math.ceil(Math.random()*999999 );
   const { customer_email } = req.body;
   const finddetails  = await Customer.findOneAndUpdate(
     { customer_email: customer_email },
@@ -326,23 +326,38 @@ exports.verifyotp = async (req, res) => {
   const { customer_email, otp } = req.body;
 
   
-    const findone = await Customer.findOne({$and: [{ customer_email: customer_email }, { otp: otp }]})
-    if (findone) {
+    const findone = await Customer.findOne({$and: [{ customer_email: customer_email }, { otp: otp }]}).then((data)=>{
       res.status(200).json({
         status: true,
         msg: "otp verified",
-        data : findone
-          
+        data: data,
       });
-    } else {
+    })
+    .catch((error) => {
       res.status(400).json({
-        status: true,
+        status: false,
         msg: "Incorrect Otp",
-          
+        error: error,
       });
-    }
+    })
+  }
   
-};
+    // if (findone) {
+    //   res.status(200).json({
+    //     status: true,
+    //     msg: "otp verified",
+    //     data : findone
+          
+    //   });
+    // } else {
+    //   res.status(400).json({
+    //     status: true,
+    //     msg: "Incorrect Otp",
+          
+    //   });
+    // }
+  
+//};
 
 // exports.changePassword = async (req,res) =>{
 //   let data = await Customer.findOne({customer_email : req.body.customer_email,code : req.body.otpCode})
