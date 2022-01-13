@@ -328,14 +328,14 @@ exports.verifyotp = async (req, res) => {
   
     const findone = await Customer.findOne({$and: [{ customer_email: customer_email }, { otp: otp }]}).then((data)=>{
       res.status(200).json({
-        status: true,
+        //status: true,
         msg: "otp verified",
         data: data,
       });
     })
     .catch((error) => {
       res.status(200).json({
-        status: false,
+       // status: false,
         msg: "Incorrect Otp",
         error: error,
       });
