@@ -51,7 +51,7 @@ exports.delstocktransfer = async(req,res) =>{
 
  
 exports.getstocktransfer = async (req, res) => {
-  const findall = await Stocktransfer.find().sort({ sortorder: 1 });
+  const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason")
   if (findall) {
     res.status(200).json({
       status: true,

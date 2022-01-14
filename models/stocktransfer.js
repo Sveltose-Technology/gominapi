@@ -22,8 +22,8 @@ const stocktransferSchema = new Schema(
             type : String
         },
         reason : {
-            type : String
-        },
+            type : Schema.Types.ObjectId, ref : "reason"
+         },
     },
     { timestamps: true }
 )
