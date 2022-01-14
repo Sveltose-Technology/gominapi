@@ -55,6 +55,7 @@ const review = require("./routes/review");
  
 const color = require("./routes/color");
 const size = require("./routes/size");
+const reason = require("./routes/reason");
 
 
 
@@ -106,6 +107,7 @@ app.use("/", review);
 //app.use("/", mail);
 app.use("/", color);
 app.use("/", size);
+app.use("/", reason);
 
 
 
