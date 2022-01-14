@@ -208,7 +208,7 @@ exports.totalcustomer = async(req,res) =>{
 
 
 exports.sendotp = async (req, res) => {
-  const defaultotp = Math.ceil(Math.random()*999999 );
+  const defaultotp = Math.ceil(100000 + Math.random()*900000 );
   const { customer_email } = req.body;
   const finddetails  = await Customer.findOneAndUpdate(
     { customer_email: customer_email },
@@ -327,7 +327,9 @@ exports.verifyotp = async (req, res) => {
 
   
     const findone = await Customer.findOne({$and: [{ customer_email: customer_email }, { otp: otp }]})
-    //.//then((data)=>{
+    
+    
+    //.then((data)=>{
   //     res.status(200).json({
   //       //status: true,
   //       msg: "otp verified",
@@ -343,7 +345,8 @@ exports.verifyotp = async (req, res) => {
   //   })
   // }
   
-    if (findone) {
+   
+  if (findone) {
       res.status(200).json({
         status: true,
         msg: "otp verified",
