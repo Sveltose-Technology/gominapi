@@ -6,36 +6,27 @@ const customerSchema = new Schema(
     customerId: {
       type: String,
     },
-    first_name: {
+    firstname: {
       type: String,
     },
-    last_name: {
-      type : String
+    lastname: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    mobile:{
+      type :Number
     },
     password: {
       type: String,
     },
-    customer_email: {
-      type: String,
-    },
-    mobile_no: {
-      type: Number,
-      require: true,
-    },
-    expireIn: {
-      type: Number,
-    },
+      
     //  code: {
     //  type: String,
     //   default: 1234,
     // },
-    sortorder: {
-      type: Number,
-    },
-    status: {
-      type: String,
     
-    },
     otp : {
       type : Number
     }

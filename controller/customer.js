@@ -7,10 +7,10 @@ const {sendmail} = require("./mail");
 
 const router = require("../routes/mail");
 
-const validatePassword = (password, dbpassword) => {
-  bcrypt.compareSync(password, dbpassword);
-  return true;
-};
+// const validatePassword = (password, dbpassword) => {
+//   bcrypt.compareSync(password, dbpassword);
+//   return true;
+// };
 
 // function generateAccessToken(username) {
 //   return jwt.sign(customername, process.env.TOKEN_SECRET, {
@@ -18,20 +18,18 @@ const validatePassword = (password, dbpassword) => {
 //   });
 // }
 
-exports.addcustomer = async (req, res) => {
+exports.signup = async (req, res) => {
   const {
     customerId,
-    first_name,
-    last_name,
-    //password,
-    customer_email,
-    mobile_no,
-    sortorder,
-    status,
+    firstname,
+    lastname,
+    email,
+    mobile,
+    password,
   } = req.body;
 
-  // const salt = bcrypt.genSaltSync(saltRounds);
-  //  const hashpassword = bcrypt.hashSync(password, salt);
+   const salt = bcrypt.genSaltSync(saltRounds);
+   const hashpassword = bcrypt.hashSync(password, salt);
 
   create_random_string(6);
   function create_random_string(string_length) {
@@ -47,17 +45,17 @@ exports.addcustomer = async (req, res) => {
   }
 
   const newCustomer = new Customer({
-    customerId: random_string,
-    first_name: first_name,
-    last_name : last_name,
-   // password: hashpassword,
-    customer_email: customer_email,
-    mobile_no: mobile_no,
-    sortorder: sortorder,
-    status: status,
+    customerId : random_string,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    mobile: mobile,
+    password: hashpassword,
   });
 
-  const findexist = await Customer.findOne({ mobile_no: mobile_no });
+  const findexist = await Customer.findOne({
+    $or: [{ email: email }, { mobile: mobile }],
+  });
   if (findexist) {
     res.status(400).json({
       status: false,
@@ -67,11 +65,21 @@ exports.addcustomer = async (req, res) => {
   } else {
     newCustomer
       .save()
-      .then((data) => {
-        res.status(200).json({
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            userId : result._id
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: 86400000,
+          }
+        )
+        res.header("auth-token",token).status(200).json({
           status: true,
+          token : token,
           msg: "success",
-          data: data,
+          user: result,
         });
       })
       .catch((error) => {
@@ -84,36 +92,78 @@ exports.addcustomer = async (req, res) => {
   }
 };
 
+// exports.login = async (req, res) => {
+//   const { email,mobile, password } = req.body;
+
+//   // Find user with requested email
+//   Customer.findOne({ $or : [{email: email },{mobile:mobile}]}), function (err, user) {
+//     if (user === null) {
+//       return res.status(400).send({
+//         message: "User not found.",
+//       });
+//     } else {
+//       // console.log(process.env.TOKEN_SECRET);
+//       if (validatePassword(password, user.password)) {
+//         const token = jwt.sign({ userId: user._id }
+//           , process.env.TOKEN_SECRET, {
+//           expiresIn: "86400000",
+//         }
+//         );
+
+//         return res.status(201).send({
+//           message: "User Logged In",
+//           token: token,
+//           user: user,
+//         });
+//       } else {
+//         return res.status(400).send({
+//           message: "Wrong Password",
+//         });
+//       }
+//   }
+// }
+//   }
+
 exports.login = async (req, res) => {
-  const { customer_email, password } = req.body;
-
-  // Find user with requested email
-  Customer.findOne({ customer_email: customer_email }, function (err, user) {
-    if (user === null) {
-      return res.status(400).send({
-        message: "User not found.",
+  const { mobile, email, password } = req.body;
+  const user = await Customer.findOne({
+    $or: [{ mobile: mobile }, { email: email }],
+  });
+  if (user) {
+    const validPass = await bcrypt.compare(password, user.password);
+    if (validPass) {
+      const token = jwt.sign(
+        {
+          userId: user._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-token", token).status(200).send({
+        status: true,
+        token: token,
+        msg: "success",
+        user: user,
       });
-    // } else {
-    //   // console.log(process.env.TOKEN_SECRET);
-    //   if (validatePassword(password, user.password)) {
-    //     const token = jwt.sign({ customerId: user._id }
-    //       // , process.env.TOKEN_SECRET, {
-    //       // expiresIn: "365d",
-    //     //}
-    //     );
-
-        return res.status(201).send({
-          message: "User Logged In",
-        //  token: token,
-         // user: user,
-        });
-      } else {
-        return res.status(400).send({
-          message: "Wrong Password",
-        });
-      }
-    })
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "User Doesnot Exist",
+      error: "error",
+    });
   }
+};
+
+
 exports.editcustomer = async (req, res) => {
   const findandUpdateEntry = await Customer.findOneAndUpdate(
     {
@@ -136,6 +186,7 @@ exports.editcustomer = async (req, res) => {
       error: "error",
     });
   }
+  
 };
 
 exports.allcustomer = async (req, res) => {

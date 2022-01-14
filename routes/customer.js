@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 const {
-  addcustomer,
+  signup,
   allcustomer,
   getonecustomer,
   delcustomer,
@@ -16,7 +16,7 @@ const {
 
 } = require("../controller/customer");
 
-router.post("/user/customersignup", addcustomer);
+router.post("/user/signup", signup);
 router.get("/user/allcustomer", allcustomer);
 router.get("/user/getonecustomer/:id", getonecustomer);
 router.post("/user/editcustomer/:id", editcustomer);
