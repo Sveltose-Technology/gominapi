@@ -17,6 +17,6 @@ router.get("/admin/remove_cart/:id", removecart);
 router.get("/admin/cartbycustomer/:id", cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
 
-
+//conso
 
 module.exports = router;
