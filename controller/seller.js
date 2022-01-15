@@ -151,37 +151,77 @@ exports.getoneseller = async (req, res) => {
 //   );
 // };
 
-exports.sellerlogin = async (req, res) => {
-  const { email, password } = req.body;
+// exports.sellerlogin = async (req, res) => {
+//   const { email,mobile, password } = req.body;
 
-  // Find user with requested email
-  Seller.findOne({ email: email }, function (err, user) {
-    if (user === null) {
-      return res.status(400).send({
-        message: "User not found.",
+//   // Find user with requested email
+//   Seller.findOne({ email: email }, function (err, user) {
+//     if (user === null) {
+//       return res.status(400).send({
+//         message: "User not found.",
+//       });
+//     } else {
+//       console.log(process.env.TOKEN_SECRET);
+      
+//       if (validatePassword(password, user.password)) {
+//         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
+//           expiresIn: "365d",
+//         });
+              
+//         return res.status(201).send({
+//           message: "User Logged In",
+//           token: token,
+//           user: user,
+ 
+//         });
+//       } else {
+//         return res.status(400).send({
+//           message: "Wrong Password",
+//         });
+//       }
+//     }
+//   });
+// };
+
+exports.sellerlogin = async (req, res) => {
+  const { mobile, email, password } = req.body;
+  const user = await Seller.findOne({
+    $or: [{ mobile: mobile }, { email: email }],
+  });
+  if (user) {
+    const validPass = await bcrypt.compare(password, user.password);
+    if (validPass) {
+      const token = jwt.sign(
+        {
+          sellerId: user._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-adtoken", token).status(200).send({
+        status: true,
+        token: token,
+        msg: "success",
+        user: user,
       });
     } else {
-      console.log(process.env.TOKEN_SECRET);
-      
-      if (validatePassword(password, user.password)) {
-        const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
-          expiresIn: "365d",
-        });
-              
-        return res.status(201).send({
-          message: "User Logged In",
-          token: token,
-          user: user,
- 
-        });
-      } else {
-        return res.status(400).send({
-          message: "Wrong Password",
-        });
-      }
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
     }
-  });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "User Doesnot Exist",
+      error: "error",
+    });
+  }
 };
+
 
 exports.editseller = async (req, res) => {
   const findandUpdateEntry = await Seller.findOneAndUpdate(

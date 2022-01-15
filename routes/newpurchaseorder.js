@@ -4,7 +4,7 @@ const { tokenverify } = require("../functions/tokenverify");
 
 
 const {
-    addnewpurchaseorder,getpurchaseorder
+    addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder
    
 } = require("../controller/newpurchaseorder");
 
@@ -12,6 +12,12 @@ const {
 
 router.post("/admin/addnewpurchaseorder", addnewpurchaseorder);
 router.get("/admin/getpurchaseorder", getpurchaseorder);
+router.post("/admin/editnewpurchaseorder/:id", editnewpurchaseorder);
+router.get("/admin/getonepurchaseorder/:id", getonepurchaseorder);
+router.get("/admin/delpurchaseorder/:id", delpurchaseorder);
+
+
+
 
  
 

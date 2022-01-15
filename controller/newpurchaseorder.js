@@ -113,7 +113,65 @@ exports.getpurchaseorder = async (req, res) => {
         error: error
       })
     })
+};
 
+
+exports.editnewpurchaseorder = async (req, res) => {
+  const findandUpdateEntry = await Purchaseorder.findOneAndUpdate(
+    {
+      _id: req.params.id,
+    },
+    { $set: req.body },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
+
+
+exports.getonepurchaseorder = async (req, res) => {
+  const findone = await Purchaseorder.findOne({ _id: req.params.id });
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.delpurchaseorder = async (req, res) => {
+  try {
+    const deleteentry = await Purchaseorder.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
 };
 
 
