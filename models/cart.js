@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const CartSchema = new mongoose.Schema(
   {
-    orderby: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
     product_price: {
       type: Number,
@@ -10,6 +10,12 @@ const CartSchema = new mongoose.Schema(
     product_qty: {
       type: Number,
     },
+    color : {
+      type : String
+    },
+    size : {
+      type : String
+    }
   },
   { timestamps: true }
 );

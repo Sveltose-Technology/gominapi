@@ -5,6 +5,6 @@ const { addstaff, Adminlogin } = require("../controller/staff");
 
 //Paths
 router.post("/admin/addstaff", addstaff);
-router.post("/admin/Adminlogin", Adminlogin);
+//router.post("/admin/Adminlogin", Adminlogin);
 
 module.exports = router;

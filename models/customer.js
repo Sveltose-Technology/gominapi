@@ -6,26 +6,30 @@ const customerSchema = new Schema(
     customerId: {
       type: String,
     },
-    customername: {
+    firstname: {
       type: String,
+    },
+    lastname: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    mobile:{
+      type :Number
     },
     password: {
       type: String,
     },
-    customer_email: {
-      type: String,
-    },
-    mobile_no: {
-      type: Number,
-      require: true,
-    },
-    sortorder: {
-      type: Number,
-    },
-    status: {
-      type: String,
-      default: "Active",
-    },
+      
+    //  code: {
+    //  type: String,
+    //   default: 1234,
+    // },
+    
+    otp : {
+      type : Number
+    }
   },
   { timestamps: true }
 );

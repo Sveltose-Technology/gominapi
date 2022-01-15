@@ -4,12 +4,14 @@ const multer = require("multer");
 const fs = require("fs");
 
 const {
-  add_seller,
+  sellersignup,
   getseller,
-  login,
+ // Adminlogin,
   del_seller,
   editseller,
   getoneseller,
+  totalseller,
+  sellerlogin
   //storebyseller,
 } = require("../controller/seller");
 
@@ -41,15 +43,17 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 
 //Paths
-router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
+router.post("/admin/seller_signup",sellersignup);
 router.get("/admin/getseller", getseller);
-router.post("/admin/login", login);
+//router.post("/admin/Adminlogin", Adminlogin);
+router.post("/admin/sellerlogin", sellerlogin);
 
 router.post("/admin/editseller/:id", editseller);
 
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", getoneseller);
-
+router.get("/admin/totalseller", totalseller);
 module.exports = router;
-editseller;
+
+ 

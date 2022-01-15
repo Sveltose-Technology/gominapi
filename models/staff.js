@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+var AutoIncrement = require("mongoose-sequence")(mongoose);
 
 const staffSchema = new Schema(
   {
-    //   staffID: {
-    //     type: String,
-    //     require: true,
-    //   },
+    Prefix: {
+      type: String,
+      default: "STAFF",
+    },
+    staffID: {
+      type: Number,
+    },
     first_name: {
       type: String,
       require: true,
@@ -47,5 +51,6 @@ const staffSchema = new Schema(
   },
   { timestamps: true }
 );
+staffSchema.plugin(AutoIncrement, { inc_field: "staffID" });
 
 module.exports = mongoose.model("staff", staffSchema);

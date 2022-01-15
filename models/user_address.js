@@ -3,37 +3,40 @@ const Schema = mongoose.Schema;
 
 const useraddressSchema = new Schema(
   {
+    customer : {
+      type :mongoose.Schema.Types.ObjectId,ref : "customer"
+    },
     user_name: {
       type: String,
-      require: true,
+      //require: true,
     },
     phone_no: {
       type: String,
-      require: true,
+     // require: true,
     },
-    house_no: {
+    address: {
       type: String,
-      require: true,
+     // require: true,
     },
-    area: {
+    locality: {
       type: String,
-      require: true,
+      //require: true,
     },
     pincode: {
-      type: String,
-      require: true,
+      type: Number,
+     // require: true,
     },
     city: {
       type: String,
     },
     state: {
       type: String,
-      require: true,
+     // require: true,
     },
-    near_bylocation: {
-      type: String,
-      require: true,
-    },
+   // near_bylocation: {
+     // type: String,
+      //require: true,
+    //},
   },
   { timestamps: true }
 );

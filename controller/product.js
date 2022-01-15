@@ -1,5 +1,8 @@
 const Product = require("../models/product");
 //const Image = require("../models/product");
+const Productcategory = require("../models/productcategory");
+const Brand = require("../models/brand");
+const Store = require("../models/store");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -13,7 +16,8 @@ cloudinary.config({
 
 exports.addproduct = async (req, res) => {
   const {
-    //productId,
+    store,
+    discount_perc,
     product_name,
     sku_no,
     hsn_sac_no,
@@ -22,24 +26,28 @@ exports.addproduct = async (req, res) => {
     productcategory,
     productsubcategory,
     brand,
-    colour,
+    tag,
     size,
+    color,
     material,
     stock,
     qty,
+    //rating,
     reorder_level,
     unit,
     cost_price,
     sell_price,
-    gst,
+    gstrate,
     product_img,
+    offer_aplicable,
     sortorder,
     status,
   } = req.body;
 
   const newProduct = new Product({
-    // productId: productId,
+    store: store,
     product_name: product_name,
+    discount_perc: discount_perc,
     sku_no: sku_no,
     hsn_sac_no: hsn_sac_no,
     short_desc: short_desc,
@@ -47,17 +55,20 @@ exports.addproduct = async (req, res) => {
     productcategory: productcategory,
     productsubcategory: productsubcategory,
     brand: brand,
-    colour: colour,
-    size: size,
+    tag : tag,
+    size : size,
+    color : color,
     material: material,
     stock: stock,
     qty: qty,
+    //rating: rating,
     reorder_level: reorder_level,
     unit: unit,
     cost_price: cost_price,
     sell_price: sell_price,
-    gst: gst,
+    gstrate: gstrate,
     product_img: product_img,
+    offer_aplicable: offer_aplicable,
     sortorder: sortorder,
     status: status,
   });
@@ -131,6 +142,7 @@ exports.addproduct = async (req, res) => {
   }
 };
 
+
 exports.editproduct = async (req, res) => {
   const {
     product_name,
@@ -141,7 +153,7 @@ exports.editproduct = async (req, res) => {
     productcategory,
     productsubcategory,
     brand,
-    colour,
+    color,
     size,
     material,
     stock,
@@ -182,8 +194,8 @@ exports.editproduct = async (req, res) => {
   if (brand) {
     data.brand = brand;
   }
-  if (colour) {
-    data.colour = colour;
+  if (color) {
+    data.color = color;
   }
   if (size) {
     data.size = size;
@@ -219,13 +231,13 @@ exports.editproduct = async (req, res) => {
   if (status) {
     data.status = status;
   }
-  console.log(data);
+  //console.log(data);
   if (req.file) {
     const response = await cloudinary.uploader.upload(req.file.path);
     data.product_img = response.secure_url;
     fs.unlinkSync(req.file.path);
   }
-  console.log(req.file);
+  //console.log(req.file);
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
       {
@@ -254,10 +266,15 @@ exports.editproduct = async (req, res) => {
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })
+   .populate("gstrate")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
+    .populate("brand")
+    .populate("color")
+    .populate("size")
+    .populate("material")
+
   if (findall) {
     res.status(200).json({
       status: true,
@@ -278,7 +295,12 @@ exports.getoneproduct = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
+    .populate("brand")
+ //   .populate("gstrate")
+    .populate("color")
+    .populate("size")
+    
+
   if (findone) {
     res.status(200).json({
       status: true,
@@ -314,28 +336,30 @@ exports.del_product = async (req, res) => {
 exports.productbycategory = async (req, res) => {
   const findall = await Product.find({ productcategory: req.params.id })
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
-  if (findall) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
+    .populate("brand")
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
     });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
-  }
 };
 
 exports.productbybrand = async (req, res) => {
   const findall = await Product.find({ brand: req.params.id })
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -358,6 +382,7 @@ exports.productbybrand = async (req, res) => {
 exports.productbysubcategory = async (req, res) => {
   const findall = await Product.find({ productsubcategory: req.params.id })
     .sort({ sortorder: 1 })
+    .populate("store")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
@@ -379,17 +404,218 @@ exports.productbysubcategory = async (req, res) => {
     });
 };
 
-//   if (findall) {
-//     req.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     req.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: error,
-//     });
-//   }
-// };
+
+
+exports.totalproduct = async (req, res) => {
+  await Product.countDocuments().then((data) => {
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    })
+}
+
+
+
+exports.searchItem = async (req, res) => {
+  const { oneinput } = req.body
+  let allproducts = []
+  let errors = []
+  await Brand.find({ name: { $regex: oneinput, $options: "i" } }).then((data) => {
+    // let allitems  = []
+    // for (let i = 0; i < data.length; i++) {
+    //   const element = data[i]._id;  
+    //   allitems.push(element);
+    // }
+    // for (let j = 0; j < allitems.length; j++) {
+    //   allitems[key] = allitems[j];
+    // }
+    // console.log(allitems)
+    // const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
+    // console.log(obj)
+
+    //view all products of brands
+    // if(data){
+    //   for (let i = 0; i < data.length; i++) {
+    //     const element = data[i]._id;
+    //     await Product.find({brand:element}).then((product)=>{
+    //       console.log(product)
+    //     }).catch((error)=>{
+    //       console.log(error)
+    //     })
+    //   }
+    // }
+
+    //store done
+    //product and category done 
+    //brand
+
+
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: data
+    })
+  }).catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error
+    })
+  })
+}
+
+
+exports.searchinputproduct = async (req, res) => {
+  const { oneinput } = req.body;
+  await Product.find({ product_name: { $regex: oneinput, $options: "i" } })
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+exports.searchinputbycategory = async (req, res) => {
+
+
+  const { oneinput } = req.body;
+  const findbycategory = await Productcategory.find({ name: { $regex: oneinput, $options: "i" } });
+
+  const findbybrand = await Brand.find({ name: { $regex: oneinput, $options: "i" } })
+
+  const findbyproduct = await Product.find({ product_name: { $regex: oneinput, $options: "i" } })
+
+  if(findbycategory && findbybrand){
+    let somearray = []
+    findbycategory.forEach(i=>{
+          somearray.indexOf(i._id) === -1 ? somearray.push(i._id):console.log("already exists");
+        })
+
+        let somebrand = []
+        findbybrand.forEach(i=>{
+          somebrand.indexOf(i._id) === -1 ? somebrand.push(i._id):console.log("already exists");
+        })
+
+        let findproducts =async()=>{
+          await Product.find({$or:[{brand:{$in:somebrand}},{productcategory:{$in:somearray}},{ product_name: { $regex: oneinput, $options: "i" } }]}).populate('productcategory').populate('brand').then((data1)=>{
+            res.status(200).json({
+              status: true,
+              data: data1,
+            });
+          })
+        }
+        findproducts();
+  }else{
+      res.status(400).json({
+        status: false,
+        data: findbyproduct,
+      });
+  }
+};
+
+
+exports.productbystore = async (req, res) => {
+  const findall = await Product.find({ store: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+     .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+     .populate("color")           
+    .populate("size")
+    .populate("material")
+    .populate("store")
+  
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.productsearchgetstore = async (req, res) => {
+  const { oneinput } = req.body;
+  const findall = await Product.find({ product_name: { $regex: oneinput, $options: "i" }})
+  
+  if (findall) {
+    let somearray = []
+    findall.forEach(i=>{
+          somearray.indexOf(i.store) === -1 ? somearray.push(i.store):console.log("already exists");
+          //console.log(i)
+        })
+        console.log(somearray)
+
+        let getstore =async()=>{
+          await Store.find({_id:{$in:somearray}}).then((data1)=>{
+            res.status(200).json({
+              status: true,
+              data: data1,
+            });
+          })
+        }
+        getstore();
+
+    // res.status(200).json({
+    //   status: true,
+    //   msg: "success",
+    //   data: findall,
+    // });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+exports.getproductbytagname = async (req,res) => {
+  const findall = await Product.find({tag : req.params.id}).sort({sortorder : 1})
+  .then((data)=>{
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status : false,
+      error : "error",
+       error : error
+ 
+    })
+  })
+}
+
+
+  exports.productfilter = async(req,res)=>{
+    const findone = await Product.findOne({ _id: req.params.id})
+    
+  
+  }
+
+   

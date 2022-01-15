@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const storeSchema = new Schema(
   {
+    store: { type: Schema.Types.ObjectId, ref: "store" },
     seller: { type: Schema.Types.ObjectId, ref: "seller" },
+
     store_name: {
       type: String,
     },
@@ -19,7 +21,6 @@ const storeSchema = new Schema(
       type: String,
       //require: true,
     },
-
     store_email: {
       type: String,
     },
@@ -35,10 +36,10 @@ const storeSchema = new Schema(
     day: {
       type: String,
     },
-    startTym: {
+    openingTym: {
       type: String,
     },
-    endTym: {
+    closingTym: {
       type: String,
     },
     address_line1: {
@@ -105,8 +106,16 @@ const storeSchema = new Schema(
       type: String,
       default: "Inactive",
     },
+    trendingPoint :{
+      type : Number,
+      default:0
+    },
+    purchaseby :{type : Schema.Types.ObjectId,ref :"orderproduct"
+
+    } 
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("store", storeSchema);
+  

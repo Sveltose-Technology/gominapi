@@ -6,7 +6,7 @@ const sellerSchema = new Schema(
     seller_name: {
       type: String,
     },
-    seller_email: {
+    email: {
       type: String,
     },
     password: {
@@ -15,10 +15,8 @@ const sellerSchema = new Schema(
     confirm_password: {
       type: String,
     },
-    status: {
-      type: String,
-    },
-    sortorder: {
+    
+    mobile: {
       type: Number,
     },
   },

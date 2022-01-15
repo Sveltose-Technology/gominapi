@@ -13,6 +13,9 @@ const {
   del_store,
   storebyseller,
   store_req,
+  totalstore,
+  browsebytrending_store,
+  searchstore
 } = require("../controller/store");
 
 const storage = multer.diskStorage({
@@ -45,12 +48,12 @@ let uploads = multer({ storage: storage });
 
 let multipleUpload = uploads.fields([
   { name: "storeImg", maxCount: 5 },
-  { name: "shoplogo_img", maxCount: 1 },
-  { name: "gstImg", maxCount: 1 },
-  { name: "storepan_img", maxCount: 1 },
-  { name: "tradelicence_img", maxCount: 1 },
-  { name: "companypan_img", maxCount: 1 },
-  { name: "address_proof_img", maxCount: 1 },
+  { name: "shoplogo_img", maxCount: 5 },
+  { name: "gstImg", maxCount: 5 },
+  { name: "storepan_img", maxCount: 5 },
+  { name: "tradelicence_img", maxCount: 5 },
+  { name: "companypan_img", maxCount: 5 },
+  { name: "address_proof_img", maxCount: 5 },
 ]);
 
 let checkitem = (req, res, next) => {
@@ -70,5 +73,8 @@ router.get("/admin/getonestore/:id", getonestore);
 router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload, editstore);
 router.get("/admin/store_req", store_req);
+router.get("/admin/totalstore", totalstore)
+router.post("/admin/searchstore", searchstore)
+router.get("/admin/browsebytrending_store",  browsebytrending_store);
 
 module.exports = router;

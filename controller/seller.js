@@ -1,7 +1,6 @@
 const Seller = require("../models/seller");
-// const cloudinary = require("cloudinary").v2;
-// const dotenv = require("dotenv");
-// const fs = require("fs");
+ 
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
@@ -17,14 +16,13 @@ function generateAccessToken(seller_name) {
   });
 }
 
-exports.add_seller = async (req, res) => {
+exports.sellersignup = async (req, res) => {
   const {
     seller_name,
-    seller_email,
+    email,
     password,
     confirm_password,
-    status,
-    sortorder,
+    mobile
   } = req.body;
   //console.log(req.body);
 
@@ -35,15 +33,14 @@ exports.add_seller = async (req, res) => {
 
   const newSeller = new Seller({
     seller_name: seller_name,
-    seller_email: seller_email,
+    email:email,
     password: hashpassword,
     confirm_password: hashpassword,
-    status: status,
-    sortorder: sortorder,
-  });
+    mobile: mobile,
+   });
 
   //console.log(req.body)
-  const findexist = await Seller.findOne({ seller_email: seller_email });
+  const findexist = await Seller.findOne({ $or : [{email: email },{mobile : mobile}]})
   if (findexist) {
     res.status(400).json({
       status: false,
@@ -53,11 +50,21 @@ exports.add_seller = async (req, res) => {
   } else {
     newSeller
       .save()
-      .then((data) => {
-        res.status(200).json({
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            sellerId: result._id,
+          },
+          process.env.TOKEN_SECRET ,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("auth-adtoken", token).status(200).json({
           status: true,
+          token: token,
           msg: "success",
-          data: data,
+          user: result,
         });
       })
       .catch((error) => {
@@ -103,60 +110,67 @@ exports.getoneseller = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
-  const { seller_email, password } = req.body;
-
-  // Find user with requested email
-  Seller.findOne({ seller_email: seller_email }, function (err, seller) {
-    if (seller === null) {
-      return res.status(400).send({
-        message: "Seller not found.",
-      });
-    } else {
-      // console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, seller.password)) {
-        const token = jwt.sign(
-          { sellerId: seller._id },
-          process.env.TOKEN_SECRET,
-          {
-            expiresIn: "365d",
-          }
-        );
-
-        return res.status(201).send({
-          message: "Successfully Logged In",
-          token: token,
-          seller: seller,
-        });
-      } else {
-        return res.status(400).send({
-          message: "Wrong Password",
-        });
-      }
-    }
-  });
-};
-
 // exports.Adminlogin = async (req, res) => {
-//   const { mobile_no, password } = req.body;
+//   const {email,password } = req.body;
 
 //   // Find user with requested email
-//   Seller.findOne({ mobile_no: mobile_no }, function (err, user) {
+//   Seller.findOne(
+//     {
+//       $or: [
+      
+//         { email: email },
+//         { password: password },
+//       ],
+//     },
+//     function (err, user) {
+//       if (user === null) {
+//         return res.status(400).send({
+//           message: "User not found.",
+//         });
+//       } else {
+//         if (validatePassword(password, user.password)) {
+//           const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+//             expiresIn: "365d",
+//           });
+
+//           return res.status(201).send({
+//             message: "User Logged In",
+//             token: token,
+//             user: user,
+//             usertype : "Admin"
+//           });
+//         } else {
+//           return res.status(400).send({
+//             message: "Wrong Password",
+//           });
+//         }
+//       }
+//     }
+//   );
+// };
+
+// exports.sellerlogin = async (req, res) => {
+//   const { email,mobile, password } = req.body;
+
+//   // Find user with requested email
+//   Seller.findOne({ email: email }, function (err, user) {
 //     if (user === null) {
 //       return res.status(400).send({
 //         message: "User not found.",
 //       });
 //     } else {
 //       console.log(process.env.TOKEN_SECRET);
+      
 //       if (validatePassword(password, user.password)) {
-//         const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
+//         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
 //           expiresIn: "365d",
 //         });
-
+              
 //         return res.status(201).send({
 //           message: "User Logged In",
 //           token: token,
 //           user: user,
+ 
 //         });
 //       } else {
 //         return res.status(400).send({
@@ -166,6 +180,46 @@ exports.login = async (req, res) => {
 //     }
 //   });
 // };
+
+exports.sellerlogin = async (req, res) => {
+  const { mobile, email, password } = req.body;
+  const user = await Seller.findOne({
+    $or: [{ mobile: mobile }, { email: email }],
+  });
+  if (user) {
+    const validPass = await bcrypt.compare(password, user.password);
+    if (validPass) {
+      const token = jwt.sign(
+        {
+          sellerId: user._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-adtoken", token).status(200).send({
+        status: true,
+        token: token,
+        msg: "success",
+        user: user,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
+    }
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "User Doesnot Exist",
+      error: "error",
+    });
+  }
+};
+
 
 exports.editseller = async (req, res) => {
   const findandUpdateEntry = await Seller.findOneAndUpdate(
@@ -226,3 +280,21 @@ exports.del_seller = async (req, res) => {
 //     });
 //   }
 // };
+
+
+exports.totalseller = async(req,res) =>{
+  await Seller.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
+

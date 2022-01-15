@@ -7,8 +7,10 @@ const orderproductSchema = new mongoose.Schema(
       ref: "customer",
       required: true,
     },
-
-    order_type: {
+    order_type :{
+      type : String
+    },
+    payment_type: {
       type: String,
     },
     product: {

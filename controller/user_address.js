@@ -1,33 +1,34 @@
 const Useraddress = require("../models/user_address");
 
-exports.adduser_address = async (req, res) => {
+exports.addcus_address = async (req, res) => {
   const {
+    customer,
     user_name,
     phone_no,
-    house_no,
-    area,
+    address,
+    locality,
     pincode,
     city,
     state,
-    near_bylocation,
+
   } = req.body;
 
   const newUseraddress = new Useraddress({
+    customer :customer,
     user_name: user_name,
     phone_no: phone_no,
-    house_no: house_no,
-    area: area,
+    address: address,
+    locality: locality,
     pincode: pincode,
     city: city,
     state: state,
-    near_bylocation: near_bylocation,
   });
 
   newUseraddress.save(function (err, data) {
     if (err) {
       res.status(400).json({
         status: false,
-        msg: "Error",
+        msg: "error",
         error: err,
       });
     } else {

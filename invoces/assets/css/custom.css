@@ -1,0 +1,162 @@
+footer .nav-item{
+    padding: 0 5px;
+}
+footer .nav-item a{
+    color: #888;
+}
+footer .nav-item a:hover, footer .nav-item a:focus{
+    color: #000;
+}
+footer strong{
+    font-weight: 700;
+}
+.subscription h3{
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+.subscription ul li{
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.subscription ul li .far{
+    color:#3ccf8e;
+    margin-right: 10px;
+}
+.subscription .btn{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.subscription table .btn{
+    text-transform: capitalize;
+}
+.subscription .radio-primary label{
+    font-size: 14px;
+}
+.subscription .radio-primary label .fas{
+    color: #0048cd;
+}
+.subscription .btn{
+    margin-right: 0;
+    margin-left: 10px;
+}
+.subscription .table-primary, .subscription  .table-primary>td, .subscription  .table-primary>th{
+    background-color: #0048cd;
+    color: #FFF;
+}
+.subscription .pagination{
+    float: right;
+}
+.subscription .pagination li{
+    font-size: 12px;
+}
+.subscription .table-border-style{
+    margin-bottom: 20px;
+}
+.store-area .btn{
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.store-area .table-primary, .store-area  .table-primary>td, .store-area  .table-primary>th{
+    background-color: #f4f7fa;
+}
+.store-area .table-border-style{
+    margin-bottom: 20px;
+}
+.store-area .btn:last-child{
+    margin-right: 0;
+}
+.preview-store-area .banner{
+    min-width: 100%;
+}
+.preview-store-area .post-emoticon ul{
+    margin: 0;
+}
+.preview-store-area .tags .btn .badge{
+    font-size: 125%;
+    top: 2px;
+}
+.product-list-area hr{
+    margin-top: 0;
+}
+.product-list-area .btn.btn-icon, .product-list-area .btn.drp-icon{
+    width: 25px;
+    height: 25px;
+    line-height: 1;
+    text-align: center;
+    padding: 0;
+}
+.product-list-area .grid-icon{
+    color: #0048cd;
+    font-size: 18px;
+    margin-right: 5px;
+}
+.set-permission-area .task-list li{
+    font-size: 16px;
+}
+.set-permission-area .task-list li .task-icon{
+    left: 43px;
+    top: 0;
+}
+
+.set-permission-area .accordion .card{
+    margin-bottom: 20px;
+}
+.set-permission-area .accordion .card .card-header{
+    padding: 0;
+    background: none;
+    box-shadow: none;
+}
+.set-permission-area .accordion .card .card-header h2{
+    font-size: 18px;
+}
+
+
+/* styling create order page design  */
+
+.sw-theme-default > ul.step-anchor > li > a.nav-link:after{
+    background: #f5f5f5;
+}
+.sw-theme-default > ul.step-anchor > li.active a, .sw-theme-default > ul.step-anchor > li.active a h6{
+    color: #FFF;
+}
+.sw-theme-default > ul.step-anchor > li a, .sw-theme-default > ul.step-anchor > li a > h6, .sw-theme-default > ul.step-anchor > li a:hover{
+    color: #111;
+}
+.sw-theme-arrows>ul.step-anchor>li>a:before{
+    border-left: 30px solid transparent;
+}
+.sw-theme-arrows .step-anchor, .sw-theme-circles .step-anchor, .sw-theme-dots .step-anchor{
+    margin-bottom: 0;
+}
+.sw-theme-default .sw-toolbar{
+    background: #FFF;
+}
+.sw-theme-default .table-border-style{
+    margin-top: 20px;
+}
+.sw-theme-default .table-border-style .grid-icon{
+    font-size: 22px;
+}
+
+
+
+/* styling create invoice area design  */
+
+
+.invoice-area strong{
+    font-weight: 700;
+    color: #0048cd;
+}
+.invoice-area .text-primary{
+    font-weight: 700;
+    color: #0048cd !important; 
+}
+
+
+/* styling new purchase order design  */
+
+
+.purchase-order .tab-content{
+    margin-bottom: 1rem;
+}

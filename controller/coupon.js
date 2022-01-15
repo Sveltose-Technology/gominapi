@@ -1,18 +1,21 @@
 const Coupon = require("../models/coupon");
+const Seller = require("../models/seller");
 
-exports.createoffer = async (req, res) => {
+exports.addcoupon = async (req, res) => {
   const {
     offer_code,
+    CouponTitle,
+    product,
+    seller,
     description,
     startDate,
-    endDate,
+    expireOn,
     usage_limit,
     amount,
-    discount,
     //discount,
-    isActive,
+    status,
   } = req.body;
-
+ 
   create_random_string(6);
   function create_random_string(string_length) {
     (random_string = ""),
@@ -27,15 +30,16 @@ exports.createoffer = async (req, res) => {
   }
 
   const newCoupon = new Coupon({
-    // customer_name: customer_name,
     offer_code: random_string,
+    CouponTitle : CouponTitle,
+    product : product,
+    seller : req.sellerId,
     description: description,
     startDate: startDate,
-    endDate: endDate,
+    expireOn: expireOn,
     usage_limit: usage_limit,
     amount: amount,
-    discount: discount,
-    isActive: isActive,
+    status: status,
   });
   newCoupon
     .save()
@@ -55,19 +59,92 @@ exports.createoffer = async (req, res) => {
     });
 };
 
-//   (function (err, data) {
-//     if (err) {
-//       res.status(400).json({
-//         status: false,
-//         msg: "error occured",
-//         error: err,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: true,
-//         msg: "coupon created",
-//         data: newCoupon,
-//       });
-//     }
-//   });
-// };
+exports.editcoupon = async(req,res)=>{
+  const findandupdate  = await Coupon.findOneAndUpdate(
+  {_id : req.params.id},
+  {$set : req.body},
+  {
+    new :true
+  })
+  if(findandupdate){
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : findandupdate
+    })
+  }else {
+    res.status(400).json({
+      status : false,
+      error : "error",
+      error : error
+    })
+  }
+}
+
+exports.getcoupon = async (req, res) => {
+  const findall = await Coupon.find({seller:req.sellerId}).populate("product").populate("seller").sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.getonecoupon  = async(req,res) =>{
+  const findone = await Coupon.findOne({seller:req.sellerId}).populate("seller").populate("product")
+   if(findone){
+     res.status(200).json({
+       status : true,
+       msg : "success",
+       data : findone
+     })
+   }else{
+     res.status(400).json({
+       status :false,
+       msg : "error",
+       error : error
+     })
+   }
+}
+ 
+
+exports.delcoupon = async (req, res) => {
+  try {
+    const deleteentry = await Coupon.deleteOne({ _id: req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};
+
+exports.totalCoupon = async(req,res) =>{
+  await Coupon.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}

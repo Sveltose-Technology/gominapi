@@ -10,12 +10,14 @@ cloudinary.config({
 });
 
 exports.addproductcategory = async (req, res) => {
-  const { name, product_img, desc, sortorder, status } = req.body;
+  const { name, product_img,price,trendingcatpoint, desc, sortorder, status } = req.body;
 
   const newProductcategory = new Productcategory({
     name: name,
     product_img: product_img,
     desc: desc,
+    price : price,
+    trendingcatpoint : trendingcatpoint,
     sortorder: sortorder,
     status: status,
   });
@@ -176,3 +178,21 @@ exports.del_productcategory = async (req, res) => {
     });
   }
 };
+
+
+exports.browsebycategory = async(req,res)=>{
+  const findall = await store.find().sort({trendingcatpoint : -1}).then((data) =>{
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status :false,
+      msg : "error",
+      error : error
+    })
+  })
+
+}

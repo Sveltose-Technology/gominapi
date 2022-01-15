@@ -9,6 +9,7 @@ const {
   del_employee,
   edit_employee,
   getoneemployee,
+  emplogin
 } = require("../controller/employee");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -44,5 +45,7 @@ router.get("/admin/Getemployee", Getemployee);
 router.get("/admin/getoneemployee/:id", getoneemployee);
 router.post("/admin/edit_employee/:id", uploads.single("image"), edit_employee);
 router.get("/admin/del_employee/:id", del_employee);
+//router.post("/admin/emplogin", emplogin);
+
 
 module.exports = router;

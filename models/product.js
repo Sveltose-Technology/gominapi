@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema(
   {
+    store :{
+       type : Schema.Types.ObjectId, ref: "store"
+    },
     product_name: {
       type: String,
       require: true,
@@ -12,6 +15,9 @@ const productSchema = new Schema(
     // },
     sku_no: {
       type: String,
+    },
+    discount_perc: {
+      type: Number,
     },
     hsn_sac_no: {
       type: String,
@@ -29,43 +35,60 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "subproductcategory",
     },
-    colour: {
-      type: String,
-    },
-    size: {
-      type: String,
-    },
-    material: {
-      type: String,
-    }, //user input
+    
+    material: { type:  String },
+
+    
+    //user input
 
     stock: {
       type: String,
-      avalaible: "Available",
-      unavailable: " UnAvailable",
+      // avalaible: "Available",
+      // unavailable: " UnAvailable",
+      default : "UnAvailable"
     },
     qty: {
       type: String,
     },
+    // rating :{
+    //   type : Number
+    // },
     reorder_level: {
-      type: String,
+      type: Number,
     },
-
+     
     unit: { type: Schema.Types.ObjectId, ref: "unit" },
+     color: [{ type: Schema.Types.ObjectId, ref: "color" }],
+     size: [{ type: Schema.Types.ObjectId, ref: "size" }],
+
+   // color : [{
+  //   type :Object
+  // }],
+  // size : [{
+  //   type :Object
+  // }],
+
     cost_price: {
       type: Number,
     },
     sell_price: {
       type: Number,
     },
-    gst: {
-      type: String,
-    },
+    gstrate: 
+      { type: Schema.Types.ObjectId, ref: "gstrate" },
+  
     product_img: {
       type: Array,
     }, //goods && service
+    offer_aplicable : {
+       type : String,
+       default: "Inactive"
+    },
+    tag : {
+      type : String
+    },
+     sortorder: {
 
-    sortorder: {
       type: Number,
     },
     status: {

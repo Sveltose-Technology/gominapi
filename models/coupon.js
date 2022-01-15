@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const CouponSchema = new mongoose.Schema(
   {
@@ -7,26 +8,35 @@ const CouponSchema = new mongoose.Schema(
       // require: true,
       // unique: true,
     },
+    CouponTitle: {
+      type:String
+    },
+    product : {
+      type: Schema.Types.ObjectId, ref :"product"
+    },
+  
+      seller : { type : Schema.Types.ObjectId,ref :"seller"
+
+    },
     description: {
       type: String,
     },
     startDate: {
       type: String,
     },
-    endDate: {
+    expireOn: {
       type: String,
     },
     usage_limit: {
       type: Number,
     },
-    amount: {
-      type: Number,
+   
+    amount : {
+      type : Number
     },
-    discount: {
+    status: {
       type: String,
-    },
-    isActive: {
-      type: String,
+     default : "Active"
     },
   },
   { timestamps: true }

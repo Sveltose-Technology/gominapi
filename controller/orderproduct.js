@@ -1,4 +1,6 @@
-const Orderproduct = require("../models/orderproduct");
+const Orderproduct = require("../models/orderproduct")
+const Coupon = require("../models/coupon");
+
 const { v4: uuidv4 } = require("uuid");
 
 exports.addorder = async (req, res) => {
@@ -6,6 +8,7 @@ exports.addorder = async (req, res) => {
     customer,
     product,
     order_type,
+    payment_type,
     orderId,
     qty,
     //customer_name,
@@ -17,10 +20,14 @@ exports.addorder = async (req, res) => {
     status,
   } = req.body;
 
+  // const verifycoupon = await Coupon.find({CouponTitle:})
+
+
   const newOrderproduct = new Orderproduct({
     customer: customer,
     product: product,
-    order_type: order_type,
+    order_type : order_type,
+    payment_type: payment_type,
     orderId: uuidv4(),
     qty: qty,
     //customer_name: customer_name,
@@ -28,7 +35,7 @@ exports.addorder = async (req, res) => {
     delivery_address: delivery_address,
     order_date: order_date,
     // shippingdate: shippingdate,
-    // deliverdondate: deliverdondate,
+    // deliverdondate: deliverdondate, 
     status: status,
   });
   newOrderproduct.save(function (err, data) {
@@ -47,6 +54,7 @@ exports.addorder = async (req, res) => {
     }
   });
 };
+
 
 exports.getorder = async (req, res) => {
   const findall = await Orderproduct.find()
@@ -148,6 +156,30 @@ exports.complete_order = async (req, res, next) => {
     });
 };
 
+exports.salesbyseller = async (req,res)=>{
+  const findall = await Orderproduct.find({ $and: [{ seller: req.params.id }, { status: "Complete" }]})
+  .populate("customer")
+  .populate({path:'product',populate:{
+    path:'gstrate'
+  }})
+   .then((data)=>{
+    res.status(200).json({        
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status : false,
+      error : "error",
+       error : error
+ 
+    })
+  })
+
+}
+
+
 exports.del_order = async (req, res) => {
   try {
     const deleteentry = await Orderproduct.deleteOne({ _id: req.params.id });
@@ -164,3 +196,21 @@ exports.del_order = async (req, res) => {
     });
   }
 };
+
+
+exports.totalorder = async(req,res) =>{
+  await Orderproduct.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
+

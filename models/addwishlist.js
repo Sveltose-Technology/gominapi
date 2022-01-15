@@ -2,8 +2,14 @@ const mongoose = require("mongoose");
 
 const AddwishlistSchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
     product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+    color :{
+ type : String
+    },
+    size : {
+      type : String
+    },
   },
   { timestamps: true }
 );

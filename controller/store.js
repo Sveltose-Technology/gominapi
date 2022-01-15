@@ -5,6 +5,7 @@ const Seller = require("../models/seller");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const dotenv = require("dotenv");
+const product = require("../models/product");
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -24,8 +25,8 @@ exports.addstore = async (req, res) => {
     altphone_no,
     altphone_no2,
     day,
-    startTym,
-    endTym,
+    openingTym,
+    closingTym,
     address_line1,
     address_line2,
     landmark,
@@ -43,6 +44,7 @@ exports.addstore = async (req, res) => {
     tradelicence_img,
     companypan_img,
     address_proof_img,
+    trendingPoint,
     sortorder,
     status,
     //verifystore,
@@ -56,10 +58,10 @@ exports.addstore = async (req, res) => {
     store_email: store_email,
     phone_no: phone_no,
     altphone_no: altphone_no,
-    altphone_no2: altphone_no2,
+    //altphone_no2: altphone_no2,
     day: day,
-    startTym: startTym,
-    endTym: endTym,
+    openingTym: openingTym,
+    closingTym: closingTym,
     address_line1: address_line1,
     address_line2: address_line2,
     landmark: landmark,
@@ -71,6 +73,7 @@ exports.addstore = async (req, res) => {
     pan_no: pan_no,
     company_panno: company_panno,
     address_proof: address_proof,
+    trendingPoint : trendingPoint,
     //gstImg: gstImg,
     // storepan_img: storepan_img,
     // tradelicence_img: tradelicence_img,
@@ -137,7 +140,7 @@ exports.addstore = async (req, res) => {
         //   req.files.shoplogo_img[i].path
         // );
         const resp = await cloudinary.uploader.upload(
-          req.files.gstImg[i].path,
+          req.files.gstImg[i].path,  
           { use_filename: true, unique_filename: false },
           function (cb) {
             // console.log(cb);
@@ -307,7 +310,7 @@ exports.getonestore = async (req, res) => {
 };
 
 exports.storebyseller = async (req, res) => {
-  const getseller = await Seller.findOne({ _id: req.sellerId });
+  //const getseller = await Seller.findOne({ _id: req.sellerId });
 
   const findone = await Store.findOne({ seller: req.sellerId }).populate(
     "seller"
@@ -660,3 +663,60 @@ exports.del_store = async (req, res) => {
     });
   }
 };
+
+
+//get counts
+exports.totalstore = async (req, res) => {
+  await Store.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+
+exports.searchstore = async (req, res) => {
+  const { oneinput } = req.body;
+  await Store.find({store_name:{$regex: oneinput,$options:"i"}})
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
+ exports.browsebytrending_store = async (req,res) =>{
+   const findall = await Store.find().sort({trendingPoint : -1}).limit(5) .then((data) => {
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  });
+};
+
+
+ 

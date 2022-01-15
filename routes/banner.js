@@ -9,6 +9,7 @@ const {
   viewonebanner,
   delbanner,
   getbannerbytype,
+  totalbanner
 } = require("../controller/banner");
 
 const storage = multer.diskStorage({
@@ -25,8 +26,11 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
-  if (
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (
     file.mimetype.includes("jpeg") ||
     file.mimetype.includes("png") ||
     file.mimetype.includes("jpg")
@@ -35,19 +39,15 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(null, false);
   }
-};
+}
+});
 
-let uploads = multer({ storage: storage });
-
-// router.post(
-//   "/admin/up_bannerload_image",
-//   uploads.single("banner_img"),
-//   addbanner
-// );
-
-router.post("/admin/addbanner", uploads.array("banner_img"), addbanner);
+// PATHS
+router.post("/admin/addbanner", upload.array("banner_img"), addbanner);
 router.get("/admin/getbanner", getbanner);
 router.get("/admin/viewonebanner/:id", viewonebanner);
 router.get("/admin/delbanner/:id", delbanner);
 router.get("/admin/bannerbytype/:id", getbannerbytype);
+router.get("/admin/totalbanner", totalbanner);
+
 module.exports = router;
