@@ -3,7 +3,7 @@ const { verifytoken } = require("../functions/verifytoken");
 
 
 exports.addtocartproduct = async (req, res) => {
-   const carttoken = await Cart.findOne({ _id: req.userId });
+   const carttoken = await Cart.findOne({ user: req.userId });
 
   const { customer, product, product_price, product_qty,color,size } = req.body;
 
@@ -42,6 +42,7 @@ exports.addtocartproduct = async (req, res) => {
         status: true,
         msg: "cart updated",
         data: data,
+
       });
     }).catch((error)=>{
       res.status(200).json({
@@ -73,6 +74,7 @@ exports.addtocartproduct = async (req, res) => {
 };
 
 exports.getallcart = async (req, res) => {
+  const carttoken = await Cart.findOne({ user: req.userId });
   const findall = await Cart.find().sort({ sortorder: 1 }).populate("customer").populate("product")
   if (findall) {
     res.status(200).json({
