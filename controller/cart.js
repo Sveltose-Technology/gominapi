@@ -16,7 +16,8 @@ exports.addtocartproduct = async (req, res) => {
   //   total_amount =total_amount + product[i].product_price;
 
   // }
-
+  //
+  console.log();
   const addtoCart = new Cart({
     customer: req.userId,
     product: product,
