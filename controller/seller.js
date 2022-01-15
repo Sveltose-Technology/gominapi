@@ -1,8 +1,6 @@
 const Seller = require("../models/seller");
  
-// const cloudinary = require("cloudinary").v2;
-// const dotenv = require("dotenv");
-// const fs = require("fs");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = 10;
@@ -18,7 +16,7 @@ function generateAccessToken(seller_name) {
   });
 }
 
-exports.add_seller = async (req, res) => {
+exports.sellersignup = async (req, res) => {
   const {
     seller_name,
     email,

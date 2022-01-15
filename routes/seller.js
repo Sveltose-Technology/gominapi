@@ -4,7 +4,7 @@ const multer = require("multer");
 const fs = require("fs");
 
 const {
-  add_seller,
+  sellersignup,
   getseller,
  // Adminlogin,
   del_seller,
@@ -43,7 +43,7 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 
 //Paths
-router.post("/admin/seller_signup", uploads.single("seller_img"), add_seller);
+router.post("/admin/seller_signup",sellersignup);
 router.get("/admin/getseller", getseller);
 //router.post("/admin/Adminlogin", Adminlogin);
 router.post("/admin/sellerlogin", sellerlogin);
