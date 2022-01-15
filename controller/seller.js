@@ -24,8 +24,7 @@ exports.add_seller = async (req, res) => {
     email,
     password,
     confirm_password,
-    status,
-    sortorder,
+    mobile
   } = req.body;
   //console.log(req.body);
 
@@ -39,12 +38,11 @@ exports.add_seller = async (req, res) => {
     email:email,
     password: hashpassword,
     confirm_password: hashpassword,
-    status: status,
-    sortorder: sortorder,
-  });
+    mobile: mobile,
+   });
 
   //console.log(req.body)
-  const findexist = await Seller.findOne({ email: email });
+  const findexist = await Seller.findOne({ $or : [{email: email },{mobile : mobile}]})
   if (findexist) {
     res.status(400).json({
       status: false,

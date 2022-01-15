@@ -56,7 +56,7 @@ const review = require("./routes/review");
 const color = require("./routes/color");
 const size = require("./routes/size");
 const reason = require("./routes/reason");
-
+const transfer_type = require("./routes/transfer_type");
 
 
  
@@ -108,6 +108,7 @@ app.use("/", review);
 app.use("/", color);
 app.use("/", size);
 app.use("/", reason);
+app.use("/", transfer_type);
 
 
 

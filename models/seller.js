@@ -15,10 +15,8 @@ const sellerSchema = new Schema(
     confirm_password: {
       type: String,
     },
-    status: {
-      type: String,
-    },
-    sortorder: {
+    
+    mobile: {
       type: Number,
     },
   },
