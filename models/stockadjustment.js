@@ -13,7 +13,7 @@ const stockadjustmentSchema = new Schema(
             type :String
         },
         reason : {
-            type : String
+            type : Schema.Types.ObjectId, ref : "reason"
         },
         adjusted_qty:{
             type : Number
