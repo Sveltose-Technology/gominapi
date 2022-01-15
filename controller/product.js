@@ -271,7 +271,6 @@ exports.getproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-     
     .populate("color")
     .populate("size")
     .populate("material")
@@ -613,5 +612,10 @@ exports.getproductbytagname = async (req,res) => {
 }
 
 
-
+  exports.productfilter = async(req,res)=>{
+    const findone = await Product.findOne({ _id: req.params.id})
+    
   
+  }
+
+   

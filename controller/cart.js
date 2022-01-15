@@ -1,7 +1,12 @@
 const Cart = require("../models/cart");
+const { verifytoken } = require("../functions/verifytoken");
+
 
 exports.addtocartproduct = async (req, res) => {
+   const carttoken = await Cart.findOne({ _id: req.userId });
+
   const { customer, product, product_price, product_qty,color,size } = req.body;
+
 
   // let total_qty = 0;
   // for (let i = 0; i < product.length; i++) {
@@ -13,10 +18,6 @@ exports.addtocartproduct = async (req, res) => {
   //   total_amount =total_amount + product[i].product_price;
    
   // }
-
-  
-  
-
 
   const addtoCart = new Cart({
     customer: customer,
