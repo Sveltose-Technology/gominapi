@@ -2,8 +2,8 @@ const Customer = require("../models/customer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const nodemailer = require("nodemailer")
-const {sendmail} = require("./mail");
+const nodemailer = require("nodemailer");
+const { sendmail } = require("./mail");
 
 const router = require("../routes/mail");
 
@@ -19,17 +19,10 @@ const router = require("../routes/mail");
 // }
 
 exports.signup = async (req, res) => {
-  const {
-    customerId,
-    firstname,
-    lastname,
-    email,
-    mobile,
-    password,
-  } = req.body;
+  const { customerId, firstname, lastname, email, mobile, password } = req.body;
 
-   const salt = bcrypt.genSaltSync(saltRounds);
-   const hashpassword = bcrypt.hashSync(password, salt);
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt);
 
   create_random_string(6);
   function create_random_string(string_length) {
@@ -45,7 +38,7 @@ exports.signup = async (req, res) => {
   }
 
   const newCustomer = new Customer({
-    customerId : random_string,
+    customerId: random_string,
     firstname: firstname,
     lastname: lastname,
     email: email,
@@ -68,16 +61,16 @@ exports.signup = async (req, res) => {
       .then((result) => {
         const token = jwt.sign(
           {
-            userId : result._id
+            userId: result._id,
           },
           process.env.TOKEN_SECRET,
           {
             expiresIn: 86400000,
           }
-        )
-        res.header("auth-token",token).status(200).json({
+        );
+        res.header("auth-token", token).status(200).json({
           status: true,
-          token : token,
+          token: token,
           msg: "success",
           user: result,
         });
@@ -163,7 +156,6 @@ exports.login = async (req, res) => {
   }
 };
 
-
 exports.editcustomer = async (req, res) => {
   const findandUpdateEntry = await Customer.findOneAndUpdate(
     {
@@ -186,7 +178,6 @@ exports.editcustomer = async (req, res) => {
       error: "error",
     });
   }
-  
 };
 
 exports.allcustomer = async (req, res) => {
@@ -240,70 +231,69 @@ exports.delcustomer = async (req, res) => {
   }
 };
 
-
-exports.totalcustomer = async(req,res) =>{
-  await Customer.countDocuments().then((data)=>{
-    res.status(200).json({
-      status: true,
-      data: data,
+exports.totalcustomer = async (req, res) => {
+  await Customer.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
     });
-  })
-  .catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error,
-    });
-  })
-}
-
+};
 
 exports.sendotp = async (req, res) => {
-  const defaultotp = Math.ceil(100000 + Math.random()*900000 );
+  const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { customer_email } = req.body;
-  const finddetails  = await Customer.findOneAndUpdate(
+  const finddetails = await Customer.findOneAndUpdate(
     { customer_email: customer_email },
     { $set: { otp: defaultotp } },
     { new: true }
-   )
-   
+  );
+
   //console.log(mobile_no.length);
   //console.log(finddetails);
   //console.log(finddetails.customer_email);
   if (finddetails) {
-  //   //const {to,text,} = req.body
-  //   const subject = `Buynaa Email Verification`;
-  //   const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
+    //   //const {to,text,} = req.body
+    //   const subject = `Buynaa Email Verification`;
+    //   const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
 
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  // let testAccount = await nodemailer.createTestAccount();
+    // Generate test SMTP service account from ethereal.email
+    // Only needed if you don't have a real mail account for testing
+    // let testAccount = await nodemailer.createTestAccount();
 
-  // // create reusable transporter object using the default SMTP transport
-  // let transporter = nodemailer.createTransport({
-  //   host: "smtpout.secureserver.net",
-  //   port: 587,
-  //   secure: false, // true for 465, false for other ports
-  //   auth: {
-  //     user: "support@buynaa.com", // generated ethereal user
-  //     pass: "Buynaa330*", // generated ethereal password
-  //   },
-  // });
+    // // create reusable transporter object using the default SMTP transport
+    // let transporter = nodemailer.createTransport({
+    //   host: "smtpout.secureserver.net",
+    //   port: 587,
+    //   secure: false, // true for 465, false for other ports
+    //   auth: {
+    //     user: "support@buynaa.com", // generated ethereal user
+    //     pass: "Buynaa330*", // generated ethereal password
+    //   },
+    // });
 
-  // // send mail with defined transport object
-  // let info = await transporter.sendMail({
-  //   from: '"Buynaa Support" <support@buynaa.com>', // sender address
-  //   to: finddetails.customer_email, // list of receivers
-  //   subject: subject, // Subject line
-  //   text: text, // plain text body
-  //   html: `<b>${text}</b>`, // html body
-  // })
+    // // send mail with defined transport object
+    // let info = await transporter.sendMail({
+    //   from: '"Buynaa Support" <support@buynaa.com>', // sender address
+    //   to: finddetails.customer_email, // list of receivers
+    //   subject: subject, // Subject line
+    //   text: text, // plain text body
+    //   html: `<b>${text}</b>`, // html body
+    // })
 
-  // console.log("Message sent: %s", info);
-  // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    // console.log("Message sent: %s", info);
+    // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
-  // // Preview only available when sending through an Ethereal account
-  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // // Preview only available when sending through an Ethereal account
+    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
@@ -317,7 +307,6 @@ exports.sendotp = async (req, res) => {
     });
   }
 };
-
 
 // // const mailer = (email,otp) =>{
 // // const nodemailer = require("nodemailer");
@@ -346,10 +335,11 @@ exports.sendotp = async (req, res) => {
 // });
 // }
 
-
 exports.emailSend = async (req, res) => {
   //console.log(req.body.customer_email);
-  let data = await Customer.findOne({ customer_email: req.body.customer_email });
+  let data = await Customer.findOne({
+    customer_email: req.body.customer_email,
+  });
   //console.log(data);
   const responseType = {};
   if (data) {
@@ -372,15 +362,14 @@ exports.emailSend = async (req, res) => {
   res.status(200).json(responseType);
 };
 
- 
 exports.verifyotp = async (req, res) => {
   const { customer_email, otp } = req.body;
 
-  
-    const findone = await Customer.findOne({$and: [{ customer_email: customer_email }, { otp: otp }]})
-    
-    
-    //.then((data)=>{
+  const findone = await Customer.findOne({
+    $and: [{ customer_email: customer_email }, { otp: otp }],
+  });
+
+  //.then((data)=>{
   //     res.status(200).json({
   //       //status: true,
   //       msg: "otp verified",
@@ -395,23 +384,19 @@ exports.verifyotp = async (req, res) => {
   //     });
   //   })
   // }
-  
-   
+
   if (findone) {
-      res.status(200).json({
-        status: true,
-        msg: "otp verified",
-        data : findone
-          
-      });
-    } else {
-      res.status(200).json({
-        status: false,
-        msg: "Incorrect Otp",
-          
-      });
-    }
-  
+    res.status(200).json({
+      status: true,
+      msg: "otp verified",
+      data: findone,
+    });
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "Incorrect Otp",
+    });
+  }
 };
 
 // exports.changePassword = async (req,res) =>{
@@ -426,10 +411,8 @@ exports.verifyotp = async (req, res) => {
 //   }else {
 //     let customer = await Customer.findOne({})
 //   }
-// }    
 // }
-
-
+// }
 
 // exports.login = async (req, res) => {
 //   const { customer_email, password } = req.body;
@@ -465,7 +448,7 @@ exports.verifyotp = async (req, res) => {
 //         msg: "Incorrect Password",
 //         error: "error",
 //       });
-//     } 
+//     }
 //   // else {
 //   //   res.status(400).json({
 //   //     status: false,

@@ -1,12 +1,10 @@
 const Cart = require("../models/cart");
 const { verifytoken } = require("../functions/verifytoken");
 
-
 exports.addtocartproduct = async (req, res) => {
-   const carttoken = await Cart.findOne({ user: req.userId });
+  // const carttoken = await Cart.findOne({ user: req.userId });
 
-  const { customer, product, product_price, product_qty,color,size } = req.body;
-
+  const { product, product_price, product_qty, color, size } = req.body;
 
   // let total_qty = 0;
   // for (let i = 0; i < product.length; i++) {
@@ -16,41 +14,48 @@ exports.addtocartproduct = async (req, res) => {
   // let total_amount = 0;
   // for (let i = 0; i < product.length; i++) {
   //   total_amount =total_amount + product[i].product_price;
-   
+
   // }
 
   const addtoCart = new Cart({
-    customer: customer,
+    customer: req.userId,
     product: product,
     product_price: product_price,
     product_qty: product_qty,
-    color : color,
-    size : size
+    color: color,
+    size: size,
   });
 
-  
   const findexist = await Cart.findOne({
-    $and: [{ customer: customer }, { product: product },{ color: color },{ size: size }],
+    $and: [
+      { customer: req.userId },
+      { product: product },
+      { color: color },
+      { size: size },
+    ],
   });
   if (findexist) {
-    await Cart.findOneAndUpdate({
-      $and: [{ customer: customer }, { product: product }]
-    },
-    { $set: req.body },
-    { new: true }).then((data)=>{
-      res.status(200).json({
-        status: true,
-        msg: "cart updated",
-        data: data,
-
+    await Cart.findOneAndUpdate(
+      {
+        $and: [{ customer: customer }, { product: product }],
+      },
+      { $set: req.body },
+      { new: true }
+    )
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "cart updated",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(200).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
       });
-    }).catch((error)=>{
-      res.status(200).json({
-        status: false,
-        msg: "error",
-        error: error,
-      });
-    })
   } else {
     addtoCart.save(function (err, data) {
       if (err) {
@@ -60,13 +65,11 @@ exports.addtocartproduct = async (req, res) => {
           error: err,
         });
       } else {
-    
         res.status(200).json({
           status: false,
           msg: "Product added to cart",
           data: data,
-          total_qty : product_qty,
-           
+          total_qty: product_qty,
         });
       }
     });
@@ -74,8 +77,11 @@ exports.addtocartproduct = async (req, res) => {
 };
 
 exports.getallcart = async (req, res) => {
-  const carttoken = await Cart.findOne({ user: req.userId });
-  const findall = await Cart.find().sort({ sortorder: 1 }).populate("customer").populate("product")
+  //const carttoken = await Cart.findOne({ user: req.userId });
+  const findall = await Cart.find({ customer: req.userId })
+    .sort({ sortorder: 1 })
+    .populate("customer")
+    .populate("product");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -92,7 +98,6 @@ exports.getallcart = async (req, res) => {
 };
 
 exports.editcart = async (req, res) => {
-  
   const findandUpdateEntry = await Cart.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -132,33 +137,30 @@ exports.removecart = async (req, res) => {
     });
   }
 };
- 
 
-
- //CARTBY // USERID
+//CARTBY // USERID
 // exports.cartbyshow = async(req,res) =>{
-//   const 
+//   const
 // }
 
-
 exports.cartbycustomer = async (req, res) => {
-  const findone = await Cart.find({ customer: req.params.id }).populate("customer").populate("product")
+  const findone = await Cart.find({ customer: req.params.id })
+    .populate("customer")
+    .populate("product");
   if (findone) {
-
-    let sum = 0
+    let sum = 0;
     for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
-      sum =sum+ element_price*element_qty;
-      
+      sum = sum + element_price * element_qty;
     }
-    console.log(sum)
+    console.log(sum);
     //console.log(findone)
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
-       total: sum
+      total: sum,
     });
   } else {
     res.status(400).json({
