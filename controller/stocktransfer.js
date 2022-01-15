@@ -31,6 +31,49 @@ exports.addstocktransfer = (req,res)=>{
       });
     };
     
+
+    exports.editstocktranfer = async (req, res) => {
+      const findandUpdateEntry = await Stocktransfer.findOneAndUpdate(
+        {
+          _id: req.params.id,
+        },
+        { $set: req.body },
+        { new: true }
+      );
+    
+      if (findandUpdateEntry) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findandUpdateEntry,
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          status: "error",
+          error: "error",
+        });
+      }
+    };
+
+    exports.getstocktransfer = async (req, res) => {
+      const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason").populate("transfer_type")
+      if (findall) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findall,
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      }
+    };
+    
+
 exports.delstocktransfer = async(req,res) =>{
     try {
         const deleteentry   =  await Stocktransfer.deleteOne({_id : req.params.id})
@@ -50,20 +93,6 @@ exports.delstocktransfer = async(req,res) =>{
 
 
  
-exports.getstocktransfer = async (req, res) => {
-  const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason")
-  if (findall) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findall,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
-  }
-};
+ 
+
 

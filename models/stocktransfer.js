@@ -19,7 +19,7 @@ const stocktransferSchema = new Schema(
             type : String
         },
         transfer_type : {
-            type : String
+            type : Schema.Types.ObjectId, ref : "transfer_type"
         },
         reason : {
             type : Schema.Types.ObjectId, ref : "reason"
