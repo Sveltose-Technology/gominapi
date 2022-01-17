@@ -75,7 +75,7 @@ exports.getorder = async (req, res) => {
 };
 
 exports.pending_order = async (req, res, next) => {
-  const datas = await Orderproduct.find({ status: "Pending" })
+  const finddetails = await Orderproduct.find({ $and :[{customer:req.userId},{status: "Pending" }]})
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -95,7 +95,7 @@ exports.pending_order = async (req, res, next) => {
 };
 
 exports.delivery_order = async (req, res, next) => {
-  const datas = await Orderproduct.find({ status: "Delivery" })
+  const finddetails = await Orderproduct.find({ $and : [{customer : req.userId },{status: "Delivery" }]})
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -115,7 +115,7 @@ exports.delivery_order = async (req, res, next) => {
 };
 
 exports.cancelled_order = async (req, res, next) => {
-  const datas = await Orderproduct.find({ status: "Cancel" })
+  const finddetails = await Orderproduct.find({ $and : [{customer : req.userId},{status: "Cancel"}]})
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -135,7 +135,7 @@ exports.cancelled_order = async (req, res, next) => {
 };
 
 exports.complete_order = async (req, res, next) => {
-  const datas = await Orderproduct.find({ status: "Complete" })
+  const finddetails = await Orderproduct.find({$and : [{customer: req.userId},{status: "Complete"}]})
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -163,7 +163,8 @@ exports.salesbyseller = async (req, res) => {
       path: "product",
       populate: {
         path: "gstrate",
-      },
+      }, 
+
     })
     .then((data) => {
       res.status(200).json({
