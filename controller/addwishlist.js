@@ -75,6 +75,19 @@ exports.getonewishlist = async (req, res) => {
   const findone = await Addwishlist.findOne({ _id: req.params.id })
     .populate("customer")
     .populate("product")
+    .populate({
+      path: "product",
+      populate: {
+        path: "color",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "size",
+      },
+    })
+
     .then((result) => {
       res.status(200).json({
         status: true,
@@ -96,6 +109,18 @@ exports.getallwishlist = async (req, res) => {
     .sort({ sortorder: 1 })
     .populate("customer")
     .populate("product")
+    .populate({
+      path: "product",
+      populate: {
+        path: "color",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "size",
+      },
+    })
     .then((result) => {
       res.status(200).json({
         status: true,
