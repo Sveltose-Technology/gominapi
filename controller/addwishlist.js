@@ -5,7 +5,7 @@ exports.addwishlist = async (req, res) => {
   const { product, color, size } = req.body;
 
   const newAddwishlist = new Addwishlist({
-    //  customer: req.userId,
+      customer: req.userId,
     product: product,
     color: color,
     size: size,
