@@ -152,3 +152,6 @@ exports.deletewishlist = async (req, res) => {
     });
   }
 };
+
+
+//console.log()
