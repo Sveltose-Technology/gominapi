@@ -2,69 +2,115 @@ const Addwishlist = require("../models/addwishlist");
 const { v4: uuidv4 } = require("uuid");
 
 exports.addwishlist = async (req, res) => {
-  const { customer, product,color,size } = req.body;
+  const { product, color, size } = req.body;
 
   const newAddwishlist = new Addwishlist({
-    customer: customer,
+    //  customer: req.userId,
     product: product,
-    color : color,
-    size : size
+    color: color,
+    size: size,
   });
-  newAddwishlist.save(function (err, data) {
-    if (err) {
-      res.status(400).json({
-        status: false,
-        msg: "Error Occured",
-        error: err,
-      });
-    } else {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
-    }
+  const findexist = await Cart.findOne({
+    $and: [{ customer: req.userId }, { product: product }],
   });
-};
-
- 
-exports.getonewishlist = async (req,res) =>{
-  const findone = await Addwishlist.findOne({_id :req.params.id}).populate("customer").populate("product").then((result)=>{
-    res.status(200).json({
-      status : true,
-      msg :"success",
-      data : result
-    })
-  }).catch((error)=>{
-    res.status(400).json({
-      status : false,
-      msg : "error",
-      error : "error"
-    })
-  })
-
-}
-
-exports.getallwishlist = async (req, res) => {
-  const findall = await Addwishlist.find().sort({ sortorder: 1 }).populate("customer").populate("product")
-  .then((result) => {
+  if (findexist) {
+    await Addwishlist.findOneAndUpdate(
+      {
+        $and: [{ customer: req.userId }, { product: product }],
+      },
+      { $set: req.body },
+      { new: true }
+    )
+      .then((data) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: result,
+          data: data,
         });
       })
       .catch((error) => {
-        res.status(400).json({
+        res.status(200).json({
           status: false,
           msg: "error",
-          error: "error",
+          error: error,
         });
       });
+  } else {
+    newAddwishlist.save(function (err, data) {
+      if (err) {
+        res.status(400).json({
+          status: false,
+          msg: "Error Occured",
+          error: err,
+        });
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "Product added to wishlist",
+          data: data,
+        });
+      }
+    });
+  }
 };
- 
 
+//   newAddwishlist.save(function (err, data) {
+//     if (err) {
+//       res.status(400).json({
+//         status: false,
+//         msg: "Error Occured",
+//         error: err,
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: true,
+//         msg: "Added to Wishlist",
+//         data: data,
+//       });
+//     }
+//   });
+// };
 
+exports.getonewishlist = async (req, res) => {
+  const findone = await Addwishlist.findOne({ _id: req.params.id })
+    .populate("customer")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
+
+exports.getallwishlist = async (req, res) => {
+  const findall = await Addwishlist.find({ customer: req.userId })
+    .sort({ sortorder: 1 })
+    .populate("customer")
+    .populate("product")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
 
 exports.editwishlist = async (req, res) => {
   const findandUpdateEntry = await Addwishlist.findOneAndUpdate(
