@@ -14,9 +14,9 @@ const {
 router.post("/admin/add_ToCart",verifytoken, addtocartproduct);
 router.get("/admin/get_allcart",verifytoken, getallcart);
 router.get("/admin/remove_cart/:id", removecart);
-router.get("/admin/cartbycustomer/:id", cartbycustomer);
+router.get("/admin/cartbycustomer",verifytoken, cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
 
-//conso
+//console.log()
 
 module.exports = router;

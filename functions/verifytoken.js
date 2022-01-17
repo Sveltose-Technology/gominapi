@@ -13,7 +13,7 @@ exports.verifytoken = async (req, res, next) => {
       return res.status(401).send({ message: "Unathorized!!" });
     }
     req.userId = decoded.userId;
-    console.log(req.userId);
+   // console.log(req.userId);
     req.usertype = decoded.usertype;
     next();
   });

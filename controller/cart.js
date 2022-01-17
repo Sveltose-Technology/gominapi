@@ -80,7 +80,7 @@ exports.addtocartproduct = async (req, res) => {
 };
 
 exports.getallcart = async (req, res) => {
-  //const carttoken = await Cart.findOne({ user: req.userId });
+  
   const findall = await Cart.find({ customer: req.userId })
     .sort({ sortorder: 1 })
     .populate("customer")
@@ -147,7 +147,7 @@ exports.removecart = async (req, res) => {
 // }
 
 exports.cartbycustomer = async (req, res) => {
-  const findone = await Cart.find({ customer: req.params.id })
+  const findone = await Cart.find({customer: req.userId })
     .populate("customer")
     .populate("product");
   if (findone) {
