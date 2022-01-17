@@ -10,6 +10,55 @@ exports.addwishlist = async (req, res) => {
     color: color,
     size: size,
   });
+  const findexist = await Addwishlist.findOne({
+    $and: [
+      { customer: req.userId },
+      { product: product },
+      { color: color },
+      { size: size },
+    ],
+  });
+  if (findexist) {
+    await Addwishlist.findOneAndUpdate(
+      {
+        $and: [{ customer: req.userId }, { product: product }],
+      },
+      { $set: req.body },
+      { new: true }
+    )
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(200).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  } else {
+    newAddwishlist.save(function (err, data) {
+      if (err) {
+        res.status(400).json({
+          status: false,
+          msg: "Error Occured",
+          error: err,
+        });
+      } else {
+        res.status(200).json({
+          status: true,
+          msg: "Product added to Wishlist",
+          data: data,
+         });
+      }
+    });
+  }
+};
+
   // const findexist = await Addwishlist.findOne({
   //   $and: [{ customer: req.userId }, { product: product }],
   // });
@@ -36,22 +85,23 @@ exports.addwishlist = async (req, res) => {
   //       });
   //     });
   // } else {
-     newAddwishlist.save(function (err, data) {
-      if (err) {
-        res.status(400).json({
-          status: false,
-          msg: "Error Occured",
-          error: err,
-        });
-      } else {
-        res.status(200).json({
-          status: true,
-          msg: "Product added to wishlist",
-          data: data,
-        });
-      }
-    });
-  }
+
+  //    newAddwishlist.save(function (err, data) {
+  //     if (err) {
+  //       res.status(400).json({
+  //         status: false,
+  //         msg: "Error Occured",
+  //         error: err,
+  //       });
+  //     } else {
+  //       res.status(200).json({
+  //         status: true,
+  //         msg: "Product added to wishlist",
+  //         data: data,
+  //       });
+  //     }
+  //   });
+  // }
 
 
 //   newAddwishlist.save(function (err, data) {
