@@ -45,7 +45,7 @@ exports.addwishlist = async (req, res) => {
         });
       } else {
         res.status(200).json({
-          status: false,
+          status: true,
           msg: "Product added to wishlist",
           data: data,
         });
