@@ -84,7 +84,19 @@ exports.getallcart = async (req, res) => {
   const findall = await Cart.find({ customer: req.userId })
     .sort({ sortorder: 1 })
     .populate("customer")
-    .populate("product");
+    .populate("product")
+    .populate({
+      path: "product",
+      populate: {
+        path: "color",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "size",
+      },
+    })
   if (findall) {
     res.status(200).json({
       status: true,
@@ -149,7 +161,19 @@ exports.removecart = async (req, res) => {
 exports.cartbycustomer = async (req, res) => {
   const findone = await Cart.find({customer: req.userId })
     .populate("customer")
-    .populate("product");
+    .populate("product")
+    .populate({
+      path: "product",
+      populate: {
+        path: "color",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "size",
+      },
+    })
   if (findone) {
     let sum = 0;
     for (let i = 0; i < findone.length; i++) {
