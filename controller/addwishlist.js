@@ -10,7 +10,7 @@ exports.addwishlist = async (req, res) => {
     color: color,
     size: size,
   });
-  const findexist = await Cart.findOne({
+  const findexist = await Addwishlist.findOne({
     $and: [{ customer: req.userId }, { product: product }],
   });
   if (findexist) {
