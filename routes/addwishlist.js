@@ -11,7 +11,7 @@ const {
 } = require("../controller/addwishlist");
 
 //path
-//router.post("/admin/addwishlist", addwishlist);
+router.post("/admin/addwishlist",verifytoken, addwishlist);
 router.get("/admin/getallwishlist", verifytoken, getallwishlist);
 router.get("/admin/getonewishlist/:id", getonewishlist);
 router.get("/admin/deletewishlist/:id", deletewishlist);
