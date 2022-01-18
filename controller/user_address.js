@@ -2,10 +2,8 @@ const Useraddress = require("../models/user_address");
 
 exports.addcus_address = async (req, res) => {
   const {
-    customer,
-    user_name,
-    phone_no,
-    address,
+    
+     address,
     locality,
     pincode,
     city,
@@ -14,10 +12,8 @@ exports.addcus_address = async (req, res) => {
   } = req.body;
 
   const newUseraddress = new Useraddress({
-    customer :customer,
-    user_name: user_name,
-    phone_no: phone_no,
-    address: address,
+    customer :req.userId,
+     address: address,
     locality: locality,
     pincode: pincode,
     city: city,
@@ -40,6 +36,43 @@ exports.addcus_address = async (req, res) => {
     }
   });
 };
+
+exports.getaddress = async (req, res) => {
+  const findall = await Useraddress.find({ customer: req.userId }).sort({ sortorder: 1 }).populate("product")
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+exports.viewoneuseraddress = async (req, res) => {
+  const findone = await Useraddress.findOne({ customer:req.userId});
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
 
 exports.edit_address = async (req, res) => {
   console.log = req.body;

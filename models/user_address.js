@@ -6,14 +6,7 @@ const useraddressSchema = new Schema(
     customer : {
       type :mongoose.Schema.Types.ObjectId,ref : "customer"
     },
-    user_name: {
-      type: String,
-      //require: true,
-    },
-    phone_no: {
-      type: String,
-     // require: true,
-    },
+    
     address: {
       type: String,
      // require: true,
