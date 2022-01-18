@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { verifytoken } = require("../functions/verifytoken");
 
 
 const {
@@ -19,7 +20,7 @@ const {
 router.post("/user/signup", signup);
 router.get("/user/allcustomer", allcustomer);
 router.get("/user/getonecustomer/:id", getonecustomer);
-router.post("/user/editcustomer/:id", editcustomer);
+router.post("/user/editcustomer",verifytoken, editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
 router.get("/user/totalcustomer", totalcustomer);

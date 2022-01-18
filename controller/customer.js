@@ -159,7 +159,7 @@ exports.login = async (req, res) => {
 exports.editcustomer = async (req, res) => {
   const findandUpdateEntry = await Customer.findOneAndUpdate(
     {
-      _id: req.params.id,
+      customer : req.userId,
     },
     { $set: req.body },
     { new: true }

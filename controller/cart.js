@@ -6,11 +6,11 @@ exports.addtocartproduct = async (req, res) => {
 
   const { product, product_price, product_qty, color, size } = req.body;
 
-  // let total_qty = 0;
-  // for (let i = 0; i < product.length; i++) {
-  //   total_qty = total_qty + product[i].product_qty;
-  // }
-
+  let total_qty = 0;
+   for (let i = 0; i < product.length; i++) {
+     total_qty = total_qty + product[i].product_qty;
+   }
+ 
   // let total_amount = 0;
   // for (let i = 0; i < product.length; i++) {
   //   total_amount =total_amount + product[i].product_price;
@@ -176,18 +176,18 @@ exports.cartbycustomer = async (req, res) => {
     })
   if (findone) {
     let sum = 0;
-    for (let i = 0; i < findone.length; i++) {
+     for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
       sum = sum + element_price * element_qty;
     }
-    console.log(sum);
+   // console.log(sum);
     //console.log(findone)
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
-      total: sum,
+       total: sum,
     });
   } else {
     res.status(400).json({
