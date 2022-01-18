@@ -19,7 +19,7 @@ const router = require("../routes/mail");
 // }
 
 exports.signup = async (req, res) => {
-  const { customerId, firstname, lastname, email, mobile, password } = req.body;
+  const { customerId, firstname, lastname, email, mobile, password,address,locality,pincode,state,city } = req.body;
 
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
@@ -44,6 +44,11 @@ exports.signup = async (req, res) => {
     email: email,
     mobile: mobile,
     password: hashpassword,
+    address :address,
+    locality : locality,
+    pincode : pincode,
+    state :state,
+    city : city
   });
 
   const findexist = await Customer.findOne({

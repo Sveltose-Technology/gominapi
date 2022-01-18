@@ -20,8 +20,24 @@ const customerSchema = new Schema(
     },
     password: {
       type: String,
+      default:12345
     },
       
+    address :{
+      type : String
+    },
+    locality : {
+      type : String
+    },
+    pincode:{
+      type : String
+    },
+    state : {
+      type : String
+    },
+    city:{
+      type : String
+    },
     //  code: {
     //  type: String,
     //   default: 1234,
