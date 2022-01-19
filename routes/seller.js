@@ -14,7 +14,8 @@ const {
   sellerlogin,
   sendOtp,
   emailsend,
-  verifyOtp
+  verifyOtp,
+  sendOTP
   //storebyseller,
 } = require("../controller/seller");
 
@@ -60,8 +61,10 @@ router.get("/admin/totalseller", totalseller);
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
+router.post("/admin/sendOTP", sendOTP);
 
 
+ 
 module.exports = router;
  
  
