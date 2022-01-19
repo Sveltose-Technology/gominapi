@@ -66,9 +66,9 @@ exports.viewoneuseraddress = async (req, res) => {
 };
 
 exports.edit_address = async (req, res) => {
-  console.log = req.body;
+  //console.log = req.body;
   const findandUpdateEntry = await Useraddress.findOneAndUpdate(
-    { _id: req.userId },
+    { customer: req.userId },
     { $set: req.body },
     { new: true }
   );
