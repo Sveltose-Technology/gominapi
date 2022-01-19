@@ -11,7 +11,7 @@ const {
 } = require("../controller/user_address");
 
 //Paths
-router.post("/user/addcus_address", addcus_address);
+router.post("/user/addcus_address",verifytoken, addcus_address);
 router.post("/user/edit_address", verifytoken, edit_address);
 router.get("/user/getaddress", verifytoken, getaddress);
 router.post("/user/viewoneuseraddress", verifytoken, viewoneuseraddress);
