@@ -59,7 +59,7 @@ exports.viewoneuseraddress = async (req, res) => {
   } else {
     res.status(400).json({
       status: false,
-      msg: "error",
+      msg: "Add New Address",
       error: "error",
     });
   }
