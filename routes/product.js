@@ -21,7 +21,8 @@ const {
   getproductbytagname,
   productsearchgetstore,
   productfilter,
-  getproductbysize
+  getproductbysize,
+  getuniquetag
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -75,7 +76,8 @@ router.get("/admin/getproductbytagname/:id", getproductbytagname);
 
 router.post("/admin/productsearchgetstore", productsearchgetstore);
 
-   
+router.get("/admin/getuniquetag", getuniquetag);
+
 
 
 module.exports = router;

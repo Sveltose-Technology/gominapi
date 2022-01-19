@@ -613,3 +613,20 @@ exports.getproductbytagname = async (req,res) => {
 
 
  
+exports.getuniquetag = async (req,res) => {
+  const findall = await Product.find().distinct("tag")
+  .then((data)=>{
+    res.status(200).json({
+      status : true,
+      msg : "success",
+      data : data
+    })
+  }).catch((error)=>{
+    res.status(400).json({
+      status : false,
+      error : "error",
+       error : error
+ 
+    })
+  })
+}
