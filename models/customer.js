@@ -15,37 +15,24 @@ const customerSchema = new Schema(
     email: {
       type: String,
     },
-    mobile:{
-      type :Number
+    mobile: {
+      type: Number,
     },
     password: {
       type: String,
-      default:12345
     },
-      
-    address :{
-      type : String
+    cnfrmPassword: {
+      type: String,
     },
-    locality : {
-      type : String
-    },
-    pincode:{
-      type : String
-    },
-    state : {
-      type : String
-    },
-    city:{
-      type : String
-    },
+
     //  code: {
     //  type: String,
     //   default: 1234,
     // },
-    
-    otp : {
-      type : Number
-    }
+
+    otp: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

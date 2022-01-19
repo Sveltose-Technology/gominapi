@@ -19,7 +19,15 @@ const router = require("../routes/mail");
 // }
 
 exports.signup = async (req, res) => {
-  const { customerId, firstname, lastname, email, mobile, password,address,locality,pincode,state,city } = req.body;
+  const {
+    customerId,
+    firstname,
+    lastname,
+    email,
+    mobile,
+    password,
+    cnfrmPassword,
+  } = req.body;
 
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
@@ -44,11 +52,7 @@ exports.signup = async (req, res) => {
     email: email,
     mobile: mobile,
     password: hashpassword,
-    address :address,
-    locality : locality,
-    pincode : pincode,
-    state :state,
-    city : city
+    cnfrmPassword: hashpassword,
   });
 
   const findexist = await Customer.findOne({
@@ -164,7 +168,7 @@ exports.login = async (req, res) => {
 exports.editcustomer = async (req, res) => {
   const findandUpdateEntry = await Customer.findOneAndUpdate(
     {
-      customer : req.userId,
+      customer: req.userId,
     },
     { $set: req.body },
     { new: true }
@@ -203,7 +207,7 @@ exports.allcustomer = async (req, res) => {
 };
 
 exports.getonecustomer = async (req, res) => {
-  const findone = await Customer.findOne({customer: req.userId });
+  const findone = await Customer.findOne({ customer: req.userId });
   if (findone) {
     res.status(200).json({
       status: true,

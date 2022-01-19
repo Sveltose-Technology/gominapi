@@ -1,19 +1,11 @@
 const Useraddress = require("../models/user_address");
 
 exports.addcus_address = async (req, res) => {
-  const {
-    
-     address,
-    locality,
-    pincode,
-    city,
-    state,
-
-  } = req.body;
+  const { address, locality, pincode, city, state } = req.body;
 
   const newUseraddress = new Useraddress({
-    customer :req.userId,
-     address: address,
+    customer: req.userId,
+    address: address,
     locality: locality,
     pincode: pincode,
     city: city,
@@ -38,7 +30,9 @@ exports.addcus_address = async (req, res) => {
 };
 
 exports.getaddress = async (req, res) => {
-  const findall = await Useraddress.find({ customer: req.userId }).sort({ sortorder: 1 }).populate("product")
+  const findall = await Useraddress.find({ customer: req.userId })
+    .sort({ sortorder: 1 })
+    .populate("product");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -54,9 +48,8 @@ exports.getaddress = async (req, res) => {
   }
 };
 
-
 exports.viewoneuseraddress = async (req, res) => {
-  const findone = await Useraddress.findOne({ customer:req.userId});
+  const findone = await Useraddress.findOne({ customer: req.userId });
   if (findone) {
     res.status(200).json({
       status: true,
@@ -72,12 +65,10 @@ exports.viewoneuseraddress = async (req, res) => {
   }
 };
 
-
-
 exports.edit_address = async (req, res) => {
   console.log = req.body;
   const findandUpdateEntry = await Useraddress.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.userId },
     { $set: req.body },
     { new: true }
   );
