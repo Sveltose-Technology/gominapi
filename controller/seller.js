@@ -462,7 +462,7 @@ exports.sendOTP = async (req, res) => {
     // // send mail with defined transport object
     let info = await transporter.sendMail({
       from: '"Buynaa Support" <support@buynaa.com>', // sender address
-      to: finddetails.customer_email, // list of receivers
+      to: finddetails.email, // list of receivers
       subject: subject, // Subject line
       text: text, // plain text body
       html: `<b>${text}</b>`, // html body
@@ -472,7 +472,7 @@ exports.sendOTP = async (req, res) => {
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // // Preview only available when sending through an Ethereal account
-    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
