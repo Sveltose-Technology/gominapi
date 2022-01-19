@@ -19,6 +19,10 @@ const sellerSchema = new Schema(
     mobile: {
       type: Number,
     },
+    //  code: {
+    //  type: String,
+    //   default: 1234,
+    // },
     otp: {
       type: Number,
     },

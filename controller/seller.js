@@ -3,6 +3,7 @@ const Seller = require("../models/seller");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const seller = require("../models/seller");
 const saltRounds = 10;
 
 const validatePassword = (password, dbpassword) => {
@@ -355,6 +356,73 @@ exports.sendOtp = async (req, res) => {
     res.status(400).json({
       status: false,
       msg: "error occured",
+    });
+  }
+};
+
+
+exports.emailsend = async (req, res) => {
+  //console.log(req.body.customer_email);
+  let data = await Seller.findOne({
+    email: req.body.email,
+  });
+  //console.log(data);
+  const responseType = {};
+  if (data) {
+    let otpcode = Math.floor(Math.random() * 10000 + 1);
+    //console.log(data + "if");
+    let otpData = new Seller({
+      email: req.body.email,
+      code: otpcode,
+      expireIn: new Date().getTime() + 300 * 1000,
+    });
+    let otpResponse = await otpData.save();
+    responseType.statusText = "success";
+    responseType.message = "please check your email Id";
+    responseType.data = otpData;
+  } else {
+    //console.log(data + "else");
+    responseType.statusText = "error";
+    responseType.message = "email Id not exist";
+  }
+  res.status(200).json(responseType);
+};
+
+
+
+exports.verifyOtp = async (req, res) => {
+  const { email, otp } = req.body;
+
+  const findone = await Seller.findOne({
+    $and: [{email: email }, { otp: otp }],
+  });
+
+  //.then((data)=>{
+  //     res.status(200).json({
+  //       //status: true,
+  //       msg: "otp verified",
+  //       data: data,
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     res.status(400).json({
+  //      // status: false,
+  //       msg: "Incorrect Otp",
+  //       error: error,
+  //     });
+  //   })
+  // }
+
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "otp verified",
+      data: findone,
+    });
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "Incorrect Otp",
     });
   }
 };

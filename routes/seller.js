@@ -12,7 +12,9 @@ const {
   getoneseller,
   totalseller,
   sellerlogin,
-  sendOtp
+  sendOtp,
+  emailsend,
+  verifyOtp
   //storebyseller,
 } = require("../controller/seller");
 
@@ -56,7 +58,10 @@ router.get("/admin/delSeller/:id", del_seller);
 router.get("/admin/getoneseller/:id", getoneseller);
 router.get("/admin/totalseller", totalseller);
 router.post("/admin/sendOtp", sendOtp);
+//router.post("/admin/emailsend", emailsend);
+router.post("/admin/verifyOtp", verifyOtp);
+
 
 module.exports = router;
-
+ 
  
