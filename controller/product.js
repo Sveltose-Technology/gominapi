@@ -612,27 +612,4 @@ exports.getproductbytagname = async (req,res) => {
 }
 
 
-//   exports.productfilter = async(req,res)=>{
-//  const {size}  =req.body  
-//  Product.find({size: size}, function(err, data){     
-//           if(err){       
-//               console.log(err)     
-//           } else {       
-//               res.json(data);     
-//           }       
-//       }) 
-//   }
-   
-
-//   }
-   
-//   exports.search = (req, res) => {   
-//     const filterType = req.query.business_type;   
-//     Business.find({business_type: filterType}, function(err, business){     
-//         if(err){       
-//             console.log(err)     
-//         } else {       
-//             res.json(business);     
-//         }       
-//     }) 
-// }; 
+ 
