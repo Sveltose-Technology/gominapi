@@ -19,6 +19,9 @@ const sellerSchema = new Schema(
     mobile: {
       type: Number,
     },
+    otp: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

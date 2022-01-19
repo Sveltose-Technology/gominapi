@@ -11,7 +11,8 @@ const {
   editseller,
   getoneseller,
   totalseller,
-  sellerlogin
+  sellerlogin,
+  sendOtp
   //storebyseller,
 } = require("../controller/seller");
 
@@ -54,6 +55,8 @@ router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", getoneseller);
 router.get("/admin/totalseller", totalseller);
+router.post("/admin/sendOtp", sendOtp);
+
 module.exports = router;
 
  
