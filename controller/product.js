@@ -612,7 +612,7 @@ exports.getproductbytagname = async (req,res) => {
 }
 
 
- 
+ //console.log()
 exports.getuniquetag = async (req,res) => {
   const findall = await Product.find().distinct("tag")
   .then((data)=>{
