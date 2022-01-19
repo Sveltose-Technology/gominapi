@@ -32,7 +32,7 @@ exports.addcus_address = async (req, res) => {
 exports.getaddress = async (req, res) => {
   const findall = await Useraddress.find({ customer: req.userId })
     .sort({ sortorder: 1 })
-    .populate("product");
+    .populate("customer");
   if (findall) {
     res.status(200).json({
       status: true,
