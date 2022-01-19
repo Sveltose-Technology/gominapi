@@ -613,9 +613,15 @@ exports.getproductbytagname = async (req,res) => {
 
 
 //   exports.productfilter = async(req,res)=>{
-//  const {size,value}  =req.body  
-//  product.find
-
+//  const {size}  =req.body  
+//  Product.find({size: size}, function(err, data){     
+//           if(err){       
+//               console.log(err)     
+//           } else {       
+//               res.json(data);     
+//           }       
+//       }) 
+//   }
    
 
 //   }

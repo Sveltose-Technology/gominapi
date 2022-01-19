@@ -40,9 +40,14 @@ exports.addtocartproduct = async (req, res) => {
   if (findexist) {
     await Cart.findOneAndUpdate(
       {
-        $and: [{ customer: req.userId }, { product: product }],
+        $and: [
+          { customer: req.userId },
+          { product: product },
+          { color: color },
+          { size: size },
+        ],
       },
-      { $set: req.body },
+      { $set: {product_qty :findexist.product_qty + product_qty} },
       { new: true }
     )
       .then((data) => {
