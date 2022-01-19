@@ -153,10 +153,25 @@ exports.removecart = async (req, res) => {
   }
 };
 
-//CARTBY // USERID
-// exports.cartbyshow = async(req,res) =>{
-//   const
-// }
+
+exports.clearCart = async (req, res) => {
+  try {
+    const deleteentry = await Cart.deleteOne({ customer : req.userId});
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};
+
+ 
 
 exports.cartbycustomer = async (req, res) => {
   const findone = await Cart.find({customer: req.userId })

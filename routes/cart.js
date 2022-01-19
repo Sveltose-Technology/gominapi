@@ -7,7 +7,8 @@ const {
   getallcart,
   removecart,
   cartbycustomer,
-  editcart
+  editcart,
+  clearCart
 } = require("../controller/cart");
  
 //path
@@ -16,6 +17,8 @@ router.get("/admin/get_allcart",verifytoken, getallcart);
 router.get("/admin/remove_cart/:id",verifytoken, removecart);
 router.get("/admin/cartbycustomer",verifytoken, cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
+router.get("/admin/clearCart",verifytoken, clearCart);
+
 
 //console.log()
 
