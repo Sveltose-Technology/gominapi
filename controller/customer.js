@@ -466,3 +466,34 @@ exports.verifyotp = async (req, res) => {
 //   //   });
 //   // }
 // }
+
+
+exports.resetpassword = async (req, res) => {
+  const { email, password } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  const finddetails = await Customer.findOneAndUpdate(
+    { email: email },
+    { $set: { ConfirmPassword: hashPassword } },
+    { new: true }
+  );
+
+  if (finddetails) {
+    res.status(200).json({
+      status: true,
+      msg: "Password Reset Successfull",
+      data: finddetails,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+ 

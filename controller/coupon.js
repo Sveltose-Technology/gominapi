@@ -148,3 +148,9 @@ exports.totalCoupon = async(req,res) =>{
     });
   })
 }
+
+// exports.varifyCoupon = async (req,res)=>{
+//   const{offer_code}  = req.body
+
+
+// }

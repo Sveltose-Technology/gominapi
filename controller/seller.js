@@ -78,7 +78,7 @@ exports.sellersignup = async (req, res) => {
   }
 };
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find().sort({ sortorder: 1 });
+  const findall = await Seller.find({seller :req.sellerId}).sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -95,7 +95,7 @@ exports.getseller = async (req, res) => {
 };
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.params.id });
+  const findone = await Seller.findOne({ seller: req.sellerId });
   if (findone) {
     res.status(200).json({
       status: true,

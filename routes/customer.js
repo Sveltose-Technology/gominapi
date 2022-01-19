@@ -14,6 +14,8 @@ const {
   sendotp,
   emailSend,
   verifyotp,
+  forgotPassword,
+  resetpassword
 
 } = require("../controller/customer");
 
@@ -27,6 +29,8 @@ router.get("/user/totalcustomer", totalcustomer);
 router.post("/user/sendotp", sendotp);
 router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
+router.post("/user/resetpassword", resetpassword);
+
 
 module.exports = router;
-//console.log()
+//console.log()   

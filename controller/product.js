@@ -613,9 +613,8 @@ exports.getproductbytagname = async (req,res) => {
 
 
   exports.productfilter = async(req,res)=>{
-    const findone = await Product.findOne({ _id: req.params.id})
-    
-  
-  }
+ const {material,value}  =req.body  
+   
 
+  }
    

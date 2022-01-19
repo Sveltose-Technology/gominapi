@@ -138,7 +138,7 @@ exports.editcart = async (req, res) => {
 
 exports.removecart = async (req, res) => {
   try {
-    const deleteentry = await Cart.deleteOne({ _id: req.params.id });
+    const deleteentry = await Cart.deleteOne({ customer : req.userId });
     res.status(200).json({
       status: true,
       msg: "success",
