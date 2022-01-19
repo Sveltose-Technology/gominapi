@@ -49,7 +49,7 @@ exports.getaddress = async (req, res) => {
 };
 
 exports.viewoneuseraddress = async (req, res) => {
-  const findone = await Useraddress.findOne({ customer: req.userId });
+  const findone = await Useraddress.findOne({ customer: req.userId }).populate("customer")
   if (findone) {
     res.status(200).json({
       status: true,
