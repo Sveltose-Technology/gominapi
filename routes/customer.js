@@ -18,7 +18,7 @@ const {
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
-router.get("/user/allcustomer", allcustomer);
+router.get("/user/allcustomer", verifytoken,allcustomer);
 router.get("/user/getonecustomer",verifytoken, getonecustomer);
 router.post("/user/editcustomer",verifytoken, editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);

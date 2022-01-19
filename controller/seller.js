@@ -310,7 +310,7 @@ exports.sendOtp = async (req, res) => {
 
   //console.log(mobile_no.length);
   //console.log(finddetails);
-  //console.log(finddetails.customer_email);
+  //console.log(finddetails.email);
   if (finddetails) {
     //   //const {to,text,} = req.body
     //   const subject = `Buynaa Email Verification`;
@@ -438,7 +438,7 @@ exports.sendOTP = async (req, res) => {
 
   //console.log(mobile_no.length);
   //console.log(finddetails);
-  //console.log(finddetails.customer_email);
+  //console.log(finddetails.email);
   if (finddetails) {
       //const {to,text,} = req.body
       const subject = `Buynaa Email Verification`;
