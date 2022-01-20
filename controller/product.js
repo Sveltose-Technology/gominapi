@@ -660,7 +660,7 @@ exports.productbycolor = async (req, res) => {
     });
   }
 };
-
+//console.log()
 exports.productbysize = async (req, res) => {
   const findall = await Product.find({ size: req.params.id })
     .sort({ sortorder: 1 })
