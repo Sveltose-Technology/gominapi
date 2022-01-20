@@ -638,7 +638,7 @@ exports.getproductbytagname = async (req,res) => {
 
 
 exports.productbycolor = async (req, res) => {
-  const findall = await Product.find({ size: req.params.id })
+  const findall = await Product.find({ color: req.params.id })
     .sort({ sortorder: 1 })
     .populate("store")
     .populate("productcategory")
