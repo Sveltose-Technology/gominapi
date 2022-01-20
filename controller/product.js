@@ -70,7 +70,7 @@ exports.addproduct = async (req, res) => {
     product_img: product_img,
     offer_aplicable: offer_aplicable,
     sortorder: sortorder,
-    status: status,
+    status: status, 
   });
 
   if (req.files) {
@@ -273,7 +273,7 @@ exports.getproduct = async (req, res) => {
     .populate("brand")
     .populate("color")
     .populate("size")
-    .populate("material")
+  //  .populate("material")
 
   if (findall) {
     res.status(200).json({
@@ -340,7 +340,9 @@ exports.productbycategory = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand")
+    .populate("brand") 
+    .populate("size")
+    .populate("color")
     .then((data) => {
       res.status(200).json({
         status: true,
@@ -363,7 +365,10 @@ exports.productbybrand = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand");
+    .populate("brand")
+    .populate("size")
+    .populate("color")
+
   if (findall) {
     res.status(200).json({
       status: true,
@@ -539,7 +544,7 @@ exports.productbystore = async (req, res) => {
     .populate("brand")
      .populate("color")           
     .populate("size")
-    .populate("material")
+   // .populate("material")
     .populate("store")
   
   if (findall) {
@@ -629,3 +634,59 @@ exports.getproductbytagname = async (req,res) => {
     })
   })
 }
+
+
+
+exports.productbycolor = async (req, res) => {
+  const findall = await Product.find({ size: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("store")
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .populate("size")
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.productbysize = async (req, res) => {
+  const findall = await Product.find({ size: req.params.id })
+    .sort({ sortorder: 1 })
+    .populate("store")
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .populate("size")
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+
+
+
+
