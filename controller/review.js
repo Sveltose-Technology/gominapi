@@ -5,13 +5,13 @@ exports.addreview = async(req,res)=>{
 
  
     const newReview  = new Review({
-        customer: customer ,
+        customer: req.userId ,
         product : product,
         rating : rating,
         comment :comment
         
     })
-    const alreadyReviewed = await Review.findOne({  $and: [{ customer:customer  }, { product: product }] });
+    const alreadyReviewed = await Review.findOne({  $and: [{ customer:req.userId  }, { product: product }] });
     if (alreadyReviewed) {
       res.status(400).json({
         status: false,
