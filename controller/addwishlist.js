@@ -216,7 +216,7 @@ exports.editwishlist = async (req, res) => {
 
 exports.clrwishlist = async (req, res) => {
   try {
-    const deleteentry = await Addwishlist.deleteOne({ customer : req.userId });
+    const deleteentry = await Addwishlist.deleteMany({ customer : req.userId });
     res.status(200).json({
       status: true,
       msg: "success",
