@@ -8,7 +8,7 @@ exports.addcoupon = async (req, res) => {
     product,
     seller,
     description,
-    startDate,
+     
     expireOn,
     usage_limit,
     amount,
@@ -35,7 +35,7 @@ exports.addcoupon = async (req, res) => {
     product : product,
     seller : req.sellerId,
     description: description,
-    startDate: startDate,
+    startDate: Date.now(),
     expireOn: expireOn,
     usage_limit: usage_limit,
     amount: amount,
@@ -101,6 +101,25 @@ exports.getcoupon = async (req, res) => {
 exports.getonecoupon  = async(req,res) =>{
   const findone = await Coupon.findOne({seller:req.sellerId}).populate("seller").populate("product")
    if(findone){
+     res.status(200).json({
+       status : true,
+       msg : "success",
+       data : findone
+     })
+   }else{
+     res.status(400).json({
+       status :false,
+       msg : "error",
+       error : error
+     })
+   }
+}
+
+exports.getonecouponcheckvalidity  = async(req,res) =>{
+  const findone = await Coupon.findOne({offer_code:req.params.id}).populate("seller").populate("product")
+   if(findone){
+    findone.expireOn = 12/12/2021
+
      res.status(200).json({
        status : true,
        msg : "success",

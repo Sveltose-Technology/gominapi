@@ -572,6 +572,34 @@ exports.productbystore = async (req, res) => {
     });
   }
 };
+
+exports.productbystorebytoken = async (req, res) => {
+  const findall = await Product.find({ seller: req.sellerId })
+    .sort({ sortorder: 1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .populate("color")
+    .populate("size")
+    // .populate("material")
+    .populate("store");
+
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
 exports.productsearchgetstore = async (req, res) => {
   const { oneinput } = req.body;
   const findall = await Product.find({

@@ -18,8 +18,7 @@ exports.addbillinginvoice = async (req, res) => {
   let total_amount = 0;
   for (let i = 0; i < product.length; i++) {
     total_amount =total_amount + product[i].amount;
-   
-  }
+   }
 
   create_randomString(12);
   function create_randomString(string_length) {

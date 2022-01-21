@@ -11,7 +11,7 @@ exports.addreview = async(req,res)=>{
         comment :comment
         
     })
-    const alreadyReviewed = await Review.findOne({ product: product });
+    const alreadyReviewed = await Review.findOne({  $and: [{ customer:customer  }, { product: product }] });
     if (alreadyReviewed) {
       res.status(400).json({
         status: false,
@@ -75,5 +75,22 @@ exports.getallreview =async(req,res)=>{
 
 }
 
-  
+  exports.getonereviewproduct = async(req,res) => {
+    const findall =await Review.find({product:req.params.id})
+    .populate("customer").populate("product")
+    if(findall){
+        res.status(200).json({
+            status:true,
+            msg:"success",
+            data:findall
+        })
+    }else{
+        res.status(400).json({
+            status:false,
+            msg:"error",
+            error:"error"
+        })
+    }
+
+  }
 

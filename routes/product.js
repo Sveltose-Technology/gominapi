@@ -3,6 +3,8 @@ const router = express.Router();
 const fs = require("fs");
 const multer = require("multer");
 //const { verifytoken } = require("../functions/verifytoken");
+const { tokenverify } = require("../functions/tokenverify");
+
 
 const {
   addproduct,
@@ -25,6 +27,7 @@ const {
   getuniquetag,
   productbycolor,
   productbypricerange,
+  productbystorebytoken
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -82,5 +85,8 @@ router.get("/admin/productbysize/:id", productbysize);
 router.get("/admin/productbycolor/:id", productbycolor);
 router.get("/admin/getuniquetag", getuniquetag);
 router.post("/admin/productbypricerange", productbypricerange);
+router.post("/admin/productbystorebytoken",tokenverify, productbystorebytoken);
 
+
+ 
 module.exports = router;
