@@ -20,8 +20,7 @@ router.post("/admin/editcart/:id", editcart);
 router.get("/admin/clearCart",verifytoken, clearCart);
 
 
-//console.log()
-
+ 
 module.exports = router;
 
 
