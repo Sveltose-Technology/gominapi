@@ -2,13 +2,16 @@ const Addwishlist = require("../models/addwishlist");
 const { v4: uuidv4 } = require("uuid");
 
 exports.addwishlist = async (req, res) => {
-  const { product, color, size } = req.body;
+  const { product, color, size,qty,price } = req.body;
 
   const newAddwishlist = new Addwishlist({
       customer: req.userId,
     product: product,
     color: color,
     size: size,
+    qty :qty,
+    price : price
+
   });
   const findexist = await Addwishlist.findOne({
     $and: [
@@ -211,7 +214,7 @@ exports.editwishlist = async (req, res) => {
   }
 };
 
-exports.deletewishlist = async (req, res) => {
+exports.clrwishlist = async (req, res) => {
   try {
     const deleteentry = await Addwishlist.deleteOne({ _id: req.params.id });
     res.status(200).json({
@@ -229,4 +232,19 @@ exports.deletewishlist = async (req, res) => {
 };
 
 
-//console.log()
+exports.delonewishlist = async (req, res) => {
+  try {
+    const deleteentry = await Addwishlist.deleteOne({ customer : req.userId,product:req.params.id });
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: deleteentry,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};

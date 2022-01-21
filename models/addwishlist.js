@@ -10,6 +10,12 @@ const AddwishlistSchema = new mongoose.Schema(
     size : {
       type : String
     },
+    qty : {
+      type : Number
+    },
+    price : {
+ type :Number
+    },
   },
   { timestamps: true }
 );
