@@ -23,7 +23,6 @@ router.post("/admin/addorder", verifytoken, addorder);
 router.get("/admin/getorder", verifytoken, getorder);
 router.get("/admin/getorderbyseller", tokenverify, getorderbyseller);
 
-
 router.get("/admin/pending_order",verifytoken, pending_order);
 router.get("/admin/delivery_order",verifytoken, delivery_order);
 router.get("/admin/cancel_order", verifytoken,cancelled_order);
