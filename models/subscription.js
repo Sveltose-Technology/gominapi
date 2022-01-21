@@ -15,7 +15,7 @@ const subscriptionSchema = new Schema(
 
     status: {
       type: String,
-      default: false,
+      default: "Inactive",
     },
     sortorder: {
       type: String,

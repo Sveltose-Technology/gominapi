@@ -106,12 +106,13 @@ exports.total_sub = async (req, res) => {
 };
 
 exports.subscribedplan = async (req, res) => {
-  const findall = await Subscription.find({ status: "false" })
+  const findall = await Subscription.find({ status: "Inactive" })
     .then((result) => {
       res.status(200).json({
         status: true,
         msg: "success",
         data: result,
+        
       });
     })
     .catch((error) => {
