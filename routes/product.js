@@ -23,7 +23,8 @@ const {
   productbymaterial,
   productbysize,
   getuniquetag,
-  productbycolor
+  productbycolor,
+  productbypricerange,
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -66,7 +67,6 @@ router.get("/admin/productbycategory/:id", productbycategory);
 router.get("/admin/productbybrand/:id", productbybrand);
 //router.get("/admin/productbymaterial/:id", productbymaterial);
 
-
 router.get("/admin/productbysubcategory/:id", productbysubcategory);
 
 router.get("/admin/del_product/:id", del_product);
@@ -80,14 +80,7 @@ router.get("/admin/getproductbytagname/:id", getproductbytagname);
 router.post("/admin/productsearchgetstore", productsearchgetstore);
 router.get("/admin/productbysize/:id", productbysize);
 router.get("/admin/productbycolor/:id", productbycolor);
-
-
-
 router.get("/admin/getuniquetag", getuniquetag);
-
- 
+router.post("/admin/productbypricerange", productbypricerange);
 
 module.exports = router;
-
-
- 

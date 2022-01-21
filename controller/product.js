@@ -55,9 +55,9 @@ exports.addproduct = async (req, res) => {
     productcategory: productcategory,
     productsubcategory: productsubcategory,
     brand: brand,
-    tag : tag,
-    size : size,
-    color : color,
+    tag: tag,
+    size: size,
+    color: color,
     material: material,
     stock: stock,
     qty: qty,
@@ -70,7 +70,7 @@ exports.addproduct = async (req, res) => {
     product_img: product_img,
     offer_aplicable: offer_aplicable,
     sortorder: sortorder,
-    status: status, 
+    status: status,
   });
 
   if (req.files) {
@@ -141,7 +141,6 @@ exports.addproduct = async (req, res) => {
     }
   }
 };
-
 
 exports.editproduct = async (req, res) => {
   const {
@@ -266,13 +265,13 @@ exports.editproduct = async (req, res) => {
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()
     .sort({ sortorder: 1 })
-   .populate("gstrate")
+    .populate("gstrate")
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
     .populate("color")
-    .populate("size")
+    .populate("size");
   //  .populate("material")
 
   if (findall) {
@@ -296,10 +295,9 @@ exports.getoneproduct = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
- //   .populate("gstrate")
+    //   .populate("gstrate")
     .populate("color")
-    .populate("size")
-    
+    .populate("size");
 
   if (findone) {
     res.status(200).json({
@@ -340,7 +338,7 @@ exports.productbycategory = async (req, res) => {
     .populate("productcategory")
     .populate("productsubcategory")
     .populate("unit")
-    .populate("brand") 
+    .populate("brand")
     .populate("size")
     .populate("color")
     .then((data) => {
@@ -367,7 +365,7 @@ exports.productbybrand = async (req, res) => {
     .populate("unit")
     .populate("brand")
     .populate("size")
-    .populate("color")
+    .populate("color");
 
   if (findall) {
     res.status(200).json({
@@ -409,74 +407,71 @@ exports.productbysubcategory = async (req, res) => {
     });
 };
 
-
-
 exports.totalproduct = async (req, res) => {
-  await Product.countDocuments().then((data) => {
-    res.status(200).json({
-      status: true,
-      data: data,
-    });
-  })
+  await Product.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
     .catch((error) => {
       res.status(400).json({
         status: false,
         msg: "error",
         error: error,
       });
-    })
-}
-
-
+    });
+};
 
 exports.searchItem = async (req, res) => {
-  const { oneinput } = req.body
-  let allproducts = []
-  let errors = []
-  await Brand.find({ name: { $regex: oneinput, $options: "i" } }).then((data) => {
-    // let allitems  = []
-    // for (let i = 0; i < data.length; i++) {
-    //   const element = data[i]._id;  
-    //   allitems.push(element);
-    // }
-    // for (let j = 0; j < allitems.length; j++) {
-    //   allitems[key] = allitems[j];
-    // }
-    // console.log(allitems)
-    // const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
-    // console.log(obj)
+  const { oneinput } = req.body;
+  let allproducts = [];
+  let errors = [];
+  await Brand.find({ name: { $regex: oneinput, $options: "i" } })
+    .then((data) => {
+      // let allitems  = []
+      // for (let i = 0; i < data.length; i++) {
+      //   const element = data[i]._id;
+      //   allitems.push(element);
+      // }
+      // for (let j = 0; j < allitems.length; j++) {
+      //   allitems[key] = allitems[j];
+      // }
+      // console.log(allitems)
+      // const obj = allitems.reduce((o, key) => ({ ...o, [key]: "whatever"}), {})
+      // console.log(obj)
 
-    //view all products of brands
-    // if(data){
-    //   for (let i = 0; i < data.length; i++) {
-    //     const element = data[i]._id;
-    //     await Product.find({brand:element}).then((product)=>{
-    //       console.log(product)
-    //     }).catch((error)=>{
-    //       console.log(error)
-    //     })
-    //   }
-    // }
+      //view all products of brands
+      // if(data){
+      //   for (let i = 0; i < data.length; i++) {
+      //     const element = data[i]._id;
+      //     await Product.find({brand:element}).then((product)=>{
+      //       console.log(product)
+      //     }).catch((error)=>{
+      //       console.log(error)
+      //     })
+      //   }
+      // }
 
-    //store done
-    //product and category done 
-    //brand
+      //store done
+      //product and category done
+      //brand
 
-
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: data
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
     })
-  }).catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error
-    })
-  })
-}
-
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
 
 exports.searchinputproduct = async (req, res) => {
   const { oneinput } = req.body;
@@ -497,56 +492,72 @@ exports.searchinputproduct = async (req, res) => {
 };
 
 exports.searchinputbycategory = async (req, res) => {
-
-
   const { oneinput } = req.body;
-  const findbycategory = await Productcategory.find({ name: { $regex: oneinput, $options: "i" } });
+  const findbycategory = await Productcategory.find({
+    name: { $regex: oneinput, $options: "i" },
+  });
 
-  const findbybrand = await Brand.find({ name: { $regex: oneinput, $options: "i" } })
+  const findbybrand = await Brand.find({
+    name: { $regex: oneinput, $options: "i" },
+  });
 
-  const findbyproduct = await Product.find({ product_name: { $regex: oneinput, $options: "i" } })
+  const findbyproduct = await Product.find({
+    product_name: { $regex: oneinput, $options: "i" },
+  });
 
-  if(findbycategory && findbybrand){
-    let somearray = []
-    findbycategory.forEach(i=>{
-          somearray.indexOf(i._id) === -1 ? somearray.push(i._id):console.log("already exists");
-        })
+  if (findbycategory && findbybrand) {
+    let somearray = [];
+    findbycategory.forEach((i) => {
+      somearray.indexOf(i._id) === -1
+        ? somearray.push(i._id)
+        : console.log("already exists");
+    });
 
-        let somebrand = []
-        findbybrand.forEach(i=>{
-          somebrand.indexOf(i._id) === -1 ? somebrand.push(i._id):console.log("already exists");
-        })
+    let somebrand = [];
+    findbybrand.forEach((i) => {
+      somebrand.indexOf(i._id) === -1
+        ? somebrand.push(i._id)
+        : console.log("already exists");
+    });
 
-        let findproducts =async()=>{
-          await Product.find({$or:[{brand:{$in:somebrand}},{productcategory:{$in:somearray}},{ product_name: { $regex: oneinput, $options: "i" } }]}).populate('productcategory').populate('brand').then((data1)=>{
-            res.status(200).json({
-              status: true,
-              data: data1,
-            });
-          })
-        }
-        findproducts();
-  }else{
-      res.status(400).json({
-        status: false,
-        data: findbyproduct,
-      });
+    let findproducts = async () => {
+      await Product.find({
+        $or: [
+          { brand: { $in: somebrand } },
+          { productcategory: { $in: somearray } },
+          { product_name: { $regex: oneinput, $options: "i" } },
+        ],
+      })
+        .populate("productcategory")
+        .populate("brand")
+        .then((data1) => {
+          res.status(200).json({
+            status: true,
+            data: data1,
+          });
+        });
+    };
+    findproducts();
+  } else {
+    res.status(400).json({
+      status: false,
+      data: findbyproduct,
+    });
   }
 };
-
 
 exports.productbystore = async (req, res) => {
   const findall = await Product.find({ store: req.params.id })
     .sort({ sortorder: 1 })
     .populate("productcategory")
-     .populate("productsubcategory")
+    .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-     .populate("color")           
+    .populate("color")
     .populate("size")
-   // .populate("material")
-    .populate("store")
-  
+    // .populate("material")
+    .populate("store");
+
   if (findall) {
     res.status(200).json({
       status: true,
@@ -563,25 +574,29 @@ exports.productbystore = async (req, res) => {
 };
 exports.productsearchgetstore = async (req, res) => {
   const { oneinput } = req.body;
-  const findall = await Product.find({ product_name: { $regex: oneinput, $options: "i" }})
-  
-  if (findall) {
-    let somearray = []
-    findall.forEach(i=>{
-          somearray.indexOf(i.store) === -1 ? somearray.push(i.store):console.log("already exists");
-          //console.log(i)
-        })
-        console.log(somearray)
+  const findall = await Product.find({
+    product_name: { $regex: oneinput, $options: "i" },
+  });
 
-        let getstore =async()=>{
-          await Store.find({_id:{$in:somearray}}).then((data1)=>{
-            res.status(200).json({
-              status: true,
-              data: data1,
-            });
-          })
-        }
-        getstore();
+  if (findall) {
+    let somearray = [];
+    findall.forEach((i) => {
+      somearray.indexOf(i.store) === -1
+        ? somearray.push(i.store)
+        : console.log("already exists");
+      //console.log(i)
+    });
+    console.log(somearray);
+
+    let getstore = async () => {
+      await Store.find({ _id: { $in: somearray } }).then((data1) => {
+        res.status(200).json({
+          status: true,
+          data: data1,
+        });
+      });
+    };
+    getstore();
 
     // res.status(200).json({
     //   status: true,
@@ -597,45 +612,43 @@ exports.productsearchgetstore = async (req, res) => {
   }
 };
 
-
-exports.getproductbytagname = async (req,res) => {
-  const findall = await Product.find({tag : req.params.id}).sort({sortorder : 1})
-  .then((data)=>{
-    res.status(200).json({
-      status : true,
-      msg : "success",
-      data : data
+exports.getproductbytagname = async (req, res) => {
+  const findall = await Product.find({ tag: req.params.id })
+    .sort({ sortorder: 1 })
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
     })
-  }).catch((error)=>{
-    res.status(400).json({
-      status : false,
-      error : "error",
-       error : error
- 
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+};
+
+exports.getuniquetag = async (req, res) => {
+  const findall = await Product.find()
+    .distinct("tag")
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
     })
-  })
-}
-
-
- exports.getuniquetag = async (req,res) => {
-  const findall = await Product.find().distinct("tag")
-  .then((data)=>{
-    res.status(200).json({
-      status : true,
-      msg : "success",
-      data : data
-    })
-  }).catch((error)=>{
-    res.status(400).json({
-      status : false,
-      error : "error",
-       error : error
- 
-    })
-  })
-}
-
-
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+};
 
 exports.productbycolor = async (req, res) => {
   const findall = await Product.find({ color: req.params.id })
@@ -645,7 +658,7 @@ exports.productbycolor = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-    .populate("size")
+    .populate("size");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -669,7 +682,7 @@ exports.productbysize = async (req, res) => {
     .populate("productsubcategory")
     .populate("unit")
     .populate("brand")
-    .populate("size")
+    .populate("size");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -685,8 +698,30 @@ exports.productbysize = async (req, res) => {
   }
 };
 
+exports.productbypricerange = async (req, res) => {
+  const { minamt, maxamt } = req.body;
 
-
-
-
-
+  const findall = await Product.find({
+    sell_price: { $gte: minamt, $lte: maxamt },
+  })
+    .sort({ sortorder: 1 })
+    .populate("store")
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .populate("size");
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
