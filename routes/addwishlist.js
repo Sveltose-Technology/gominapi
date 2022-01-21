@@ -16,8 +16,8 @@ router.post("/admin/addwishlist",verifytoken, addwishlist);
 router.get("/admin/getallwishlist", verifytoken, getallwishlist);
 router.get("/admin/getonewishlist/:id", getonewishlist);
  router.get("/admin/editwishlist/:id", editwishlist);
-router.get("/admin/delonewishlist/:id", delonewishlist);
-router.get("/admin/clrwishlist", clrwishlist);
+router.get("/admin/delonewishlist/:id",verifytoken, delonewishlist);
+router.get("/admin/clrwishlist",verifytoken, clrwishlist);
 
 
 module.exports = router;
