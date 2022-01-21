@@ -76,6 +76,30 @@ exports.getorder = async (req, res) => {
   }
 
 
+  exports.getorderbyseller = async (req, res) => {
+    const findall = await Orderproduct.find({ seller: req.sellerId })
+      .sort({ sortorder: 1 })
+      .populate("customer")
+      .populate("product")
+      .then((result) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: result,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      });
+    }
+  
+
+
+
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({ $and :[{customer:req.userId},{status: "Pending" }]})
     .populate("customer")

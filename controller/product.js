@@ -582,8 +582,7 @@ exports.productbystorebytoken = async (req, res) => {
     .populate("brand")
     .populate("color")
     .populate("size")
-    // .populate("material")
-    .populate("store");
+     .populate("store");
 
   if (findall) {
     res.status(200).json({

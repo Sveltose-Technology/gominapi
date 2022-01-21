@@ -85,7 +85,7 @@ router.get("/admin/productbysize/:id", productbysize);
 router.get("/admin/productbycolor/:id", productbycolor);
 router.get("/admin/getuniquetag", getuniquetag);
 router.post("/admin/productbypricerange", productbypricerange);
-router.post("/admin/productbystorebytoken",tokenverify, productbystorebytoken);
+router.get("/admin/productbystorebytoken",tokenverify, productbystorebytoken);
 
 
  

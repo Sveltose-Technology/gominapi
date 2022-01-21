@@ -49,8 +49,7 @@ let uploads = multer({ storage: storage });
 //Paths
 router.post("/admin/seller_signup",sellersignup);
 router.get("/admin/getseller", getseller);
-router.get("/admin/getorderbyseller", getorderbyseller);
-
+ 
 //router.post("/admin/Adminlogin", Adminlogin);
 router.post("/admin/sellerlogin", sellerlogin);
 
