@@ -2,9 +2,10 @@
 
 
 exports.addstocktransfer = (req,res)=>{
-    const {reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason} = req.body
+    const {product,reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason} = req.body
 
     const newStocktransfer = new Stocktransfer({
+      product : product,
         reference_no : reference_no,
         from_warehouse :from_warehouse,
         to_warehouse : to_warehouse,
@@ -57,7 +58,7 @@ exports.addstocktransfer = (req,res)=>{
     };
 
     exports.getstocktransfer = async (req, res) => {
-      const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason").populate("transfer_type")
+      const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason").populate("transfer_type").populate("product")
       if (findall) {
         res.status(200).json({
           status: true,
@@ -73,7 +74,22 @@ exports.addstocktransfer = (req,res)=>{
       }
     };
     
-
+    exports.getonestocktransfer = async (req, res) => {
+      const findone = await Stocktransfer.findOne({ _id: req.params.id }).populate("reason").populate("transfer_type").populate("product")
+      if (findone) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findone,
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      }
+    };
 exports.delstocktransfer = async(req,res) =>{
     try {
         const deleteentry   =  await Stocktransfer.deleteOne({_id : req.params.id})

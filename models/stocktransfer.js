@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const stocktransferSchema = new Schema(
     {
+        product : {type: Schema.Types.ObjectId, ref: "product" },
         reference_no :{
          type : Number
         },

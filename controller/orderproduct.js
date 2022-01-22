@@ -1,5 +1,6 @@
 const Orderproduct = require("../models/orderproduct");
 const Coupon = require("../models/coupon");
+const seller = require("../models/seller");
 
 const { v4: uuidv4 } = require("uuid");
 
@@ -76,28 +77,48 @@ exports.getorder = async (req, res) => {
   }
 
 
-  exports.getorderbyseller = async (req, res) => {
-    const findall = await Orderproduct.find({ seller: req.sellerId })
-      .sort({ sortorder: 1 })
-      .populate("customer")
-      .populate("product")
-      .then((result) => {
+  // exports.getorderbysellerbytoken = async (req, res) => {
+  //   const findall = await Orderproduct.find({ $and :[{seller:req.sellerId},{_id: req.params.id }]})
+  //     .sort({ sortorder: 1 })
+  //     .populate("customer")
+  //     .populate("product")
+  //     .then((result) => {
+  //       res.status(200).json({
+  //         status: true,
+  //         msg: "success",
+  //         data: result,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       res.status(400).json({
+  //         status: false,
+  //         msg: "error",
+  //         error: "error",
+  //       });
+  //     });
+  //   }
+  
+    exports.getorderbysellerbytoken = async (req, res) => {
+      //const getseller = await Seller.findOne({ _id: req.sellerId });
+    
+      const findone = await Orderproduct.find({ seller: req.sellerId }).populate(
+        "product"
+      ).populate("customer")
+      if (findone) {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: result,
+          data: findone,
+           
         });
-      })
-      .catch((error) => {
+      } else {
         res.status(400).json({
           status: false,
           msg: "error",
           error: "error",
         });
-      });
-    }
-  
-
+      }
+    };
 
 
 exports.pending_order = async (req, res, next) => {
@@ -182,7 +203,7 @@ exports.complete_order = async (req, res, next) => {
 
 exports.salesbyseller = async (req, res) => {
   const findall = await Orderproduct.find({
-    $and: [{ seller: req.params.id }, { status: "Complete" }],
+    $and: [{ seller: req.sellerId }, { status: "Complete" }],
   })
     .populate("customer")
     .populate({
@@ -269,3 +290,4 @@ exports.editOrder= async (req, res) => {
 
 
 
+ 

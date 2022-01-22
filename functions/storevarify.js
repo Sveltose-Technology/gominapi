@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
-exports.tokenverify = async (req, res, next) => {
+exports.storetokenverify = async (req, res, next) => {
   let token = req.headers["auth-storetoken"];
 
   if (!token) {
