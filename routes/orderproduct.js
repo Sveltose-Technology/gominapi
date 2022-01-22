@@ -14,7 +14,8 @@ const {
   del_order,
   totalorder,
   salesbyseller,
-  getorderbyseller
+  getorderbyseller,
+  editOrder
 } = require("../controller/orderproduct");
 
 // PATHS
@@ -30,6 +31,8 @@ router.get("/admin/complete_order", verifytoken,complete_order);
 router.get("/admin/del_order", del_order);
 router.get("/admin/totalorder", totalorder);
 router.get("/admin/salesbyseller/:id", salesbyseller);
+router.post("/admin/editOrder/:id",tokenverify, editOrder);
+
 
 
 module.exports = router;

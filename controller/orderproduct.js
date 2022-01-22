@@ -241,3 +241,31 @@ exports.totalorder = async (req, res) => {
       });
     });
 };
+
+
+exports.editOrder= async (req, res) => {
+  const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
+    {
+      $and: [
+        { seller: req.sellerId },
+        {  _id: req.params.id }]},
+    { $set: req.body },
+    { new: true }
+  ).then((result)=>{
+    res.status(200).json({
+      status : true,
+      msg : "Order Update",
+      data : result
+
+    })
+  }).catch((error)=>{
+    res.status(200).json({
+      status : true,
+      msg : "error",
+      error : error
+  })
+})
+};
+
+
+
