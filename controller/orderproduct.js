@@ -73,23 +73,6 @@ exports.addorder = async (req, res) => {
   }
 };
 
-//   newOrderproduct.save(function (err, data) {
-//     if (err) {
-//       res.status(400).json({
-//         status: false,
-//         msg: "Error Occured",
-//         error: err,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: true,
-//         msg: "success",
-//         data: data,
-//       });
-//     }
-//   });
-// };
-
 exports.getorder = async (req, res) => {
   const findall = await Orderproduct.find({ customer: req.userId })
     .sort({ sortorder: 1 })
