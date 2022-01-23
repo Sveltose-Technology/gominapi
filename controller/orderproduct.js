@@ -12,12 +12,9 @@ exports.addorder = async (req, res) => {
     payment_type,
     orderId,
     qty,
-    //customer_name,
     purchaseprice,
     delivery_address,
     order_date,
-    // shippingdate,
-    // deliverdondate,
     status,
   } = req.body;
 
@@ -30,30 +27,68 @@ exports.addorder = async (req, res) => {
     payment_type: payment_type,
     orderId: uuidv4(),
     qty: qty,
-    //customer_name: customer_name,
     purchaseprice: purchaseprice,
     delivery_address: delivery_address,
     order_date: order_date,
-    // shippingdate: shippingdate,
-    // deliverdondate: deliverdondate,
     status: status,
   });
-  newOrderproduct.save(function (err, data) {
-    if (err) {
-      res.status(400).json({
-        status: false,
-        msg: "Error Occured",
-        error: err,
-      });
-    } else {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
-    }
+
+  const findexist = await Orderproduct.findOne({
+    $and: [{ customer: req.userId }, { product: product }],
   });
+  if (findexist) {
+    await Orderproduct.findOneAndUpdate({
+      $and: [{ customer: req.userId }, { product: product }, { new: true }],
+    })
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(200).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  } else {
+    newOrderproduct.save(function (err, data) {
+      if (err) {
+        res.status(400).json({
+          status: false,
+          msg: "Error Occured",
+          error: err,
+        });
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "Product Order",
+          data: data,
+        });
+      }
+    });
+  }
 };
+
+//   newOrderproduct.save(function (err, data) {
+//     if (err) {
+//       res.status(400).json({
+//         status: false,
+//         msg: "Error Occured",
+//         error: err,
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: true,
+//         msg: "success",
+//         data: data,
+//       });
+//     }
+//   });
+// };
 
 exports.getorder = async (req, res) => {
   const findall = await Orderproduct.find({ customer: req.userId })
@@ -74,55 +109,33 @@ exports.getorder = async (req, res) => {
         error: "error",
       });
     });
+};
+
+exports.getorderbysellerbytoken = async (req, res) => {
+  const findone = await Orderproduct.findOne({
+    $and: [{ seller: req.sellerId }, { product: req.params.id }],
+  })
+    .populate("product")
+    .populate("customer");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
   }
-
-
-  // exports.getorderbysellerbytoken = async (req, res) => {
-  //   const findall = await Orderproduct.find({ $and :[{seller:req.sellerId},{_id: req.params.id }]})
-  //     .sort({ sortorder: 1 })
-  //     .populate("customer")
-  //     .populate("product")
-  //     .then((result) => {
-  //       res.status(200).json({
-  //         status: true,
-  //         msg: "success",
-  //         data: result,
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       res.status(400).json({
-  //         status: false,
-  //         msg: "error",
-  //         error: "error",
-  //       });
-  //     });
-  //   }
-  
-    exports.getorderbysellerbytoken = async (req, res) => {
-      //const getseller = await Seller.findOne({ _id: req.sellerId });
-    
-      const findone = await Orderproduct.find({ seller: req.sellerId }).populate(
-        "product"
-      ).populate("customer")
-      if (findone) {
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: findone,
-           
-        });
-      } else {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: "error",
-        });
-      }
-    };
-
+};
 
 exports.pending_order = async (req, res, next) => {
-  const finddetails = await Orderproduct.find({ $and :[{customer:req.userId},{status: "Pending" }]})
+  const finddetails = await Orderproduct.find({
+    $and: [{ customer: req.userId }, { status: "Pending" }],
+  })
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -142,7 +155,9 @@ exports.pending_order = async (req, res, next) => {
 };
 
 exports.delivery_order = async (req, res, next) => {
-  const finddetails = await Orderproduct.find({ $and : [{customer : req.userId },{status: "Delivery" }]})
+  const finddetails = await Orderproduct.find({
+    $and: [{ customer: req.userId }, { status: "Delivery" }],
+  })
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -162,7 +177,9 @@ exports.delivery_order = async (req, res, next) => {
 };
 
 exports.cancelled_order = async (req, res, next) => {
-  const finddetails = await Orderproduct.find({ $and : [{customer : req.userId},{status: "Cancel"}]})
+  const finddetails = await Orderproduct.find({
+    $and: [{ customer: req.userId }, { status: "Cancel" }],
+  })
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -182,7 +199,9 @@ exports.cancelled_order = async (req, res, next) => {
 };
 
 exports.complete_order = async (req, res, next) => {
-  const finddetails = await Orderproduct.find({$and : [{customer: req.userId},{status: "Complete"}]})
+  const finddetails = await Orderproduct.find({
+    $and: [{ customer: req.userId }, { status: "Complete" }],
+  })
     .populate("customer")
     .populate("product")
     .then((result) => {
@@ -210,8 +229,7 @@ exports.salesbyseller = async (req, res) => {
       path: "product",
       populate: {
         path: "gstrate",
-      }, 
-
+      },
     })
     .then((data) => {
       res.status(200).json({
@@ -263,31 +281,26 @@ exports.totalorder = async (req, res) => {
     });
 };
 
-
-exports.editOrder= async (req, res) => {
+exports.editOrder = async (req, res) => {
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-      $and: [
-        { seller: req.sellerId },
-        {  _id: req.params.id }]},
+      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+    },
     { $set: req.body },
     { new: true }
-  ).then((result)=>{
-    res.status(200).json({
-      status : true,
-      msg : "Order Update",
-      data : result
-
+  )
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "Order Update",
+        data: result,
+      });
     })
-  }).catch((error)=>{
-    res.status(200).json({
-      status : true,
-      msg : "error",
-      error : error
-  })
-})
+    .catch((error) => {
+      res.status(200).json({
+        status: true,
+        msg: "error",
+        error: error,
+      });
+    });
 };
-
-
-
- 
