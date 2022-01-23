@@ -1,5 +1,6 @@
 const Seller = require("../models/seller");
- 
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -17,13 +18,16 @@ function generateAccessToken(seller_name) {
   });
 }
 
-exports.sellersignup = async (req, res) => {
+exports.signup = async (req, res) => {
   const {
-    seller_name,
+    name,
     email,
+    mobile,
     password,
-    confirm_password,
-    mobile
+    cnfrm_password,
+    image,
+    designation,
+    role,
   } = req.body;
   //console.log(req.body);
 
@@ -33,52 +37,72 @@ exports.sellersignup = async (req, res) => {
   // const token = generateAccessToken({ mobile_no: mobile_no });
 
   const newSeller = new Seller({
-    seller_name: seller_name,
-    email:email,
-    password: hashpassword,
-    confirm_password: hashpassword,
+    name: name,
+    email: email,
     mobile: mobile,
-   });
+    password: hashpassword,
+    cnfrm_password: hashpassword,
+    image: image,
+    designation: designation,
+    role: role,
+  });
 
   //console.log(req.body)
-  const findexist = await Seller.findOne({ $or : [{email: email },{mobile : mobile}]})
-  if (findexist) {
-    res.status(400).json({
-      status: false,
-      msg: "Already Exists",
-      data: {},
+  if (req.file) {
+    const findexist = await Seller.findOne({
+      $or: [{ email: email }, { mobile: mobile }],
     });
-  } else {
-    newSeller
-      .save()
-      .then((result) => {
-        const token = jwt.sign(
-          {
-            sellerId: result._id,
-          },
-          process.env.TOKEN_SECRET ,
-          {
-            expiresIn: 86400000,
-          }
-        );
-        res.header("auth-adtoken", token).status(200).json({
-          status: true,
-          token: token,
-          msg: "success",
-          user: result,
-        });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
+    if (findexist) {
+      res.status(400).json({
+        status: false,
+        msg: "Already Exists",
+        data: {},
       });
+    } else {
+      const resp = await cloudinary.uploader.upload(req.file.path);
+      if (resp) {
+        newSeller.image = resp.secure_url;
+        fs.unlinkSync(req.file.path);
+        newSeller
+          .save()
+          .then((result) => {
+            const token = jwt.sign(
+              {
+                sellerId: result._id,
+              },
+              process.env.TOKEN_SECRET,
+              {
+                expiresIn: 86400000,
+              }
+            );
+            res.header("auth-adtoken", token).status(200).json({
+              status: true,
+              token: token,
+              msg: "success",
+              user: result,
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              status: false,
+              msg: "error",
+              error: error,
+            });
+          });
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "img not uploaded",
+        });
+      }
+    }
   }
 };
+
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find({seller :req.sellerId}).sort({ sortorder: 1 });
+  const findall = await Seller.find({ seller: req.sellerId }).sort({
+    sortorder: 1,
+  });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -118,7 +142,7 @@ exports.getoneseller = async (req, res) => {
 //   Seller.findOne(
 //     {
 //       $or: [
-      
+
 //         { email: email },
 //         { password: password },
 //       ],
@@ -161,17 +185,17 @@ exports.getoneseller = async (req, res) => {
 //       });
 //     } else {
 //       console.log(process.env.TOKEN_SECRET);
-      
+
 //       if (validatePassword(password, user.password)) {
 //         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
 //           expiresIn: "365d",
 //         });
-              
+
 //         return res.status(201).send({
 //           message: "User Logged In",
 //           token: token,
 //           user: user,
- 
+
 //         });
 //       } else {
 //         return res.status(400).send({
@@ -220,7 +244,6 @@ exports.sellerlogin = async (req, res) => {
     });
   }
 };
-
 
 exports.editseller = async (req, res) => {
   const findandUpdateEntry = await Seller.findOneAndUpdate(
@@ -282,29 +305,29 @@ exports.del_seller = async (req, res) => {
 //   }
 // };
 
-
-exports.totalseller = async(req,res) =>{
-  await Seller.countDocuments().then((data)=>{
-    res.status(200).json({
-      status: true,
-      data: data,
+exports.totalseller = async (req, res) => {
+  await Seller.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
     });
-  })
-  .catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error,
-    });
-  })
-}
+};
 
 exports.sendOtp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { email } = req.body;
-  const finddetails = await Seller.findOneAndUpdate(  
-     { email:email},
-     { $set: { otp: defaultotp } },
+  const finddetails = await Seller.findOneAndUpdate(
+    { email: email },
+    { $set: { otp: defaultotp } },
     { new: true }
   );
 
@@ -349,7 +372,7 @@ exports.sendOtp = async (req, res) => {
       status: true,
       msg: "otp send successfully",
       email: email,
-        otp: defaultotp,
+      otp: defaultotp,
     });
   } else {
     res.status(400).json({
@@ -358,7 +381,6 @@ exports.sendOtp = async (req, res) => {
     });
   }
 };
-
 
 exports.emailsend = async (req, res) => {
   //console.log(req.body.customer_email);
@@ -387,13 +409,11 @@ exports.emailsend = async (req, res) => {
   res.status(200).json(responseType);
 };
 
-
-
 exports.verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
 
   const findone = await Seller.findOne({
-    $and: [{email: email }, { otp: otp }],
+    $and: [{ email: email }, { otp: otp }],
   });
 
   //.then((data)=>{
@@ -426,13 +446,12 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
-
 exports.sendOTP = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { email} = req.body;
-  const finddetails = await Seller.findOneAndUpdate(  
-     { email:email},
-     { $set: { otp: defaultotp } },
+  const { email } = req.body;
+  const finddetails = await Seller.findOneAndUpdate(
+    { email: email },
+    { $set: { otp: defaultotp } },
     { new: true }
   );
 
@@ -440,13 +459,13 @@ exports.sendOTP = async (req, res) => {
   //console.log(finddetails);
   //console.log(finddetails.email);
   if (finddetails) {
-      //const {to,text,} = req.body
-      const subject = `Buynaa Email Verification`;
-      const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
+    //const {to,text,} = req.body
+    const subject = `Buynaa Email Verification`;
+    const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
 
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
-     let testAccount = await nodemailer.createTestAccount();
+    let testAccount = await nodemailer.createTestAccount();
 
     // // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -466,18 +485,18 @@ exports.sendOTP = async (req, res) => {
       subject: subject, // Subject line
       text: text, // plain text body
       html: `<b>${text}</b>`, // html body
-    })
+    });
 
     console.log("Message sent: %s", info);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // // Preview only available when sending through an Ethereal account
-     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
       email: email,
-       otp: defaultotp,
+      otp: defaultotp,
     });
   } else {
     res.status(400).json({

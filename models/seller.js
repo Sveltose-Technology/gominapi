@@ -3,22 +3,31 @@ const Schema = mongoose.Schema;
 
 const sellerSchema = new Schema(
   {
-    seller_name: {
+    name: {
       type: String,
     },
     email: {
       type: String,
     },
-    password: {
-      type: String,
-    },
-    confirm_password: {
-      type: String,
-    },
-    
     mobile: {
       type: Number,
     },
+    password: {
+      type: String,
+    },
+    cnfrm_password: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+    designation: {
+      type: String,
+    },
+    role: {
+      type: String,
+    },
+
     //  code: {
     //  type: String,
     //   default: 1234,
