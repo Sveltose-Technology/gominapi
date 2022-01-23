@@ -100,9 +100,11 @@ exports.signup = async (req, res) => {
 };
 
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find({ seller: req.sellerId }).sort({
-    sortorder: 1,
-  });
+  const findall = await Seller.find({ seller: req.sellerId })
+    .sort({
+      sortorder: 1,
+    })
+    .populate("role");
   if (findall) {
     res.status(200).json({
       status: true,

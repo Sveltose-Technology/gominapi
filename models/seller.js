@@ -24,9 +24,7 @@ const sellerSchema = new Schema(
     designation: {
       type: String,
     },
-    role: {
-      type: String,
-    },
+    role: { type: Schema.Types.ObjectId, ref: "role" },
 
     //  code: {
     //  type: String,
