@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const { tokenverify } = require("../functions/tokenverify");
 
 const {
   signup,
@@ -48,7 +49,7 @@ let uploads = multer({ storage: storage });
 
 //Paths
 router.post("/admin/signup", uploads.single("image"), signup);
-router.get("/admin/getseller", getseller);
+router.get("/admin/getseller", tokenverify, getseller);
 
 //router.post("/admin/Adminlogin", Adminlogin);
 router.post("/admin/sellerlogin", sellerlogin);
@@ -57,7 +58,7 @@ router.post("/admin/editseller/:id", editseller);
 
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
-router.get("/admin/getoneseller/:id", getoneseller);
+router.get("/admin/getoneseller", tokenverify, getoneseller);
 router.get("/admin/totalseller", totalseller);
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
