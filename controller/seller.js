@@ -46,10 +46,12 @@ exports.signup = async (req, res) => {
     role: role,
   });
 
+  if(req.file){
   const resp = await cloudinary.uploader.upload(req.file.path);
     // if (resp) {
       newSeller.image = resp.secure_url;
       fs.unlinkSync(req.file.path);
+  }
       
   //console.log(req.body)
  //
