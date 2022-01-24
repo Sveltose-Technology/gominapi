@@ -8,6 +8,7 @@ const stocktransferSchema = new Schema(
           }],
           total_qty: { type: String, },
           total_amount: { type: String, },
+          
         reference_no :{
          type : Number
         },

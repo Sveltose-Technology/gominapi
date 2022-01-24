@@ -20,7 +20,7 @@ exports.addbillinginvoice = async (req, res) => {
     total_amount =total_amount + product[i].amount;
    }
 
-   sum = sum + amount * qty;
+  //  sum = sum + amount * qty;
 
   create_randomString(12);
   function create_randomString(string_length) {
@@ -50,7 +50,7 @@ exports.addbillinginvoice = async (req, res) => {
       status: true,
       msg: "successfully Order",
       data: data,
-      grand_total:sum
+      // grand_total:sum
     })
   })
     .catch((error) => {

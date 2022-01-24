@@ -207,7 +207,7 @@ exports.cartbycustomer = async (req, res) => {
       status: true,
       msg: "success",
       data: findone,
-       total: sum,
+        total: sum,
     });
   } else {
     res.status(400).json({

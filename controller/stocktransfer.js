@@ -5,8 +5,7 @@ exports.addstocktransfer = (req,res)=>{
    
     const {product,reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason} = req.body
 
-    
-  let total_qty = 0;
+   let total_qty = 0;
   for (let i = 0; i < product.length; i++) {
     total_qty = total_qty + product[i].qty;
   }
@@ -15,7 +14,6 @@ exports.addstocktransfer = (req,res)=>{
   for (let i = 0; i < product.length; i++) {
     total_amount =total_amount + product[i].amount;
    }
-
     
     const newStocktransfer = new Stocktransfer({
         product : product,
@@ -35,6 +33,7 @@ exports.addstocktransfer = (req,res)=>{
         status: true,
         msg: "successfully Order",
         data: data
+        
       })
     })
       .catch((error) => {
