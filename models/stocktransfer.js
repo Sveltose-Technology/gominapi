@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const stocktransferSchema = new Schema(
     {
-        product : {type: Schema.Types.ObjectId, ref: "product" },
+        product: [{
+            type: Object
+          }],
+          total_qty: { type: String, },
+          total_amount: { type: String, },
         reference_no :{
          type : Number
         },

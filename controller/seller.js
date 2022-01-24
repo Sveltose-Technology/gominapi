@@ -4,8 +4,7 @@ const fs = require("fs");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const seller = require("../models/seller");
-const saltRounds = 10;
+ const saltRounds = 10;
 
 const validatePassword = (password, dbpassword) => {
   bcrypt.compareSync(password, dbpassword);
@@ -47,8 +46,13 @@ exports.signup = async (req, res) => {
     role: role,
   });
 
+  const resp = await cloudinary.uploader.upload(req.file.path);
+    // if (resp) {
+      newSeller.image = resp.secure_url;
+      fs.unlinkSync(req.file.path);
+      
   //console.log(req.body)
-  if (req.file) {
+ //
     const findexist = await Seller.findOne({
       $or: [{ email: email }, { mobile: mobile }],
     });
@@ -59,10 +63,10 @@ exports.signup = async (req, res) => {
         data: {},
       });
     } else {
-      const resp = await cloudinary.uploader.upload(req.file.path);
-      if (resp) {
-        newSeller.image = resp.secure_url;
-        fs.unlinkSync(req.file.path);
+    //   const resp = await cloudinary.uploader.upload(req.file.path);
+    //   if (resp) {
+    //     newSeller.image = resp.secure_url;
+    //     fs.unlinkSync(req.file.path);
         newSeller
           .save()
           .then((result) => {
@@ -89,15 +93,16 @@ exports.signup = async (req, res) => {
               error: error,
             });
           });
-      } else {
-        res.status(200).json({
-          status: false,
-          msg: "img not uploaded",
-        });
-      }
+      // } else {
+      //   res.status(200).json({
+      //     status: false,
+      //     msg: "img not uploaded",
+      //   });
+      // }
     }
   }
-};
+  
+
 
 exports.getseller = async (req, res) => {
   const findall = await Seller.find({ seller: req.sellerId })

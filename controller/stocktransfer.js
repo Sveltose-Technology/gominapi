@@ -2,35 +2,50 @@
 
 
 exports.addstocktransfer = (req,res)=>{
+   
     const {product,reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason} = req.body
 
+    
+  let total_qty = 0;
+  for (let i = 0; i < product.length; i++) {
+    total_qty = total_qty + product[i].qty;
+  }
+
+  let total_amount = 0;
+  for (let i = 0; i < product.length; i++) {
+    total_amount =total_amount + product[i].amount;
+   }
+
+    
     const newStocktransfer = new Stocktransfer({
-      product : product,
+        product : product,
         reference_no : reference_no,
         from_warehouse :from_warehouse,
         to_warehouse : to_warehouse,
         transfer_date :transfer_date,
         delivery_duedate :delivery_duedate,
         transfer_type : transfer_type,
-        reason :reason 
+        reason :reason ,
+        total_qty: total_qty,
+        total_amount: total_amount,
 
     })
-    newStocktransfer.save(function (err, data) {
-        if (err) {
-          res.status(400).json({
-            status: false,
-            msg: "error occured",
-            error: err,
-          });
-        } else {
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: newStocktransfer,
-          });
-        }
-      });
-    };
+    newStocktransfer.save().then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "successfully Order",
+        data: data
+      })
+    })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error
+        })
+      })
+  
+  };
     
 
     exports.editstocktranfer = async (req, res) => {
