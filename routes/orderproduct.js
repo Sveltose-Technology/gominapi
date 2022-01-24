@@ -21,11 +21,11 @@ const {
 
 router.post("/admin/addorder", verifytoken, addorder);
 router.get("/admin/getorder", verifytoken, getorder);
-router.get(
-  "/admin/getorderbysellerbytoken/:id",
-  tokenverify,
-  getorderbysellerbytoken
-);
+//router.get(
+//   "/admin/getorderbysellerbytoken/:id",
+//   tokenverify,
+//   getorderbysellerbytoken
+// );
 
 router.get("/admin/pending_order", verifytoken, pending_order);
 router.get("/admin/delivery_order", verifytoken, delivery_order);

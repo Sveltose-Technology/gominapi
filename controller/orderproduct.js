@@ -1,8 +1,9 @@
 const Orderproduct = require("../models/orderproduct");
 const Coupon = require("../models/coupon");
-const seller = require("../models/seller");
+const Store = require("../models/store");
 
 const { v4: uuidv4 } = require("uuid");
+const store = require("../models/store");
 
 exports.addorder = async (req, res) => {
   const {
@@ -94,26 +95,30 @@ exports.getorder = async (req, res) => {
     });
 };
 
-exports.getorderbysellerbytoken = async (req, res) => {
-  const findone = await Orderproduct.findOne({
-    $and: [{ seller: req.sellerId }, { product: req.params.id }],
-  })
-    .populate("product")
-    .populate("customer");
-  if (findone) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findone,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
-  }
-};
+// exports.getorderbysellerbytoken = async (req, res) => {
+// const getstore = await Store.findOne({product:req.params.id})
+// if(getstore){
+//   const seller = getstore.seller
+// }
+//   const findone = await Orderproduct.findOne({
+//      seller: seller
+//   })
+//     .populate("product")
+//     .populate("customer");
+//   if (findone) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findone,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   }
+// };
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
@@ -211,7 +216,7 @@ exports.salesbyseller = async (req, res) => {
     .populate({
       path: "product",
       populate: {
-        path: "gstrate",
+        path: "seller",
       },
     })
     .then((data) => {
