@@ -270,7 +270,7 @@ exports.totalorder = async (req, res) => {
 exports.editOrder = async (req, res) => {
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-      $and: [{ customer: req.userId }, { _id: req.params.id }],
+     seller: req.sellerId 
     },
     { $set: req.body },
     { new: true }
