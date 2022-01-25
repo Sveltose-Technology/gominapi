@@ -1,28 +1,29 @@
 const Orderproduct = require("../models/orderproduct");
-const Coupon = require("../models/coupon");
-const Store = require("../models/store");
-
+ const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
-const store = require("../models/store");
-
+ 
 exports.addorder = async (req, res) => {
+  const getstore = await Store.findOne({product : req.params.id})
+  if(getstore){
+  const seller = getstore.seller
+  
   const {
-    //customer,
-    product,
-    order_type,
-    payment_type,
-    orderId,
-    qty,
-    purchaseprice,
-    delivery_address,
-    order_date,
-    status,
+     product,
+     order_type,
+     payment_type,
+     orderId,
+     qty,
+     purchaseprice,
+     delivery_address,
+     order_date,
+     status,
   } = req.body;
 
   // const verifycoupon = await Coupon.find({CouponTitle:})
 
   const newOrderproduct = new Orderproduct({
     customer: req.userId,
+    seller : seller,
     product: product,
     order_type: order_type,
     payment_type: payment_type,
@@ -33,6 +34,7 @@ exports.addorder = async (req, res) => {
     order_date: order_date,
     status: status,
   });
+//}
 
   const findexist = await Orderproduct.findOne({
     $and: [{ customer: req.userId }, { product: product }],
@@ -72,6 +74,7 @@ exports.addorder = async (req, res) => {
       }
     });
   }
+}
 };
 
 exports.getorder = async (req, res) => {
@@ -99,8 +102,8 @@ exports.getorderbysellerbytoken = async (req, res) => {
 const getstore = await Store.findOne({product:req.params.id})
 if(getstore){
   const seller = getstore.seller
-}
-  const findone = await Orderproduct.findOne({seller: seller})
+
+  const findone = await Orderproduct.find({ seller: seller})
     .populate("product")
     .populate("customer");
   if (findone) {
@@ -108,6 +111,7 @@ if(getstore){
       status: true,
       msg: "success",
       data: findone,
+
     });
   } else {
     res.status(400).json({
@@ -116,6 +120,7 @@ if(getstore){
       error: "error",
     });
   }
+}
 };
 
 exports.pending_order = async (req, res, next) => {
@@ -268,9 +273,10 @@ exports.totalorder = async (req, res) => {
 };
 
 exports.editOrder = async (req, res) => {
+
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-     seller: req.sellerId 
+      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }

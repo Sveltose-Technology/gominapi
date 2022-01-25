@@ -7,6 +7,10 @@ const orderproductSchema = new mongoose.Schema(
       ref: "customer",
       required: true,
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+     },
     order_type :{
       type : String
     },
