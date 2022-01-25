@@ -48,7 +48,7 @@ exports.addbillinginvoice = async (req, res) => {
   newBillinginvoice.save().then((data) => {
     res.status(200).json({
       status: true,
-      msg: "successfully Order",
+      msg: "success",
       data: data,
       // grand_total:sum
     })
