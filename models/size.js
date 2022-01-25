@@ -6,6 +6,11 @@ const SizeSchema = new mongoose.Schema(
     sizeName: {
       type: String,
     },
+
+    // seller: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "seller",
+    //  },
   },
   { timestamps: true }
 );

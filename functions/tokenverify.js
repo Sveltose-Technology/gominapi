@@ -16,7 +16,7 @@ exports.tokenverify = async (req, res, next) => {
     }
     req.sellerId = decoded.sellerId;
     console.log(req.sellerId);
-    // req.usertype = decoded.usertype;
+     req.usertype = decoded.usertype;
     next();
   });
 };

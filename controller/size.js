@@ -5,6 +5,7 @@ exports.addsize = async (req, res) => {
 
   const newSize = new Size({
     sizeName : sizeName,
+    
   });
 
   const findexist = await Size.findOne({ sizeName: sizeName });

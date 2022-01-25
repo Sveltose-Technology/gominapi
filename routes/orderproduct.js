@@ -28,7 +28,7 @@ router.get(
   getorderbysellerbytoken
 );
 
-router.get("/admin/pending_order", verifytoken, pending_order);
+router.get("/admin/pending_order", tokenverify, pending_order);
 router.get("/admin/delivery_order", verifytoken, delivery_order);
 router.get("/admin/cancel_order", verifytoken, cancelled_order);
 router.get("/admin/complete_order", verifytoken, complete_order);

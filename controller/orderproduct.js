@@ -1,11 +1,12 @@
 const Orderproduct = require("../models/orderproduct");
- const Store = require("../models/store");
+  const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
+const Seller = require("../models/seller");
  
 exports.addorder = async (req, res) => {
   const getstore = await Store.findOne({product : req.params.id})
-  if(getstore){
-  const seller = getstore.seller
+   if(getstore){
+   const seller = getstore.seller
   
   const {
      product,
@@ -34,7 +35,7 @@ exports.addorder = async (req, res) => {
     order_date: order_date,
     status: status,
   });
-//}
+
 
   const findexist = await Orderproduct.findOne({
     $and: [{ customer: req.userId }, { product: product }],
@@ -47,7 +48,8 @@ exports.addorder = async (req, res) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: data,
+           
+   
         });
       })
       .catch((error) => {
@@ -70,7 +72,7 @@ exports.addorder = async (req, res) => {
           status: false,
           msg: "Product Order",
           data: data,
-        });
+         });
       }
     });
   }
@@ -99,11 +101,11 @@ exports.getorder = async (req, res) => {
 };
 
 exports.getorderbysellerbytoken = async (req, res) => {
-const getstore = await Store.findOne({product:req.params.id})
-if(getstore){
-  const seller = getstore.seller
+// const getstore = await Store.findOne({product:req.params.id})
+// if(getstore){
+//   const seller = getstore.seller
 
-  const findone = await Orderproduct.find({ seller: seller})
+  const findone = await Orderproduct.find({ seller: req.sellerId})
     .populate("product")
     .populate("customer");
   if (findone) {
@@ -121,11 +123,11 @@ if(getstore){
     });
   }
 }
-};
+//}
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
-    $and: [{ customer: req.userId }, { status: "Pending" }],
+    $and: [{ seller: req.sellerId }, { status: "Pending" }],
   })
     .populate("customer")
     .populate("product")
