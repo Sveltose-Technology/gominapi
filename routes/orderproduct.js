@@ -15,6 +15,7 @@ const {
   salesbyseller,
   getorderbysellerbytoken,
   editOrder,
+  viewoneOrder
 } = require("../controller/orderproduct");
 
 // PATHS
@@ -34,6 +35,9 @@ router.get("/admin/complete_order", verifytoken, complete_order);
 router.get("/admin/del_order", del_order);
 router.get("/admin/totalorder", totalorder);
 router.get("/admin/salesbyseller", tokenverify, salesbyseller);
-router.post("/admin/editOrder/:id", tokenverify, editOrder);
+router.post("/admin/editOrder", verifytoken, editOrder);
+router.get("/admin/viewoneOrder", verifytoken, viewoneOrder);
+
 
 module.exports = router;
+ 

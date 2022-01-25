@@ -95,30 +95,28 @@ exports.getorder = async (req, res) => {
     });
 };
 
-// exports.getorderbysellerbytoken = async (req, res) => {
-// const getstore = await Store.findOne({product:req.params.id})
-// if(getstore){
-//   const seller = getstore.seller
-// }
-//   const findone = await Orderproduct.findOne({
-//      seller: seller
-//   })
-//     .populate("product")
-//     .populate("customer");
-//   if (findone) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findone,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
+exports.getorderbysellerbytoken = async (req, res) => {
+const getstore = await Store.findOne({product:req.params.id})
+if(getstore){
+  const seller = getstore.seller
+}
+  const findone = await Orderproduct.findOne({seller: seller})
+    .populate("product")
+    .populate("customer");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
@@ -272,7 +270,7 @@ exports.totalorder = async (req, res) => {
 exports.editOrder = async (req, res) => {
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+      $and: [{ customer: req.userId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }
@@ -291,4 +289,22 @@ exports.editOrder = async (req, res) => {
         error: error,
       });
     });
+};
+
+
+exports.viewoneOrder = async (req, res) => {
+  const findone = await Orderproduct.findOne({ customer:req.userId }).populate("customer")
+  if (findone) {
+      res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findone,
+      });
+  } else {
+      res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+      });
+  }
 };
