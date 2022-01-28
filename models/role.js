@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 
 const roleSchema = new Schema(
   {
-    role_name: {
-      type: String,
-      require: true,
-    },
+    // role_name: {
+    //   type: String,
+    //   require: true,
+    // },
+
+    seller :{
+      type : Schema.Types.ObjectId, ref: "seller"
+   },
     storePermission: {
       type: Boolean,
       default: false,

@@ -1,9 +1,10 @@
 const Role = require("../models/role");
+const seller = require("../models/seller");
 
 exports.add_role = async (req, res) => { };
 
 exports.addrole = async (req, res) => {
-    const { role_name,storePermission,customerPermission,empPermission,supplierPermission,productPermission,stockcntrlPermission,offerPermission,couponPermission,billingPermission,purchaseorderPer,purchaseInvoicePer,
+    const { role_name,seller,storePermission,customerPermission,empPermission,supplierPermission,productPermission,stockcntrlPermission,offerPermission,couponPermission,billingPermission,purchaseorderPer,purchaseInvoicePer,
         //  store_add, store_edit, store_view, store_delete, customer_add, customer_edit, customer_view, customer_delete,
         // employee_add, employee_edit, employee_view, employee_delete, supplier_add, supplier_edit, supplier_view, supplier_delete,
         // product_add, product_edit, product_view, product_delete, stockcontrol_add, stockcontrol_edit, stockcontrol_view, stockcontrol_delete, offer_add,
@@ -13,6 +14,7 @@ exports.addrole = async (req, res) => {
 
     const newRole = await new Role({
         role_name: role_name,
+        seller :seller,
         storePermission : storePermission,
         customerPermission : customerPermission,
         empPermission : empPermission,
@@ -136,6 +138,30 @@ exports.edit_role = async (req, res) => {
         });
     }
 };
+
+exports.editRole = async (req, res) => {
+    const findandUpdateEntry = await Role.findOneAndUpdate(
+        {
+            _id: req.params.id,
+        },
+        { $set: req.body },
+        { new: true }
+    );
+    if (findandUpdateEntry) {
+        res.status(200).json({
+            status: true,
+            msg: "success",
+            data: findandUpdateEntry,
+        });
+    } else {
+        res.status(400).json({
+            status: false,
+            msg: "error",
+            error: "error",
+        });
+    }
+};
+
 
 exports.viewonerole = async (req, res) => {
     const findone = await Role.findOne({ _id: req.params.id });
