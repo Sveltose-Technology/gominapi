@@ -7,13 +7,14 @@ exports.addorder = async (req, res) => {
   // const getstore = await Store.findOne({product : req.params.id})
   //  if(getstore){
   // const seller = getstore.seller
-  const getstore = await Store.findOne({product:req.params.id})
-if(getstore){
-  const seller = getstore.seller
-   const getseller = await Seller.findOne({ seller: seller }); 
+//   const getstore = await Store.findOne({product:req.params.id})
+// if(getstore){
+//   const seller = getstore.seller
+//    const getseller = await Seller.findOne({ seller: seller }); 
   
   
   const {
+  //  seller,
      product,
      order_type,
      payment_type,
@@ -25,6 +26,13 @@ if(getstore){
      status,
   } = req.body;
 
+//   const getstore = await Store.findOne({product:req.params.id})
+// if(getstore){
+//   const seller = getstore.seller
+//    const getseller = await Seller.findOne({ seller: seller }); 
+  
+// }
+
   // const getstore = await Store.findOne({product:req.params.id})
   // if(getstore){
   //   const seller = getstore.seller
@@ -34,7 +42,7 @@ if(getstore){
 
   const newOrderproduct = new Orderproduct({
     customer: req.userId,
-    seller : seller,
+  //  seller : seller,
     product: product,
     order_type: order_type,
     payment_type: payment_type,
@@ -59,8 +67,7 @@ if(getstore){
           status: true,
           msg: "success",
           data : data ,
-         seller : seller
-         });
+          });
       })
       .catch((error) => {
         res.status(200).json({
@@ -90,7 +97,7 @@ if(getstore){
     });
   }
 }
-}
+//}
  
 
 exports.getorder = async (req, res) => {

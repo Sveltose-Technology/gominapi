@@ -11,7 +11,67 @@ const roleSchema = new Schema(
     seller :{
       type : Schema.Types.ObjectId, ref: "seller"
    },
-    storePermission: {
+   store: {
+      type: Boolean,
+      default: false,
+     },
+     employee: {
+      type: Boolean,
+      default: false,
+     },
+     customer: {
+      type: Boolean,
+      default: false,
+     },
+     supplier: {
+      type: Boolean,
+      default: false,
+     },
+     product: {
+      type: Boolean,
+      default: false,
+     },
+     stockControl: {
+      type: Boolean,
+      default: false,
+     },
+     offers: {
+      type: Boolean,
+      default: false,
+     },
+     coupons: {
+      type: Boolean,
+      default: false,
+     },
+     subscription: {
+      type: Boolean,
+      default: false,
+     },
+     billing: {
+      type: Boolean,
+      default: false,
+     },
+     order: {
+      type: Boolean,
+      default: false,
+     },
+     purcahse: {
+      type: Boolean,
+      default: false,
+     },
+     reports: {
+      type: Boolean,
+      default: false,
+     },
+     notification: {
+      type: Boolean,
+      default: false,
+     },
+     rolesPermission: {
+      type: Boolean,
+      default: false,
+     },
+     setting: {
       type: Boolean,
       default: false,
      },
@@ -28,10 +88,10 @@ const roleSchema = new Schema(
     //   default: false,
     // },
 
-    customerPermission : {
-     type :Boolean,
-     default: false,
-    },
+    // customerPermission : {
+    //  type :Boolean,
+    //  default: false,
+    // },
 
     // customer_add: {
     //   type: Boolean,
@@ -49,10 +109,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    empPermission : {
-      type : Boolean,
-      default: false,
-    },
+    // empPermission : {
+    //   type : Boolean,
+    //   default: false,
+    // },
     // employee_add: {
     //   type: Boolean,
     //   default: false,
@@ -69,10 +129,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    supplierPermission :{
-      type :Boolean,
-      default: false,
-    },
+    // supplierPermission :{
+    //   type :Boolean,
+    //   default: false,
+    // },
     // supplier_add: {
     //   type: Boolean,
     //   default: false,
@@ -89,10 +149,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    productPermission : {
-      type : Boolean,
-      default: false,
-    },
+    // productPermission : {
+    //   type : Boolean,
+    //   default: false,
+    // },
     // product_add: {
     //   type: Boolean,
     //   default: false,
@@ -110,10 +170,10 @@ const roleSchema = new Schema(
     //   default: false,
     // },
 
-    stockcntrlPermission :{
-      type: Boolean,
-      default: false,
-    },
+    // stockcntrlPermission :{
+    //   type: Boolean,
+    //   default: false,
+    // },
     // stockcontrol_add: {
     //   type: Boolean,
     //   default: false,
@@ -130,10 +190,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    offerPermission : {
-      type: Boolean,
-      default: false,
-    },
+    // offerPermission : {
+    //   type: Boolean,
+    //   default: false,
+    // },
     // offer_add: {
     //   type: Boolean,
     //   default: false,
@@ -150,10 +210,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    couponPermission :{
-      type: Boolean,
-      default: false,
-    },
+    // couponPermission :{
+    //   type: Boolean,
+    //   default: false,
+    // },
     // coupon_add: {
     //   type: Boolean,
     //   default: false,
@@ -170,10 +230,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    billingPermission :{
-      type: Boolean,
-      default: false,
-    },
+    // billingPermission :{
+    //   type: Boolean,
+    //   default: false,
+    // },
     // billing_add: {
     //   type: Boolean,
     //   default: false,
@@ -190,10 +250,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    purchaseorderPer : {
-      type: Boolean,
-      default: false,
-    },
+    // purchaseorderPer : {
+    //   type: Boolean,
+    //   default: false,
+    // },
     // purchaseorder_add: {
     //   type: Boolean,
     //   default: false,
@@ -210,10 +270,10 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-    purchaseInvoicePer : {
-      type: Boolean,
-      default: false,
-    },
+    // purchaseInvoicePer : {
+    //   type: Boolean,
+    //   default: false,
+    // },
     // purchaseInvoice_add: {
     //   type: Boolean,
     //   default: false,
