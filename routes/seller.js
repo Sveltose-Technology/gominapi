@@ -58,7 +58,7 @@ router.post("/admin/editseller",tokenverify, editseller);
 
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
-router.get("/admin/getoneseller", tokenverify, getoneseller);
+router.get("/admin/getoneseller", tokenverify,  getoneseller);
 router.get("/admin/totalseller", totalseller);
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
