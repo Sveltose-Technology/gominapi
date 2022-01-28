@@ -100,7 +100,7 @@ exports.addrole = async (req, res) => {
 //};
 
 exports.allrole = async (req, res) => {
-    const findall = await Role.find().sort({ sortorder: 1 });
+    const findall = await Role.find().sort({ sortorder: 1 }).populate("seller")
     if (findall) {
         res.status(200).json({
             status: true,
