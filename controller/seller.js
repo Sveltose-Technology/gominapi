@@ -118,9 +118,10 @@ exports.getseller = async (req, res) => {
 };
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ seller: req.sellerId }).populate(
-    "role"
-  );
+  const findone = await Seller.findOne({ seller: req.sellerId })
+  // .populate(
+  //   "role"
+ // );
   if (findone) {
     res.status(200).json({
       status: true,
@@ -249,7 +250,7 @@ exports.sellerlogin = async (req, res) => {
 exports.editseller = async (req, res) => {
   const findandUpdateEntry = await Seller.findOneAndUpdate(
     {
-      _id: req.params.id,
+      _id: req.sellerId,
     },
     { $set: req.body },
     { new: true }

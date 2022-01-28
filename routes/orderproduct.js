@@ -35,7 +35,7 @@ router.get("/admin/del_order", del_order);
 router.get("/admin/totalorder", totalorder);
 router.get("/admin/salesbyseller", tokenverify, salesbyseller);
 router.post("/admin/editOrder/:id", tokenverify,editOrder);
-router.get("/admin/viewoneOrder", verifytoken, viewoneOrder);
+router.get("/admin/viewoneOrder/:id", tokenverify, viewoneOrder);
 
 
 module.exports = router;

@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const customerSchema = new Schema(
   {
+
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+     },
     customerId: {
       type: String,
     },

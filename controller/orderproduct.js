@@ -6,11 +6,11 @@ const Seller = require("../models/seller");
 exports.addorder = async (req, res) => {
   // const getstore = await Store.findOne({product : req.params.id})
   //  if(getstore){
-  //  const seller = getstore.seller
-//   const getstore = await Store.findOne({product:req.params.id})
-// if(getstore){
-//   const seller = getstore.seller
-//    const getseller = await Seller.findOne({ seller: seller }); 
+  // const seller = getstore.seller
+  const getstore = await Store.findOne({product:req.params.id})
+if(getstore){
+  const seller = getstore.seller
+   const getseller = await Seller.findOne({ seller: seller }); 
   
   
   const {
@@ -25,10 +25,10 @@ exports.addorder = async (req, res) => {
      status,
   } = req.body;
 
-  const getstore = await Store.findOne({product:req.params.id})
-  if(getstore){
-    const seller = getstore.seller
-     const getseller = await Seller.findOne({  seller: seller }); 
+  // const getstore = await Store.findOne({product:req.params.id})
+  // if(getstore){
+  //   const seller = getstore.seller
+  //    const getseller = await Seller.findOne({  seller: seller }); 
 
   // const verifycoupon = await Coupon.find({CouponTitle:})
 
@@ -59,7 +59,7 @@ exports.addorder = async (req, res) => {
           status: true,
           msg: "success",
           data : data ,
-         seller : getseller
+         seller : seller
          });
       })
       .catch((error) => {
@@ -324,10 +324,10 @@ exports.editOrder = async (req, res) => {
 
 
 exports.viewoneOrder = async (req, res) => {
-  const findone = await Orderproduct.findOne({ customer:req.userId }).populate("customer")
+  const findone = await Orderproduct.findOne({ seller:req.sellerId },{id: req.params.id}).populate("customer")
   if (findone) {
       res.status(200).json({
-          status: true,
+          status: true, 
           msg: "success",
           data: findone,
       });

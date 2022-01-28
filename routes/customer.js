@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { verifytoken } = require("../functions/verifytoken");
+const { tokenverify } = require("../functions/tokenverify");
 
 
 const {
@@ -15,7 +16,8 @@ const {
   emailSend,
   verifyotp,
   forgotPassword,
-  resetpassword
+  resetpassword,
+  Customerbysellerbytoken
 
 } = require("../controller/customer");
 
@@ -30,7 +32,7 @@ router.post("/user/sendotp", sendotp);
 router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
 router.post("/user/resetpassword", resetpassword);
+router.get("/user/Customerbysellerbytoken",tokenverify, Customerbysellerbytoken);
 
 
 module.exports = router;
-//console.log()   
