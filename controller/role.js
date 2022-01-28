@@ -13,7 +13,7 @@ exports.addrole = async (req, res) => {
         req.body;
 
     const newRole = await new Role({
-        role_name: role_name,
+        // role_name: role_name,
         seller :seller,
         storePermission : storePermission,
         customerPermission : customerPermission,
@@ -72,14 +72,14 @@ exports.addrole = async (req, res) => {
         // purchaseInovice_delete: purchaseInovice_delete
          });
 
-    const findexist = await Role.findOne({ role_name: role_name });
-    if (findexist) {
-        res.status(400).json({
-            status: false,
-            msg: "Already Exists",
-            data: {},
-        });
-    } else {
+    // const findexist = await Role.findOne({ role_name: role_name });
+    // if (findexist) {
+    //     res.status(400).json({
+    //         status: false,
+    //         msg: "Already Exists",
+    //         data: {},
+    //     });
+    // } else {
         newRole
             .save()
             .then((data) => {
@@ -97,7 +97,7 @@ exports.addrole = async (req, res) => {
                 });
             });
     }
-};
+//};
 
 exports.allrole = async (req, res) => {
     const findall = await Role.find().sort({ sortorder: 1 });
