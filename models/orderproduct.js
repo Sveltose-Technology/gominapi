@@ -11,6 +11,10 @@ const orderproductSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
      },
+     store: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "store",
+     },
     order_type :{
       type : String
     },

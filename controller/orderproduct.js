@@ -4,9 +4,14 @@ const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
  
 exports.addorder = async (req, res) => {
-  const getstore = await Store.findOne({product : req.params.id})
-   if(getstore){
-   const seller = getstore.seller
+  // const getstore = await Store.findOne({product : req.params.id})
+  //  if(getstore){
+  //  const seller = getstore.seller
+//   const getstore = await Store.findOne({product:req.params.id})
+// if(getstore){
+//   const seller = getstore.seller
+//    const getseller = await Seller.findOne({ seller: seller }); 
+  
   
   const {
      product,
@@ -19,6 +24,11 @@ exports.addorder = async (req, res) => {
      order_date,
      status,
   } = req.body;
+
+  const getstore = await Store.findOne({product:req.params.id})
+  if(getstore){
+    const seller = getstore.seller
+     const getseller = await Seller.findOne({  seller: seller }); 
 
   // const verifycoupon = await Coupon.find({CouponTitle:})
 
@@ -48,9 +58,9 @@ exports.addorder = async (req, res) => {
         res.status(200).json({
           status: true,
           msg: "success",
-           
-   
-        });
+          data : data ,
+         seller : getseller
+         });
       })
       .catch((error) => {
         res.status(200).json({
@@ -69,15 +79,19 @@ exports.addorder = async (req, res) => {
         });
       } else {
         res.status(200).json({
-          status: false,
+          status: true,
           msg: "Product Order",
           data: data,
-         });
+         
+          
+          });
+          
       }
     });
   }
 }
-};
+}
+ 
 
 exports.getorder = async (req, res) => {
   const findall = await Orderproduct.find({ customer: req.userId })
@@ -101,18 +115,27 @@ exports.getorder = async (req, res) => {
 };
 
 exports.getorderbysellerbytoken = async (req, res) => {
-// const getstore = await Store.findOne({product:req.params.id})
-// if(getstore){
-//   const seller = getstore.seller
+const getstore = await Store.findOne({product:req.params.id})
+if(getstore){
+  const seller = getstore.seller
+  const getseller = await Seller.findOne({ seller:  seller }); 
 
-  const findone = await Orderproduct.find({ seller: req.sellerId})
+  const findone = await Orderproduct.find()
     .populate("product")
-    .populate("customer");
+    .populate("customer")
+    // .populate({
+    //   path : "store",
+    //   populate :{
+    //     path : "seller"
+    //   }
+    // })
+    .populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
+      seller : getseller
 
     });
   } else {
@@ -123,7 +146,7 @@ exports.getorderbysellerbytoken = async (req, res) => {
     });
   }
 }
-//}
+}
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
@@ -278,7 +301,7 @@ exports.editOrder = async (req, res) => {
 
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+      $and: [{ seller: req.sellerId }, { id: req.params.id }],
     },
     { $set: req.body },
     { new: true }

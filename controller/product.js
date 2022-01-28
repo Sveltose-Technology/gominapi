@@ -573,7 +573,7 @@ exports.productbystore = async (req, res) => {
   }
 };
 
-exports.productbystorebytoken = async (req, res) => {
+exports.productbysellerbytoken = async (req, res) => {
   const findall = await Product.find({ seller: req.sellerId })
     .sort({ sortorder: 1 })
     .populate("productcategory")
