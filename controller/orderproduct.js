@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
  
 exports.addorder = async (req, res) => {
-  console.log()
+   
   // const getstore = await Store.findOne({product : req.params.id})
   //  if(getstore){
   // const seller = getstore.seller
