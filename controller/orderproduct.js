@@ -7,10 +7,10 @@ exports.addorder = async (req, res) => {
   // const getstore = await Store.findOne({product : req.params.id})
   //  if(getstore){
   // const seller = getstore.seller
-//   const getstore = await Store.findOne({product:req.params.id})
+  const getstore = await Store.findOne({product:req.params.id})
 // if(getstore){
-//   const seller = getstore.seller
-//    const getseller = await Seller.findOne({ seller: seller }); 
+  const seller = getstore.seller
+   //const getseller = await Seller.findOne({ seller: seller }); 
   
   
   const {
@@ -26,23 +26,14 @@ exports.addorder = async (req, res) => {
      status,
   } = req.body;
 
-//   const getstore = await Store.findOne({product:req.params.id})
-// if(getstore){
-//   const seller = getstore.seller
-//    const getseller = await Seller.findOne({ seller: seller }); 
   
-// }
 
-  // const getstore = await Store.findOne({product:req.params.id})
-  // if(getstore){
-  //   const seller = getstore.seller
-  //    const getseller = await Seller.findOne({  seller: seller }); 
-
+   
   // const verifycoupon = await Coupon.find({CouponTitle:})
 
   const newOrderproduct = new Orderproduct({
     customer: req.userId,
-  //  seller : seller,
+      seller : seller,
     product: product,
     order_type: order_type,
     payment_type: payment_type,
@@ -56,17 +47,18 @@ exports.addorder = async (req, res) => {
 
 
   const findexist = await Orderproduct.findOne({
-    $and: [{ customer: req.userId }, { product: product }],
+    $and: [{ customer: req.userId }, { product: product },{purchaseprice :purchaseprice},{qty:qty}],
   });
   if (findexist) {
     await Orderproduct.findOneAndUpdate({
-      $and: [{ customer: req.userId }, { product: product }, { new: true }],
+      $and: [{ customer: req.userId }, { product: product }, { purchaseprice: purchaseprice }, { qty: qty }, { new: true }],
     })
       .then((data) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data : data ,
+           data : data ,
+            
           });
       })
       .catch((error) => {
@@ -88,9 +80,7 @@ exports.addorder = async (req, res) => {
         res.status(200).json({
           status: true,
           msg: "Product Order",
-          data: data,
-         
-          
+           data: data,
           });
           
       }
