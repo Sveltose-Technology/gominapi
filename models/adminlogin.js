@@ -3,19 +3,41 @@ const Schema = mongoose.Schema;
 
 const AdminloginSchema = new mongoose.Schema(
   {
-    mobile : {
+    name: {
+      type: String,
+    },
+
+    mobile: {
       type: Number,
       //default : 9893245678
     },
-    email : {
-      type :String,
-     // default : "admin1232gmail.com"
+    phoneno: {
+      type: String,
     },
-    password : {
-      type : String,
+    country: {
+      type: String,
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    image: {
+      type: String,
+    },
+
+    email: {
+      type: String,
+      // default : "admin1232gmail.com"
+    },
+    password: {
+      type: String,
       //default : "admin123"
     },
-    
+    cnfmPassword: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

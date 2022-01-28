@@ -2,7 +2,8 @@ const Adminlogin = require("../models/adminlogin");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
- 
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 
 const validatePassword = (password, dbpassword) => {
   bcrypt.compareSync(password, dbpassword);
@@ -13,36 +14,62 @@ function generateAccessToken(mobile) {
   return jwt.sign(mobile, process.env.TOKEN_SECRET, { expiresIn: "1800h" });
 }
 
-exports.createadmin = async(req,res) =>{
-   const {mobile,password} = req.body
-     
-   const salt = bcrypt.genSaltSync(saltRounds);
+exports.createadmin = async (req, res) => {
+  const {
+    name,
+    mobile,
+    phoneno,
+    country,
+    state,
+    city,
+    image,
+    password,
+    cnfmPassword,
+  } = req.body;
+
+  const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
   const token = generateAccessToken({ mobile: mobile });
 
-   const newAdminlogin = new Adminlogin({
-    mobile :mobile,
-    password :hashpassword
-   })
-   newAdminlogin.save()
-   .then((data) => {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: data,
-    });
-  })
-  .catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error,
-    });
+  const newAdminlogin = new Adminlogin({
+    name: name,
+    mobile: mobile,
+    phoneno: phoneno,
+    country: country,
+    state: state,
+    city: city,
+    image: image,
+    password: hashpassword,
+    cnfmPassword: hashpassword,
   });
-}
+
+  if (req.file) {
+    const resp = await cloudinary.uploader.upload(req.file.path);
+    // if (resp) {
+    newSeller.image = resp.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+
+  newAdminlogin
+    .save()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
 // exports.adminlogin = async (req, res) => {
 //     const {mobile,password } = req.body;
-  
+
 //     // Find user with requested phone no.
 //     Adminlogin.findOne(
 //       {mobile : mobile},
@@ -58,8 +85,7 @@ exports.createadmin = async(req,res) =>{
 //               expiresIn: "365d",
 //             });
 //           }
-        
-        
+
 //         else if(true) {
 //             res.status(201).send({
 //               message: "User Logged In",
@@ -74,12 +100,9 @@ exports.createadmin = async(req,res) =>{
 //         }
 //     );
 //   };
-  
-
 
 exports.adminlogin = async (req, res) => {
   const { mobile, password } = req.body;
-  
 
   //Find user with requested email
   Adminlogin.findOne({ mobile: mobile }, function (err, user) {
@@ -90,9 +113,13 @@ exports.adminlogin = async (req, res) => {
     } else {
       // console.log(process.env.TOKEN_SECRET);
       if (validatePassword(password, user.password)) {
-        const token = jwt.sign({ adminId: user._id,mobile : mobile }, process.env.TOKEN_SECRET, {
-          expiresIn: "365d",
-        });
+        const token = jwt.sign(
+          { adminId: user._id, mobile: mobile },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: "365d",
+          }
+        );
 
         return res.status(201).send({
           message: "User Logged In",
@@ -108,7 +135,7 @@ exports.adminlogin = async (req, res) => {
   });
 };
 
-exports.editadmin= async (req, res) => {
+exports.editadmin = async (req, res) => {
   const findandUpdateEntry = await Adminlogin.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -148,9 +175,6 @@ exports.getoneadmin = async (req, res) => {
   }
 };
 
- 
-  
- 
 // exports.adminlogin = async (req, res) => {
 //   // console.log(req.body);
 //   const { mobile,password } = req.body;
@@ -189,10 +213,6 @@ exports.getoneadmin = async (req, res) => {
 //     });
 //   }
 // };
-
-
-
-
 
 // exports.setting = async (req, res) => {
 //   const updatedChange = await Adminlogin.findOneAndUpdate(
