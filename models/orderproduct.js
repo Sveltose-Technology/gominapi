@@ -53,6 +53,12 @@ const orderproductSchema = new mongoose.Schema(
     order_date: {
       type: String,
     },
+    size : {
+      type: String
+    },
+    color : {
+      type : String
+    },
     status: {
       type: String,
     },

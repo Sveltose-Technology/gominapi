@@ -26,6 +26,8 @@ exports.addorder = async (req, res) => {
      delivery_address,
      order_date,
      status,
+     size,
+     color
   } = req.body;
 
   
@@ -44,6 +46,8 @@ exports.addorder = async (req, res) => {
     purchaseprice: purchaseprice,
     delivery_address: delivery_address,
     order_date: order_date,
+    size : size,
+    color :color,
     status: status,
   });
 
