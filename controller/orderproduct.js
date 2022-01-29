@@ -5,7 +5,7 @@ const Seller = require("../models/seller");
 const { populate } = require("../models/orderproduct");
  
 exports.addorder = async (req, res) => {
-  //console.log()
+  console.log()
    
   // const getstore = await Store.findOne({product : req.params.id})
   //  if(getstore){
