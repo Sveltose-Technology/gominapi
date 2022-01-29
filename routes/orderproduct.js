@@ -23,7 +23,7 @@ const {
 router.post("/admin/addorder", verifytoken,  addorder);
 router.get("/admin/getorder", verifytoken, getorder);
 router.get(
-  "/admin/getorderbysellerbytoken/:id",
+  "/admin/getorderbysellerbytoken",tokenverify,
   getorderbysellerbytoken
 );
 

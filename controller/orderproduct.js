@@ -115,11 +115,11 @@ exports.getorder = async (req, res) => {
 
 exports.getorderbysellerbytoken = async (req, res) => {
 const getstore = await Store.findOne({product:req.params.id})
-if(getstore){
-  const seller = getstore.seller
-  const getseller = await Seller.findOne({ seller:  seller }); 
+// if(getstore){
+//   const seller = getstore.seller
+//   const getseller = await Seller.findOne({ seller:  seller }); 
 
-  const findone = await Orderproduct.find()
+  const findone = await Orderproduct.find({id: req.sellerId})
     .populate("product")
     .populate("customer")
     // .populate({
@@ -134,7 +134,7 @@ if(getstore){
       status: true,
       msg: "success",
       data: findone,
-      seller : getseller
+   //   seller : getseller
 
     });
   } else {
@@ -145,7 +145,7 @@ if(getstore){
     });
   }
 }
-}
+//}
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
