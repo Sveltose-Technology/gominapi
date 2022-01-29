@@ -237,15 +237,16 @@ exports.complete_order = async (req, res, next) => {
 
 exports.salesbyseller = async (req, res) => {
   const findall = await Orderproduct.find({
-    $and: [{ seller: req.sellerId }, { status: "Complete" }],
+    $and: [{ id: req.sellerId }, { status: "Complete" }],
   })
     .populate("customer")
-    .populate({
-      path: "product",
-      populate: {
-        path: "seller",
-      },
-    })
+    .populate("product")
+    // .populate({
+    //   path: "product",
+    //   populate: {
+    //     path: "seller",
+    //   },
+    // })
     .then((data) => {
       res.status(200).json({
         status: true,
