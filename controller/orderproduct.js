@@ -123,7 +123,7 @@ const getstore = await Store.findOne({product:req.params.id})
   const findone = await Orderproduct.find({id: req.sellerId})
     .populate("product")
     .populate("customer")
-    .populate(delivery_address)
+    .populate("delivery_address")
     // .populate({
     //   path : "store",
     //   populate :{
