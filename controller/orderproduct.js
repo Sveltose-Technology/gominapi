@@ -2,6 +2,7 @@ const Orderproduct = require("../models/orderproduct");
   const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
+const { populate } = require("../models/orderproduct");
  
 exports.addorder = async (req, res) => {
    
@@ -122,6 +123,7 @@ const getstore = await Store.findOne({product:req.params.id})
   const findone = await Orderproduct.find({id: req.sellerId})
     .populate("product")
     .populate("customer")
+    .populate(delivery_address)
     // .populate({
     //   path : "store",
     //   populate :{
@@ -327,7 +329,7 @@ exports.editOrder = async (req, res) => {
 
 exports.viewoneOrder = async (req, res) => {
 
-  const findone = await Orderproduct.findOne( { $and: [{ id: req.sellerId }, { _id: req.params.id, }]}).populate("product").populate("customer")
+  const findone = await Orderproduct.findOne( { $and: [{ id: req.sellerId }, { _id: req.params.id, }]}).populate("product").populate("customer").populate("delivery_address")
   if (findone) {
       res.status(200).json({
           status: true, 

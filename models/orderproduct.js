@@ -41,7 +41,7 @@ const orderproductSchema = new mongoose.Schema(
     },
 
     delivery_address: {
-      type: String,
+      type :mongoose.Schema.Types.ObjectId,ref : "user_address"
     },
 
     // shippingdate: {
