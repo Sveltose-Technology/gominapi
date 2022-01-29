@@ -327,7 +327,7 @@ exports.editOrder = async (req, res) => {
 
 exports.viewoneOrder = async (req, res) => {
 
-  const findone = await Orderproduct.findOne( { $and: [{ id: req.sellerId }, { _id: req.params.id, }]}) 
+  const findone = await Orderproduct.findOne( { $and: [{ id: req.sellerId }, { _id: req.params.id, }]}).populate("product").populate("customer")
   if (findone) {
       res.status(200).json({
           status: true, 

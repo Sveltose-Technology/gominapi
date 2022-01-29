@@ -21,11 +21,11 @@ const orderproductSchema = new mongoose.Schema(
     payment_type: {
       type: String,
     },
-    product: {
+    product: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "product",
       required: true,
-    },
+    }],
     orderId: {
       type: String,
     },
