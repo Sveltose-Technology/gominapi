@@ -9,9 +9,9 @@ exports.addorder = async (req, res) => {
   //  if(getstore){
   // const seller = getstore.seller
   const getstore = await Store.findOne({product:req.params.id})
-// if(getstore){
+ if(getstore){
   const seller = getstore.seller
-   //const getseller = await Seller.findOne({ seller: seller }); 
+   const getseller = await Seller.findOne({ seller: seller }); 
   
   
   const {
@@ -82,13 +82,14 @@ exports.addorder = async (req, res) => {
           status: true,
           msg: "Product Order",
            data: data,
+           seller : getseller
           });
           
       }
     });
   }
 }
-//}
+}
  
 
 exports.getorder = async (req, res) => {
@@ -299,7 +300,7 @@ exports.editOrder = async (req, res) => {
 
   const findandUpdateEntry = await Orderproduct.findOneAndUpdate(
     {
-      $and: [{ seller: req.sellerId }, { id: req.params.id }],
+      $and: [{ id: req.sellerId }, { _id: req.params.id, }],
     },
     { $set: req.body },
     { new: true }
@@ -309,6 +310,8 @@ exports.editOrder = async (req, res) => {
         status: true,
         msg: "Order Update",
         data: result,
+
+
       });
     })
     .catch((error) => {
@@ -322,7 +325,7 @@ exports.editOrder = async (req, res) => {
 
 
 exports.viewoneOrder = async (req, res) => {
-  const findone = await Orderproduct.findOne({ seller:req.sellerId },{id: req.params.id}).populate("customer")
+  const findone = await Orderproduct.findOne({ id:req.sellerId },{_id: req.params.id}).populate("customer")
   if (findone) {
       res.status(200).json({
           status: true, 
