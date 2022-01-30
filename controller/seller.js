@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
- const saltRounds = 10;
+const saltRounds = 10;
 
 const validatePassword = (password, dbpassword) => {
   bcrypt.compareSync(password, dbpassword);
@@ -28,7 +28,6 @@ exports.signup = async (req, res) => {
     designation,
     role,
   } = req.body;
-    
 
   //hashing password
   const salt = bcrypt.genSaltSync(saltRounds);
@@ -47,55 +46,53 @@ exports.signup = async (req, res) => {
     role: role,
   });
 
-  if(req.file){
-  const resp = await cloudinary.uploader.upload(req.file.path);
+  if (req.file) {
+    const resp = await cloudinary.uploader.upload(req.file.path);
     // if (resp) {
-      newSeller.image = resp.secure_url;
-      fs.unlinkSync(req.file.path);
+    newSeller.image = resp.secure_url;
+    fs.unlinkSync(req.file.path);
   }
-      
-   
-  
-    const findexist = await Seller.findOne({
-      $or: [{ email: email }, { mobile: mobile }],
+
+  const findexist = await Seller.findOne({
+    $or: [{ email: email }, { mobile: mobile }],
+  });
+  if (findexist) {
+    res.status(400).json({
+      status: false,
+      msg: "Already Exists",
+      data: {},
     });
-    if (findexist) {
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
+  } else {
+    newSeller
+      .save()
+      .then((result) => {
+        const token = jwt.sign(
+          {
+            sellerId: result._id,
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("auth-adtoken", token).status(200).json({
+          status: true,
+          token: token,
+          msg: "success",
+          user: result,
+          //  user_type: "seller",
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
       });
-    } else {
-        newSeller
-          .save()
-          .then((result) => {
-            const token = jwt.sign(
-              {
-                sellerId: result._id,
-              },
-              process.env.TOKEN_SECRET,
-              {
-                expiresIn: 86400000,
-              }
-            );
-            res.header("auth-adtoken", token).status(200).json({
-              status: true,
-              token: token,
-              msg: "success",
-              user: result,
-            });
-          })
-          .catch((error) => {
-            res.status(400).json({
-              status: false,
-              msg: "error",
-              error: error,
-            });
-          });
-      
-    }
   }
-  
+};
+
 exports.getseller = async (req, res) => {
   const findall = await Seller.find({ seller: req.sellerId })
     .sort({
@@ -118,10 +115,10 @@ exports.getseller = async (req, res) => {
 };
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.sellerId })
+  const findone = await Seller.findOne({ _id: req.sellerId });
   // .populate(
   //   "role"
- // );
+  // );
   if (findone) {
     res.status(200).json({
       status: true,

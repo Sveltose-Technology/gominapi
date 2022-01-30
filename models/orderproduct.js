@@ -10,22 +10,27 @@ const orderproductSchema = new mongoose.Schema(
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
-     },
-     store: {
+    },
+    store: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "store",
-     },
-    order_type :{
-      type : String
+    },
+    order_type: {
+      type: String,
     },
     payment_type: {
       type: String,
     },
-    product: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product",
-      required: true,
-    }],
+    // product: [{
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "product",
+    //   required: true,
+    // }],
+    product: [
+      {
+        type: Object,
+      },
+    ],
     orderId: {
       type: String,
     },
@@ -41,7 +46,8 @@ const orderproductSchema = new mongoose.Schema(
     },
 
     delivery_address: {
-      type :mongoose.Schema.Types.ObjectId,ref : "user_address"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user_address",
     },
 
     // shippingdate: {
@@ -53,11 +59,11 @@ const orderproductSchema = new mongoose.Schema(
     order_date: {
       type: String,
     },
-    size : {
-      type: String
+    size: {
+      type: String,
     },
-    color : {
-      type : String
+    color: {
+      type: String,
     },
     status: {
       type: String,
