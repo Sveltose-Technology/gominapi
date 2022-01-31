@@ -21,16 +21,16 @@ const orderproductSchema = new mongoose.Schema(
     payment_type: {
       type: String,
     },
-    // product: [{
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "product",
-    //   required: true,
-    // }],
-    product: [
-      {
-        type: Object,
-      },
-    ],
+    product: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "product",
+      required: true,
+    },
+    // product: [
+    //   {
+    //     type: Object,
+    //   },
+    // ],
     orderId: {
       type: String,
     },
