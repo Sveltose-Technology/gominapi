@@ -96,7 +96,7 @@ exports.addnewpurchaseorder = async (req, res) => {
 };
 
 exports.getpurchaseorder = async (req, res) => {
-  const findall = await Purchaseorder.find().populate("seller")
+  const findall = await Purchaseorder.find() 
     .sort({ sortorder: 1 }).populate("product")
     .populate("supplier").then((data) => {
       res.status(200).json({
@@ -142,7 +142,7 @@ exports.editnewpurchaseorder = async (req, res) => {
 
 
 exports.getonepurchaseorder = async (req, res) => {
-  const findone = await Purchaseorder.findOne({ _id: req.params.id });
+  const findone = await Purchaseorder.findOne({ _id: req.params.id }).populate("product").populate("supplier")
   if (findone) {
     res.status(200).json({
       status: true,
