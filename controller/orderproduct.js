@@ -13,7 +13,7 @@ exports.addorder = async (req, res) => {
   // const seller = getstore.seller
   //console.log(req.params.id)
   const getproduct = await Product.findOne({ _id: req.body.product});
-  console.log(getproduct)
+  //console.log(getproduct)
   if (getproduct) {
     //const seller = getstore.Seller;
     const getstore = await Store.findOne({ _id: getproduct.store });

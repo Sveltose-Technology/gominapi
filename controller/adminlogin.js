@@ -29,7 +29,7 @@ exports.createadmin = async (req, res) => {
   } = req.body;
 
   const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
+  const hashpassword = bcrypt.hashSync(cnfmPassword, salt);
   const token = generateAccessToken({ mobile: mobile });
 
   const newAdminlogin = new Adminlogin({
@@ -107,7 +107,7 @@ exports.adminlogin = async (req, res) => {
     $or: [{ mobile: mobile }, { email: email }],
   });
   if (admin) {
-    const validPass = await bcrypt.compare(password, admin.password);
+    const validPass = await bcrypt.compare(password, admin.cnfmPassword);
     if (validPass) {
       const token = jwt.sign(
         {
