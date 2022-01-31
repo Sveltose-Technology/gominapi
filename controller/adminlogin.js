@@ -142,6 +142,7 @@ exports.adminlogin = async (req, res) => {
 
 
 // exports.adminlogin = async (req, res) => {
+  //console.log()
 //   const { mobile, password } = req.body;
 
 //   //Find user with requested email
