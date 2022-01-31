@@ -217,7 +217,7 @@ exports.getoneadmin = async (req, res) => {
 
 
 
-
+//console.log()
 
 // exports.adminlogin = async (req, res) => {
 //   // console.log(req.body);
