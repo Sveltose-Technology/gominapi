@@ -17,6 +17,7 @@ function generateAccessToken(mobile) {
 exports.createadmin = async (req, res) => {
   const {
     name,
+    email,
     mobile,
     phoneno,
     country,
@@ -34,7 +35,7 @@ exports.createadmin = async (req, res) => {
   const newAdminlogin = new Adminlogin({
     name: name,
     mobile: mobile,
-    phoneno: phoneno,
+    email : email,
     country: country,
     state: state,
     city: city,
@@ -100,40 +101,79 @@ exports.createadmin = async (req, res) => {
 //         }
 //     );
 //   };
-
 exports.adminlogin = async (req, res) => {
-  const { mobile, password } = req.body;
-
-  //Find user with requested email
-  Adminlogin.findOne({ mobile: mobile }, function (err, user) {
-    if (user === null) {
-      return res.status(400).send({
-        message: "User not found.",
+  const { mobile, email, password } = req.body;
+  const admin = await Adminlogin.findOne({
+    $or: [{ mobile: mobile }, { email: email }],
+  });
+  if (admin) {
+    const validPass = await bcrypt.compare(password, admin.password);
+    if (validPass) {
+      const token = jwt.sign(
+        {
+          adminId: admin._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-admintoken", token).status(200).send({
+        status: true,
+        token: token,
+        msg: "success",
+        user: admin,
       });
     } else {
-      // console.log(process.env.TOKEN_SECRET);
-      if (validatePassword(password, user.password)) {
-        const token = jwt.sign(
-          { adminId: user._id, mobile: mobile },
-          process.env.TOKEN_SECRET,
-          {
-            expiresIn: "365d",
-          }
-        );
-
-        return res.status(201).send({
-          message: "User Logged In",
-          token: token,
-          user: user,
-        });
-      } else {
-        return res.status(400).send({
-          message: "Wrong Password",
-        });
-      }
+      res.status(400).json({
+        status: false,
+        msg: "Incorrect Password",
+        error: "error",
+      });
     }
-  });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "User Doesnot Exist",
+      error: "error",
+    });
+  }
 };
+
+
+// exports.adminlogin = async (req, res) => {
+//   const { mobile, password } = req.body;
+
+//   //Find user with requested email
+//   Adminlogin.findOne({ mobile: mobile }, function (err, user) {
+//     if (user === null) {
+//       return res.status(400).send({
+//         message: "User not found.",
+//       });
+//     } else {
+//       // console.log(process.env.TOKEN_SECRET);
+//       if (validatePassword(password, user.password)) {
+//         const token = jwt.sign(
+//           { adminId: user._id, mobile: mobile },
+//           process.env.TOKEN_SECRET,
+//           {
+//             expiresIn: "365d",
+//           }
+//         );
+
+//         return res.status(201).send({
+//           message: "User Logged In",
+//           token: token,
+//           user: user,
+//         });
+//       } else {
+//         return res.status(400).send({
+//           message: "Wrong Password",
+//         });
+//       }
+//     }
+//   });
+// };
 
 exports.editadmin = async (req, res) => {
   const findandUpdateEntry = await Adminlogin.findOneAndUpdate(
@@ -174,6 +214,10 @@ exports.getoneadmin = async (req, res) => {
     });
   }
 };
+
+
+
+
 
 // exports.adminlogin = async (req, res) => {
 //   // console.log(req.body);

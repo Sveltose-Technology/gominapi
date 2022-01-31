@@ -4,7 +4,7 @@ const Seller = require("../models/seller");
 
 exports.addnewpurchaseorder = async (req, res) => {
   const {
-    seller,
+    //seller,
     supplier,
     product,
     stock_due,
@@ -64,7 +64,7 @@ exports.addnewpurchaseorder = async (req, res) => {
   invoiceDate.getTime();
 
   const newpurchaseorder = new Purchaseorder({
-    seller: seller,
+    //seller: seller,
     supplier: supplier,
     product: product,
     stock_due: stock_due,

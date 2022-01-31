@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 
 exports.admintoken = async (req,res,next) =>{
-    let token = req.headers["authorization"]
+    let token = req.headers["auth-admintoken"]
     
     if(!token){
         return res.status(403).send({message : "No Token Provided"})

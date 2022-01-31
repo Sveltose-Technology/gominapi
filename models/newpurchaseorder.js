@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const newpurchaseorderSchema = new mongoose.Schema(
   {
-    seller: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "seller",
-      required: true,
-    },
+    // seller: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "seller",
+    //   required: true,
+    // },
     supplier: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "supplier",
