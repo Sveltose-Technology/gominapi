@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 const stockadjustmentSchema = new Schema(
     {
+        product:[{
+            type:Object
+        }],
         reference_no :{
          type : Number
         },

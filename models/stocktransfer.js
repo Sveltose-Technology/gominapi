@@ -12,6 +12,7 @@ const stocktransferSchema = new Schema(
         reference_no :{
          type : Number
         },
+
         from_warehouse :{
             type : String
         },
@@ -30,6 +31,7 @@ const stocktransferSchema = new Schema(
         reason : {
             type : Schema.Types.ObjectId, ref : "reason"
          },
+          
     },
     { timestamps: true }
 )
