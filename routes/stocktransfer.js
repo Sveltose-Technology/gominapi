@@ -11,7 +11,7 @@ router.get("/admin/getonestocktransfer/:id", getonestocktransfer);
 
 router.get("/admin/editstocktranfer/:id", editstocktranfer);
 
-
+//CONSOLE.LOG()
 
 //router.post("/admin/Adminlogin", Adminlogin);
 
