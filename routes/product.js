@@ -27,7 +27,8 @@ const {
   getuniquetag,
   productbycolor,
   productbypricerange,
-  productbysellerbytoken
+  productbysellerbytoken,
+  dispense
 } = require("../controller/product");
 
 const storage = multer.diskStorage({
@@ -86,6 +87,8 @@ router.get("/admin/productbycolor/:id", productbycolor);
 router.get("/admin/getuniquetag", getuniquetag);
 router.post("/admin/productbypricerange", productbypricerange);
 router.get("/admin/productbysellerbytoken",tokenverify, productbysellerbytoken);
+router.post("/admin/dispense", dispense);
+
 
 
  

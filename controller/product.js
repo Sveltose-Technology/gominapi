@@ -752,3 +752,30 @@ exports.productbypricerange = async (req, res) => {
     });
   }
 };
+
+exports.dispense = async (req, res) => {
+  const { qty } = req.body;
+  try {
+    //console.log(req.body);
+    const getqty = await Product.findOne;
+    //({ _id: req.params.id }, { $set: req.body }, { new: true });
+
+    //console.log(getqty.stock_qty);
+    const displayqty = Number(getqty.stock) - Number(qty);
+    // console.log(displayqty);
+    [{ $set: req.body }, { $set: req.body }, { new: true }];
+
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data:  displayqty,
+                   
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  }
+};
