@@ -3,7 +3,7 @@
 
 exports.addstocktransfer = (req,res)=>{
    
-    const {product,reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason, } = req.body
+    const {product,reference_no,from_warehouse,to_warehouse,transfer_date,delivery_duedate,transfer_type,reason, grandTotal } = req.body
 
    let total_qty = 0;
   for (let i = 0; i < product.length; i++) {
@@ -26,6 +26,7 @@ exports.addstocktransfer = (req,res)=>{
         reason :reason ,
         total_qty: total_qty,
         total_amount: total_amount,
+        grandTotal : grandTotal
        
     })
     newStocktransfer.save().then((data) => {

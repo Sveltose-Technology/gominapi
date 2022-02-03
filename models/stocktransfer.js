@@ -31,6 +31,10 @@ const stocktransferSchema = new Schema(
         reason : {
             type : Schema.Types.ObjectId, ref : "reason"
          },
+         grandTotal:{
+             type :String,
+             default:0
+         }
           
     },
     { timestamps: true }

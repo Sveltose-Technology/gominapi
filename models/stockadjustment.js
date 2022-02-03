@@ -24,6 +24,10 @@ const stockadjustmentSchema = new Schema(
         adjusted_value : {
             type : String
         },
+        grandTotal:{
+            type :String,
+            default:0
+        }
         
     },
     { timestamps: true }

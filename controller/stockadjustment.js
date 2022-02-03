@@ -2,7 +2,7 @@ const Stockadjustment = require("../models/stockadjustment");
 
 
 exports.addstockadjustment = (req,res)=>{
-    const {product,reference_no,adjustment_date,warehouse,reason,adjusted_qty,adjusted_value} = req.body
+    const {product,reference_no,adjustment_date,warehouse,reason,adjusted_qty,adjusted_value,grandTotal} = req.body
 
     const newStockadjustment = new Stockadjustment({
           product : product,
@@ -11,7 +11,8 @@ exports.addstockadjustment = (req,res)=>{
         warehouse : warehouse,
         reason :reason ,
         adjusted_qty :adjusted_qty,
-        adjusted_value :adjusted_value
+        adjusted_value :adjusted_value,
+        grandTotal :grandTotal
     })
     newStockadjustment.save(function (err, data) {
         
