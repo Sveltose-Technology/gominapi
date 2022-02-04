@@ -15,7 +15,7 @@ cloudinary.config({
 
 exports.addstore = async (req, res) => {
   const {
-    seller,
+   // seller,
     store_name,
     storeImg,
     store_desc,
@@ -274,7 +274,7 @@ exports.addstore = async (req, res) => {
 
 exports.getstore = async (req, res) => {
   //const getseller = await Seller.findOne({ _id: req.sellerId });
-  const findall = await Store.find({ seller: req.sellerId }).sort({ sortorder: 1 }).populate("seller");
+  const findall = await Store.find().populate("seller");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -290,7 +290,44 @@ exports.getstore = async (req, res) => {
   }
 };
 
+// exports.getstorebytoken = async (req, res) => {
+//   //const getseller = await Seller.findOne({ _id: req.sellerId });
+//   const findall = await Store.find({ seller: req.sellerId }).sort({ sortorder: 1 }).populate("seller");
+//   if (findall) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findall,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   }
+// };
+
 exports.getonestore = async (req, res) => {
+  const findone = await Store.findOne( { _id: req.params.id  }).populate(
+    "seller"
+  );
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.getonestorebytoken = async (req, res) => {
   const findone = await Store.findOne({  $and: [{ id: req.sellerId }, { _id: req.params.id }], }).populate(
     "seller"
   );
@@ -309,10 +346,11 @@ exports.getonestore = async (req, res) => {
   }
 };
 
+
 exports.storebyseller = async (req, res) => {
   //const getseller = await Seller.findOne({ _id: req.sellerId });
 
-  const findone = await Store.findOne({ seller: req.sellerId }).populate(
+  const findall = await Store.find({ seller: req.sellerId }).populate(
     "seller"
   );
   if (getseller) {
@@ -320,7 +358,7 @@ exports.storebyseller = async (req, res) => {
       status: true,
       msg: "success",
       data: getseller,
-      store: findone,
+      store: findall,
     });
   } else {
     res.status(400).json({

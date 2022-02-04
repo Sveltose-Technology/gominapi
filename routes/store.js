@@ -8,7 +8,9 @@ const { tokenverify } = require("../functions/tokenverify");
 const {
   addstore,
   getstore,
+  getstorebytoken,
   getonestore,
+  getonestorebytoken,
   editstore,
   del_store,
   storebyseller,
@@ -68,13 +70,19 @@ let checkitem = (req, res, next) => {
 
 router.post("/admin/addstore", multipleUpload,tokenverify, addstore);
 router.get("/admin/del_store/:id", del_store);
-router.get("/admin/getstore",tokenverify, getstore);
-router.get("/admin/getonestore/:id",tokenverify, getonestore);
+router.get("/admin/getstore", getstore);
+//router.get("/admin/getstore",tokenverify, getstore);
+
+router.get("/admin/getonestore/:id",  getonestore);
+router.get("/admin/getonestorebytoken",tokenverify,  getonestorebytoken);
 router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload,tokenverify, editstore);
 router.get("/admin/store_req", store_req);
 router.get("/admin/totalstore", totalstore)
 router.post("/admin/searchstore", searchstore)
 router.get("/admin/browsebytrending_store",  browsebytrending_store);
+router.get("/admin/getonestorebytoken",  browsebytrending_store);
+
 
 module.exports = router;
+ 
