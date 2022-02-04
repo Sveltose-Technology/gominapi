@@ -3,19 +3,14 @@ const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
-//const { populate } = require("../models/orderproduct");
+
 
 exports.addorder = async (req, res) => {
   console.log();
 
-  // const getstore = await Store.findOne({product : req.params.id})
-  //  if(getstore){
-  // const seller = getstore.seller
-  //console.log(req.params.id)
   const getproduct = await Product.findOne({ _id: req.body.product});
   //console.log(getproduct)
   if (getproduct) {
-    //const seller = getstore.Seller;
     const getstore = await Store.findOne({ _id: getproduct.store });
 
     const {
@@ -33,7 +28,7 @@ exports.addorder = async (req, res) => {
       //color,
     } = req.body;
 
-    // const verifycoupon = await Coupon.find({CouponTitle:})
+    
 
     const newOrderproduct = new Orderproduct({
       customer: req.userId,
@@ -132,19 +127,13 @@ exports.getorderbysellerbytoken = async (req, res) => {
     .populate("product")
     .populate("customer")
     .populate("delivery_address")
-    // .populate({
-    //   path: "product",
-    //   populate: {
-    //     path: "product",
-    //   },
-    // })
     .populate("seller");
   if (findone) {
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
-      //   seller : getseller
+    
     });
   } else {
     res.status(400).json({
@@ -154,7 +143,7 @@ exports.getorderbysellerbytoken = async (req, res) => {
     });
   }
 };
-//}
+
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
@@ -250,12 +239,6 @@ exports.salesbyseller = async (req, res) => {
   })
     .populate("customer")
     .populate("product")
-    // .populate({
-    //   path: "product",
-    //   populate: {
-    //     path: "seller",
-    //   },
-    // })
     .then((data) => {
       res.status(200).json({
         status: true,
