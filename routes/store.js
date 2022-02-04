@@ -74,7 +74,7 @@ router.get("/admin/getstore", getstore);
 //router.get("/admin/getstore",tokenverify, getstore);
 
 router.get("/admin/getonestore/:id",  getonestore);
-router.get("/admin/getonestorebytoken",tokenverify,  getonestorebytoken);
+router.get("/admin/getonestorebytoken/:id",tokenverify,  getonestorebytoken);
 router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload,tokenverify, editstore);
 router.get("/admin/store_req", store_req);

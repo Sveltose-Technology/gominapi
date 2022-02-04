@@ -348,8 +348,6 @@ exports.getonestorebytoken = async (req, res) => {
 
 
 exports.storebyseller = async (req, res) => {
-  //const getseller = await Seller.findOne({ _id: req.sellerId });
-
   const findall = await Store.find({ seller: req.sellerId }).populate(
     "seller"
   );
