@@ -357,8 +357,8 @@ exports.storebyseller = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "success",
-      data: getseller,
-      store: findall,
+      data: findall,
+      // store: findall,
     });
   } else {
     res.status(400).json({
