@@ -353,7 +353,7 @@ exports.storebyseller = async (req, res) => {
   const findall = await Store.find({ seller: req.sellerId }).populate(
     "seller"
   );
-  if (getseller) {
+  if (findall) {
     res.status(200).json({
       status: true,
       msg: "success",
