@@ -14,10 +14,10 @@ const stocktransferSchema = new Schema(
         },
 
         from_warehouse :{
-            type : String
+            type : Schema.Types.ObjectId, ref : "warehouse"
         },
         to_warehouse :{
-            type :String
+            type : Schema.Types.ObjectId, ref : "warehouse"
         },
         transfer_date : {
             type : String

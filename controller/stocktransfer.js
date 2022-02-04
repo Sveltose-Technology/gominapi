@@ -73,7 +73,7 @@ exports.addstocktransfer = (req,res)=>{
     };
 
     exports.getstocktransfer = async (req, res) => {
-      const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason").populate("transfer_type").populate("product")
+      const findall = await Stocktransfer.find().sort({ sortorder: 1 }).populate("reason").populate("warehouse").populate("product")
       if (findall) {
         res.status(200).json({
           status: true,
@@ -90,7 +90,7 @@ exports.addstocktransfer = (req,res)=>{
     };
     
     exports.getonestocktransfer = async (req, res) => {
-      const findone = await Stocktransfer.findOne({ _id: req.params.id }).populate("reason").populate("transfer_type").populate("product")
+      const findone = await Stocktransfer.findOne({ _id: req.params.id }).populate("reason").populate("warehouse").populate("product")
       if (findone) {
         res.status(200).json({
           status: true,
