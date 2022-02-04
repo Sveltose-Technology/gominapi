@@ -51,7 +51,7 @@ exports.addstore = async (req, res) => {
   } = req.body;
 
   const newStore = new Store({
-    seller: seller,
+    seller: req.sellerId,
     store_name: store_name,
     store_desc: store_desc,
     websiteUrl: websiteUrl,
@@ -274,7 +274,7 @@ exports.addstore = async (req, res) => {
 
 exports.getstore = async (req, res) => {
   //const getseller = await Seller.findOne({ _id: req.sellerId });
-  const findall = await Store.find().sort({ sortorder: 1 }).populate("seller");
+  const findall = await Store.find({ seller: req.sellerId }).sort({ sortorder: 1 }).populate("seller");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -291,7 +291,7 @@ exports.getstore = async (req, res) => {
 };
 
 exports.getonestore = async (req, res) => {
-  const findone = await Store.findOne({ _id: req.params.id }).populate(
+  const findone = await Store.findOne({  $and: [{ id: req.sellerId }, { _id: req.params.id }], }).populate(
     "seller"
   );
   if (findone) {
@@ -607,7 +607,7 @@ exports.editstore = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Store.findOneAndUpdate(
       {
-        _id: req.params.id,
+        $and: [{ id: req.sellerId }, { _id: req.params.id }],
       },
       { $set: data },
       { new: true }

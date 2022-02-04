@@ -66,12 +66,12 @@ let checkitem = (req, res, next) => {
 //Paths
 //router.post("/admin/addstore", uploads.array("storeImg"), addstore);
 
-router.post("/admin/addstore", multipleUpload, addstore);
+router.post("/admin/addstore", multipleUpload,tokenverify, addstore);
 router.get("/admin/del_store/:id", del_store);
-router.get("/admin/getstore", getstore);
-router.get("/admin/getonestore/:id", getonestore);
+router.get("/admin/getstore",tokenverify, getstore);
+router.get("/admin/getonestore/:id",tokenverify, getonestore);
 router.get("/admin/storebyseller", tokenverify, storebyseller);
-router.post("/admin/editstore/:id", multipleUpload, editstore);
+router.post("/admin/editstore/:id", multipleUpload,tokenverify, editstore);
 router.get("/admin/store_req", store_req);
 router.get("/admin/totalstore", totalstore)
 router.post("/admin/searchstore", searchstore)

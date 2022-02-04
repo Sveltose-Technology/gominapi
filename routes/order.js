@@ -16,7 +16,7 @@ const {
   getorderbysellerbytoken,
   editOrder,
   viewoneOrder
-} = require("../controller/orderproduct");
+} = require("../controller/order");
 
 // PATHS
 

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const orderproductSchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
     customer: {
       type: mongoose.Schema.Types.ObjectId,
@@ -21,11 +21,11 @@ const orderproductSchema = new mongoose.Schema(
     payment_type: {
       type: String,
     },
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "product",
-      required: true,
-    },
+    // product: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "product",
+    //   required: true,
+    // },
     // product: [
     //   {
     //     type: Object,
@@ -72,4 +72,4 @@ const orderproductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("orderproduct", orderproductSchema);
+module.exports = mongoose.model("order", orderSchema);

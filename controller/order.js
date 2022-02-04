@@ -1,9 +1,9 @@
-const Orderproduct = require("../models/orderproduct");
+const Orderproduct = require("../models/order");
 const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
-const { populate } = require("../models/orderproduct");
+//const { populate } = require("../models/orderproduct");
 
 exports.addorder = async (req, res) => {
   console.log();
@@ -20,7 +20,7 @@ exports.addorder = async (req, res) => {
 
     const {
       //  seller,
-      product,
+     // product,
       order_type,
       payment_type,
       orderId,
@@ -38,7 +38,7 @@ exports.addorder = async (req, res) => {
     const newOrderproduct = new Orderproduct({
       customer: req.userId,
       seller: getstore?.seller,
-      product: product,
+      //product: product,
       order_type: order_type,
       payment_type: payment_type,
       orderId: uuidv4(),
