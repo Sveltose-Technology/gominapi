@@ -115,10 +115,10 @@ exports.getseller = async (req, res) => {
 };
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.sellerId });
-  // .populate(
-  //   "role"
-  // );
+  const findone = await Seller.findOne({ _id: req.sellerId })
+  .populate(
+    "role"
+  );
   if (findone) {
     res.status(200).json({
       status: true,
