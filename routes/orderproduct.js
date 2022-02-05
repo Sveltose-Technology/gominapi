@@ -4,7 +4,7 @@ const { verifytoken } = require("../functions/verifytoken");
 const { tokenverify } = require("../functions/tokenverify");
 
 const {
-  addorder,
+    addoderproduct,
 //   getorder,
 //   pending_order,
 //   delivery_order,
@@ -16,11 +16,11 @@ const {
 //   getorderbysellerbytoken,
 //   editOrder,
 //   viewoneOrder
-} = require("../controller/order");
+} = require("../controller/orderproduct");
 
 // PATHS
 
-router.post("/admin/addorder", verifytoken,  addorder);
+router.post("/admin/addoderproduct", verifytoken,  addoderproduct);
 // router.get("/admin/getorder", verifytoken, getorder);
 // router.get(
 //   "/admin/getorderbysellerbytoken",tokenverify,

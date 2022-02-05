@@ -114,6 +114,28 @@ exports.getseller = async (req, res) => {
   }
 };
 
+exports.getemployee = async (req, res) => {
+  const findall = await Seller.find({ usertype:"employee" })
+    .sort({
+      sortorder: 1,
+    })
+    .populate("role");
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
 exports.getoneseller = async (req, res) => {
   const findone = await Seller.findOne({ _id: req.sellerId })
   .populate(

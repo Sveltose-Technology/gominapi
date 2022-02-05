@@ -15,7 +15,7 @@ exports.addorder = async (req, res) => {
 
     const {
       //  seller,
-     // product,
+      product,
       order_type,
       payment_type,
       orderId,
@@ -33,7 +33,7 @@ exports.addorder = async (req, res) => {
     const newOrderproduct = new Orderproduct({
       customer: req.userId,
       seller: getstore?.seller,
-      //product: product,
+      product: product,
       order_type: order_type,
       payment_type: payment_type,
       orderId: uuidv4(),

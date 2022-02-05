@@ -1,4 +1,4 @@
-const Orderproduct = require("../models/order");
+const Orderproduct = require("../models/orderproduct");
 const Store = require("../models/store");
 const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");

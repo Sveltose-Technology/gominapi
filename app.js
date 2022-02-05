@@ -58,6 +58,7 @@ const size = require("./routes/size");
 const reason = require("./routes/reason");
 const transfer_type = require("./routes/transfer_type");
 
+const orderproduct = require("./routes/orderproduct");
 
  
 
@@ -109,8 +110,7 @@ app.use("/", color);
 app.use("/", size);
 app.use("/", reason);
 app.use("/", transfer_type);
-
-
+app.use("/", orderproduct);
 
 
 
