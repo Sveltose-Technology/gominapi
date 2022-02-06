@@ -21,12 +21,15 @@ const sellerSchema = new Schema(
     image: {
       type: String,
     },
-    designation: {
-      type: String,
-      default: "seller",
-      //active, inactive, owner, manager, employee
+
+    //active, inactive, owner, manager, employee
+
+    role: {
+      type: Schema.Types.ObjectId,
+      ref: "role",
+      // //active, inactive, owner, manager, employee
     },
-    role: { type: Schema.Types.ObjectId, ref: "role" },
+
     createdby: { type: Schema.Types.ObjectId, ref: "seller" },
 
     //  code: {

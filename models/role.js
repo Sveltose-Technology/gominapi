@@ -3,78 +3,75 @@ const Schema = mongoose.Schema;
 
 const roleSchema = new Schema(
   {
-    // role_name: {
-    //   type: String,
-    //   require: true,
-    // },
+    role_name: {
+      type: String,
+      require: true,
+    },
 
-    seller :{
-      type : Schema.Types.ObjectId, ref: "seller"
-   },
-   store: {
+    store: {
       type: Boolean,
       default: false,
-     },
-     employee: {
+    },
+    employee: {
       type: Boolean,
       default: false,
-     },
-     customer: {
+    },
+    customer: {
       type: Boolean,
       default: false,
-     },
-     supplier: {
+    },
+    supplier: {
       type: Boolean,
       default: false,
-     },
-     product: {
+    },
+    product: {
       type: Boolean,
       default: false,
-     },
-     stockControl: {
+    },
+    stockControl: {
       type: Boolean,
       default: false,
-     },
-     offers: {
+    },
+    offers: {
       type: Boolean,
       default: false,
-     },
-     coupons: {
+    },
+    coupons: {
       type: Boolean,
       default: false,
-     },
-     subscription: {
+    },
+    subscription: {
       type: Boolean,
       default: false,
-     },
-     billing: {
+    },
+    billing: {
       type: Boolean,
       default: false,
-     },
-     order: {
+    },
+    order: {
       type: Boolean,
       default: false,
-     },
-     purcahse: {
+    },
+    purcahse: {
       type: Boolean,
       default: false,
-     },
-     reports: {
+    },
+    reports: {
       type: Boolean,
       default: false,
-     },
-     notification: {
+    },
+    notification: {
       type: Boolean,
       default: false,
-     },
-     rolesPermission: {
+    },
+    rolesPermission: {
       type: Boolean,
       default: false,
-     },
-     setting: {
+    },
+    setting: {
       type: Boolean,
       default: false,
-     },
+    },
     // store_edit: {
     //   type: Boolean,
     //   default: false,
@@ -290,7 +287,6 @@ const roleSchema = new Schema(
     //   type: Boolean,
     //   default: false,
     // },
-
   },
   { timestamps: true }
 );

@@ -25,7 +25,6 @@ exports.signup = async (req, res) => {
     password,
     cnfrm_password,
     image,
-    designation,
     role,
     //createdby,
   } = req.body;
@@ -43,9 +42,8 @@ exports.signup = async (req, res) => {
     password: hashpassword,
     cnfrm_password: hashpassword,
     image: image,
-    designation: designation,
     role: role,
-    createdby: createdby,
+    //createdby: createdby,
   });
 
   if (req.file) {
@@ -103,7 +101,6 @@ exports.addemployee = async (req, res) => {
     password,
     cnfrm_password,
     image,
-    designation,
     role,
     createdby,
   } = req.body;
@@ -119,7 +116,6 @@ exports.addemployee = async (req, res) => {
     password: hashPassword,
     cnfrm_password: hashPassword,
     image: image,
-    designation: designation,
     role: role,
     createdby: req.sellerId,
   });
