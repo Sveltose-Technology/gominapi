@@ -1,6 +1,7 @@
 const Seller = require("../models/seller");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const role = require("../models/role");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -255,7 +256,6 @@ exports.sellerlogin = async (req, res) => {
         token: token,
         msg: "success",
         user: user,
-        //user_type: user.designation,
       });
     } else {
       res.status(400).json({
