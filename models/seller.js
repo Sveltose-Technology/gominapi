@@ -22,8 +22,6 @@ const sellerSchema = new Schema(
       type: String,
     },
 
-    //active, inactive, owner, manager, employee
-
     role: {
       type: Schema.Types.ObjectId,
       ref: "role",

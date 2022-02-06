@@ -17,6 +17,7 @@ const {
   emailsend,
   verifyOtp,
   getemployecreatedbyseller,
+  getoneempcreatedbyseller,
 
   //storebyseller,
 } = require("../controller/seller");
@@ -62,6 +63,11 @@ router.get(
   "/admin/getemployecreatedbyseller",
   tokenverify,
   getemployecreatedbyseller
+);
+router.get(
+  "/admin/getoneempcreatedbyseller/:id",
+  tokenverify,
+  getoneempcreatedbyseller
 );
 
 //router.post("/admin/Adminlogin", Adminlogin);
