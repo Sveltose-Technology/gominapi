@@ -23,8 +23,11 @@ const sellerSchema = new Schema(
     },
     designation: {
       type: String,
+      default: "seller",
+      //active, inactive, owner, manager, employee
     },
     role: { type: Schema.Types.ObjectId, ref: "role" },
+    createdby: { type: Schema.Types.ObjectId, ref: "seller" },
 
     //  code: {
     //  type: String,

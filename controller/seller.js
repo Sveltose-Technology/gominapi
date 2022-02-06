@@ -27,6 +27,7 @@ exports.signup = async (req, res) => {
     image,
     designation,
     role,
+    //createdby,
   } = req.body;
 
   //hashing password
@@ -44,6 +45,7 @@ exports.signup = async (req, res) => {
     image: image,
     designation: designation,
     role: role,
+    createdby: createdby,
   });
 
   if (req.file) {
@@ -80,7 +82,70 @@ exports.signup = async (req, res) => {
           token: token,
           msg: "success",
           user: result,
-          //  user_type: "seller",
+          //designation: "seller",
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  }
+};
+
+exports.addemployee = async (req, res) => {
+  const {
+    name,
+    email,
+    mobile,
+    password,
+    cnfrm_password,
+    image,
+    designation,
+    role,
+    createdby,
+  } = req.body;
+
+  //hashing password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  const newSeller = new Seller({
+    name: name,
+    email: email,
+    mobile: mobile,
+    password: hashPassword,
+    cnfrm_password: hashPassword,
+    image: image,
+    designation: designation,
+    role: role,
+    createdby: req.sellerId,
+  });
+
+  const emailexist = await Seller.findOne({ email: email });
+  const numberexist = await Seller.findOne({ mobile: mobile });
+  if (emailexist) {
+    res.status(400).json({
+      status: false,
+      msg: "Email Already Exists",
+      data: {},
+    });
+  } else if (numberexist) {
+    res.status(400).json({
+      status: false,
+      msg: " Mobile Already Exists",
+      data: {},
+    });
+  } else {
+    newSeller
+      .save()
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
         });
       })
       .catch((error) => {
@@ -114,12 +179,11 @@ exports.getseller = async (req, res) => {
   }
 };
 
-exports.getemployee = async (req, res) => {
-  const findall = await Seller.find({ usertype:"employee" })
-    .sort({
-      sortorder: 1,
-    })
-    .populate("role");
+exports.getemployecreatedbyseller = async (req, res) => {
+  const findall = await Seller.find({ createdby: req.sellerId })
+    .populate("role")
+    .populate("createdby")
+    .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -134,13 +198,8 @@ exports.getemployee = async (req, res) => {
     });
   }
 };
-
-
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.sellerId })
-  .populate(
-    "role"
-  );
+  const findone = await Seller.findOne({ _id: req.sellerId }).populate("role");
   if (findone) {
     res.status(200).json({
       status: true,
@@ -155,77 +214,6 @@ exports.getoneseller = async (req, res) => {
     });
   }
 };
-
-// exports.Adminlogin = async (req, res) => {
-//   const {email,password } = req.body;
-
-//   // Find user with requested email
-//   Seller.findOne(
-//     {
-//       $or: [
-
-//         { email: email },
-//         { password: password },
-//       ],
-//     },
-//     function (err, user) {
-//       if (user === null) {
-//         return res.status(400).send({
-//           message: "User not found.",
-//         });
-//       } else {
-//         if (validatePassword(password, user.password)) {
-//           const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
-//             expiresIn: "365d",
-//           });
-
-//           return res.status(201).send({
-//             message: "User Logged In",
-//             token: token,
-//             user: user,
-//             usertype : "Admin"
-//           });
-//         } else {
-//           return res.status(400).send({
-//             message: "Wrong Password",
-//           });
-//         }
-//       }
-//     }
-//   );
-// };
-
-// exports.sellerlogin = async (req, res) => {
-//   const { email,mobile, password } = req.body;
-
-//   // Find user with requested email
-//   Seller.findOne({ email: email }, function (err, user) {
-//     if (user === null) {
-//       return res.status(400).send({
-//         message: "User not found.",
-//       });
-//     } else {
-//       console.log(process.env.TOKEN_SECRET);
-
-//       if (validatePassword(password, user.password)) {
-//         const token = jwt.sign({sellerId: user._id }, process.env.TOKEN_SECRET, {
-//           expiresIn: "365d",
-//         });
-
-//         return res.status(201).send({
-//           message: "User Logged In",
-//           token: token,
-//           user: user,
-
-//         });
-//       } else {
-//         return res.status(400).send({
-//           message: "Wrong Password",
-//         });
-//       }
-//     }
-//   });
-// };
 
 exports.sellerlogin = async (req, res) => {
   const { mobile, email, password } = req.body;
@@ -249,6 +237,7 @@ exports.sellerlogin = async (req, res) => {
         token: token,
         msg: "success",
         user: user,
+        //user_type: user.designation,
       });
     } else {
       res.status(400).json({
@@ -463,66 +452,6 @@ exports.verifyOtp = async (req, res) => {
     res.status(200).json({
       status: false,
       msg: "Incorrect Otp",
-    });
-  }
-};
-
-exports.sendOTP = async (req, res) => {
-  const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { email } = req.body;
-  const finddetails = await Seller.findOneAndUpdate(
-    { email: email },
-    { $set: { otp: defaultotp } },
-    { new: true }
-  );
-
-  //console.log(mobile_no.length);
-  //console.log(finddetails);
-  //console.log(finddetails.email);
-  if (finddetails) {
-    //const {to,text,} = req.body
-    const subject = `Buynaa Email Verification`;
-    const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
-
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    let testAccount = await nodemailer.createTestAccount();
-
-    // // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      host: "smtpout.secureserver.net",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: "support@buynaa.com", // generated ethereal user
-        pass: "Buynaa330*", // generated ethereal password
-      },
-    });
-
-    // // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Buynaa Support" <support@buynaa.com>', // sender address
-      to: finddetails.email, // list of receivers
-      subject: subject, // Subject line
-      text: text, // plain text body
-      html: `<b>${text}</b>`, // html body
-    });
-
-    console.log("Message sent: %s", info);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-    // // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    res.status(200).json({
-      status: true,
-      msg: "otp send successfully",
-      email: email,
-      otp: defaultotp,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error occured",
     });
   }
 };
