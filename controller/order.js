@@ -4,11 +4,10 @@ const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
 
-
 exports.addorder = async (req, res) => {
   console.log();
 
-  const getproduct = await Product.findOne({ _id: req.body.product});
+  const getproduct = await Product.findOne({ _id: req.body.product });
   //console.log(getproduct)
   if (getproduct) {
     const getstore = await Store.findOne({ _id: getproduct.store });
@@ -27,8 +26,6 @@ exports.addorder = async (req, res) => {
       //size,
       //color,
     } = req.body;
-
-    
 
     const newOrderproduct = new Orderproduct({
       customer: req.userId,
@@ -133,7 +130,6 @@ exports.getorderbysellerbytoken = async (req, res) => {
       status: true,
       msg: "success",
       data: findone,
-    
     });
   } else {
     res.status(400).json({
@@ -143,7 +139,6 @@ exports.getorderbysellerbytoken = async (req, res) => {
     });
   }
 };
-
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
@@ -169,7 +164,7 @@ exports.pending_order = async (req, res, next) => {
 
 exports.delivery_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
-    $and: [{ customer: req.userId }, { status: "Delivery" }],
+    $and: [{ seller: req.sellerId }, { status: "Delivery" }],
   })
     .populate("customer")
     .populate("product")
@@ -191,7 +186,7 @@ exports.delivery_order = async (req, res, next) => {
 
 exports.cancelled_order = async (req, res, next) => {
   const finddetails = await Orderproduct.find({
-    $and: [{ customer: req.userId }, { status: "Cancel" }],
+    $and: [{ seller: req.seller }, { status: "Cancel" }],
   })
     .populate("customer")
     .populate("product")

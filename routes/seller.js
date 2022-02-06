@@ -73,7 +73,12 @@ router.get(
 //router.post("/admin/Adminlogin", Adminlogin);
 router.post("/admin/sellerlogin", sellerlogin);
 
-router.post("/admin/editseller", tokenverify, editseller);
+router.post(
+  "/admin/editseller",
+  uploads.single("image"),
+  tokenverify,
+  editseller
+);
 
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);

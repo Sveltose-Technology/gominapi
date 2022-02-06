@@ -47,7 +47,7 @@ exports.signup = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
-   // seller :req.sellerId,
+    // seller :req.sellerId,
     firstname: firstname,
     lastname: lastname,
     email: email,
@@ -94,38 +94,6 @@ exports.signup = async (req, res) => {
       });
   }
 };
-
-// exports.login = async (req, res) => {
-//   const { email,mobile, password } = req.body;
-
-//   // Find user with requested email
-//   Customer.findOne({ $or : [{email: email },{mobile:mobile}]}), function (err, user) {
-//     if (user === null) {
-//       return res.status(400).send({
-//         message: "User not found.",
-//       });
-//     } else {
-//       // console.log(process.env.TOKEN_SECRET);
-//       if (validatePassword(password, user.password)) {
-//         const token = jwt.sign({ userId: user._id }
-//           , process.env.TOKEN_SECRET, {
-//           expiresIn: "86400000",
-//         }
-//         );
-
-//         return res.status(201).send({
-//           message: "User Logged In",
-//           token: token,
-//           user: user,
-//         });
-//       } else {
-//         return res.status(400).send({
-//           message: "Wrong Password",
-//         });
-//       }
-//   }
-// }
-//   }
 
 exports.login = async (req, res) => {
   const { mobile, email, password } = req.body;
@@ -191,7 +159,9 @@ exports.editcustomer = async (req, res) => {
 };
 
 exports.allcustomer = async (req, res) => {
-  const findall = await Customer.find({customer : req.userId}).sort({ sortorder: 1 });
+  const findall = await Customer.find({ customer: req.userId }).sort({
+    sortorder: 1,
+  });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -208,8 +178,9 @@ exports.allcustomer = async (req, res) => {
 };
 
 exports.Customerbysellerbytoken = async (req, res) => {
-  const findall = await Customer.find({ seller: req.sellerId })
-    .sort({ sortorder: 1 })
+  const findall = await Customer.find({ seller: req.sellerId }).sort({
+    sortorder: 1,
+  });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -224,7 +195,6 @@ exports.Customerbysellerbytoken = async (req, res) => {
     });
   }
 };
-
 
 exports.getonecustomer = async (req, res) => {
   const findone = await Customer.findOne({ customer: req.userId });
@@ -443,60 +413,15 @@ exports.verifyotp = async (req, res) => {
 // }
 // }
 
-// exports.login = async (req, res) => {
-//   const { customer_email, password } = req.body;
-
-//   const finddetails = await Customer.findOne({
-//     $or: [{ Mobile: Mobile }, { ConfirmEmail: Email }],
-//   });
-//   if (finddetails) {
-//     const validPass = await bcrypt.compare(
-//       password,
-//       finddetails.ConfirmPassword
-//     );
-//     // if (validPass) {
-//     //   const token = jwt.sign(
-//     //     {
-//     //       staffId: finddetails._id,
-//     //     },
-//     //     key,
-//     //     {
-//     //       expiresIn: 86400000,
-//     //     }
-//     //   );
-//     //   res.header("auth-adtoken", token).status(200).send({
-//     //     status: true,
-//     //     token: token,
-//     //     msg: "success",
-//     //     user: finddetails,
-//     //     user_type: "user",
-//     //   });
-//     } else {
-//       res.status(400).json({
-//         status: false,
-//         msg: "Incorrect Password",
-//         error: "error",
-//       });
-//     }
-//   // else {
-//   //   res.status(400).json({
-//   //     status: false,
-//   //     msg: "User Doesnot Exist",
-//   //     error: "error",
-//   //   });
-//   // }
-// }
-
-
 exports.resetpassword = async (req, res) => {
-  const { email, password } = req.body;
+  const { otp, password } = req.body;
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const finddetails = await Customer.findOneAndUpdate(
-    { email: email },
-    { $set: { ConfirmPassword: hashPassword } },
+    { otp: otp },
+    { $set: { cnfrmPassword: hashPassword } },
     { new: true }
   );
 
@@ -514,6 +439,3 @@ exports.resetpassword = async (req, res) => {
     });
   }
 };
-
-
- 

@@ -273,27 +273,81 @@ exports.sellerlogin = async (req, res) => {
   }
 };
 
-exports.editseller = async (req, res) => {
-  const findandUpdateEntry = await Seller.findOneAndUpdate(
-    {
-      _id: req.sellerId,
-    },
-    { $set: req.body },
-    { new: true }
-  );
+// exports.editseller = async (req, res) => {
+//   const findandUpdateEntry = await Seller.findOneAndUpdate(
+//     {
+//       _id: req.sellerId,
+//     },
+//     { $set: req.body },
+//     { new: true }
+//   );
 
-  if (findandUpdateEntry) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findandUpdateEntry,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      status: "error",
-      error: "error",
-    });
+//   if (findandUpdateEntry) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: findandUpdateEntry,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       status: "error",
+//       error: "error",
+//     });
+//   }
+// };
+
+exports.editseller = async (req, res) => {
+  const { name, email, mobile, role } = req.body;
+
+  data = {};
+  if (name) {
+    data.name = name;
+  }
+  if (email) {
+    data.email = email;
+  }
+  if (mobile) {
+    data.mobile = mobile;
+  }
+  // if (password) {
+  //   data.password = password;
+  // }
+  // if(cnfrm_password){
+  //   data.cnfrm_password = cnfrm_password
+  // }
+  if (role) {
+    data.role = role;
+  }
+  console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.image = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  //console.log(data);
+  if (data) {
+    const findandUpdateEntry = await Seller.findOneAndUpdate(
+      {
+        _id: req.sellerId,
+      },
+      { $set: data },
+      { new: true }
+    );
+
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    }
   }
 };
 
