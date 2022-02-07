@@ -183,7 +183,7 @@ exports.getorderProduct = async (req, res) => {
       path: 'delivery_address' 
   }
 })
-    // .populate("seller")
+   
     .then((result) => {
       res.status(200).json({
         status: true,
