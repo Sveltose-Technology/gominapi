@@ -19,6 +19,7 @@ const {
   getemployecreatedbyseller,
   getoneempcreatedbyseller,
   resetpassword,
+  editempByseller
 
   //storebyseller,
 } = require("../controller/seller");
@@ -70,9 +71,9 @@ router.get(
   tokenverify,
   getoneempcreatedbyseller
 );
-
+router.post("/admin/editempByseller/:id",tokenverify,uploads.single("image"), editempByseller);
 //router.post("/admin/Adminlogin", Adminlogin);
-router.post("/admin/sellerlogin", sellerlogin);
+router.post("/admin/sellerlogin", sellerlogin); 
 
 router.post(
   "/admin/editseller",
