@@ -12,7 +12,7 @@ exports.addrole = async (req, res) => {
   // } =
 
   const {
-    role_name,
+    addemp,
     store,
     employee,
     customer,
@@ -32,7 +32,7 @@ exports.addrole = async (req, res) => {
   } = req.body;
 
   const newRole = await new Role({
-    role_name: role_name,
+    addemp: addemp,
     store: store,
     employee: employee,
     customer: customer,
@@ -123,7 +123,7 @@ exports.addrole = async (req, res) => {
 //};
 
 exports.allrole = async (req, res) => {
-  const findall = await Role.find().sort({ sortorder: 1 });
+  const findall = await Role.find().sort({ sortorder: 1 }).populate("addemp")
   if (findall) {
     res.status(200).json({
       status: true,
@@ -163,7 +163,7 @@ exports.edit_role = async (req, res) => {
 };
 
 exports.viewonerole = async (req, res) => {
-  const findone = await Role.findOne({ _id: req.params.id });
+  const findone = await Role.findOne({ _id: req.params.id }).populate("addemp")
   if (findone) {
     res.status(200).json({
       status: true,
