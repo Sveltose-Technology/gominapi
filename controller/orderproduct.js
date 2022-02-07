@@ -138,7 +138,19 @@ exports.addoderproduct = async (req, res) => {
 
 exports.getoneorderproduct = async(req,res) => {
   const findall =await Orderproduct.find({_id: req.params.id})
-  .populate("product")
+  .populate("orderId")
+  .populate({
+    path: 'product',
+    populate: {
+        path: 'product' 
+    }
+})
+.populate({
+  path: 'orderId',
+  populate: {
+      path: 'delivery_address' 
+  }
+})
   if(findall){
       res.status(200).json({
           status:true,
@@ -156,6 +168,36 @@ exports.getoneorderproduct = async(req,res) => {
 }
 
 
-
+exports.getorderProduct = async (req, res) => {
+  const findall = await Orderproduct.find()
+  .populate("orderId")
+  .populate({
+    path: 'product',
+    populate: {
+        path: 'product' 
+    }
+})
+.populate({
+  path: 'orderId',
+  populate: {
+      path: 'delivery_address' 
+  }
+})
+    // .populate("seller")
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
+    });
+};
   
 
