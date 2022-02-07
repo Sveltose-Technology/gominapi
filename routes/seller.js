@@ -18,6 +18,7 @@ const {
   verifyOtp,
   getemployecreatedbyseller,
   getoneempcreatedbyseller,
+  resetpassword,
 
   //storebyseller,
 } = require("../controller/seller");
@@ -87,5 +88,6 @@ router.get("/admin/totalseller", totalseller);
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
+router.post("/admin/resetpassword", resetpassword);
 
 module.exports = router;

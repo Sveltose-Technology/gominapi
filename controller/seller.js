@@ -26,6 +26,7 @@ exports.signup = async (req, res) => {
     password,
     cnfrm_password,
     image,
+    rolename,
     role,
     //createdby,
   } = req.body;
@@ -43,6 +44,7 @@ exports.signup = async (req, res) => {
     password: hashpassword,
     cnfrm_password: hashpassword,
     image: image,
+    rolename: rolename,
     role: role,
     //createdby: createdby,
   });
@@ -524,6 +526,43 @@ exports.verifyOtp = async (req, res) => {
     res.status(200).json({
       status: false,
       msg: "Incorrect Otp",
+    });
+  }
+};
+
+exports.resetpassword = async (req, res) => {
+  const { password, cnfrm_password } = req.body;
+
+  const findone = await Seller.findOne({
+    $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
+  });
+
+  //.then((data)=>{
+  //     res.status(200).json({
+  //       //status: true,
+  //       msg: "otp verified",
+  //       data: data,
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     res.status(400).json({
+  //      // status: false,
+  //       msg: "Incorrect Otp",
+  //       error: error,
+  //     });
+  //   })
+  // }
+
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "Password  Change Successfully",
+      data: findone,
+    });
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "Password Not Matched",
     });
   }
 };
