@@ -6,7 +6,7 @@ const Product = require("../models/product");
 
 
 exports.addoderproduct = async (req, res) => {
-  console.log();
+  // console.log();
 
   const getproduct = await Product.findOne({ _id: req.body.product});
   //console.log(getproduct)

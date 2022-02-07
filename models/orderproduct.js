@@ -9,11 +9,11 @@ const orderProductSchema = new mongoose.Schema(
     //   ref: "product",
     //   required: true,
     // },
-    // product: [
-    //   {
-    //     type: Object,
-    //   },
-    // ],
+    product: [
+      {
+        type: Object,
+      },
+    ],
     orderId: {
       type: String,
     },

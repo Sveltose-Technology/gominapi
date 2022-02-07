@@ -5,7 +5,7 @@ const Seller = require("../models/seller");
 const Product = require("../models/product");
 
 exports.addorder = async (req, res) => {
-  console.log();
+  
 
   const getproduct = await Product.findOne({ _id: req.body.product });
   //console.log(getproduct)
@@ -14,11 +14,11 @@ exports.addorder = async (req, res) => {
 
     const {
       //  seller,
-      product,
+      //product,
       order_type,
       payment_type,
       orderId,
-      qty,
+     // qty,
       purchaseprice,
       delivery_address,
       order_date,
@@ -30,11 +30,11 @@ exports.addorder = async (req, res) => {
     const newOrderproduct = new Orderproduct({
       customer: req.userId,
       seller: getstore?.seller,
-      product: product,
+      //product: product,
       order_type: order_type,
       payment_type: payment_type,
       orderId: uuidv4(),
-      qty: qty,
+    //  qty: qty,
       purchaseprice: purchaseprice,
       delivery_address: delivery_address,
       order_date: order_date,
@@ -46,18 +46,18 @@ exports.addorder = async (req, res) => {
     const findexist = await Orderproduct.findOne({
       $and: [
         { customer: req.userId },
-        { product: product },
+        // { product: product },
         { purchaseprice: purchaseprice },
-        { qty: qty },
+        // { qty: qty },
       ],
     });
     if (findexist) {
       await Orderproduct.findOneAndUpdate({
         $and: [
           { customer: req.userId },
-          { product: product },
+          // { product: product },
           { purchaseprice: purchaseprice },
-          { qty: qty },
+          // { qty: qty },
           { new: true },
         ],
       })
