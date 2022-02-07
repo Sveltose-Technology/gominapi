@@ -323,7 +323,7 @@ exports.editempByseller = async (req, res) => {
     data.rolename = rolename;
   }
   
-  console.log(req.file);
+  //console.log(req.file);
   if (req.file) {
     const response = await cloudinary.uploader.upload(req.file.path);
     data.image = response.secure_url;
