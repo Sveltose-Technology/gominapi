@@ -137,7 +137,7 @@ exports.addoderproduct = async (req, res) => {
 
 
 exports.getoneorderproduct = async(req,res) => {
-  const findall =await Orderproduct.find({_id: req.params.id})
+  const findall =await Orderproduct.find({orderId: req.params.id})
   .populate("orderId")
   .populate({
     path: 'product',
