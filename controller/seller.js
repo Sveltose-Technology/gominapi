@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
     cnfrm_password,
     image,
     rolename,
-    role,
+    // role,
     //createdby,
   } = req.body;
 
@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
     cnfrm_password: hashpassword,
     image: image,
     rolename: rolename,
-    role: role,
+    // role: role,
     //createdby: createdby,
   });
 
@@ -162,7 +162,7 @@ exports.getseller = async (req, res) => {
     .sort({
       sortorder: 1,
     })
-    .populate("role");
+    //.populate("role");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -180,7 +180,7 @@ exports.getseller = async (req, res) => {
 
 exports.getemployecreatedbyseller = async (req, res) => {
   const findall = await Seller.find({ createdby: req.sellerId })
-    .populate("role")
+   // .populate("role")
     .populate("createdby")
     .sort({ sortorder: 1 });
   if (findall) {
@@ -202,7 +202,7 @@ exports.getoneempcreatedbyseller = async (req, res) => {
   const findone = await Seller.findOne({
     $and: [{ id: req.sellerId }, { _id: req.params.id }],
   })
-    .populate("role")
+    //.populate("role")
     .populate("createdby");
   if (findone) {
     res.status(200).json({
@@ -220,7 +220,8 @@ exports.getoneempcreatedbyseller = async (req, res) => {
 };
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.sellerId }).populate("role");
+  const findone = await Seller.findOne({ _id: req.sellerId })
+  //.populate("role");
   if (findone) {
     res.status(200).json({
       status: true,
