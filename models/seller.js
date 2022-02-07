@@ -30,7 +30,7 @@ const sellerSchema = new Schema(
     //   // //active, inactive, owner, manager, employee
     // },
 
-    createdby: { type: Schema.Types.ObjectId, ref: "seller" },
+    added_by: { type: Schema.Types.ObjectId, ref: "seller" },
 
     //  code: {
     //  type: String,

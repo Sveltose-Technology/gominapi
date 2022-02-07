@@ -5,6 +5,7 @@ const { tokenverify } = require("../functions/tokenverify");
 
 const {
     addoderproduct,
+    getoneorderproduct
 //   getorder,
 //   pending_order,
 //   delivery_order,
@@ -21,6 +22,8 @@ const {
 // PATHS
 
 router.post("/admin/addoderproduct", verifytoken,  addoderproduct);
+router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
+
 // router.get("/admin/getorder", verifytoken, getorder);
 // router.get(
 //   "/admin/getorderbysellerbytoken",tokenverify,

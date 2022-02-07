@@ -1,89 +1,161 @@
-const Orderproduct = require("../models/orderproduct");
-const Store = require("../models/store");
-const { v4: uuidv4 } = require("uuid");
-const Seller = require("../models/seller");
-const Product = require("../models/product");
+ const Orderproduct = require("../models/orderproduct");
+// const Store = require("../models/store");
+// const { v4: uuidv4 } = require("uuid");
+// const Seller = require("../models/seller");
+// const Product = require("../models/product");
 
 
-exports.addoderproduct = async (req, res) => {
-  // console.log();
+// exports.addoderproduct = async (req, res) => {
+//   // console.log();
 
-  const getproduct = await Product.findOne({ _id: req.body.product});
-  //console.log(getproduct)
-  if (getproduct) {
-    const getstore = await Store.findOne({ _id: getproduct.store });
+//   const getproduct = await Product.findOne({ _id: req.body.product});
+//   //console.log(getproduct)
+//   if (getproduct) {
+//     const getstore = await Store.findOne({ _id: getproduct.store });
 
-    const {
-      orderId,
-      product,
-      qty,
-      price,
-      size,
-      color,
-      status,
-    } = req.body;
+//     const {
+//       orderId,
+//       product,
+//       // qty,
+//       // price,
+//       // size,
+//       // color,
+//       // status,
+//     } = req.body;
 
     
 
-    const newOrderproduct = new Orderproduct({
+//     const newOrderproduct = new Orderproduct({
       
-      product: product,
-      orderId: uuidv4(),
-      qty: qty,
-      price: price,
-       size: size,
-      color: color,
-      status: status,
-    });
+//       product: product,
+//       orderId: orderId,
+//       // qty: qty,
+//       // price: price,
+//       //  size: size,
+//       // color: color,
+//      });
 
-    const findexist = await Orderproduct.findOne({
-      $and: [
-        { orderId: req.params.id },
-        { product: product },
-        { price: price },
-        { qty: qty },
-      ],
-    });
-    if (findexist) {
-      await Orderproduct.findOneAndUpdate({
-        $and: [
-          { customer: req.userId },
-          { product: product },
-          { purchaseprice: purchaseprice },
-          { qty: qty },
-          { new: true },
-        ],
+//     const findexist = await Orderproduct.findOne({
+//       $and: [
+//         { orderId: orderId  },
+//         { product: product },
+//         // { price: price },
+//         // { qty: qty },
+//       ],
+//     });
+//     if (findexist) {
+//       await Orderproduct.findOneAndUpdate({
+//         $and: [
+//           { customer: req.userId },
+//           { product: product },
+//           // { purchaseprice: purchaseprice },
+//           // { qty: qty },
+//           // { new: true },
+//         ],
+//       })
+//         .then((data) => {
+         
+//           res.status(200).json({
+//             status: true,
+//             msg: "success",
+//             data: data,
+//           });
+//         })
+//         .catch((error) => {
+//           res.status(200).json({
+//             status: false,
+//             msg: "error",
+//             error: error,
+//           });
+//         });
+//     } else {
+//       newOrderproduct.save(function (err, data) {
+//         if (err) {
+//           res.status(400).json({
+//             status: false,
+//             msg: "Error Occured",
+//             error: err,
+//           });
+//         } else {
+//           res.status(200).json({
+//             status: true,
+//             msg: "Product added to order",
+//             data: data,
+//           });
+//         }
+//       });
+//     }
+//   }
+// };
+
+
+exports.addoderproduct = async (req, res) => {
+  const {orderId,product}  = req.body
+
+
+  const newOrderproduct = new Orderproduct ({
+    orderId :orderId,
+    product : product
+  })
+  const findexist = await Orderproduct.findOne({ $and: [{orderId : orderId},{product : product}]})
+  if (findexist){
+    await Orderproduct.findOneAndUpdate({
+              $and: [
+                { orderId: orderId },
+                { product: product },
+              ]
+            }).then((data)=>{
+              res.status(200).json({
+                status : true,
+                data : data
+              })
+            }).catch((error)=>{
+              res.status(400).json({
+                status : false,
+                error : error
+              })
+            })
+  }else {
+    newOrderproduct.save(function (err, data) {
+              if (err) {
+                res.status(400).json({
+                  status: false,
+                  msg: "Error Occured",
+                  error: err,
+                });
+              } else {
+                res.status(200).json({
+                  status: true,
+                  msg: "Product added to order",
+                  data: data,
+                });
+              }
+            });
+          }
+        
+}
+
+
+exports.getoneorderproduct = async(req,res) => {
+  const findall =await Orderproduct.find({_id: req.params.id})
+  .populate("product")
+  if(findall){
+      res.status(200).json({
+          status:true,
+          msg:"success",
+          data:findall
       })
-        .then((data) => {
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: data,
-          });
-        })
-        .catch((error) => {
-          res.status(200).json({
-            status: false,
-            msg: "error",
-            error: error,
-          });
-        });
-    } else {
-      newOrderproduct.save(function (err, data) {
-        if (err) {
-          res.status(400).json({
-            status: false,
-            msg: "Error Occured",
-            error: err,
-          });
-        } else {
-          res.status(200).json({
-            status: true,
-            msg: "Product added to order",
-            data: data,
-          });
-        }
-      });
-    }
+  }else{
+      res.status(400).json({
+          status:false,
+          msg:"error",
+          error:"error"
+      })
   }
-};
+
+}
+
+
+
+  
+

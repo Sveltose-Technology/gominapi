@@ -105,7 +105,7 @@ exports.addemployee = async (req, res) => {
     cnfrm_password,
     image,
     role,
-    createdby,
+    added_by,
   } = req.body;
 
   //hashing password
@@ -120,7 +120,7 @@ exports.addemployee = async (req, res) => {
     cnfrm_password: hashPassword,
     image: image,
     role: role,
-    createdby: req.sellerId,
+    added_by: req.sellerId,
   });
 
   const emailexist = await Seller.findOne({ email: email });
@@ -179,9 +179,9 @@ exports.getseller = async (req, res) => {
 };
 
 exports.getemployecreatedbyseller = async (req, res) => {
-  const findall = await Seller.find({ createdby: req.sellerId })
+  const findall = await Seller.find({ added_by: req.sellerId })
    // .populate("role")
-    .populate("createdby")
+    .populate("added_by")
     .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
@@ -203,7 +203,7 @@ exports.getoneempcreatedbyseller = async (req, res) => {
     $and: [{ id: req.sellerId }, { _id: req.params.id }],
   })
     //.populate("role")
-    .populate("createdby");
+    .populate("added_by");
   if (findone) {
     res.status(200).json({
       status: true,
