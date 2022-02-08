@@ -34,6 +34,9 @@ const customerSchema = new Schema(
     //  type: String,
     //   default: 1234,
     // },
+    code:{
+      type :String
+    },
 
     otp: {
       type: Number,
