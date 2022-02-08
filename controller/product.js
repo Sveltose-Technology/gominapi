@@ -144,6 +144,7 @@ exports.addproduct = async (req, res) => {
 
 exports.editproduct = async (req, res) => {
   const {
+    discount_perc,
     product_name,
     sku_no,
     hsn_sac_no,
@@ -161,13 +162,16 @@ exports.editproduct = async (req, res) => {
     unit,
     cost_price,
     sell_price,
-    gst,
-    product_img,
+    gstrate,
+    //product_img,
     sortorder,
     status,
   } = req.body;
 
   data = {};
+  if(discount_perc){
+ data.discount_perc =discount_perc
+  }
   if (product_name) {
     data.product_name = product_name;
   }
@@ -220,7 +224,7 @@ exports.editproduct = async (req, res) => {
   if (sell_price) {
     data.sell_price = sell_price;
   }
-  if (gst) {
+  if (gstrate) {
     data.gst = gst;
   }
 
