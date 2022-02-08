@@ -167,7 +167,7 @@ exports.addemployee = async (req, res) => {
 };
 
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find({ seller: req.sellerId })
+  const findall = await Seller.find()
     .sort({
       sortorder: 1,
     })

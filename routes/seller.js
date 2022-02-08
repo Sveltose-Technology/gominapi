@@ -60,7 +60,7 @@ router.post(
   addemployee
 );
 
-router.get("/admin/getseller", tokenverify, getseller);
+router.get("/admin/getseller", getseller);
 router.get(
   "/admin/getemployecreatedbyseller",
   tokenverify,uploads.single("image"),
