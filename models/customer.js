@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const customerSchema = new Schema(
   {
 
-    seller: {
+    added_by: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
      },

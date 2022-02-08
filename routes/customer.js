@@ -6,6 +6,7 @@ const { tokenverify } = require("../functions/tokenverify");
 
 const {
   signup,
+  addcustomerbyseller,
   allcustomer,
   getonecustomer,
   delcustomer,
@@ -24,6 +25,8 @@ const {
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
+router.post("/user/addcustomerbyseller",tokenverify, addcustomerbyseller);
+
 router.get("/user/allcustomer",allcustomer);
 router.get("/user/getonecustomer",verifytoken, getonecustomer);
 router.post("/user/editcustomer",verifytoken, editcustomer);

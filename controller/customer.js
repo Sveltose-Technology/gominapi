@@ -95,6 +95,86 @@ exports.signup = async (req, res) => {
   }
 };
 
+
+exports.addcustomerbyseller = async (req, res) => {
+  const {
+    customerId,
+    firstname,
+    lastname,
+    email,
+    mobile,
+    password,
+    cnfrmPassword,
+    added_by,
+  } = req.body;
+
+  //hashing password
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  create_random_string(6);
+  function create_random_string(string_length) {
+    (random_string = ""),
+      (characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
+    for (var i, i = 0; i < string_length; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    return random_string;
+  }
+
+  const newCustomer = new Customer({
+    customerId: random_string,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
+    mobile: mobile,
+    password: hashPassword,
+    cnfrmPassword :hashPassword,
+    added_by: req.sellerId,
+  });
+
+
+  
+  const emailexist = await Customer.findOne({ email: email });
+  const numberexist = await Customer.findOne({ mobile: mobile });
+  if (emailexist) {
+    res.status(400).json({
+      status: false,
+      msg: "Email Already Exists",
+      data: {},
+    });
+  } else if (numberexist) {
+    res.status(400).json({
+      status: false,
+      msg: " Mobile Already Exists",
+      data: {},
+    });
+  } else {
+    newCustomer
+      .save()
+      .then((data) => {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: data,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  }
+};
+;
+
+
+
 exports.login = async (req, res) => {
   const { mobile, email, password } = req.body;
   const user = await Customer.findOne({
@@ -177,10 +257,12 @@ exports.allcustomer = async (req, res) => {
   }
 };
 
+ 
 exports.Customerbysellerbytoken = async (req, res) => {
-  const findall = await Customer.find({ seller: req.sellerId }).sort({
-    sortorder: 1,
-  });
+  const findall = await Customer.find({ added_by: req.sellerId })
+   // .populate("role")
+    .populate("added_by")
+    .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
