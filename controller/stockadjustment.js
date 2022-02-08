@@ -52,7 +52,12 @@ exports.delstockadjustment = async(req,res) =>{
 }
 
 exports.getstockadjustment = async (req, res) => {
-  const findall = await Stockadjustment.find().sort({ sortorder: 1 }).populate("reason").populate("warehouse")
+  const findall = await Stockadjustment.find().sort({ sortorder: 1 }).populate("reason").populate("warehouse").populate({
+    path: 'product',
+    populate: {
+        path: 'product' 
+    }
+})
   if (findall) {
     res.status(200).json({
       status: true,
@@ -70,7 +75,12 @@ exports.getstockadjustment = async (req, res) => {
 
  
 exports.getonestockadjustment = async (req, res) => {
-  const findone = await Stockadjustment.findOne({ _id: req.params.id }).populate("reason").populate("warehouse")
+  const findone = await Stockadjustment.findOne({ _id: req.params.id }).populate("reason").populate("warehouse").populate({
+    path: 'product',
+    populate: {
+        path: 'product' 
+    }
+})
   if (findone) {
     res.status(200).json({
       status: true,
