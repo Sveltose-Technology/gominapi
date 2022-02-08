@@ -63,7 +63,7 @@ router.post(
 router.get("/admin/getseller", tokenverify, getseller);
 router.get(
   "/admin/getemployecreatedbyseller",
-  tokenverify,
+  tokenverify,uploads.single("image"),
   getemployecreatedbyseller
 );
 router.get(
