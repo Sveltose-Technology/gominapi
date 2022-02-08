@@ -17,6 +17,17 @@ const orderProductSchema = new mongoose.Schema(
     orderId: {
       type: mongoose.Schema.Types.ObjectId,ref :"order"
     },
+    status : {
+      type :String
+    },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+    },
+    store: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "store",
+    },
     
     // qty: {
     //   type: Number,

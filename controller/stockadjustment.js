@@ -68,3 +68,19 @@ exports.getstockadjustment = async (req, res) => {
 };
 
  
+exports.getonestockadjustment = async (req, res) => {
+  const findone = await Stockadjustment.findOne({ _id: req.params.id }).populate("reason").populate("reason")
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};

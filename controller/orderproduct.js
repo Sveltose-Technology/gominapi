@@ -1,8 +1,8 @@
  const Orderproduct = require("../models/orderproduct");
-// const Store = require("../models/store");
+ const Store = require("../models/store");
 // const { v4: uuidv4 } = require("uuid");
-// const Seller = require("../models/seller");
-// const Product = require("../models/product");
+ const Seller = require("../models/seller");
+ const Product = require("../models/product");
 
 
 // exports.addoderproduct = async (req, res) => {
@@ -90,12 +90,19 @@
 
 
 exports.addoderproduct = async (req, res) => {
-  const {orderId,product}  = req.body
+  const getproduct = await Product.findOne({ _id: req.body.product });
+  //console.log(getproduct)
+  if (getproduct) {
+    const getstore = await Store.findOne({ _id: getproduct.store });
+
+  const {orderId,product,status}  = req.body
 
 
   const newOrderproduct = new Orderproduct ({
+    seller: getstore?.seller,
     orderId :orderId,
-    product : product
+    product : product,
+    status : status
   })
   const findexist = await Orderproduct.findOne({ $and: [{orderId : orderId},{product : product}]})
   if (findexist){
@@ -132,7 +139,7 @@ exports.addoderproduct = async (req, res) => {
               }
             });
           }
-        
+        }  
 }
 
 
