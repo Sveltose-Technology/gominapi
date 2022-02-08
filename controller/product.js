@@ -225,7 +225,7 @@ exports.editproduct = async (req, res) => {
     data.sell_price = sell_price;
   }
   if (gstrate) {
-    data.gst = gst;
+    data.gstrate = gstrate;
   }
 
   if (sortorder) {
