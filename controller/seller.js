@@ -123,6 +123,15 @@ exports.addemployee = async (req, res) => {
     added_by: req.sellerId,
   });
 
+
+  if (req.file) {
+    const resp = await cloudinary.uploader.upload(req.file.path);
+    // if (resp) {
+    newSeller.image = resp.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+
+
   const emailexist = await Seller.findOne({ email: email });
   const numberexist = await Seller.findOne({ mobile: mobile });
   if (emailexist) {
