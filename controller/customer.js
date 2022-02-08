@@ -159,7 +159,7 @@ exports.editcustomer = async (req, res) => {
 };
 
 exports.allcustomer = async (req, res) => {
-  const findall = await Customer.find({ customer: req.userId }).sort({
+  const findall = await Customer.find().sort({
     sortorder: 1,
   });
   if (findall) {
