@@ -104,7 +104,7 @@ exports.addemployee = async (req, res) => {
     password,
     cnfrm_password,
     image,
-    role,
+    rolename,
     added_by,
   } = req.body;
 
@@ -119,7 +119,7 @@ exports.addemployee = async (req, res) => {
     password: hashPassword,
     cnfrm_password: hashPassword,
     image: image,
-    role: role,
+    rolename: rolename,
     added_by: req.sellerId,
   });
 

@@ -5,7 +5,8 @@ exports.addstockadjustment = (req,res)=>{
     const {product,reference_no,adjustment_date,warehouse,reason,adjusted_qty,adjusted_value,grandTotal} = req.body
 
     const newStockadjustment = new Stockadjustment({
-          product : product,
+        seller :req.sellerId,
+        product : product,
         reference_no : reference_no,
         adjustment_date :adjustment_date,
         warehouse : warehouse,

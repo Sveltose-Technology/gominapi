@@ -6,6 +6,9 @@ const stockadjustmentSchema = new Schema(
         product:[{
             type:Object
         }],
+        seller :{
+            type : Schema.Types.ObjectId, ref : "seller"
+        },
         reference_no :{
          type : Number
         },
@@ -15,6 +18,7 @@ const stockadjustmentSchema = new Schema(
         warehouse :{
             type : Schema.Types.ObjectId, ref : "warehouse"
         },
+        
         reason : {
             type : Schema.Types.ObjectId, ref : "reason"
         },
