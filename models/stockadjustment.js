@@ -3,9 +3,14 @@ const Schema = mongoose.Schema;
 
 const stockadjustmentSchema = new Schema(
     {
-        product:[{
-            type:Object
-        }],
+        // product:[{
+        //     type:Object
+        // }],
+        product: [
+            {
+              product :{ type: mongoose.Schema.Types.ObjectId,ref:"product"},availableqty:{type : String},comment:{type : String},value:{type :Number},qty:{type : Number}
+            },
+          ],
         seller :{
             type : Schema.Types.ObjectId, ref : "seller"
         },
