@@ -3,7 +3,8 @@ const Material = require("../models/material");
 exports.addmaterial = async (req, res) => {
   const { materialname } = req.body;
   const newMaterial = new Material({
-    materialname :materialname
+    materialname :materialname,
+    seller :req.sellerId
   });
 
   const findexist = await Material.findOne({ materialname: materialname });
@@ -74,6 +75,24 @@ exports.getallmaterial = async(req,res)=>{
       })
     })
 }
+
+exports.getmaterialByseller = async(req,res)=>{
+  const findall = await Material.find({seller :req.sellerId}).sort({sortorder : 0})
+    .then((data)=>{
+      res.status(200).json({
+        status : true,
+        msg : "success",
+        data  : data
+      })
+    }).catch((error)=>{
+      res.status(400).json({
+      status : false,
+      msg : "error",
+      error : error
+    })
+  })
+}
+
 
 
 

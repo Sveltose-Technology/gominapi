@@ -6,6 +6,9 @@ const materialSchema = new mongoose.Schema(
     materialname : {
       type: String
     },
+    seller :
+      { type: Schema.Types.ObjectId, ref: "seller" }
+    
 
   },
   { timestamps: true }
