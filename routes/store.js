@@ -15,7 +15,7 @@ const {
   del_store,
   storebyseller,
   store_req,
-  totalstore,
+  totalstorebyseller,
   browsebytrending_store,
   searchstore
 } = require("../controller/store");
@@ -78,7 +78,7 @@ router.get("/admin/getonestorebytoken/:id",tokenverify,  getonestorebytoken);
 router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload,tokenverify, editstore);
 router.get("/admin/store_req", store_req);
-router.get("/admin/totalstore", totalstore)
+router.get("/admin/totalstorebyseller",tokenverify, totalstorebyseller)
 router.post("/admin/searchstore", searchstore)
 router.get("/admin/browsebytrending_store",  browsebytrending_store);
 router.get("/admin/getonestorebytoken",  browsebytrending_store);

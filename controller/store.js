@@ -702,8 +702,8 @@ exports.del_store = async (req, res) => {
 
 
 //get counts
-exports.totalstore = async (req, res) => {
-  await Store.countDocuments()
+exports.totalstorebyseller = async (req, res) => {
+  await Store.countDocuments({seller :req.sellerId})
     .then((data) => {
       res.status(200).json({
         status: true,
