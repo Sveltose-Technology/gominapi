@@ -16,6 +16,7 @@ const supplierSchema = new Schema(
     },
     email: {
       type: String,
+      
     },
     phone_no: {
       type: Number,
