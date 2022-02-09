@@ -8,6 +8,7 @@ const {tokenverify} = require("../functions/tokenverify")
 const {
   addproductsubcategory,
   getproductsubcategory,
+  getsubcatByseller,
   viewoneproductsubcategory,
   editproductsubcategory,
   deleteproductsubcategory,
@@ -48,7 +49,9 @@ router.post(
   uploads.single("product_img"),tokenverify,
   addproductsubcategory
 );
-router.get("/admin/getproductsubcategory",tokenverify, getproductsubcategory);
+router.get("/admin/getproductsubcategory", getproductsubcategory);
+router.get("/admin/getsubcatByseller",tokenverify, getsubcatByseller);
+
 router.get("/admin/viewoneproductsubcategory/:id",tokenverify, viewoneproductsubcategory);
 
 router.post(
@@ -56,7 +59,7 @@ router.post(
   uploads.single("product_img"),
   editproductsubcategory
 );
-
+ 
 router.get("/admin/deleteproductsubcategory/:id", deleteproductsubcategory);
 
 module.exports = router;

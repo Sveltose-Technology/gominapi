@@ -81,6 +81,26 @@ exports.addproductsubcategory = async (req, res) => {
 };
 
 exports.getproductsubcategory = async (req, res) => {
+  const findall = await Productsubcategory.find()
+    .sort({ sortorder: 1 })
+    .populate("productcategory");
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "error",
+      data: "error",
+    });
+  }
+};
+
+
+exports.getsubcatByseller = async (req, res) => {
   const findall = await Productsubcategory.find({seller:req.sellerId}).populate("seller")
     .sort({ sortorder: 1 })
     .populate("productcategory");
@@ -98,6 +118,7 @@ exports.getproductsubcategory = async (req, res) => {
     });
   }
 };
+
 
 exports.editproductsubcategory = async (req, res) => {
   const { name, productcategory, product_img, desc, sortorder, status } =
