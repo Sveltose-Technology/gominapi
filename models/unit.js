@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const unitsSchema = new Schema(
   {
+
+    seller :
+      { type: Schema.Types.ObjectId, ref: "seller" },
+    
     units_title: {
       type: String,
       require: true,

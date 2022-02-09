@@ -3,6 +3,7 @@ const Units = require("../models/unit");
 exports.addunits = async (req, res) => {
   const { units_title, value, desc, sortorder, status } = req.body;
   const newUnits = new Units({
+    seller :req.sellerId,
     units_title: units_title,
     value: value,
     desc: desc,
@@ -38,7 +39,7 @@ exports.addunits = async (req, res) => {
   }
 };
 exports.viewoneunits = async (req, res) => {
-  const findone = await Units.findOne({ _id: req.params.id });
+  const findone = await Units.findOne({ $and : [{seller : req.sellerId},{_id: req.params.id}]}).populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
@@ -70,10 +71,27 @@ exports.viewallunits = async (req, res) => {
     });
   }
 };
+
+exports.viewallunitByseller = async (req, res) => {
+  const findall = await Units.find({seller : req.sellerId}).populate("seller").sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: true,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 exports.editunits = async (req, res) => {
   const findandUpdateEntry = await Units.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and : [{seller : req.sellerId},{_id: req.params.id}]
     },
     { $set: req.body },
     { new: true }
