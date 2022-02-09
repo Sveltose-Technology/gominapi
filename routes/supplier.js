@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const { tokenverify } = require("../functions/tokenverify");
 
 const {
   addsupplier,
@@ -9,6 +10,7 @@ const {
   Getsupplier,
   edit_supplier,
   getonesupplier,
+  totalsupplierBytoken
 } = require("../controller/supplier");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,11 +41,13 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 
 //Paths
-router.post("/admin/addsupplier", addsupplier);
-router.get("/admin/Getsupplier", Getsupplier);
+router.post("/admin/addsupplier",tokenverify, addsupplier);
+router.get("/admin/Getsupplier",tokenverify, Getsupplier);
 router.get("/admin/del_supplier/:id", del_supplier);
-router.post("/admin/edit_supplier/:id", edit_supplier);
+router.post("/admin/edit_supplier/:id",tokenverify, edit_supplier);
 
-router.get("/admin/getonesupplier/:id", getonesupplier);
+router.get("/admin/getonesupplier/:id",tokenverify, getonesupplier);
+router.get("/admin/totalsupplierBytoken",tokenverify, getonesupplier);
+
 
 module.exports = router;

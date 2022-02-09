@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const supplierSchema = new Schema(
   {
+
+     seller : {
+      type : mongoose.Schema.Types.ObjectId,
+     ref : "seller"
+     },
     first_name: {
       type: String,
     },

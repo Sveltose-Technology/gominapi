@@ -21,6 +21,7 @@ exports.addsupplier = async (req, res) => {
   } = req.body;
 
   const newSupplier = new Supplier({
+    seller :req.sellerId,
     first_name: first_name,
     last_name: last_name,
     email: email,
@@ -63,7 +64,7 @@ exports.addsupplier = async (req, res) => {
   }
 };
 exports.Getsupplier = async (req, res) => {
-  const findall = await Supplier.find().sort({ sortorder: 1 });
+  const findall = await Supplier.find({seller :req.sellerId}).populate("seller").sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
@@ -80,7 +81,7 @@ exports.Getsupplier = async (req, res) => {
 };
 
 exports.getonesupplier = async (req, res) => {
-  const findone = await Supplier.findOne({ _id: req.params.id });
+  const findone = await Supplier.findOne({ $and :[{seller : req.sellerId},{_id: req.params.id }]}).populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
@@ -99,7 +100,7 @@ exports.getonesupplier = async (req, res) => {
 exports.edit_supplier = async (req, res) => {
   const findandUpdateEntry = await Supplier.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and: [{ id: req.sellerId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }
@@ -135,4 +136,22 @@ exports.del_supplier = async (req, res) => {
       error: error,
     });
   }
+};
+
+
+exports.totalsupplierBytoken = async (req, res) => {
+  await Supplier.countDocuments({seller :req.sellerId})
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
 };
