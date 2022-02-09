@@ -20,7 +20,8 @@ const {
   resetpassword,
   Customerbysellerbytoken,
   changePassword,
-  editcustomerbyseller
+  editcustomerbyseller,
+  totalcustomerbyseller
 
 } = require("../controller/customer");
 
@@ -34,6 +35,8 @@ router.post("/user/editcustomer",verifytoken, editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
 router.get("/user/totalcustomer", totalcustomer);
+router.get("/user/totalcustomerbyseller",tokenverify, totalcustomerbyseller);
+
 router.post("/user/sendotp", sendotp);
 router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
@@ -43,3 +46,4 @@ router.post("/user/changePassword", changePassword);
 
 
 module.exports = router;
+ 

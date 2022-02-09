@@ -354,6 +354,23 @@ exports.totalcustomer = async (req, res) => {
     });
 };
 
+exports.totalcustomerbyseller = async (req, res) => {
+  await Customer.countDocuments({seller :req.sellerId})
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+}
+
 exports.sendotp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { customer_email } = req.body;
