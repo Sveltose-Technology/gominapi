@@ -115,7 +115,7 @@ exports.getcouponbyseller = async (req, res) => {
   }
 };
 exports.getonecoupon  = async(req,res) =>{
-  const findone = await Coupon.findOne({seller:req.sellerId}).populate("seller").populate("product")
+  const findone = await Coupon.findOne({ $and : [{seller : req.sellerId},{_id: req.params.id}]}).populate("seller").populate("product")
    if(findone){
      res.status(200).json({
        status : true,

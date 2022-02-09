@@ -39,7 +39,7 @@ exports.addmaterial = async (req, res) => {
 exports.editmaterial = async (req,res) =>{
   const findandUpdateEntry = await Material.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and : [{seller : req.sellerId},{_id: req.params.id}]
   },{
     $set: req.body
   },
@@ -77,7 +77,7 @@ exports.getallmaterial = async(req,res)=>{
 }
 
 exports.getmaterialByseller = async(req,res)=>{
-  const findall = await Material.find({seller :req.sellerId}).sort({sortorder : 0})
+  const findall = await Material.find({seller :req.sellerId}).populate("seller").sort({sortorder : 0})
     .then((data)=>{
       res.status(200).json({
         status : true,
@@ -97,7 +97,7 @@ exports.getmaterialByseller = async(req,res)=>{
 
 
 exports.viewonematerial = async (req, res) => {
-  const findone = await Material.findOne({ _id: req.params.id });
+  const findone = await Material.findOne({ $and : [{seller : req.sellerId},{_id: req.params.id}]}).populate("seller")
   if (findone) {
       res.status(200).json({
           status: true,
