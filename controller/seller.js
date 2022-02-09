@@ -473,6 +473,23 @@ exports.totalseller = async (req, res) => {
     });
 };
 
+exports.totalempbyseller = async (req, res) => {
+  await Seller.countDocuments({seller :req.sellerId})
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
+
 exports.sendOtp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { email } = req.body;

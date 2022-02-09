@@ -19,7 +19,8 @@ const {
   getemployecreatedbyseller,
   getoneempcreatedbyseller,
   resetpassword,
-  editempByseller
+  editempByseller,
+  totalempbyseller
 
   //storebyseller,
 } = require("../controller/seller");
@@ -86,6 +87,8 @@ router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", tokenverify, getoneseller);
 router.get("/admin/totalseller", totalseller);
+router.get("/admin/totalempbyseller",tokenverify, totalempbyseller);
+
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
