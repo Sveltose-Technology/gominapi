@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
+const {tokenverify} = require("../functions/tokenverify")
 
 const {
   addproductsubcategory,
@@ -44,14 +45,14 @@ let uploads = multer({ storage: storage });
 //Paths
 router.post(
   "/admin/addproductsubcategory",
-  uploads.single("product_img"),
+  uploads.single("product_img"),tokenverify,
   addproductsubcategory
 );
-router.get("/admin/getproductsubcategory", getproductsubcategory);
-router.get("/admin/viewoneproductsubcategory/:id", viewoneproductsubcategory);
+router.get("/admin/getproductsubcategory",tokenverify, getproductsubcategory);
+router.get("/admin/viewoneproductsubcategory/:id",tokenverify, viewoneproductsubcategory);
 
 router.post(
-  "/admin/editproductsubcategory/:id",
+  "/admin/editproductsubcategory/:id",tokenverify,
   uploads.single("product_img"),
   editproductsubcategory
 );

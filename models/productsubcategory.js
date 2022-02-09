@@ -6,6 +6,10 @@ const subproductcategorySchema = new Schema(
     name: {
       type: String,
     },
+    seller :{
+type : mongoose.Schema.Types.ObjectId,
+ref : "seller"
+    },
     desc: {
       type: String,
     },

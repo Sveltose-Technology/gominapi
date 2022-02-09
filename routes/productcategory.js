@@ -3,10 +3,13 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
+const { tokenverify } = require("../functions/tokenverify");
+
 
 const {
   addproductcategory,
   getproductCategory,
+  allcatByseller,
   getone_productcategory,
   editproductcategory,
   del_productcategory,
@@ -43,16 +46,18 @@ let uploads = multer({ storage: storage });
 
 //Paths
 router.post(
-  "/admin/addproductcategory",
+  "/admin/addproductcategory",tokenverify,
   uploads.single("product_img"),
   addproductcategory
 );
 router.get("/admin/getproductCategory", getproductCategory);
-router.get("/admin/getone_productcategory/:id", getone_productcategory);
+router.get("/admin/allcatByseller",tokenverify, allcatByseller);
+
+router.get("/admin/getone_productcategory/:id",tokenverify, getone_productcategory);
 // router.get("/admin/allproductsubcategory", allproductsubcategory);
 router.get("/admin/del_productcategory/:id", del_productcategory);
 router.post(
-  "/admin/editproductcategory/:id",
+  "/admin/editproductcategory/:id",tokenverify,
   uploads.single("product_img"),
   editproductcategory
 );

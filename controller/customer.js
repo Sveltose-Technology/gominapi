@@ -278,6 +278,31 @@ exports.Customerbysellerbytoken = async (req, res) => {
   }
 };
 
+exports.editcustomerbyseller = async (req, res) => {
+  const findandUpdateEntry = await Customer.findOneAndUpdate(
+    {
+      $and: [{ added_by: req.sellerId }, { _id: req.params.id }],
+    },
+    { $set: req.body },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};
+
+       
 exports.getonecustomer = async (req, res) => {
   const findone = await Customer.findOne({ customer: req.userId });
   if (findone) {

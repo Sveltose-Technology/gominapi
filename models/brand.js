@@ -15,6 +15,10 @@ const brandSchema = new Schema(
     //   type: Boolean,
     //   //true,false
     // },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+    },
     desc: {
       type: String,
       require: true,

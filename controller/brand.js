@@ -13,6 +13,7 @@ exports.addbrand = async (req, res) => {
   const { name, brand_img, desc, sortorder, status } = req.body;
 
   const newBrand = new Brand({
+    seller :req.sellerId,
     name: name,
     desc: desc,
     brand_img: brand_img,
@@ -102,7 +103,7 @@ exports.editbrand = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Brand.findOneAndUpdate(
       {
-        _id: req.params.id,
+        $and: [{ id: req.sellerId }, { _id: req.params.id }],
       },
       { $set: data },
       { new: true }
@@ -125,7 +126,7 @@ exports.editbrand = async (req, res) => {
 };
 
 exports.viewonebrand = async (req, res) => {
-  const findone = await Brand.findOne({ _id: req.params.id });
+  const findone = await Brand.findOne({ $and :[{seller : req.sellerId},{_id: req.params.id }]}).populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
@@ -142,7 +143,23 @@ exports.viewonebrand = async (req, res) => {
 };
 
 exports.allbrand = async (req, res) => {
-  const findall = await Brand.find().sort({ sortorder: 1 });
+  const findall = await Brand.find().sort({ sortorder: 1 })
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.allbrandbyseller = async (req, res) => {
+  const findall = await Brand.find({seller : req.sellerId}).sort({ sortorder: 1 }).populate("seller")
   if (findall) {
     res.status(200).json({
       status: true,
@@ -224,8 +241,8 @@ exports.search_brand = (req, res) => {
 };
 
 
-exports.totalbrand = async(req,res) => {
-  await Brand.countDocuments().then((data)=>{
+exports.totalbrandbyseller = async(req,res) => {
+  await Brand.countDocuments({seller: req.sellerId}).then((data)=>{
     res.status(200).json({
       status: true,
       data: data,
@@ -239,3 +256,4 @@ exports.totalbrand = async(req,res) => {
     });
   })
 }
+

@@ -30,6 +30,7 @@ exports.addcoupon = async (req, res) => {
   }
 
   const newCoupon = new Coupon({
+    seller :req.sellerId,
     offer_code: random_string,
     CouponTitle : CouponTitle,
     product : product,

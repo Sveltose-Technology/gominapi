@@ -411,8 +411,8 @@ exports.productbysubcategory = async (req, res) => {
     });
 };
 
-exports.totalproduct = async (req, res) => {
-  await Product.countDocuments()
+exports.totalproductbyseller = async (req, res) => {
+  await Product.countDocuments({seller :req.sellerId})
     .then((data) => {
       res.status(200).json({
         status: true,

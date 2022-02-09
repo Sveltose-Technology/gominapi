@@ -1,4 +1,5 @@
 const Productcategory = require("../models/productcategory");
+const seller = require("../models/seller")
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -13,6 +14,7 @@ exports.addproductcategory = async (req, res) => {
   const { name, product_img,price,trendingcatpoint, desc, sortorder, status } = req.body;
 
   const newProductcategory = new Productcategory({
+    seller :req.sellerId,
     name: name,
     product_img: product_img,
     desc: desc,
@@ -103,9 +105,7 @@ exports.editproductcategory = async (req, res) => {
   console.log(req.file);
   if (data) {
     const findandUpdateEntry = await Productcategory.findOneAndUpdate(
-      {
-        _id: req.params.id,
-      },
+      {$and : [{seller : req.sellerId},{_id: req.params.id}]},
       { $set: data },
       { new: true }
     )
@@ -127,7 +127,7 @@ exports.editproductcategory = async (req, res) => {
 };
 
 exports.getproductCategory = async (req, res) => {
-  const findall = await Productcategory.find().sort({ sortorder: 1 });
+  const findall = await Productcategory.find()
   if (findall) {
     res.status(200).json({
       status: true,
@@ -143,8 +143,27 @@ exports.getproductCategory = async (req, res) => {
   }
 };
 
+exports.allcatByseller = async (req, res) => {
+  const findall = await Productcategory.find({seller : req.sellerId}).sort({ sortorder: 1 }).populate("seller")
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+
 exports.getone_productcategory = async (req, res) => {
-  const findone = await Productcategory.findOne({ _id: req.params.id });
+  const findone = await Productcategory.findOne({$and :[{seller : req.sellerId},{_id: req.params.id }]}).populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,

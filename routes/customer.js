@@ -19,13 +19,14 @@ const {
   forgotPassword,
   resetpassword,
   Customerbysellerbytoken,
-  changePassword
-
+  changePassword,
+  editcustomerbyseller
 
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
 router.post("/user/addcustomerbyseller",tokenverify, addcustomerbyseller);
+router.post("/user/editcustomerbyseller/:id",tokenverify, editcustomerbyseller);
 
 router.get("/user/allcustomer",allcustomer);
 router.get("/user/getonecustomer",verifytoken, getonecustomer);

@@ -2,16 +2,18 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const { tokenverify } = require("../functions/tokenverify");
 
 const {
   addbrand,
   editbrand,
   viewonebrand,
   allbrand,
+  allbrandbyseller,
   deletebrand,
   brand_img,
   search_brand,
-  totalbrand
+  totalbrandbyseller
 } = require("../controller/brand");
 
 const storage = multer.diskStorage({
@@ -43,13 +45,14 @@ const fileFilter = (req, file, cb) => {
 let uploads = multer({ storage: storage });
 
 //Paths
-router.post("/admin/addbrand", uploads.single("brand_img"), addbrand);
-router.post("/admin/editbrand/:id", uploads.single("brand_img"), editbrand);
-router.get("/admin/viewonebrand/:id", viewonebrand);
+router.post("/admin/addbrand",tokenverify, uploads.single("brand_img"), addbrand);
+router.post("/admin/editbrand/:id",tokenverify, uploads.single("brand_img"), editbrand);
+router.get("/admin/viewonebrand/:id",tokenverify, viewonebrand);
 router.get("/admin/allbrand", allbrand);
+router.get("/admin/allbrandbyseller",tokenverify, allbrandbyseller);
+
 router.get("/admin/deletebrand/:id", deletebrand);
 router.get("/admin/search_brand", search_brand);
 //router.post("/admin/brandimage/:id", uploads.single("brand_img"), brand_img);
-router.get("/admin/totalbrand", totalbrand);
+router.get("/admin/totalbrandbyseller",tokenverify, totalbrandbyseller);
 module.exports = router;
- 

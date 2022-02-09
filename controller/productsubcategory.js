@@ -1,4 +1,5 @@
 const Productsubcategory = require("../models/productsubcategory");
+const seller = require("../models/seller")
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -15,6 +16,7 @@ exports.addproductsubcategory = async (req, res) => {
     req.body;
 
   const newProductsubcategory = new Productsubcategory({
+    seller :req.sellerId,
     name: name,
     desc: desc,
     productcategory: productcategory,
@@ -79,7 +81,7 @@ exports.addproductsubcategory = async (req, res) => {
 };
 
 exports.getproductsubcategory = async (req, res) => {
-  const findall = await Productsubcategory.find()
+  const findall = await Productsubcategory.find({seller:req.sellerId}).populate("seller")
     .sort({ sortorder: 1 })
     .populate("productcategory");
   if (findall) {
@@ -127,7 +129,7 @@ exports.editproductsubcategory = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Productsubcategory.findOneAndUpdate(
       {
-        _id: req.params.id,
+       $and : [{seller : req.sellerId},{_id : req.params.id}]
       },
       { $set: data },
       { new: true }
@@ -150,9 +152,7 @@ exports.editproductsubcategory = async (req, res) => {
 };
 
 exports.viewoneproductsubcategory = async (req, res) => {
-  const findone = await Productsubcategory.findOne({
-    _id: req.params.id,
-  }).populate("productcategory");
+  const findone = await Productsubcategory.findOne({ $and:[{seller : req.sellerId},{_id: req.params.id}]}).populate("productcategory").populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
