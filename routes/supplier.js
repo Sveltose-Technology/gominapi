@@ -47,7 +47,7 @@ router.get("/admin/del_supplier/:id", del_supplier);
 router.post("/admin/edit_supplier/:id",tokenverify, edit_supplier);
 
 router.get("/admin/getonesupplier/:id",tokenverify, getonesupplier);
-router.get("/admin/totalsupplierBytoken",tokenverify, getonesupplier);
+router.get("/admin/totalsupplierBytoken",tokenverify, totalsupplierBytoken);
 
 
 module.exports = router;
