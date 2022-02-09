@@ -6,6 +6,8 @@ const roleSchema = new Schema(
     addemp: 
       { type: Schema.Types.ObjectId, ref: "seller" },
   
+emp :
+  { type: Schema.Types.ObjectId, ref: "seller" },
 
     store: {
       type: Boolean,

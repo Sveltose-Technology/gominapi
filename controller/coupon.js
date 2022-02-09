@@ -62,7 +62,7 @@ exports.addcoupon = async (req, res) => {
 
 exports.editcoupon = async(req,res)=>{
   const findandupdate  = await Coupon.findOneAndUpdate(
-  {_id : req.params.id},
+    {$and : [{seller : req.sellerId},{_id: req.params.id}]},
   {$set : req.body},
   {
     new :true
@@ -83,6 +83,22 @@ exports.editcoupon = async(req,res)=>{
 }
 
 exports.getcoupon = async (req, res) => {
+  const findall = await Coupon.find().populate("product").sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.getcouponbyseller = async (req, res) => {
   const findall = await Coupon.find({seller:req.sellerId}).populate("product").populate("seller").sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
@@ -98,7 +114,6 @@ exports.getcoupon = async (req, res) => {
     });
   }
 };
-
 exports.getonecoupon  = async(req,res) =>{
   const findone = await Coupon.findOne({seller:req.sellerId}).populate("seller").populate("product")
    if(findone){
@@ -154,7 +169,7 @@ exports.delcoupon = async (req, res) => {
 };
 
 exports.totalCoupon = async(req,res) =>{
-  await Coupon.countDocuments().then((data)=>{
+  await Coupon.countDocuments({seller:req.sellerId}).then((data)=>{
     res.status(200).json({
       status: true,
       data: data,

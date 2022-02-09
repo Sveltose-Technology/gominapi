@@ -12,7 +12,7 @@ exports.addrole = async (req, res) => {
   // } =
 
   const {
-    //addemp,
+    emp,
     store,
     employee,
     customer,
@@ -33,6 +33,8 @@ exports.addrole = async (req, res) => {
 
   const newRole = await new Role({
     addemp: req.sellerId,
+    emp : emp,
+    employee:employee,
     store: store,
     employee: employee,
     customer: customer,
@@ -123,7 +125,7 @@ exports.addrole = async (req, res) => {
 //};
 
 exports.allrole = async (req, res) => {
-  const findall = await Role.find({addemp: req.sellerId}).populate("addemp")
+  const findall = await Role.find({addemp: req.sellerId}).populate("addemp").populate("emp")
   if (findall) {
     res.status(200).json({
       status: true,

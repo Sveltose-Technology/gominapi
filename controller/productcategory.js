@@ -138,7 +138,7 @@ exports.getproductCategory = async (req, res) => {
     res.status(400).json({
       status: true,
       msg: "error",
-      error: "error",
+      error: "error", 
     });
   }
 };
