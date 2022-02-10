@@ -4,6 +4,7 @@
  const Seller = require("../models/seller");
  const Product = require("../models/product");
 const cart = require("../models/cart");
+const store = require("../models/store");
 
 
 // exports.addoderproduct = async (req, res) => {
@@ -217,10 +218,10 @@ exports.getorderProduct = async(req,res) => {
   // const getcart = await Cart.findOne({ })
   // const getcart = await Cart.findOne({ _id: req.Seller});
 
-  const getproduct = await Product.findOne({ _id: req.body.product });
-  console.log(getproduct)
-  if (getproduct) {
-    const getseller = await Seller.findOne({ _id: getproduct.seller });
+  // const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const getseller = await Seller.findOne({ _id: getproduct.seller });
   
   const findall =await Orderproduct.find()
   .populate("cartId")
@@ -230,12 +231,12 @@ exports.getorderProduct = async(req,res) => {
         path: 'product' 
     }
 
-}).populate({
+}).populate([{
   path: 'cartId',
   populate: {
       path: 'seller' 
   }
-}).populate("seller")
+}])
 
 .populate({
   path: 'orderId',
@@ -243,6 +244,7 @@ exports.getorderProduct = async(req,res) => {
       path: 'delivery_address' 
   }
 })
+// .populate({path :'cartId',select :['product' ,'seller']})
   if(findall){
       res.status(200).json({
           status:true,
@@ -256,5 +258,5 @@ exports.getorderProduct = async(req,res) => {
           error:"error"
       })
   }
-  }
+  //}
 }

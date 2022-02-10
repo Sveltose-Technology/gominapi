@@ -1,8 +1,6 @@
 const Product = require("../models/product");
 //const Image = require("../models/product");
 const Productcategory = require("../models/productcategory");
-const Seller = require("../models/seller");
-
 const Brand = require("../models/brand");
 const Store = require("../models/store");
 
@@ -17,7 +15,6 @@ cloudinary.config({
 });
 
 exports.addproduct = async (req, res) => {
-   
   const {
      store,
     discount_perc,
@@ -590,7 +587,8 @@ exports.productbysellerbytoken = async (req, res) => {
     .populate("brand")
     .populate("color")
     .populate("size")
-     .populate("store");
+     .populate("store")
+     .populate("seller")
 
   if (findall) {
     res.status(200).json({
