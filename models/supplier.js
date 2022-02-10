@@ -43,13 +43,7 @@ const supplierSchema = new Schema(
     gst_no: {
       type: String,
     },
-    sortorder: {
-      type: Number,
-    },
-    status: {
-      type: String,
-      default: "Active",
-    },
+  
   },
   { timestamps: true }
 );

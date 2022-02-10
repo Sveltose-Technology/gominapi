@@ -16,8 +16,8 @@ exports.addsupplier = async (req, res) => {
     city,
     postcode,
     gst_no,
-    sortorder,
-    status,
+     
+     
   } = req.body;
 
   const newSupplier = new Supplier({
@@ -33,8 +33,7 @@ exports.addsupplier = async (req, res) => {
     city: city,
     postcode: postcode,
     gst_no: gst_no,
-    sortorder: sortorder,
-    status: status,
+    
   });
 
   const findexist = await Supplier.findOne({ phone_no: phone_no });
