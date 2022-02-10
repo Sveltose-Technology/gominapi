@@ -13,9 +13,7 @@ const productSchema = new Schema(
       type: String,
       require: true,
     },
-    // productId: {
-    //   type: Number,
-    // },
+     
     sku_no: {
       type: String,
     },
