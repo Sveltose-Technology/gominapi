@@ -91,7 +91,7 @@ const cart = require("../models/cart");
 
 
 exports.addoderproduct = async (req, res) => {
-  // const getproduct = await Product.findOne({ _id: req.body.product });
+  //  const getproduct = await Product.findOne({ _id: req.body.product });
   // console.log(getproduct)
   // if (getproduct) {
   //   const getstore = await Store.findOne({ _id: getproduct.store });
@@ -100,7 +100,7 @@ exports.addoderproduct = async (req, res) => {
 
 
   const newOrderproduct = new Orderproduct ({
-  //  seller: getproduct?.seller,
+  // seller: getproduct?.seller,
    cartId :cartId,
     orderId :orderId,
    // product : product,
@@ -216,6 +216,12 @@ exports.getoneorderproduct = async(req,res) => {
 exports.getorderProduct = async(req,res) => {
   // const getcart = await Cart.findOne({ })
   // const getcart = await Cart.findOne({ _id: req.Seller});
+
+  const getproduct = await Product.findOne({ _id: req.body.product });
+  console.log(getproduct)
+  if (getproduct) {
+    const getseller = await Seller.findOne({ _id: getproduct.seller });
+  
   const findall =await Orderproduct.find()
   .populate("cartId")
   .populate({
@@ -223,12 +229,13 @@ exports.getorderProduct = async(req,res) => {
     populate: {
         path: 'product' 
     }
+
 }).populate({
   path: 'cartId',
   populate: {
       path: 'seller' 
   }
-})
+}).populate("seller")
 
 .populate({
   path: 'orderId',
@@ -249,5 +256,5 @@ exports.getorderProduct = async(req,res) => {
           error:"error"
       })
   }
-
+  }
 }

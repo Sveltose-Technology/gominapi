@@ -43,9 +43,10 @@ const orderProductSchema = new mongoose.Schema(
     // color: {
     //   type: String,
     // },
-    // status: {
-    //   type: String,
-    // },
+    status: {
+      type: String,
+      default :"Order order"
+    },
   },
   { timestamps: true }
 );
