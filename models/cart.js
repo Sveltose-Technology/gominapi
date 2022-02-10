@@ -9,6 +9,14 @@ const CartSchema = new mongoose.Schema(
     product_price: {
       type: Number,
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+    },
+    store: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "store",
+    },
     product_qty: {
       type: Number,
     },

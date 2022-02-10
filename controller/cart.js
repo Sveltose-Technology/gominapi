@@ -1,8 +1,16 @@
 const Cart = require("../models/cart");
 const { verifytoken } = require("../functions/verifytoken");
+const Store = require("../models/store");
+const Seller = require("../models/seller");
+const Product = require("../models/product");
+
 
 exports.addtocartproduct = async (req, res) => {
   // const carttoken = await Cart.findOne({ user: req.userId });
+  // const getproduct = await Product.findOne({ _id: req.body.product });
+  //console.log(getproduct)
+  // if (getproduct) {
+  //    const getstore = await Store.findOne({ _id: getproduct.store })
 
   const { product, product_price, product_qty, color, size } = req.body;
 
@@ -22,6 +30,7 @@ exports.addtocartproduct = async (req, res) => {
   console.log();
   const addtoCart = new Cart({
     customer: req.userId,
+    //seller: getstore?.seller,
     product: product,
     product_price: product_price,
     product_qty: product_qty,
@@ -74,7 +83,7 @@ exports.addtocartproduct = async (req, res) => {
         });
       } else {
         res.status(200).json({
-          status: false,
+          status: true,
           msg: "Product added to cart",
           data: data,
           total_qty: product_qty,
@@ -82,6 +91,7 @@ exports.addtocartproduct = async (req, res) => {
       }
     });
   }
+//}
 };
 
 exports.getallcart = async (req, res) => {
@@ -100,6 +110,11 @@ exports.getallcart = async (req, res) => {
       path: "product",
       populate: {
         path: "size",
+      },
+    }).populate({
+      path: "product",
+      populate: {
+        path: "seller",
       },
     })
   if (findall) {
@@ -192,6 +207,11 @@ exports.cartbycustomer = async (req, res) => {
       path: "product",
       populate: {
         path: "size",
+      },
+    }).populate({
+      path: "product",
+      populate: {
+        path: "seller",
       },
     })
   if (findone) {

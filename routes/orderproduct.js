@@ -22,7 +22,7 @@ const {
 
 // PATHS
  
-router.post("/admin/addoderproduct", verifytoken,  addoderproduct);
+router.post("/admin/addoderproduct",  addoderproduct);
 router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
 router.get("/admin/getorderProduct",  getorderProduct);
 

@@ -3,6 +3,7 @@
 // const { v4: uuidv4 } = require("uuid");
  const Seller = require("../models/seller");
  const Product = require("../models/product");
+const cart = require("../models/cart");
 
 
 // exports.addoderproduct = async (req, res) => {
@@ -90,28 +91,24 @@
 
 
 exports.addoderproduct = async (req, res) => {
-  const getproduct = await Product.findOne({ _id: req.body.product });
-  //console.log(getproduct)
-  if (getproduct) {
-    const getstore = await Store.findOne({ _id: getproduct.store });
+  // const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const getstore = await Store.findOne({ _id: getproduct.store });
 
-  const {orderId,product,status}  = req.body
+  const {cartId,orderId,status}  = req.body
 
 
   const newOrderproduct = new Orderproduct ({
-    seller: getstore?.seller,
+  //  seller: getproduct?.seller,
+   cartId :cartId,
     orderId :orderId,
-    product : product,
+   // product : product,
     status : status
   })
-  const findexist = await Orderproduct.findOne({ $and: [{orderId : orderId},{product : product}]})
+  const findexist = await Orderproduct.findOne({orderId : orderId})
   if (findexist){
-    await Orderproduct.findOneAndUpdate({
-              $and: [
-                { orderId: orderId },
-                { product: product },
-              ]
-            }).then((data)=>{
+    await Orderproduct.findOneAndUpdate({orderId:orderId}).then((data)=>{
               res.status(200).json({
                 status : true,
                 data : data
@@ -139,19 +136,27 @@ exports.addoderproduct = async (req, res) => {
               }
             });
           }
-        }  
+    //    }  
 }
 
 
 exports.getoneorderproduct = async(req,res) => {
+  // const getcart = await Cart.findOne({ })
+  // const getcart = await Cart.findOne({ _id: req.Seller});
   const findall =await Orderproduct.find({orderId: req.params.id})
-  .populate("orderId")
+  .populate("cartId")
   .populate({
-    path: 'product',
+    path: 'cartId',
     populate: {
         path: 'product' 
     }
+}).populate({
+  path: 'cartId',
+  populate: {
+      path: 'seller' 
+  }
 })
+
 .populate({
   path: 'orderId',
   populate: {
@@ -175,36 +180,74 @@ exports.getoneorderproduct = async(req,res) => {
 }
 
 
-exports.getorderProduct = async (req, res) => {
-  const findall = await Orderproduct.find()
-  .populate("orderId")
+// exports.getorderProduct = async (req, res) => {
+//   const findall = await Orderproduct.find()
+//   .populate("cart")
+//   .populate({
+//     path: 'cart',
+//     populate: {
+//         path: 'product' 
+//     }
+// })
+// .populate({
+//   path: 'orderId',
+//   populate: {
+//       path: 'delivery_address' 
+//   }
+// })
+   
+//     .then((result) => {
+//       res.status(200).json({
+//         status: true,
+//         msg: "success",
+//         data: result,
+//       });
+//     })
+//     .catch((error) => {
+//       res.status(400).json({
+//         status: false,
+//         msg: "error",
+//         error: "error",
+//       });
+//     });
+// };
+  
+
+exports.getorderProduct = async(req,res) => {
+  // const getcart = await Cart.findOne({ })
+  // const getcart = await Cart.findOne({ _id: req.Seller});
+  const findall =await Orderproduct.find()
+  .populate("cartId")
   .populate({
-    path: 'product',
+    path: 'cartId',
     populate: {
         path: 'product' 
     }
+}).populate({
+  path: 'cartId',
+  populate: {
+      path: 'seller' 
+  }
 })
+
 .populate({
   path: 'orderId',
   populate: {
       path: 'delivery_address' 
   }
 })
-   
-    .then((result) => {
+  if(findall){
       res.status(200).json({
-        status: true,
-        msg: "success",
-        data: result,
-      });
-    })
-    .catch((error) => {
+          status:true,
+          msg:"success",
+          data:findall
+      })
+  }else{
       res.status(400).json({
-        status: false,
-        msg: "error",
-        error: "error",
-      });
-    });
-};
-  
+          status:false,
+          msg:"error",
+          error:"error"
+      })
+  }
 
+}
