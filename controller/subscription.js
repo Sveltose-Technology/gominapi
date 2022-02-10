@@ -1,9 +1,10 @@
 const Subscription = require("../models/subscription");
 
 exports.addSubscription = async (req, res) => {
-  const { description, duration, sub_plan, status, sortorder } = req.body;
+  const { seller,description, duration, sub_plan, status, sortorder } = req.body;
 
   const newSubscription = new Subscription({
+    seller : seller,
     description: description,
     duration: duration,
     sub_plan: sub_plan,

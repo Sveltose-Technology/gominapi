@@ -6,6 +6,10 @@ const subscriptionSchema = new Schema(
     description: {
       type: String,
     },
+    seller : {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+    },
     sub_plan: {
       type: String,
     },
