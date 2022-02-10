@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "customer",
-      required: true,
-    },
-    seller: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "seller",
-    },
-    store: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "store",
-    },
+    // customer: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "customer",
+    //   required: true,
+    // },
+    // seller: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "seller",
+    // },
+    // store: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "store",
+    // },
     order_type: {
       type: String,
     },
@@ -40,10 +40,10 @@ const orderSchema = new mongoose.Schema(
     qty: {
       type: Number,
     },
-    purchaseprice: {
-      type: Number,
-      required: true,
-    },
+    // purchaseprice: {
+    //   type: Number,
+    //   required: true,
+    // },
 
     delivery_address: {
       type: mongoose.Schema.Types.ObjectId,
