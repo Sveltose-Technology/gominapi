@@ -6,6 +6,10 @@ const productSchema = new Schema(
     store :{
        type : Schema.Types.ObjectId, ref: "store"
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+    },
     product_name: {
       type: String,
       require: true,

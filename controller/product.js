@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 //const Image = require("../models/product");
 const Productcategory = require("../models/productcategory");
+const Seller = require("../models/seller");
+
 const Brand = require("../models/brand");
 const Store = require("../models/store");
 
@@ -15,7 +17,7 @@ cloudinary.config({
 });
 
 exports.addproduct = async (req, res) => {
-  const getstore  = await Produc.findOne({_id : req.body.store})
+   
   const {
      store,
     discount_perc,
@@ -47,7 +49,7 @@ exports.addproduct = async (req, res) => {
 
   const newProduct = new Product({
     store: store,
-    seller :getstore?.seller,
+    seller :req.sellerId,
     product_name: product_name,
     discount_perc: discount_perc,
     sku_no: sku_no,
