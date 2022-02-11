@@ -198,12 +198,17 @@ exports.getorderProductbyseller = async(req,res) => {
   populate: {
       path: 'seller' 
   }
-}])
+}]).populate("seller")
 
 .populate({
   path: 'orderId',
   populate: {
       path: 'delivery_address' 
+  }
+}).populate({
+  path: 'orderId',
+  populate: {
+      path: 'customer' 
   }
 })
 // .populate({path :'cartId',select :['product' ,'seller']})
