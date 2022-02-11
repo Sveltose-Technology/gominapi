@@ -207,9 +207,9 @@ exports.getorderProductbyseller = async(req,res) => {
   }
 }).populate({
   path: 'orderId',
-  populate: {
-      path: 'customer' 
-  }
+  // populate: {
+  //     path: 'customer' 
+  // }
 })
 // .populate({path :'cartId',select :['product' ,'seller']})
   if(findall){
