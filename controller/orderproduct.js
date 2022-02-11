@@ -227,3 +227,5 @@ exports.getorderProductbyseller = async(req,res) => {
   }
   //}
 }
+
+//CONSOLE
