@@ -174,3 +174,51 @@ exports.getorderProduct = async(req,res) => {
   }
   //}
 }
+
+
+exports.getorderProductbyseller = async(req,res) => {
+  // const getcart = await Cart.findOne({ })
+  // const getcart = await Cart.findOne({ _id: req.Seller});
+
+  // const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const getseller = await Seller.findOne({ _id: getproduct.seller });
+  
+  const findall =await Orderproduct.find()
+  .populate("cartId")
+  .populate({
+    path: 'cartId',
+    populate: {
+        path: 'product' 
+    }
+
+}).populate([{
+  path: 'cartId',
+  populate: {
+      path: 'seller' 
+  }
+}])
+
+.populate({
+  path: 'orderId',
+  populate: {
+      path: 'delivery_address' 
+  }
+})
+// .populate({path :'cartId',select :['product' ,'seller']})
+  if(findall){
+      res.status(200).json({
+          status:true,
+          msg:"success",
+          data:findall
+      })
+  }else{
+      res.status(400).json({
+          status:false,
+          msg:"error",
+          error:"error"
+      })
+  }
+  //}
+}

@@ -6,7 +6,8 @@ const { tokenverify } = require("../functions/tokenverify");
 const {
     addoderproduct,
     getoneorderproduct,
-    getorderProduct
+    getorderProduct,
+    getorderProductbyseller
 //   getorder,
 //   pending_order,
 //   delivery_order,
@@ -25,6 +26,8 @@ const {
 router.post("/admin/addoderproduct",  addoderproduct);
 router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
 router.get("/admin/getorderProduct",  getorderProduct);
+router.get("/admin/getorderProductbyseller", tokenverify, getorderProductbyseller);
+
 
 // router.get("/admin/getorder", verifytoken, getorder);
 // router.get(
