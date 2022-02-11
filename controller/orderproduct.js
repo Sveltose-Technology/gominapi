@@ -3,113 +3,27 @@
 // const { v4: uuidv4 } = require("uuid");
  const Seller = require("../models/seller");
  const Product = require("../models/product");
-const cart = require("../models/cart");
+const Cart = require("../models/cart");
 const store = require("../models/store");
-
-
-// exports.addoderproduct = async (req, res) => {
-//   // console.log();
-
-//   const getproduct = await Product.findOne({ _id: req.body.product});
-//   //console.log(getproduct)
-//   if (getproduct) {
-//     const getstore = await Store.findOne({ _id: getproduct.store });
-
-//     const {
-//       orderId,
-//       product,
-//       // qty,
-//       // price,
-//       // size,
-//       // color,
-//       // status,
-//     } = req.body;
-
-    
-
-//     const newOrderproduct = new Orderproduct({
-      
-//       product: product,
-//       orderId: orderId,
-//       // qty: qty,
-//       // price: price,
-//       //  size: size,
-//       // color: color,
-//      });
-
-//     const findexist = await Orderproduct.findOne({
-//       $and: [
-//         { orderId: orderId  },
-//         { product: product },
-//         // { price: price },
-//         // { qty: qty },
-//       ],
-//     });
-//     if (findexist) {
-//       await Orderproduct.findOneAndUpdate({
-//         $and: [
-//           { customer: req.userId },
-//           { product: product },
-//           // { purchaseprice: purchaseprice },
-//           // { qty: qty },
-//           // { new: true },
-//         ],
-//       })
-//         .then((data) => {
-         
-//           res.status(200).json({
-//             status: true,
-//             msg: "success",
-//             data: data,
-//           });
-//         })
-//         .catch((error) => {
-//           res.status(200).json({
-//             status: false,
-//             msg: "error",
-//             error: error,
-//           });
-//         });
-//     } else {
-//       newOrderproduct.save(function (err, data) {
-//         if (err) {
-//           res.status(400).json({
-//             status: false,
-//             msg: "Error Occured",
-//             error: err,
-//           });
-//         } else {
-//           res.status(200).json({
-//             status: true,
-//             msg: "Product added to order",
-//             data: data,
-//           });
-//         }
-//       });
-//     }
-//   }
-// };
-
+   
 
 exports.addoderproduct = async (req, res) => {
-  //  const getproduct = await Product.findOne({ _id: req.body.product });
-  // console.log(getproduct)
-  // if (getproduct) {
-  //   const getstore = await Store.findOne({ _id: getproduct.store });
-
+    const getcart = await Cart.findOne({ _id: req.body.cartId });
+  console.log(getcart)
+   if (getcart) {
+     const getproduct = await Product.findOne({ _id: getcart.product });
+ 
   const {cartId,orderId,status}  = req.body
 
-
   const newOrderproduct = new Orderproduct ({
-  // seller: getproduct?.seller,
-   cartId :cartId,
+   seller: getproduct?.seller,
+   cartId :cartId, 
     orderId :orderId,
-   // product : product,
-    status : status
+     status : status
   })
-  const findexist = await Orderproduct.findOne({orderId : orderId})
+  const findexist = await Orderproduct.findOne({cartId :cartId})
   if (findexist){
-    await Orderproduct.findOneAndUpdate({orderId:orderId}).then((data)=>{
+    await Orderproduct.findOneAndUpdate({cartId:cartId}).then((data)=>{
               res.status(200).json({
                 status : true,
                 data : data
@@ -137,7 +51,7 @@ exports.addoderproduct = async (req, res) => {
               }
             });
           }
-    //    }  
+        }  
 }
 
 
@@ -156,7 +70,7 @@ exports.getoneorderproduct = async(req,res) => {
   populate: {
       path: 'seller' 
   }
-})
+}).populate("seller")
 
 .populate({
   path: 'orderId',

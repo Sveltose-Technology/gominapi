@@ -276,7 +276,8 @@ exports.getproduct = async (req, res) => {
     .populate("unit")
     .populate("brand")
     .populate("color")
-    .populate("size");
+    .populate("size")
+    .populate("seller")
   //  .populate("material")
 
   if (findall) {

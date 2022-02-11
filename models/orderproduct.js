@@ -45,7 +45,7 @@ const orderProductSchema = new mongoose.Schema(
     // },
     status: {
       type: String,
-      default :"Order order"
+      default :"Order Placed"
     },
   },
   { timestamps: true }
