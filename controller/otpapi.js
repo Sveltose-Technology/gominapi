@@ -1,16 +1,16 @@
 const Otpapi = require("../models/otpapi");
 
 exports.addotpapi = async (req, res) => {
-  const { provider, apikey, templatename, status } = req.body;
+  const { template_id, mobile, authkey, status } = req.body;
 
   const newOtpapi = new Otpapi({
-    provider: provider,
-    apikey: apikey,
-    templatename: templatename,
+    template_id: template_id,
+    mobile: mobile,
+    authkey: authkey,
     status: status,
   });
 
-  const findexist = await Otpapi.findOne({ provider: provider });
+  const findexist = await Otpapi.findOne({ template_id: template_id });
   if (findexist) {
     res.status(400).json({
       status: false,

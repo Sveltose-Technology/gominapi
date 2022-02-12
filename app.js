@@ -59,11 +59,12 @@ const reason = require("./routes/reason");
 const transfer_type = require("./routes/transfer_type");
 
 const orderproduct = require("./routes/orderproduct");
+const otpapi = require("./routes/otpapi");
 
  
 
  
-
+ 
 
 //use
 app.use("/", customer);
@@ -111,8 +112,9 @@ app.use("/", size);
 app.use("/", reason);
 app.use("/", transfer_type);
 app.use("/", orderproduct);
+app.use("/", otpapi);
 
-
+ 
 
 app.get("/", (req, res) => {
   res.send("Hello World!!!!");

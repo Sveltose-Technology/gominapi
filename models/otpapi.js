@@ -3,18 +3,30 @@ const Schema = mongoose.Schema;
 
 const otpSchema = new Schema(
   {
-    provider: {
-      type: String,
-      require: true,
+    // provider: {
+    //   type: String,
+    //   require: true,
+    // },
+    // apikey: {
+    //   type: String,
+    //   require: true,
+    // },
+    // templatename: {
+    //   type: String,
+    //   require: true,
+    // },
+
+    template_id:{
+type : String
     },
-    apikey: {
-      type: String,
-      require: true,
-    },
-    templatename: {
-      type: String,
-      require: true,
-    },
+
+    mobile:{
+      type : String
+          },
+          authkey:{
+            type : String
+                },
+
     status: {
       type: String,
       default: "Inactive",
