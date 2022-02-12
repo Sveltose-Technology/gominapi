@@ -95,6 +95,47 @@ exports.getoneorderproduct = async(req,res) => {
 }
 
 
+exports.getoneorderbyseller = async(req,res) => {
+  // const getcart = await Cart.findOne({ })
+  // const getcart = await Cart.findOne({ _id: req.Seller});
+  const findall =await Orderproduct.find({ $and: [{ seller: req.sellerId }, { orderId: req.params.id }]})
+   
+  .populate("cartId")
+  .populate({
+    path: 'cartId',
+    populate: {
+        path: 'product' 
+    }
+}).populate({
+  path: 'cartId',
+  populate: {
+      path: 'seller' 
+  }
+}).populate("seller")
+
+.populate({
+  path: 'orderId',
+  populate: {
+      path: 'delivery_address' 
+  }
+})
+  if(findall){
+      res.status(200).json({
+          status:true,
+          msg:"success",
+          data:findall
+      })
+  }else{
+      res.status(400).json({
+          status:false,
+          msg:"error",
+          error:"error"
+      })
+  }
+
+}
+
+
 // exports.getorderProduct = async (req, res) => {
 //   const findall = await Orderproduct.find()
 //   .populate("cart")
@@ -228,4 +269,3 @@ exports.getorderProductbyseller = async(req,res) => {
   //}
 }
 
-//CONSOLE

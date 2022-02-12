@@ -7,7 +7,8 @@ const {
     addoderproduct,
     getoneorderproduct,
     getorderProduct,
-    getorderProductbyseller
+    getorderProductbyseller,
+    getoneorderbyseller
 //   getorder,
 //   pending_order,
 //   delivery_order,
@@ -27,13 +28,14 @@ router.post("/admin/addoderproduct",  addoderproduct);
 router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
 router.get("/admin/getorderProduct",  getorderProduct);
 router.get("/admin/getorderProductbyseller", tokenverify, getorderProductbyseller);
+router.get("/admin/getoneorderbyseller/:id", tokenverify, getoneorderbyseller);
 
 
 // router.get("/admin/getorder", verifytoken, getorder);
 // router.get(
 //   "/admin/getorderbysellerbytoken",tokenverify,
 //   getorderbysellerbytoken
-// );
+// ); 
 
 // router.get("/admin/pending_order", tokenverify, pending_order);
 // router.get("/admin/delivery_order", verifytoken, delivery_order);
