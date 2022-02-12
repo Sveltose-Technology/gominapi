@@ -98,7 +98,7 @@ exports.getoneorderproduct = async(req,res) => {
 exports.getoneorderbyseller = async(req,res) => {
   // const getcart = await Cart.findOne({ })
   // const getcart = await Cart.findOne({ _id: req.Seller});
-  const findall =await Orderproduct.find({ $and: [{ seller: req.sellerId }, { orderId: req.params.id }]})
+  const findall =await Orderproduct.find({ $and: [{ seller: req.sellerId }, { _id: req.params.id }]})
    
   .populate("cartId")
   .populate({
@@ -269,3 +269,34 @@ exports.getorderProductbyseller = async(req,res) => {
   //}
 }
 
+exports.delivered_order = async (req, res, next) => {
+  const datas = await Orderproduct.find({ status: "Deliver" })
+    
+    //$and: [{ orderId: req.params.id }, { status: "Deliver" }],
+
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(200).json({
+        status: false,
+        error: err,
+      });
+    });
+};
+
+
+
+exports.updateOrderStatusbyseller = (req, res) => {
+  Orderproduct.findOneAndUpdate({ _id: req.params.id }, { $set: { status: req.body.status } },{ new: true } ,(err, order) => {
+      if (err) {
+          return res.status(400).json({
+              error: errorHandler(err)
+          });
+      }
+      res.json(order);
+  });
+};

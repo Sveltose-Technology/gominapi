@@ -45,7 +45,8 @@ const orderProductSchema = new mongoose.Schema(
     // },
     status: {
       type: String,
-      default :"Order Placed"
+      default :"Order Placed",
+      enum: ["Delivered", "Cancelled","Pending","Compeleted"] 
     },
   },
   { timestamps: true }

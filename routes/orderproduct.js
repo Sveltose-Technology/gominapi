@@ -8,7 +8,8 @@ const {
     getoneorderproduct,
     getorderProduct,
     getorderProductbyseller,
-    getoneorderbyseller
+    getoneorderbyseller,
+    updateOrderStatusbyseller
 //   getorder,
 //   pending_order,
 //   delivery_order,
@@ -22,13 +23,14 @@ const {
 //   viewoneOrder
 } = require("../controller/orderproduct");
 
-// PATHS
+// PATHS  
  
 router.post("/admin/addoderproduct",  addoderproduct);
 router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
 router.get("/admin/getorderProduct",  getorderProduct);
 router.get("/admin/getorderProductbyseller", tokenverify, getorderProductbyseller);
 router.get("/admin/getoneorderbyseller/:id", tokenverify, getoneorderbyseller);
+router.post("/admin/updateOrderStatusbyseller/:id", tokenverify, updateOrderStatusbyseller);
 
 
 // router.get("/admin/getorder", verifytoken, getorder);
