@@ -118,6 +118,11 @@ exports.getoneorderbyseller = async(req,res) => {
   populate: {
       path: 'delivery_address' 
   }
+}).populate({
+  path: 'cartId',
+  populate: {
+      path: 'customer' 
+  }
 })
   if(findall){
       res.status(200).json({
