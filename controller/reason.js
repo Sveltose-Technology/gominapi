@@ -4,31 +4,31 @@ exports.addReason = async (req, res) => {
   const { reason } = req.body;
 
   const newReason = new Reason({
-    reason : reason,
+    reason: reason,
+    seller: req.sellerId,
   });
   newReason
-      .save()
-      .then(
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: newReason,
-        })
-      )
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
+    .save()
+    .then(
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: newReason,
+      })
+    )
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
       });
-  
+    });
 };
 
 exports.editReason = async (req, res) => {
   const findandUpdateEntry = await Reason.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }
@@ -49,7 +49,9 @@ exports.editReason = async (req, res) => {
 };
 
 exports.viewonecolor = async (req, res) => {
-  const findone = await Reason.findOne({ _id: req.params.id });
+  const findone = await Reason.findOne({
+    $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+  });
   if (findone) {
     res.status(200).json({
       status: true,
@@ -66,7 +68,9 @@ exports.viewonecolor = async (req, res) => {
 };
 
 exports.getReason = async (req, res) => {
-  const findall = await Reason.find().sort({ sortorder: 1 });
+  const findall = await Reason.find({ seller: req.sellerId }).sort({
+    sortorder: 1,
+  });
   if (findall) {
     res.status(200).json({
       status: true,
