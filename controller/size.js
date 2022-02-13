@@ -38,7 +38,7 @@ exports.addsize = async (req, res) => {
 exports.editsize = async (req, res) => {
   const findandUpdateEntry = await Size.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }
@@ -59,7 +59,9 @@ exports.editsize = async (req, res) => {
 };
 
 exports.viewonesize = async (req, res) => {
-  const findone = await Size.findOne({ _id: req.params.id });
+  const findone = await Size.findOne({
+    $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+  });
   if (findone) {
     res.status(200).json({
       status: true,
