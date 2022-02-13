@@ -4,40 +4,50 @@ const { verifytoken } = require("../functions/verifytoken");
 const { tokenverify } = require("../functions/tokenverify");
 
 const {
-    addoderproduct,
-    getoneorderproduct,
-    getorderProduct,
-    getorderProductbyseller,
-    getoneorderbyseller,
-    updateOrderStatusbyseller
-//   getorder,
-//   pending_order,
-//   delivery_order,
-//   cancelled_order,
-//   complete_order,
-//   del_order,
-//   totalorder,
-//   salesbyseller,
-//   getorderbysellerbytoken,
-//   editOrder,
-//   viewoneOrder
+  addoderproduct,
+  getoneorderproduct,
+  getorderProduct,
+  getorderProductbyseller,
+  getoneorderbyseller,
+  updateOrderStatusbyseller,
+  orderbycustomer,
+  //   getorder,
+  //   pending_order,
+  //   delivery_order,
+  //   cancelled_order,
+  //   complete_order,
+  //   del_order,
+  //   totalorder,
+  //   salesbyseller,
+  //   getorderbysellerbytoken,
+  //   editOrder,
+  //   viewoneOrder
 } = require("../controller/orderproduct");
 
-// PATHS  
- 
-router.post("/admin/addoderproduct",  addoderproduct);
-router.get("/admin/getoneorderproduct/:id",  getoneorderproduct);
-router.get("/admin/getorderProduct",  getorderProduct);
-router.get("/admin/getorderProductbyseller", tokenverify, getorderProductbyseller);
-router.get("/admin/getoneorderbyseller/:id", tokenverify, getoneorderbyseller);
-router.post("/admin/updateOrderStatusbyseller/:id", tokenverify, updateOrderStatusbyseller);
+// PATHS
 
+router.post("/admin/addoderproduct", addoderproduct);
+router.get("/admin/getoneorderproduct/:id", getoneorderproduct);
+router.get("/admin/getorderProduct", getorderProduct);
+router.get("/admin/orderbycustomer", verifytoken, orderbycustomer);
+
+router.get(
+  "/admin/getorderProductbyseller",
+  tokenverify,
+  getorderProductbyseller
+);
+router.get("/admin/getoneorderbyseller/:id", tokenverify, getoneorderbyseller);
+router.post(
+  "/admin/updateOrderStatusbyseller/:id",
+  tokenverify,
+  updateOrderStatusbyseller
+);
 
 // router.get("/admin/getorder", verifytoken, getorder);
 // router.get(
 //   "/admin/getorderbysellerbytoken",tokenverify,
 //   getorderbysellerbytoken
-// ); 
+// );
 
 // router.get("/admin/pending_order", tokenverify, pending_order);
 // router.get("/admin/delivery_order", verifytoken, delivery_order);
@@ -49,8 +59,4 @@ router.post("/admin/updateOrderStatusbyseller/:id", tokenverify, updateOrderStat
 // router.post("/admin/editOrder/:id", tokenverify,editOrder);
 // router.get("/admin/viewoneOrder/:id",tokenverify,   viewoneOrder);
 
-
 module.exports = router;
- 
-
- 

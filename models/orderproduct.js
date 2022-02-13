@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 
 const orderProductSchema = new mongoose.Schema(
   {
-    
-    
     // product: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   ref: "product",
@@ -15,21 +13,26 @@ const orderProductSchema = new mongoose.Schema(
     //   }
     // ],
     orderId: {
-      type: mongoose.Schema.Types.ObjectId,ref :"order"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "order",
     },
-    status : {
-      type :String
+    status: {
+      type: String,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
+    },
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "customer",
     },
     store: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "store",
     },
     cartId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
-    
+
     // qty: {
     //   type: Number,
     // },
@@ -45,8 +48,8 @@ const orderProductSchema = new mongoose.Schema(
     // },
     status: {
       type: String,
-      default :"Order Placed",
-      enum: ["Delivered", "Cancelled","Pending","Compeleted"] 
+      default: "Order Placed",
+      // enum: ["Delivered", "Cancelled","Pending","Compeleted"]
     },
   },
   { timestamps: true }
