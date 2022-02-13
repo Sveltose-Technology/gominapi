@@ -13,7 +13,7 @@ const {
 //Paths
 router.post("/admin/addstocktransfer", tokenverify, addstocktransfer);
 router.get("/admin/delstocktransfer/:id", delstocktransfer);
-router.get("/admin/getstocktransfer", getstocktransfer);
+router.get("/admin/getstocktransfer", tokenverify, getstocktransfer);
 router.get("/admin/getonestocktransfer/:id", tokenverify, getonestocktransfer);
 
 router.get("/admin/editstocktranfer/:id", editstocktranfer);
