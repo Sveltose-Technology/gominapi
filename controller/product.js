@@ -16,7 +16,7 @@ cloudinary.config({
 
 exports.addproduct = async (req, res) => {
   const {
-     store,
+    store,
     discount_perc,
     product_name,
     sku_no,
@@ -46,7 +46,7 @@ exports.addproduct = async (req, res) => {
 
   const newProduct = new Product({
     store: store,
-    seller :req.sellerId,
+    seller: req.sellerId,
     product_name: product_name,
     discount_perc: discount_perc,
     sku_no: sku_no,
@@ -170,8 +170,8 @@ exports.editproduct = async (req, res) => {
   } = req.body;
 
   data = {};
-  if(discount_perc){
- data.discount_perc =discount_perc
+  if (discount_perc) {
+    data.discount_perc = discount_perc;
   }
   if (product_name) {
     data.product_name = product_name;
@@ -245,7 +245,7 @@ exports.editproduct = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
       {
-        _id: req.params.id,
+        seller: req.sellerId,
       },
       { $set: data },
       { new: true }
@@ -277,7 +277,7 @@ exports.getproduct = async (req, res) => {
     .populate("brand")
     .populate("color")
     .populate("size")
-    .populate("seller")
+    .populate("seller");
   //  .populate("material")
 
   if (findall) {
@@ -414,7 +414,7 @@ exports.productbysubcategory = async (req, res) => {
 };
 
 exports.totalproductbyseller = async (req, res) => {
-  await Product.countDocuments({seller :req.sellerId})
+  await Product.countDocuments({ seller: req.sellerId })
     .then((data) => {
       res.status(200).json({
         status: true,
@@ -588,8 +588,8 @@ exports.productbysellerbytoken = async (req, res) => {
     .populate("brand")
     .populate("color")
     .populate("size")
-     .populate("store")
-     .populate("seller")
+    .populate("store")
+    .populate("seller");
 
   if (findall) {
     res.status(200).json({
@@ -775,8 +775,7 @@ exports.dispense = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "success",
-      data:  displayqty,
-                   
+      data: displayqty,
     });
   } catch (error) {
     res.status(400).json({

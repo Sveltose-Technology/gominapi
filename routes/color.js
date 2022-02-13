@@ -1,21 +1,23 @@
 const express = require("express");
 const router = express.Router();
+const { tokenverify } = require("../functions/tokenverify");
 
 const {
-    addcolor,getcolor,editcolor,viewonecolor,deletecolor
-   
+  addcolor,
+  getcolor,
+  editcolor,
+  viewonecolor,
+  deletecolor,
+  getcolorbyseller,
 } = require("../controller/color");
 
 //path
-router.post("/admin/addcolor", addcolor);
-router.post("/admin/editcolor/:id", editcolor);
+router.post("/admin/addcolor", tokenverify, addcolor);
+router.post("/admin/editcolor/:id", tokenverify, editcolor);
 router.get("/admin/getcolor", getcolor);
-router.get("/admin/viewonecolor/:id", viewonecolor);
+router.get("/admin/getcolorbyseller", tokenverify, getcolorbyseller);
+
+router.get("/admin/viewonecolor/:id", tokenverify, viewonecolor);
 router.get("/admin/deletecolor/:id", deletecolor);
-
-
-
-
- 
 
 module.exports = router;
