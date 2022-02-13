@@ -4,8 +4,8 @@ exports.addsize = async (req, res) => {
   const { sizeName } = req.body;
 
   const newSize = new Size({
-    sizeName : sizeName,
-    
+    sizeName: sizeName,
+    seller: req.sellerId,
   });
 
   const findexist = await Size.findOne({ sizeName: sizeName });
@@ -35,7 +35,7 @@ exports.addsize = async (req, res) => {
   }
 };
 
-exports.editsize= async (req, res) => {
+exports.editsize = async (req, res) => {
   const findandUpdateEntry = await Size.findOneAndUpdate(
     {
       _id: req.params.id,
@@ -77,6 +77,24 @@ exports.viewonesize = async (req, res) => {
 
 exports.getsize = async (req, res) => {
   const findall = await Size.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+exports.getsizebyseller = async (req, res) => {
+  const findall = await Size.find({ seller: req.sellerId }).sort({
+    sortorder: 1,
+  });
   if (findall) {
     res.status(200).json({
       status: true,
