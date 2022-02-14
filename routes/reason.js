@@ -18,4 +18,4 @@ router.post("/admin/editReason/:id", tokenverify, editReason);
 router.get("/admin/deleteReason/:id", deleteReason);
 
 module.exports = router;
-//console.log
+ 

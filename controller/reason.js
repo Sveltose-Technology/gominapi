@@ -48,7 +48,7 @@ exports.editReason = async (req, res) => {
   }
 };
 
-exports.viewonecolor = async (req, res) => {
+exports.viewonereason = async (req, res) => {
   const findone = await Reason.findOne({
     $and: [{ seller: req.sellerId }, { _id: req.params.id }],
   });
