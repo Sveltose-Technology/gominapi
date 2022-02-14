@@ -59,8 +59,7 @@ exports.editsize = async (req, res) => {
 };
 
 exports.viewonesize = async (req, res) => {
-  const findone = await Size.findOne({
-    $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+  const findone = await Size.findOne({_id: req.params.id  
   });
   if (findone) {
     res.status(200).json({

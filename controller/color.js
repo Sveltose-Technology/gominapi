@@ -59,9 +59,7 @@ exports.editcolor = async (req, res) => {
 };
 
 exports.viewonecolor = async (req, res) => {
-  const findone = await Color.findOne({
-    $and: [{ seller: req.sellerId }, { _id: req.params.id }],
-  });
+  const findone = await Color.findOne({ _id: req.params.id});
   if (findone) {
     res.status(200).json({
       status: true,
