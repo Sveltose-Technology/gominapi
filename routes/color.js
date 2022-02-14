@@ -17,7 +17,7 @@ router.post("/admin/editcolor/:id", tokenverify, editcolor);
 router.get("/admin/getcolor", getcolor);
 router.get("/admin/getcolorbyseller", tokenverify, getcolorbyseller);
 
-router.get("/admin/viewonecolor/:id", tokenverify, viewonecolor);
+router.get("/admin/viewonecolor/:id", viewonecolor);
 router.get("/admin/deletecolor/:id", deletecolor);
 
 module.exports = router;

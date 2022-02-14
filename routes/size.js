@@ -16,7 +16,7 @@ router.post("/admin/addsize", tokenverify, addsize);
 router.get("/admin/getsize", getsize);
 router.get("/admin/getsizebyseller", tokenverify, getsizebyseller);
 
-router.get("/admin/viewonesize/:id", tokenverify, viewonesize);
+router.get("/admin/viewonesize/:id", viewonesize);
 router.post("/admin/editsize/:id", tokenverify, editsize);
 router.get("/admin/deleteSize/:id", deleteSize);
 
