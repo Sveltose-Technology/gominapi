@@ -19,13 +19,13 @@ exports.addtocartproduct = async (req, res) => {
      total_qty = total_qty + product[i].product_qty;
    }
  
-  // let total_amount = 0;
-  // for (let i = 0; i < product.length; i++) {
-  //   total_amount =total_amount + product[i].product_price;
+  let total_amount = 0;
+  for (let i = 0; i < product.length; i++) {
+    total_amount =total_amount + product[i].product_price;
 
-  // }
-  //
-  //
+  }
+  
+  
 
   console.log();
   const addtoCart = new Cart({
