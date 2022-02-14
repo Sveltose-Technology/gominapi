@@ -10,10 +10,10 @@ const {
 
 // PATHS
 
-router.post("/admin/addnewpurchaseorder", addnewpurchaseorder);
-router.get("/admin/getpurchaseorder", getpurchaseorder);
-router.post("/admin/editnewpurchaseorder/:id", editnewpurchaseorder);
-router.get("/admin/getonepurchaseorder/:id", getonepurchaseorder);
+router.post("/admin/addnewpurchaseorder",tokenverify, addnewpurchaseorder);
+router.get("/admin/getpurchaseorder",tokenverify, getpurchaseorder);
+router.post("/admin/editnewpurchaseorder/:id",tokenverify, editnewpurchaseorder);
+router.get("/admin/getonepurchaseorder/:id",tokenverify, getonepurchaseorder);
 router.get("/admin/delpurchaseorder/:id", delpurchaseorder);
 
 

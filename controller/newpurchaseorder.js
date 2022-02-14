@@ -64,7 +64,7 @@ exports.addnewpurchaseorder = async (req, res) => {
   invoiceDate.getTime();
 
   const newpurchaseorder = new Purchaseorder({
-    //seller: seller,
+    seller: req.sellerId,
     supplier: supplier,
     product: product,
     stock_due: stock_due,
@@ -96,7 +96,7 @@ exports.addnewpurchaseorder = async (req, res) => {
 };
 
 exports.getpurchaseorder = async (req, res) => {
-  const findall = await Purchaseorder.find() 
+  const findall = await Purchaseorder.find({seller :req.sellerId}) 
     .sort({ sortorder: 1 }).populate("product")
     .populate("supplier").then((data) => {
       res.status(200).json({
@@ -119,7 +119,7 @@ exports.getpurchaseorder = async (req, res) => {
 exports.editnewpurchaseorder = async (req, res) => {
   const findandUpdateEntry = await Purchaseorder.findOneAndUpdate(
     {
-      _id: req.params.id,
+      $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
     { $set: req.body },
     { new: true }
@@ -142,7 +142,7 @@ exports.editnewpurchaseorder = async (req, res) => {
 
 
 exports.getonepurchaseorder = async (req, res) => {
-  const findone = await Purchaseorder.findOne({ _id: req.params.id }).populate("product").populate("supplier")
+  const findone = await Purchaseorder.findOne({ $and: [{ seller: req.sellerId }, { _id: req.params.id }], }).populate("product").populate("supplier")
   if (findone) {
     res.status(200).json({
       status: true,
