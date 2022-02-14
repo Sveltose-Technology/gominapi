@@ -10,6 +10,7 @@ const {
 } = require("../controller/reason");
 
 //path
+
 router.post("/admin/addReason", tokenverify, addReason);
 router.get("/admin/getReason", tokenverify, getReason);
 router.post("/admin/editReason/:id", tokenverify, editReason);
