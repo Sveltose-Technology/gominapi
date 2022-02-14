@@ -1,10 +1,11 @@
 const Orderproduct = require("../models/orderproduct");
+const Coupon = require("../models/coupon");
 const Store = require("../models/store");
 // const { v4: uuidv4 } = require("uuid");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
 const Cart = require("../models/cart");
-const store = require("../models/store");
+ 
 
 exports.addoderproduct = async (req, res) => {
   const getcartId = await Cart.findOne({ _id: req.body.cartId });
@@ -16,10 +17,11 @@ exports.addoderproduct = async (req, res) => {
   if (getcart) {
     const getproduct = await Product.findOne({ _id: getcart.product });
 
-    const { cartId, orderId, status } = req.body;
+    const { cartId, orderId, status } = req.body;             
 
     const newOrderproduct = new Orderproduct({
       seller: getproduct?.seller,
+      store : getproduct?.store,
       customer: getcartId?.customer,
       cartId: cartId,
       orderId: orderId,
@@ -58,7 +60,11 @@ exports.addoderproduct = async (req, res) => {
       });
     }
   }
+
+
+//}
 };
+
 
 exports.getoneorderproduct = async (req, res) => {
   // const getcart = await Cart.findOne({ })
@@ -114,12 +120,7 @@ exports.getoneorderbyseller = async (req, res) => {
         path: "product",
       },
     })
-    .populate({
-      path: "cartId",
-      populate: {
-        path: "seller",
-      },
-    })
+     
     .populate("seller")
 
     .populate({
@@ -133,7 +134,8 @@ exports.getoneorderbyseller = async (req, res) => {
       populate: {
         path: "customer",
       },
-    });
+     
+    }).populate("store")
   if (findall) {
     res.status(200).json({
       status: true,
