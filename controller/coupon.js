@@ -184,51 +184,5 @@ exports.totalCoupon = async(req,res) =>{
   })
 }
 
-// exports.varifyCoupon = async (req,res)=>{
-//   const{offer_code}  = req.body
-
-
-// }
-
-exports.varifyCoupon = async (body) => {
- // const {offer_code} = req.body;
-  // const newCoupon = new Coupon({
-  //   offer_code :  offer_code
-  // })
-  const coupon = await Coupon.findOne({ offer_code:body.offer_code })
-  if (coupon) {
-    //console.log(verifyoupon)
-      if (new Date().getDate() > Coupon.startDate.getDate() && new Date().getTime() < Coupon.expireOn.getDate()) {
-          if (body.total >= Coupon.thresholdAmount) {
-              let discount;
-              if (Coupon.type === 'percentage') {
-                  discount = (body.total * Coupon.value)/100
-              } else {
-                  discount = Coupon.value
-              }
-
-              return {
-                  inRange: true,
-                  discount,
-                  finalAmount: body.total - discount
-              }
-          } else {
-              return {
-                  inRange: false,
-                  message: `Need to add more items worth ${Coupon.thresholdAmount - body.total} to the list for this coupon to be enabled.`
-              }
-          }
-      } else {
-          return {
-              inRange: false,
-              message: 'Coupon expired! Try another coupon.'
-          }
-      }
-  } else {
-      return {
-          inRange: false,
-          message: 'Coupon invalid!please use a valid Coupon.'
-      }
-  }
-
-}
+ 
+ 

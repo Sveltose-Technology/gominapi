@@ -12,7 +12,7 @@ exports.addtocartproduct = async (req, res) => {
   // if (getproduct) {
   //    const getstore = await Store.findOne({ _id: getproduct.store })
 
-  const { product, product_price, product_qty, color, size } = req.body;
+  const {cartId, product, product_price, product_qty, color, size } = req.body;
 
   let total_qty = 0;
    for (let i = 0; i < product.length; i++) {
@@ -29,6 +29,7 @@ exports.addtocartproduct = async (req, res) => {
 
   console.log();
   const addtoCart = new Cart({
+    cartId : cartId,
     customer: req.userId,
     //seller: getstore?.seller,
     product: product,
@@ -40,6 +41,7 @@ exports.addtocartproduct = async (req, res) => {
 
   const findexist = await Cart.findOne({
     $and: [
+      {cartId : cartId},
       { customer: req.userId },
       { product: product },
       { color: color },
@@ -237,3 +239,51 @@ exports.cartbycustomer = async (req, res) => {
     });
   }
 };
+
+
+exports.cartbycartId = async (req, res) => {
+  const findone = await Cart.find({cartId: req.params.id })
+    .populate("customer")
+    .populate("product")
+    .populate({
+      path: "product",
+      populate: {
+        path: "color",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "size",
+      },
+    }).populate({
+      path: "product",
+      populate: {
+        path: "seller",
+      },
+    })
+  if (findone) {
+    let sum = 0;
+     for (let i = 0; i < findone.length; i++) {
+      let element_price = findone[i].product_price;
+      let element_qty = findone[i].product_qty;
+      sum = sum + element_price * element_qty;
+    }
+   // console.log(sum);
+    //console.log(findone)
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+        total: sum,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+

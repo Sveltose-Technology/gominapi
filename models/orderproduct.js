@@ -31,25 +31,14 @@ const orderProductSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "store",
     },
-    cartId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
+    // cartId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
+    cartId : {type: mongoose.Schema.Types.ObjectId, ref: "Cart"},
 
-    // qty: {
-    //   type: Number,
-    // },
-    // price: {
-    //   type: Number,
-    //   required: true,
-    // },
-    // size: {
-    //   type: String,
-    // },
-    // color: {
-    //   type: String,
-    // },
+    
     status: {
       type: String,
       default: "Order Placed",
-      // enum: ["Delivered", "Cancelled","Pending","Compeleted"]
+      // Delivered, Cancelled,Pending,Compeleted
     },
   },
   { timestamps: true }

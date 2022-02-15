@@ -8,7 +8,8 @@ const {
   removecart,
   cartbycustomer,
   editcart,
-  clearCart
+  clearCart,
+  cartbycartId
 } = require("../controller/cart");
  
 //path
@@ -18,8 +19,9 @@ router.get("/admin/remove_cart/:id",verifytoken, removecart);
 router.get("/admin/cartbycustomer",verifytoken, cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
 router.get("/admin/clearCart",verifytoken, clearCart);
+router.get("/admin/cartbycartId/:id",verifytoken, cartbycartId);
 
-
+ 
  
 module.exports = router;
 

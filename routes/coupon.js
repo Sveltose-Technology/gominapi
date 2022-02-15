@@ -14,7 +14,6 @@ router.get("/admin/getonecoupon/:id",tokenverify,getonecoupon )
 router.get("/admin/delcoupon/:id", delcoupon);
 router.get("/admin/totalCoupon",tokenverify, totalCoupon);
 router.get("/admin/totalCoupon",tokenverify, totalCoupon);
-router.post('/admin/varifyCoupon',varifyCoupon )
-
+ 
 
 module.exports = router;

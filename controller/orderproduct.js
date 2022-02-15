@@ -18,9 +18,6 @@ exports.addoderproduct = async (req, res) => {
     const getproduct = await Product.findOne({ _id: getcart.product });
 
     const { cartId, orderId, status } = req.body;             
-
-
-
     
     const newOrderproduct = new Orderproduct({
       seller: getproduct?.seller,
