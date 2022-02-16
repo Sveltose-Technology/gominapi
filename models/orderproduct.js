@@ -1,24 +1,7 @@
 const mongoose = require("mongoose");
 
-const orderProductSchema = new mongoose.Schema(
+const OrdertableSchema = new mongoose.Schema(
   {
-    // product: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "product",
-    //   required: true,
-    // },
-    // product: [
-    //   {
-    //     product :{ type: mongoose.Schema.Types.ObjectId,ref:"product"},size:{type : String},color:{type : String},price:{type :Number},qty:{type : Number}
-    //   }
-    // ],
-    orderId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "order",
-    },
-    status: {
-      type: String,
-    },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
@@ -27,21 +10,41 @@ const orderProductSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "customer",
     },
-    store: {
+    product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "store",
+      ref: "product",
+      required: true,
     },
-    // cartId: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cart" }],
-    cartId : {type: mongoose.Schema.Types.ObjectId, ref: "Cart"},
-
-    
+    product_qty: {
+      type: Number
+    },
+    size: {
+      type: String
+    },
+    color: {
+      type: String
+    },
+    payment_type: {
+      type: String
+    },
     status: {
-      type: String,
-      default: "Order Placed",
-      // Delivered, Cancelled,Pending,Compeleted
+      type: String
+    },
+    orderId: {
+      type: String
+    },
+    cus_orderId: {
+      type: String
+    },
+    seller_orderId: {
+      type: String
+    },
+    shipping_address: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user_address",
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("orderproduct", orderProductSchema);
+module.exports = mongoose.model("orderproduct", OrdertableSchema);

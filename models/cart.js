@@ -4,10 +4,10 @@ const CartSchema = new mongoose.Schema(
   {
     customer: { type: mongoose.Schema.Types.ObjectId, ref: "customer" },
     // customer: { type: String },
-  cartId:{
-    type :String
-  },
-   product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
+    cartId: {
+      type: String
+    },
+    product: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
     //  product: [
     //   {
     //     product :{ type: mongoose.Schema.Types.ObjectId,ref:"product"},size:{type : String},color:{type : String},price:{type :Number},qty:{type : Number}
