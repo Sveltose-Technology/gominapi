@@ -302,7 +302,23 @@ exports.editcustomerbyseller = async (req, res) => {
     });
   }
 };
-
+ 
+exports.getonecusByseller = async (req, res) => {
+  const findone = await Customer.findOne({ $and :[{added_by :req.sellerId},{_id: req.params.id }]});
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
        
 exports.getonecustomer = async (req, res) => {
   const findone = await Customer.findOne({ customer: req.userId });
