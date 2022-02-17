@@ -80,7 +80,7 @@ router.get("/admin/storebyseller", tokenverify, storebyseller);
 router.post("/admin/editstore/:id", multipleUpload,tokenverify, editstore);
 router.get("/admin/store_req", store_req);
 router.get("/admin/totalstorebyseller",tokenverify, totalstorebyseller)
-router.get("/admin/totalstore",tokenverify, totalstore)
+router.get("/admin/totalstore", totalstore)
 
 router.post("/admin/searchstore", searchstore)
 router.get("/admin/browsebytrending_store",  browsebytrending_store);
