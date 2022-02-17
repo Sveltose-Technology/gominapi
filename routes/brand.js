@@ -13,7 +13,8 @@ const {
   deletebrand,
   brand_img,
   search_brand,
-  totalbrandbyseller
+  totalbrandbyseller,
+  totalbrand
 } = require("../controller/brand");
 
 const storage = multer.diskStorage({
@@ -55,4 +56,6 @@ router.get("/admin/deletebrand/:id", deletebrand);
 router.get("/admin/search_brand", search_brand);
 //router.post("/admin/brandimage/:id", uploads.single("brand_img"), brand_img);
 router.get("/admin/totalbrandbyseller",tokenverify, totalbrandbyseller);
+router.get("/admin/totalbrand",tokenverify, totalbrand);
+
 module.exports = router;

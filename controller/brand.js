@@ -240,6 +240,23 @@ exports.search_brand = (req, res) => {
   });
 };
 
+exports.totalbrand = async(req,res) => {
+  await Brand.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
+
+
 
 exports.totalbrandbyseller = async(req,res) => {
   await Brand.countDocuments({seller: req.sellerId}).then((data)=>{
