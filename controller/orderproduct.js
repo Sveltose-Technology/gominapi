@@ -91,7 +91,7 @@ exports.addordersample = async (req, res) => {
   const finalarray = [];
   let total_qty = 0
   let total_price = 0
-  const cus_orderId = "#ORDC" + Date.now();
+  const cus_orderId = "ORDC" + Date.now();
   for (let index = 0; index < cartitem.length; index++) {
     let element = {}
     element.product = cartitem[index].product;
@@ -155,6 +155,23 @@ exports.orderbysellerbytoken = async (req, res) => {
 
 exports.orderlist = async (req, res) => {
   const findall = await Ordertable.find().sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.getorderbycustomer = async (req, res) => {
+  const findall = await Ordertable.find({cus_orderId:req.params.id}).sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
       status: true,
