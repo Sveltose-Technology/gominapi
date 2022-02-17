@@ -15,6 +15,7 @@ const {
   productbysubcategory,
   productbybrand,
   del_product,
+  totalproduct,
   totalproductbyseller,
   searchItem,
   searchinputproduct,
@@ -75,6 +76,8 @@ router.get("/admin/productbysubcategory/:id", productbysubcategory);
 
 router.get("/admin/del_product/:id", del_product);
 router.get("/admin/totalproductbyseller",tokenverify,totalproductbyseller);
+router.get("/admin/totalproduct", totalproduct);
+
 router.post("/admin/searchItem", searchItem);
 router.post("/admin/searchinputproduct", searchinputproduct);
 router.post("/admin/searchinputbycategory", searchinputbycategory);
@@ -93,3 +96,4 @@ router.post("/admin/dispense", dispense);
 
  
 module.exports = router;
+ 
