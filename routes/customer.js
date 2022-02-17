@@ -32,7 +32,7 @@ router.post("/user/addcustomerbyseller",tokenverify, addcustomerbyseller);
 router.post("/user/editcustomerbyseller/:id",tokenverify, editcustomerbyseller);
 
 router.get("/user/allcustomer",allcustomer);
-router.get("/user/viewonecustomer", viewonecustomer);
+router.get("/user/viewonecustomer/:id", viewonecustomer);
 router.get("/user/getonecustomer",verifytoken, getonecustomer);
 router.get("/user/getonecusByseller/:id",tokenverify, getonecusByseller);
 

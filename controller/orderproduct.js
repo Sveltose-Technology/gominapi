@@ -124,8 +124,6 @@ exports.addordersample = async (req, res) => {
     res.json(error)
   })
 
-
-
 }
 
 exports.orderbysellerbytoken = async (req, res) => {
