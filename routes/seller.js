@@ -20,7 +20,8 @@ const {
   getoneempcreatedbyseller,
   resetpassword,
   editempByseller,
-  totalempbyseller
+  totalempbyseller,
+  viewoneseller
 
   //storebyseller,
 } = require("../controller/seller");
@@ -86,6 +87,8 @@ router.post(
 router.get("/admin/delSeller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller/:id", tokenverify, getoneseller);
+router.get("/admin/viewoneseller/:id", viewoneseller);
+
 router.get("/admin/totalseller", totalseller);
 router.get("/admin/totalempbyseller",tokenverify, totalempbyseller);
 

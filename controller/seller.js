@@ -229,6 +229,8 @@ exports.getoneempcreatedbyseller = async (req, res) => {
   }
 };
 
+// seller by token
+
 exports.getoneseller = async (req, res) => {
   const findone = await Seller.findOne({ _id: req.sellerId })
   //.populate("role");
@@ -246,6 +248,27 @@ exports.getoneseller = async (req, res) => {
     });
   }
 };
+
+//admin
+exports.viewoneseller = async (req, res) => {
+  const findone = await Seller.findOne()
+  //.populate("role");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
 
 exports.sellerlogin = async (req, res) => {
   const { mobile, email, password } = req.body;
