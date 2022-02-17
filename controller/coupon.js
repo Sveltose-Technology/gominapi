@@ -184,5 +184,22 @@ exports.totalCoupon = async(req,res) =>{
   })
 }
 
+exports.gettotalcoupon = async(req,res) =>{
+  await Coupon.countDocuments().then((data)=>{
+    res.status(200).json({
+      status: true,
+      data: data,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  })
+}
+
+
  
  

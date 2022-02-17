@@ -13,7 +13,7 @@ router.get("/admin/getcouponbyseller",tokenverify, getcouponbyseller);
 router.get("/admin/getonecoupon/:id",tokenverify,getonecoupon )
 router.get("/admin/delcoupon/:id", delcoupon);
 router.get("/admin/totalCoupon",tokenverify, totalCoupon);
-router.get("/admin/totalCoupon",tokenverify, totalCoupon);
+router.get("/admin/gettotalcoupon", totalCoupon);
  
 
 module.exports = router;
