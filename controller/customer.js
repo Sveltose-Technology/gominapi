@@ -408,9 +408,37 @@ exports.totalcustomerbyseller = async (req, res) => {
 
 exports.sendotp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { customer_email } = req.body;
+  const { email,mobile } = req.body;
+  const http = require("https");
+
+  const options = {
+    "method": "GET",
+    "hostname": "api.msg91.com",
+    "port": null,
+    "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${mobile}&authkey=${process.env.OTPAUTH}`,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  };
+  
+  const requestmain = http.request(options, function (res) {
+    const chunks = [];
+  
+    res.on("data", function (chunk) {
+      chunks.push(chunk);
+    });
+  
+    res.on("end", function () {
+      const body = Buffer.concat(chunks);
+      console.log(body.toString());
+    });
+  });
+  
+  requestmain.write("{\"OTP\":\"6786\"}");
+  requestmain.end();
+  
   const finddetails = await Customer.findOneAndUpdate(
-    { customer_email: customer_email },
+    { email: email },
     { $set: { otp: defaultotp } },
     { new: true }
   );
@@ -455,7 +483,7 @@ exports.sendotp = async (req, res) => {
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
-      email: customer_email,
+      email: email,
       otp: defaultotp,
     });
   } else {
