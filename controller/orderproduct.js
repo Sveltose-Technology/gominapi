@@ -86,6 +86,7 @@ exports.addOrder = async (req, res) => {
 }
 
 exports.addordersample = async (req, res) => {
+
   const cartitem = await Cart.find({ _id: req.body.cart })
   const finalarray = [];
   let total_qty = 0
@@ -105,11 +106,12 @@ exports.addordersample = async (req, res) => {
     element.status = req.body.status;
     element.cus_orderId = cus_orderId;
     element.shipping_address = req.body.shipping_address;
-
+ 
     console.log(element)
     finalarray.push(element)
   }
-
+  
+ 
   //console.log(finalarray)
   await Ordertable.insertMany(finalarray).then((data) => {
     res.json({
@@ -123,7 +125,7 @@ exports.addordersample = async (req, res) => {
   }).catch((error) => {
     res.json(error)
   })
-
+  
 }
 
 exports.orderbysellerbytoken = async (req, res) => {
@@ -149,7 +151,7 @@ exports.orderbysellerbytoken = async (req, res) => {
   }
 };
 
-
+ 
 
 exports.orderlist = async (req, res) => {
   const findall = await Ordertable.find().sort({ sortorder: 1 });

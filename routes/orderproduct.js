@@ -8,13 +8,14 @@ const {
   orderlist,
   pending_order,
   orderbysellerbytoken,
-  addordersample
-} = require("../controller/orderproduct");
+  addordersample,
+ } = require("../controller/orderproduct");
 
 // PATHS
 
 router.post("/admin/addOrder",verifytoken, addOrder);
 router.get("/admin/orderlist", orderlist);
+ 
 router.post("/admin/addordersample", addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
 router.get(
@@ -25,4 +26,4 @@ router.get(
 module.exports = router;
  
 
- 
+  
