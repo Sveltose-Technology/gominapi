@@ -474,7 +474,7 @@ exports.totalseller = async (req, res) => {
 };
 
 exports.totalempbyseller = async (req, res) => {
-  await Seller.countDocuments({seller :req.sellerId})
+  await Seller.countDocuments({added_by :req.sellerId})
     .then((data) => {
       res.status(200).json({
         status: true,
