@@ -47,7 +47,7 @@ exports.signup = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
-    // seller :req.sellerId,
+    // added_by :req.sellerId,
     firstname: firstname,
     lastname: lastname,
     email: email,
@@ -127,6 +127,7 @@ exports.addcustomerbyseller = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
+    seller :req.sellerId,
     firstname: firstname,
     lastname: lastname,
     email: email,
@@ -320,6 +321,24 @@ exports.getonecustomer = async (req, res) => {
   }
 };
 
+exports.viewonecustomer = async (req, res) => {
+  const findone = await Customer.findOne({_id: req.params.id });
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
 exports.delcustomer = async (req, res) => {
   try {
     const deleteentry = await Customer.deleteOne({ _id: req.params.id });
@@ -355,7 +374,7 @@ exports.totalcustomer = async (req, res) => {
 };
 
 exports.totalcustomerbyseller = async (req, res) => {
-  await Customer.countDocuments({seller :req.sellerId})
+  await Customer.countDocuments({added_by :req.sellerId})
     .then((data) => {
       res.status(200).json({
         status: true,
