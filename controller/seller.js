@@ -390,7 +390,7 @@ exports.editempByseller = async (req, res) => {
 
 
 exports.editseller = async (req, res) => {
-  const { name, email, mobile, rolename } = req.body;
+  const { name, email, mobile, rolename,image } = req.body;
 
   data = {};
   if (name) {
