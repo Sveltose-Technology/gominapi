@@ -225,9 +225,10 @@ exports.getoneorderbyseller = async (req, res) => {
   const getseller = await Seller.findOne({ _id: req.sellerId });
 
 
-  const findone = await Ordertable.findOne({ cus_orderId: req.params.id })
+  const findone = await Ordertable.find({ cus_orderId: req.params.id })
     .populate("product")
     .populate("customer")
+    .populate("")
     //.populate("delivery_address")
     // .populate({
     //   path: "product",
