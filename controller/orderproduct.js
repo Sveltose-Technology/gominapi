@@ -87,6 +87,13 @@ exports.addOrder = async (req, res) => {
 
 exports.addordersample = async (req, res) => {
 
+ // const getproduct = await Product.findOne({ _id: req.body.product});
+  //console.log(getproduct)
+ // if (getproduct) {
+   // const seller = getstore.Seller;
+  //const getstore = await Store.findOne({ _id: getproduct.store }); 
+  
+
   const cartitem = await Cart.find({ _id: req.body.cart })
   const finalarray = [];
   let total_qty = 0
@@ -128,7 +135,7 @@ exports.addordersample = async (req, res) => {
   }).catch((error) => {
     res.json(error)
   })
-  
+//}
 }
 
 exports.orderbyseller = async (req, res) => {
@@ -136,14 +143,14 @@ exports.orderbyseller = async (req, res) => {
   //  if(getstore){
   // const seller = getstore.seller
   //console.log(req.params.id)
-  const getproduct = await Product.findOne({ _id: req.body.product});
+  //const getproduct = await Product.findOne({ _id: req.body.product});
   //console.log(getproduct)
-  if (getproduct) {
-    const seller = getstore.Seller;
-    //const getstore = await Store.findOne({ _id: getproduct.store });
+  //if (getproduct) {
+   // const seller = getstore.Seller;
+  //const getseller = await Store.findOne({ _id: getproduct.seller });
    
-
-  const findone = await Ordertable.find({seller:req.sellerId})
+  const getseller = await Seller.findOne({ _id: req.sellerId });
+  const findone = await Ordertable.find()
     .populate("product")
     .populate("customer")
     .populate("shipping_address")
@@ -168,7 +175,7 @@ exports.orderbyseller = async (req, res) => {
       error: "error",
     });
   }
-}
+
 };
 
  
