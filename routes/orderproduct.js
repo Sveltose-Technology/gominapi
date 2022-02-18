@@ -22,7 +22,7 @@ router.get("/admin/getorderbycustomer",verifytoken, getorderbycustomer);
  
 router.post("/admin/addordersample", addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
-router.get("/admin/orderbyseller",tokenverify,orderbyseller
+router.get("/admin/orderbyseller/:id",tokenverify,orderbyseller
 );
 router.get("/admin/getoneorderbyseller/:id",tokenverify, getoneorderbyseller);
 

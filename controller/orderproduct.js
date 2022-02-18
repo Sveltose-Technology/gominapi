@@ -133,13 +133,14 @@ exports.addordersample = async (req, res) => {
 }
 
 exports.orderbyseller = async (req, res) => {
+  const {orderId} = req.body
    
   const getseller = await Seller.findOne({ _id: req.sellerId });
-  const findone = await Ordertable.find()
-    .populate("product")
-    .populate("customer")
-    .populate("shipping_address")
-    .populate("seller")
+  const findone = await Ordertable.find({orderId: orderId})
+    // .populate("product")
+    // .populate("customer")
+    // .populate("shipping_address")
+    // .populate("seller")
     .populate({
       path: "product",
       populate: {
@@ -172,6 +173,8 @@ exports.orderlist = async (req, res) => {
       status: true,
       msg: "success",
       data: findall,
+     // orderId: cus_orderId,
+
     });
   } else {
     res.status(400).json({
@@ -210,7 +213,9 @@ exports.getorderbycustomer = async (req, res) => {
       msg: "success",
       data: findall,
       total_price: total_price,
-      total_qty :total_qty
+      total_qty :total_qty,
+      
+
     });
   } else {
     res.status(400).json({

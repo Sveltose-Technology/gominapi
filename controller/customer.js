@@ -437,8 +437,8 @@ exports.sendotp = async (req, res) => {
   requestmain.write("{\"OTP\":\"6786\"}");
   requestmain.end();
   
-  const finddetails = await Customer.findOneAndUpdate(
-    { email: email },
+  const finddetails = await Customer.findOneAndUpdate({
+    $or: [{ mobile: mobile }, { email: email }]},
     { $set: { otp: defaultotp } },
     { new: true }
   );
@@ -484,9 +484,11 @@ exports.sendotp = async (req, res) => {
       status: true,
       msg: "otp send successfully",
       email: email,
+      mobile:mobile,
       otp: defaultotp,
     });
-  } else {
+  } 
+  else {
     res.status(400).json({
       status: false,
       msg: "error occured",
