@@ -134,7 +134,7 @@ exports.addordersample = async (req, res) => {
 exports.orderbyseller = async (req, res) => {
    
 
-  const findone = await Ordertable.find({ seller: req.sellerId })
+  const findone = await Ordertable.find()
     .populate("product")
     .populate("customer")
     .populate("shipping_address")

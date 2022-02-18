@@ -117,7 +117,7 @@ exports.edit_role = async (req, res) => {
 };
 
 exports.viewonerole = async (req, res) => {
-  const findone = await Role.findOne({ id: req.sellerId }).populate("addemp")
+  const findone = await Role.findOne({ id: req.sellerId }).populate("addemp").populate("emp")
   if (findone) {
     res.status(200).json({
       status: true,
