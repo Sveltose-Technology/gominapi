@@ -7,7 +7,7 @@ const {
   addOrder,
   orderlist,
   pending_order,
-  orderbysellerbytoken,
+  orderbyseller,
   addordersample,
   getorderbycustomer
  } = require("../controller/orderproduct");
@@ -21,9 +21,7 @@ router.get("/admin/getorderbycustomer/:id", getorderbycustomer);
  
 router.post("/admin/addordersample", addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
-router.get(
-  "/admin/orderbysellerbytoken",tokenverify,
-  orderbysellerbytoken
+router.get("/admin/orderbyseller/:id",orderbyseller
 );
 
 module.exports = router;

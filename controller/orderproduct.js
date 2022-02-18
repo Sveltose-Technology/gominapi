@@ -92,6 +92,7 @@ exports.addordersample = async (req, res) => {
   let total_qty = 0
   let total_price = 0
   const cus_orderId = "ORDC" + Date.now();
+  const seller_orderId = "ORDC" + Date.now();
   for (let index = 0; index < cartitem.length; index++) {
     let element = {}
     element.product = cartitem[index].product;
@@ -105,6 +106,7 @@ exports.addordersample = async (req, res) => {
     element.payment_type = req.body.payment_type;
     element.status = req.body.status;
     element.cus_orderId = cus_orderId;
+    element.seller_orderId = seller_orderId;
     element.shipping_address = req.body.shipping_address;
  
     console.log(element)
@@ -119,6 +121,7 @@ exports.addordersample = async (req, res) => {
       msg: "Product added to Order",
       data: data,
       orderId: cus_orderId,
+      sellerorderId:seller_orderId,
       total_qty: total_qty,
       total_price: total_price,
     })
@@ -128,14 +131,21 @@ exports.addordersample = async (req, res) => {
   
 }
 
-exports.orderbysellerbytoken = async (req, res) => {
-  const getstore = await Store.findOne({ product: req.params.id });
+exports.orderbyseller = async (req, res) => {
+   
 
-  const findone = await Ordertable.find({ id: req.sellerId })
+  const findone = await Ordertable.find({ seller_orderId:req.params.id })
     .populate("product")
     .populate("customer")
-    //.populate("delivery_address")
-    .populate("seller");
+    .populate("shipping_address")
+    .populate("seller")
+    .populate({
+      path: "product",
+      populate: {
+        path: "seller",
+      },
+    })
+
   if (findone) {
     res.status(200).json({
       status: true,
