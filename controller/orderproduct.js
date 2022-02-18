@@ -171,7 +171,8 @@ exports.orderlist = async (req, res) => {
 };
 
 exports.getorderbycustomer = async (req, res) => {
-  const findall = await Ordertable.find({cus_orderId:req.params.id}).sort({ sortorder: 1 });
+  const findall = await Ordertable.find({cus_orderId:req.params.id}).sort({ sortorder: 1 })
+  .populate("customer").populate("shipping_address").populate("product")
   if (findall) {
     res.status(200).json({
       status: true,
