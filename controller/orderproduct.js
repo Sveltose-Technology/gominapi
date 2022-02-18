@@ -132,9 +132,18 @@ exports.addordersample = async (req, res) => {
 }
 
 exports.orderbyseller = async (req, res) => {
+  // const getstore = await Store.findOne({product : req.params.id})
+  //  if(getstore){
+  // const seller = getstore.seller
+  //console.log(req.params.id)
+  const getproduct = await Product.findOne({ _id: req.body.product});
+  //console.log(getproduct)
+  if (getproduct) {
+    const seller = getstore.Seller;
+    //const getstore = await Store.findOne({ _id: getproduct.store });
    
 
-  const findone = await Ordertable.find()
+  const findone = await Ordertable.find({seller:req.sellerId})
     .populate("product")
     .populate("customer")
     .populate("shipping_address")
@@ -159,6 +168,7 @@ exports.orderbyseller = async (req, res) => {
       error: "error",
     });
   }
+}
 };
 
  

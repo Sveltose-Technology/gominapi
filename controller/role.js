@@ -8,10 +8,11 @@ exports.addrole = async (req, res) => {
   const {
     emp,
     store,
-    employee,
-    customer,
-    supplier,
-    product,
+    contacts,
+    // employee,
+    // customer,
+    // supplier,
+    inventory,
     stockControl,
     offers,
     coupons,
@@ -20,7 +21,7 @@ exports.addrole = async (req, res) => {
     order,
     purcahse,
     reports,
-    notification,
+   // notification,
     rolesPermission,
     setting,
   } = req.body;
@@ -28,12 +29,8 @@ exports.addrole = async (req, res) => {
   const newRole = await new Role({
     addemp: req.sellerId,
     emp : emp,
-    employee:employee,
-    store: store,
-    employee: employee,
-    customer: customer,
-    supplier: supplier,
-    product: product,
+    contacts : contacts,
+    inventory: inventory,
     stockControl: stockControl,
     offers: offers,
     coupons: coupons,
@@ -45,8 +42,7 @@ exports.addrole = async (req, res) => {
     notification: notification,
     rolesPermission: rolesPermission,
     setting: setting,
-    order_add,
-     
+      
   });
 
   // const findexist = await Role.findOne({ role_name: role_name });

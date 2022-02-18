@@ -13,30 +13,39 @@ emp :
       type: Boolean,
       default: false,
     },
-    employee: {
-      type: Boolean,
+    // employee: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // customer: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    contacts:{
+      type :Boolean,
       default: false,
     },
-    customer: {
-      type: Boolean,
-      default: false,
-    },
-    supplier: {
-      type: Boolean,
-      default: false,
-    },
-    product: {
-      type: Boolean,
-      default: false,
+    // supplier: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+
+    // product: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    inventory:{
+     type : Boolean,
+       default: false,
     },
     stockControl: {
       type: Boolean,
       default: false,
     },
-    offers: {
-      type: Boolean,
-      default: false,
-    },
+    // offers: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     coupons: {
       type: Boolean,
       default: false,
@@ -61,10 +70,10 @@ emp :
       type: Boolean,
       default: false,
     },
-    notification: {
-      type: Boolean,
-      default: false,
-    },
+    // notification: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     rolesPermission: {
       type: Boolean,
       default: false,
