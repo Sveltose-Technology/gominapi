@@ -16,12 +16,12 @@ const {
 
 router.post("/admin/addOrder",verifytoken, addOrder);
 router.get("/admin/orderlist", orderlist);
-router.get("/admin/getorderbycustomer/:id", getorderbycustomer);
+router.get("/admin/getorderbycustomer",verifytoken, getorderbycustomer);
 
  
 router.post("/admin/addordersample", addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
-router.get("/admin/orderbyseller/:id",orderbyseller
+router.get("/admin/orderbyseller",tokenverify,orderbyseller
 );
 
 module.exports = router;

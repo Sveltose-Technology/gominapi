@@ -134,7 +134,7 @@ exports.addordersample = async (req, res) => {
 exports.orderbyseller = async (req, res) => {
    
 
-  const findone = await Ordertable.find({ seller_orderId:req.params.id })
+  const findone = await Ordertable.find({ seller: req.sellerId })
     .populate("product")
     .populate("customer")
     .populate("shipping_address")
@@ -181,7 +181,7 @@ exports.orderlist = async (req, res) => {
 };
 
 exports.getorderbycustomer = async (req, res) => {
-  const findall = await Ordertable.find({cus_orderId:req.params.id}).sort({ sortorder: 1 })
+  const findall = await Ordertable.find({customer:req.userId}).sort({ sortorder: 1 })
   .populate("customer").populate("shipping_address").populate("product")
   if (findall) {
     res.status(200).json({

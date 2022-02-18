@@ -4,13 +4,7 @@ const seller = require("../models/seller");
 exports.add_role = async (req, res) => {};
 
 exports.addrole = async (req, res) => {
-  // const { role_name,seller,storePermission,customerPermission,empPermission,supplierPermission,productPermission,stockcntrlPermission,offerPermission,couponPermission,billingPermission,purchaseorderPer,purchaseInvoicePer,
-  //  store_add, store_edit, store_view, store_delete, customer_add, customer_edit, customer_view, customer_delete,
-  // employee_add, employee_edit, employee_view, employee_delete, supplier_add, supplier_edit, supplier_view, supplier_delete,
-  // product_add, product_edit, product_view, product_delete, stockcontrol_add, stockcontrol_edit, stockcontrol_view, stockcontrol_delete, offer_add,
-  // offer_edit, offer_view, offer_delete, coupon_add, coupon_edit, coupon_view, coupon_delete, billing_add, billing_edit, billing_view, billing_delete, purchaseorder_add, purchaseorder_edit, purchaseorder_view, purchaseorder_delete, purchaseInvoice_add, purchaseInvoice_edit, purchaseInvoice_view, purchaseInovice_delete
-  // } =
-
+  
   const {
     emp,
     store,
@@ -51,50 +45,8 @@ exports.addrole = async (req, res) => {
     notification: notification,
     rolesPermission: rolesPermission,
     setting: setting,
-    // store_add: store_add,
-    // store_edit: store_edit,
-    // store_view: store_view,
-    // store_delete: store_delete,
-    // customer_add: customer_add,
-    // customer_edit: customer_edit,
-    // customer_view: customer_view,
-    // customer_delete: customer_delete,
-    // employee_add: employee_add,
-    // employee_edit: employee_edit,
-    // employee_view: employee_view,
-    // employee_delete: employee_delete,
-    // supplier_add: supplier_add,
-    // supplier_edit: supplier_edit,
-    // supplier_view: supplier_view,
-    // supplier_delete: supplier_delete,
-    // product_add: product_add,
-    // product_edit: product_edit,
-    // product_view: product_view,
-    // product_delete: product_delete,
-    // stockcontrol_add: stockcontrol_add,
-    // stockcontrol_edit: stockcontrol_edit,
-    // stockcontrol_view: stockcontrol_view,
-    // stockcontrol_delete: stockcontrol_delete,
-    // offer_add: offer_add,
-    // offer_edit: offer_edit,
-    // offer_view: offer_view,
-    // offer_delete: offer_delete,
-    // coupon_add: coupon_add,
-    // coupon_edit: coupon_edit,
-    // coupon_view: coupon_view,
-    // coupon_delete: coupon_delete,
-    // billing_add: billing_add,
-    // billing_edit: billing_edit,
-    // billing_view: billing_view,
-    // billing_delete: billing_delete,
-    // purchaseorder_add: purchaseorder_add,
-    // purchaseorder_edit: purchaseorder_edit,
-    // purchaseorder_view: purchaseorder_view,
-    // purchaseorder_delete: purchaseorder_delete,
-    // purchaseInvoice_add: purchaseInvoice_add,
-    // purchaseInvoice_edit: purchaseInvoice_edit,
-    // purchaseInvoice_view: purchaseInvoice_view,
-    // purchaseInovice_delete: purchaseInovice_delete
+    order_add,
+     
   });
 
   // const findexist = await Role.findOne({ role_name: role_name });
