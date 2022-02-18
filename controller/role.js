@@ -39,7 +39,7 @@ exports.addrole = async (req, res) => {
     order: order,
     purcahse: purcahse,
     reports: reports,
-    notification: notification,
+    //notification: notification,
     rolesPermission: rolesPermission,
     setting: setting,
       
