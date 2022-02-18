@@ -9,7 +9,8 @@ const {
   pending_order,
   orderbyseller,
   addordersample,
-  getorderbycustomer
+  getorderbycustomer,
+  getoneorderbyseller
  } = require("../controller/orderproduct");
 
 // PATHS
@@ -23,6 +24,8 @@ router.post("/admin/addordersample", addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
 router.get("/admin/orderbyseller",tokenverify,orderbyseller
 );
+router.get("/admin/getoneorderbyseller/:id",tokenverify, getoneorderbyseller);
+
 
 module.exports = router;
  

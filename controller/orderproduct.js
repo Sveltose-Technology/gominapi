@@ -87,12 +87,6 @@ exports.addOrder = async (req, res) => {
 
 exports.addordersample = async (req, res) => {
 
- // const getproduct = await Product.findOne({ _id: req.body.product});
-  //console.log(getproduct)
- // if (getproduct) {
-   // const seller = getstore.Seller;
-  //const getstore = await Store.findOne({ _id: getproduct.store }); 
-  
 
   const cartitem = await Cart.find({ _id: req.body.cart })
   const finalarray = [];
@@ -139,15 +133,6 @@ exports.addordersample = async (req, res) => {
 }
 
 exports.orderbyseller = async (req, res) => {
-  // const getstore = await Store.findOne({product : req.params.id})
-  //  if(getstore){
-  // const seller = getstore.seller
-  //console.log(req.params.id)
-  //const getproduct = await Product.findOne({ _id: req.body.product});
-  //console.log(getproduct)
-  //if (getproduct) {
-   // const seller = getstore.Seller;
-  //const getseller = await Store.findOne({ _id: getproduct.seller });
    
   const getseller = await Seller.findOne({ _id: req.sellerId });
   const findone = await Ordertable.find()
@@ -201,10 +186,31 @@ exports.getorderbycustomer = async (req, res) => {
   const findall = await Ordertable.find({customer:req.userId}).sort({ sortorder: 1 })
   .populate("customer").populate("shipping_address").populate("product")
   if (findall) {
+  //   let total_price = 0;
+  //    for (let i = 0; i < findall.length; i++) {
+  //     let element_price = findall[i].product_price;
+  //     let element_qty = findall[i].product_qty;
+  //     total_price = total_price + element_price * element_qty;
+  //   }
+  const cartitem = await Cart.find({ _id: req.body.cart })
+    let total_qty = 0
+  let total_price = 0
+  for (let index = 0; index < cartitem.length; index++) {
+    let element = {}
+    element.product = cartitem[index].product;
+ 
+    element.product_price = cartitem[index].product_price;
+    element.product_qty = cartitem[index].product_qty;
+    total_qty = total_qty + cartitem[index].product_qty
+    total_price = total_price + cartitem[index].product_price
+ 
+  }
     res.status(200).json({
       status: true,
       msg: "success",
       data: findall,
+      total_price: total_price,
+      total_qty :total_qty
     });
   } else {
     res.status(400).json({
@@ -214,6 +220,39 @@ exports.getorderbycustomer = async (req, res) => {
     });
   }
 };
+
+exports.getoneorderbyseller = async (req, res) => {
+  const getseller = await Seller.findOne({ _id: req.sellerId });
+
+
+  const findone = await Ordertable.findOne({ cus_orderId: req.params.id })
+    .populate("product")
+    .populate("customer")
+    //.populate("delivery_address")
+    // .populate({
+    //   path: "product",
+    //   populate: {
+    //     path: "product",
+    //   },
+    // })
+    .populate("seller");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+      //   seller : getseller
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+//}
+
 
 
 exports.pending_order = async (req, res, next) => {
