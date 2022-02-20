@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
     cnfrm_password,
     image,
     rolename,
-    // role,
+    role,
     //createdby,
   } = req.body;
 
@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
     cnfrm_password: hashpassword,
     image: image,
     rolename: rolename,
-    // role: role,
+    role: role,
     //createdby: createdby,
   });
 
@@ -123,14 +123,12 @@ exports.addemployee = async (req, res) => {
     added_by: req.sellerId,
   });
 
-
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);
     // if (resp) {
     newSeller.image = resp.secure_url;
     fs.unlinkSync(req.file.path);
   }
-
 
   const emailexist = await Seller.findOne({ email: email });
   const numberexist = await Seller.findOne({ mobile: mobile });
@@ -166,11 +164,9 @@ exports.addemployee = async (req, res) => {
   }
 };
 
- 
-
 exports.getemployecreatedbyseller = async (req, res) => {
   const findall = await Seller.find({ added_by: req.sellerId })
-   // .populate("role")
+    // .populate("role")
     .populate("added_by")
     .sort({ sortorder: 1 });
   if (findall) {
@@ -189,11 +185,10 @@ exports.getemployecreatedbyseller = async (req, res) => {
 };
 
 exports.getseller = async (req, res) => {
-  const findall = await Seller.find()
-    .sort({
-      sortorder: 1,
-    })
-    //.populate("role");
+  const findall = await Seller.find().sort({
+    sortorder: 1,
+  });
+  //.populate("role");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -232,7 +227,7 @@ exports.getoneempcreatedbyseller = async (req, res) => {
 // seller by token
 
 exports.getoneseller = async (req, res) => {
-  const findone = await Seller.findOne({ _id: req.sellerId })
+  const findone = await Seller.findOne({ _id: req.sellerId });
   //.populate("role");
   if (findone) {
     res.status(200).json({
@@ -251,7 +246,7 @@ exports.getoneseller = async (req, res) => {
 
 //admin
 exports.viewoneseller = async (req, res) => {
-  const findone = await Seller.findOne()
+  const findone = await Seller.findOne();
   //.populate("role");
   if (findone) {
     res.status(200).json({
@@ -267,8 +262,6 @@ exports.viewoneseller = async (req, res) => {
     });
   }
 };
-
-
 
 exports.sellerlogin = async (req, res) => {
   const { mobile, email, password } = req.body;
@@ -355,7 +348,7 @@ exports.editempByseller = async (req, res) => {
   if (rolename) {
     data.rolename = rolename;
   }
-  
+
   //console.log(req.file);
   if (req.file) {
     const response = await cloudinary.uploader.upload(req.file.path);
@@ -388,9 +381,8 @@ exports.editempByseller = async (req, res) => {
   }
 };
 
-
 exports.editseller = async (req, res) => {
-  const { name, email, mobile, rolename,image } = req.body;
+  const { name, email, mobile, rolename, image } = req.body;
 
   data = {};
   if (name) {
@@ -497,7 +489,7 @@ exports.totalseller = async (req, res) => {
 };
 
 exports.totalempbyseller = async (req, res) => {
-  await Seller.countDocuments({added_by :req.sellerId})
+  await Seller.countDocuments({ added_by: req.sellerId })
     .then((data) => {
       res.status(200).json({
         status: true,
