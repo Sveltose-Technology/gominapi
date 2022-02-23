@@ -5,12 +5,22 @@ const Product = require("../models/product");
 const Store = require("../models/store");
 const Cart = require("../models/cart");
 
-
 exports.addOrder = async (req, res) => {
-  const { product, product_qty, product_size, product_color, payment_type, status, orderId, cus_orderId, seller_orderId, cartID } = req.body
+  const {
+    product,
+    product_qty,
+    product_size,
+    product_color,
+    payment_type,
+    status,
+    orderId,
+    cus_orderId,
+    seller_orderId,
+    cartID,
+  } = req.body;
 
-  const cartitem = await Store.Cart({ _id: cartID })
-  const getstore = await Store.findOne({ product: req.params.id })
+  const cartitem = await Store.Cart({ _id: cartID });
+  const getstore = await Store.findOne({ product: req.params.id });
   if (getstore && cartitem) {
     const getproduct = await Product.findOne({ _id: req.body.product });
     if (getproduct) {
@@ -26,8 +36,8 @@ exports.addOrder = async (req, res) => {
         status: "Pending",
         orderId: uuidv4(),
         cus_orderId: "#ORDC" + Date.now(),
-        seller_orderId: "#ORDS" + Date.now()
-      })
+        seller_orderId: "#ORDS" + Date.now(),
+      });
       const findexist = await Ordertable.findOne({
         $and: [
           { customer: req.userId },
@@ -83,70 +93,81 @@ exports.addOrder = async (req, res) => {
       }
     }
   }
-}
+};
 
 exports.addordersample = async (req, res) => {
-
-
-  const cartitem = await Cart.find({ _id: req.body.cart })
+  const cartitem = await Cart.find({ _id: req.body.cart });
   const finalarray = [];
-  let total_qty = 0
-  let total_price = 0
+  let total_qty = 0;
+  let total_price = 0;
   const cus_orderId = "ORDC" + Date.now();
-  const seller_orderId = "ORDC" + Date.now();
+  //const seller_orderId = "ORDC" + Date.now();
+  let sellersarray = [];
+  let sellersorderidarray = [];
   for (let index = 0; index < cartitem.length; index++) {
-    let element = {}
-    element.product = cartitem[index].product;
+    let element = {};
+    element.product = cartitem[index]?.product;
     element.customer = cartitem[index].customer;
     element.product_price = cartitem[index].product_price;
     element.product_qty = cartitem[index].product_qty;
-    total_qty = total_qty + cartitem[index].product_qty
-    total_price = total_price + cartitem[index].product_price
+    total_qty = total_qty + cartitem[index].product_qty;
+    total_price = total_price + cartitem[index].product_price;
     element.color = cartitem[index].color;
     element.size = cartitem[index].size;
     element.payment_type = req.body.payment_type;
     element.status = req.body.status;
     element.cus_orderId = cus_orderId;
-    element.seller_orderId = seller_orderId;
+    const productdetail = await Product.findOne({
+      _id: cartitem[index]?.product,
+    });
+    if (productdetail) {
+      element.seller = productdetail?.seller;
+      if (sellersarray.indexOf(productdetail?.seller) === -1) {
+        const sellerNewId = "ORDC" + Date.now();
+        element.seller_orderId = sellerNewId;
+        sellersarray.push(productdetail?.seller);
+        sellersorderidarray.push(sellerNewId);
+      } else {
+        element.seller_orderId = sellersorderidarray[0];
+      }
+    }
+
     element.shipping_address = req.body.shipping_address;
- 
-    console.log(element)
-    finalarray.push(element)
+    finalarray.push(element);
   }
-  
- 
-  //console.log(finalarray)
-  await Ordertable.insertMany(finalarray).then((data) => {
-    res.json({
-      status: true,
-      msg: "Product added to Order",
-      data: data,
-      orderId: cus_orderId,
-      sellerorderId:seller_orderId,
-      total_qty: total_qty,
-      total_price: total_price,
+
+  await Ordertable.insertMany(finalarray)
+    .then((data) => {
+      res.json({
+        status: true,
+        msg: "Product added to Order",
+        data: data,
+        orderId: cus_orderId,
+        total_qty: total_qty,
+        total_price: total_price,
+      });
     })
-  }).catch((error) => {
-    res.json(error)
-  })
-//}
-}
+    .catch((error) => {
+      res.json(error);
+    });
+  //}
+};
 
 exports.orderbyseller = async (req, res) => {
-  const {orderId} = req.body
-   
-  const getseller = await Seller.findOne({ _id: req.sellerId });
-  const findone = await Ordertable.find({orderId: orderId})
-    // .populate("product")
-    // .populate("customer")
-    // .populate("shipping_address")
-    // .populate("seller")
-    .populate({
-      path: "product",
-      populate: {
-        path: "seller",
-      },
-    })
+  const { orderId } = req.body;
+
+  //const getseller = await Seller.findOne({ _id: req.sellerId });
+  const findone = await Ordertable.find({ seller: req.sellerId })
+    .populate("customer")
+    .populate("seller")
+    .populate("product")
+    .populate("shipping_address");
+  // .populate({
+  //   path: "product",
+  //   populate: {
+  //     path: "seller",
+  //   },
+  // });
 
   if (findone) {
     res.status(200).json({
@@ -161,10 +182,7 @@ exports.orderbyseller = async (req, res) => {
       error: "error",
     });
   }
-
 };
-
- 
 
 exports.orderlist = async (req, res) => {
   const findall = await Ordertable.find().sort({ sortorder: 1 });
@@ -173,8 +191,7 @@ exports.orderlist = async (req, res) => {
       status: true,
       msg: "success",
       data: findall,
-     // orderId: cus_orderId,
-
+      // orderId: cus_orderId,
     });
   } else {
     res.status(400).json({
@@ -186,36 +203,36 @@ exports.orderlist = async (req, res) => {
 };
 
 exports.getorderbycustomer = async (req, res) => {
-  const findall = await Ordertable.find({customer:req.userId}).sort({ sortorder: 1 })
-  .populate("customer").populate("shipping_address").populate("product")
+  const findall = await Ordertable.find({ customer: req.userId })
+    .sort({ sortorder: 1 })
+    .populate("customer")
+    .populate("shipping_address")
+    .populate("product");
   if (findall) {
-  //   let total_price = 0;
-  //    for (let i = 0; i < findall.length; i++) {
-  //     let element_price = findall[i].product_price;
-  //     let element_qty = findall[i].product_qty;
-  //     total_price = total_price + element_price * element_qty;
-  //   }
-  const cartitem = await Cart.find({ _id: req.body.cart })
-    let total_qty = 0
-  let total_price = 0
-  for (let index = 0; index < cartitem.length; index++) {
-    let element = {}
-    element.product = cartitem[index].product;
- 
-    element.product_price = cartitem[index].product_price;
-    element.product_qty = cartitem[index].product_qty;
-    total_qty = total_qty + cartitem[index].product_qty
-    total_price = total_price + cartitem[index].product_price
- 
-  }
+    //   let total_price = 0;
+    //    for (let i = 0; i < findall.length; i++) {
+    //     let element_price = findall[i].product_price;
+    //     let element_qty = findall[i].product_qty;
+    //     total_price = total_price + element_price * element_qty;
+    //   }
+    const cartitem = await Cart.find({ _id: req.body.cart });
+    let total_qty = 0;
+    let total_price = 0;
+    for (let index = 0; index < cartitem.length; index++) {
+      let element = {};
+      element.product = cartitem[index].product;
+
+      element.product_price = cartitem[index].product_price;
+      element.product_qty = cartitem[index].product_qty;
+      total_qty = total_qty + cartitem[index].product_qty;
+      total_price = total_price + cartitem[index].product_price;
+    }
     res.status(200).json({
       status: true,
       msg: "success",
       data: findall,
       total_price: total_price,
-      total_qty :total_qty,
-      
-
+      total_qty: total_qty,
     });
   } else {
     res.status(400).json({
@@ -228,7 +245,6 @@ exports.getorderbycustomer = async (req, res) => {
 
 exports.getoneorderbyseller = async (req, res) => {
   const getseller = await Seller.findOne({ _id: req.sellerId });
-
 
   const findone = await Ordertable.find({ cus_orderId: req.params.id })
     .populate("product")
@@ -259,8 +275,6 @@ exports.getoneorderbyseller = async (req, res) => {
 };
 //}
 
-
-
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Ordertable.find({
     $and: [{ seller: req.sellerId }, { status: "Pending" }],
@@ -283,14 +297,17 @@ exports.pending_order = async (req, res, next) => {
     });
 };
 
-
 exports.updateOrderStatus = (req, res) => {
-  Order.update({ _id: req.body.orderId }, { $set: { status: req.body.status } }, (err, order) => {
-    if (err) {
-      return res.status(400).json({
-        error: errorHandler(err)
-      });
+  Order.update(
+    { _id: req.body.orderId },
+    { $set: { status: req.body.status } },
+    (err, order) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler(err),
+        });
+      }
+      res.json(order);
     }
-    res.json(order);
-  });
+  );
 };

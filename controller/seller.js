@@ -1,4 +1,6 @@
 const Seller = require("../models/seller");
+const Role = require("../models/role");
+
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const role = require("../models/role");
@@ -48,6 +50,25 @@ exports.signup = async (req, res) => {
     role: role,
     //createdby: createdby,
   });
+
+  const newRole = new Role({
+    emp : true,
+    contacts : true,
+    inventory: true,
+    stockControl: true,
+    offers: true,
+    coupons: true,
+    subscription: true,
+    billing: true,
+    order: true,
+    purcahse: true,
+    reports: true,
+    rolesPermission: true,
+    setting: true
+  });
+
+  const makeroles = await Role.create(newRole)
+  console.log(makeroles)
 
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);

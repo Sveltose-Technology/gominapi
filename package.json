@@ -13,6 +13,7 @@
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "easyinvoice": "^1.0.152",
     "express": "^4.17.1",
@@ -25,6 +26,7 @@
     "pdf-creator-node": "^2.2.4",
     "pdfkit": "^0.9.0",
     "pspdfkit": "^2021.4.0",
+    "razorpay": "^2.8.0",
     "uuid": "^8.3.2"
   }
 }

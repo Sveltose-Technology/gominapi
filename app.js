@@ -48,6 +48,7 @@ const stockadjustment = require("./routes/stockadjustment");
 const trendingstore = require("./routes/trendingstore");
 const newpurchaseorder = require("./routes/newpurchaseorder");
 const gstrate = require("./routes/gstrate");
+const payment = require("./routes/payment");
 
  const billinginvoice = require("./routes/billinginvoice");
 const review = require("./routes/review");
@@ -111,6 +112,7 @@ app.use("/", size);
 app.use("/", reason);
 app.use("/", transfer_type);
 app.use("/", orderproduct);
+app.use("/", payment);
  
  
 
