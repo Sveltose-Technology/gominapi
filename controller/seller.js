@@ -52,7 +52,6 @@ exports.signup = async (req, res) => {
   });
 
   const newRole = new Role({
-    emp : true,
     contacts : true,
     inventory: true,
     stockControl: true,
