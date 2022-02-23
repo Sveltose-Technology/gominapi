@@ -9,10 +9,14 @@ const roleSchema = new Schema(
 emp :
   { type: Schema.Types.ObjectId, ref: "seller" },
 
-    store: {
-      type: Boolean,
-      default: false,
-    },
+  dashboard: {
+    type: Boolean,
+    default: false,
+  },
+  store: {
+    type: Boolean,
+    default: false,
+  },
     // employee: {
     //   type: Boolean,
     //   default: false,
@@ -62,7 +66,7 @@ emp :
       type: Boolean,
       default: false,
     },
-    purcahse: {
+    purchase: {
       type: Boolean,
       default: false,
     },

@@ -6,12 +6,12 @@ exports.add_role = async (req, res) => {};
 exports.addrole = async (req, res) => {
   
   const {
+    dashboard,
     emp,
     store,
     contacts,
     // employee,
     // customer,
-    // supplier,
     inventory,
     stockControl,
     offers,
@@ -29,6 +29,8 @@ exports.addrole = async (req, res) => {
   const newRole = await new Role({
     addemp: req.sellerId,
     emp : emp,
+    dashboard : dashboard,
+    store : store,
     contacts : contacts,
     inventory: inventory,
     stockControl: stockControl,
@@ -37,7 +39,7 @@ exports.addrole = async (req, res) => {
     subscription: subscription,
     billing: billing,
     order: order,
-    purcahse: purcahse,
+    purchase: purchase,
     reports: reports,
     rolesPermission: rolesPermission,
     setting: setting,
@@ -112,7 +114,7 @@ exports.edit_role = async (req, res) => {
 };
 
 exports.viewonerole = async (req, res) => {
-  const findone = await Role.findOne({ id: req.sellerId }).populate("addemp").populate("emp")
+  const findone = await Role.findOne({ emp: req.sellerId }).populate("addemp").populate("emp")
   if (findone) {
     res.status(200).json({
       status: true,

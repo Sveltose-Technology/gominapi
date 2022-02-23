@@ -47,27 +47,29 @@ exports.signup = async (req, res) => {
     cnfrm_password: hashpassword,
     image: image,
     rolename: rolename,
-    role: role,
+    //role: role,
     //createdby: createdby,
   });
 
   const newRole = new Role({
+    dashboard : true,
+    store : true,
     contacts : true,
     inventory: true,
     stockControl: true,
-    offers: true,
     coupons: true,
     subscription: true,
     billing: true,
     order: true,
-    purcahse: true,
+    purchase: true,
     reports: true,
     rolesPermission: true,
     setting: true
   });
 
-  const makeroles = await Role.create(newRole)
-  console.log(makeroles)
+  //const makeroles = await Role.create(newRole)
+  // console.log(makeroles)
+  // newSeller.role = makeroles._id 
 
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);
@@ -88,7 +90,11 @@ exports.signup = async (req, res) => {
   } else {
     newSeller
       .save()
-      .then((result) => {
+      .then( async (result) => {
+        newRole.emp = result._id
+        const makeroles = await Role.create(newRole)
+        console.log(makeroles)
+
         const token = jwt.sign(
           {
             sellerId: result._id,
