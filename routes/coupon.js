@@ -7,7 +7,7 @@ const {
   editcoupon,
   getcoupon,
 //   getcouponbyseller,
-//   getonecoupon,
+getonecoupon,
   delcoupon,
   totalCoupon,
   verifyvalidategetdiscount,
@@ -16,7 +16,7 @@ const {
 
 router.post("/admin/addcoupon",  addcoupon);
 router.post("/admin/editcoupon/:id",editcoupon);
-router.get("/admin/getcoupon", getcoupon);
+router.get("/admin/getonecoupon/:id", getonecoupon);
 // router.get("/admin/getcouponbyseller", tokenverify, getcouponbyseller);
 
 router.get("/admin/verifyvalidategetdiscount/:id", verifyvalidategetdiscount);
