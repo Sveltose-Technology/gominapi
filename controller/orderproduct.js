@@ -162,13 +162,6 @@ exports.orderbyseller = async (req, res) => {
     .populate("seller")
     .populate("product")
     .populate("shipping_address");
-  // .populate({
-  //   path: "product",
-  //   populate: {
-  //     path: "seller",
-  //   },
-  // });
-
   if (findone) {
     res.status(200).json({
       status: true,
