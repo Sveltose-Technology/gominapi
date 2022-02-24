@@ -14,14 +14,14 @@ const {
   gettotalcoupon,
 } = require("../controller/coupon");
 
-router.post("/admin/addcoupon", tokenverify, addcoupon);
-router.post("/admin/editcoupon/:id", tokenverify, editcoupon);
+router.post("/admin/addcoupon",  addcoupon);
+router.post("/admin/editcoupon/:id",editcoupon);
 router.get("/admin/getcoupon", getcoupon);
 // router.get("/admin/getcouponbyseller", tokenverify, getcouponbyseller);
 
 router.get("/admin/verifyvalidategetdiscount/:id", verifyvalidategetdiscount);
 router.get("/admin/delcoupon/:id", delcoupon);
-router.get("/admin/totalCoupon", tokenverify, totalCoupon);
+router.get("/admin/totalCoupon",totalCoupon);
 router.get("/admin/gettotalcoupon", gettotalcoupon);
 
 module.exports = router;
