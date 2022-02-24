@@ -5,18 +5,9 @@ const CouponSchema = new mongoose.Schema(
   {
     offer_code: {
       type: String,
-      // require: true,
-      // unique: true,
     },
-    CouponTitle: {
-      type:String
-    },
-    product : {
-      type: Schema.Types.ObjectId, ref :"product"
-    },
-  
-      seller : { type : Schema.Types.ObjectId,ref :"seller"
-
+    coupon_title: {
+      type: String,
     },
     description: {
       type: String,
@@ -27,16 +18,12 @@ const CouponSchema = new mongoose.Schema(
     expireOn: {
       type: String,
     },
-    usage_limit: {
+    amount: {
       type: Number,
-    },
-   
-    amount : {
-      type : Number
     },
     status: {
       type: String,
-     default : "Active"
+      default: "Active",
     },
   },
   { timestamps: true }
