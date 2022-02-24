@@ -77,7 +77,6 @@ exports.editcoupon = async (req, res) => {
 
 exports.getcoupon = async (req, res) => {
   const findall = await Coupon.find()
-    .populate("product")
     .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
