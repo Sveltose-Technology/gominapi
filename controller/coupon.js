@@ -136,8 +136,8 @@ exports.verifyvalidategetdiscount = async (req, res) => {
   let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
   if (findone) {
     if (
-      datetoday < findone.expireOn.split("/").reverse().join("/") &&
-      datetoday > findone.startDate.split("/").reverse().join("/")
+      datetoday < findone.expireOn.split("-").reverse().join("/") &&
+      datetoday > findone.startDate.split("-").reverse().join("/")
     ) {
       console.log("coupon valid");
       res.status(200).json({
