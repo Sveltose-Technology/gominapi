@@ -39,7 +39,7 @@ exports.addSubscription = async (req, res) => {
 };
 
 exports.Getsubscription = async (req, res) => {
-  const findall = await Subscription.find().sort({ sortorder: 1 });
+  const findall = await Subscription.find().sort({ sortorder: 1 }).populate("seller");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -56,7 +56,7 @@ exports.Getsubscription = async (req, res) => {
 };
 
 exports.getoneSubscription = async (req, res) => {
-  const findone = await Subscription.findOne({ _id: req.params.id });
+  const findone = await Subscription.findOne({ _id: req.params.id }).populate("seller");
   if (findone) {
     res.status(200).json({
       status: true,
@@ -107,7 +107,7 @@ exports.total_sub = async (req, res) => {
 };
 
 exports.subscribedplan = async (req, res) => {
-  const findall = await Subscription.find({ status: "Inactive" })
+  const findall = await Subscription.find({ status: "Inactive" }).populate("seller")
     .then((result) => {
       res.status(200).json({
         status: true,

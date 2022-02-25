@@ -543,6 +543,33 @@ exports.sendOtp = async (req, res) => {
   //console.log(finddetails);
   //console.log(finddetails.email);
   if (finddetails) {
+
+    const http = require("https");
+
+const options = {
+  "method": "GET",
+  "hostname": "api.msg91.com",
+  "port": null,
+  "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.MSG_AUTH}`,
+  "headers": {
+    "Content-Type": "application/json"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
     //   //const {to,text,} = req.body
     //   const subject = `Buynaa Email Verification`;
     //   const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
