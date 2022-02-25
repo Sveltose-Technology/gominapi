@@ -237,26 +237,17 @@ exports.getorderbycustomer = async (req, res) => {
 };
 
 exports.getoneorderbyseller = async (req, res) => {
-  const getseller = await Seller.findOne({ _id: req.sellerId });
+  //const getseller = await Seller.findOne({ _id: req.sellerId });
 
-  const findone = await Ordertable.find({ cus_orderId: req.params.id })
+  const findone = await Ordertable.find({ _id: req.params.id })
     .populate("product")
     .populate("customer")
-    .populate("")
-    //.populate("delivery_address")
-    // .populate({
-    //   path: "product",
-    //   populate: {
-    //     path: "product",
-    //   },
-    // })
     .populate("seller");
   if (findone) {
     res.status(200).json({
       status: true,
       msg: "success",
       data: findone,
-      //   seller : getseller
     });
   } else {
     res.status(400).json({
