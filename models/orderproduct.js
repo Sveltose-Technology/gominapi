@@ -27,6 +27,9 @@ const OrdertableSchema = new mongoose.Schema(
     payment_type: {
       type: String
     },
+    product_price: {
+      type: Number
+    },
     status: {
       type: String
     },
