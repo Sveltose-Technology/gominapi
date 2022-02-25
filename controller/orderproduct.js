@@ -242,6 +242,7 @@ exports.getoneorderbyseller = async (req, res) => {
   const findone = await Ordertable.find({ _id: req.params.id })
     .populate("product")
     .populate("customer")
+    .populate("shipping_address")
     .populate("seller");
   if (findone) {
     res.status(200).json({
