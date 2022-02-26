@@ -532,9 +532,9 @@ exports.totalempbyseller = async (req, res) => {
 
 exports.sendOtp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { email } = req.body;
+  const { mobile } = req.body;
   const finddetails = await Seller.findOneAndUpdate(
-    { email: email },
+    { mobile: mobile },
     { $set: { otp: defaultotp } },
     { new: true }
   );
@@ -550,7 +550,7 @@ const options = {
   "method": "GET",
   "hostname": "api.msg91.com",
   "port": null,
-  "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.MSG_AUTH}`,
+  "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.OTPAUTH}`,
   "headers": {
     "Content-Type": "application/json"
   }
@@ -645,29 +645,38 @@ exports.emailsend = async (req, res) => {
 };
 
 exports.verifyOtp = async (req, res) => {
-  const { email, otp } = req.body;
+  const { mobile, otp } = req.body;
 
-  const findone = await Seller.findOne({
-    $and: [{ email: email }, { otp: otp }],
-  });
-
-  //.then((data)=>{
-  //     res.status(200).json({
-  //       //status: true,
-  //       msg: "otp verified",
-  //       data: data,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     res.status(400).json({
-  //      // status: false,
-  //       msg: "Incorrect Otp",
-  //       error: error,
-  //     });
-  //   })
-  // }
+  const findone = await Seller.findOne({ mobile: mobile }
+  );
 
   if (findone) {
+
+    const http = require("https");
+
+const options = {
+  "method": "GET",
+  "hostname": "api.msg91.com",
+  "port": null,
+  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}`,
+  "headers": {}
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+
     res.status(200).json({
       status: true,
       msg: "otp verified",
