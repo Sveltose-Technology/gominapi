@@ -606,8 +606,7 @@ req.end();
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
-      email: email,
-      otp: defaultotp,
+      mobile: mobile,
     });
   } else {
     res.status(400).json({
