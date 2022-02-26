@@ -657,7 +657,7 @@ const options = {
   "method": "GET",
   "hostname": "api.msg91.com",
   "port": null,
-  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}`,
+  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
   "headers": {}
 };
 
