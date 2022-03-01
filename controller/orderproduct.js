@@ -284,7 +284,7 @@ exports.pending_order = async (req, res, next) => {
 
 exports.updateOrderStatus = (req, res) => {
   Order.update(
-    { _id: req.body.orderId },
+    { _id: req.body.id },
     { $set: { status: req.body.status } },
     (err, order) => {
       if (err) {
@@ -296,3 +296,8 @@ exports.updateOrderStatus = (req, res) => {
     }
   );
 };
+
+
+exports.getStatusValues = (req, res) => {
+  res.json(Order.schema.path('status').enumValues);
+}; 
