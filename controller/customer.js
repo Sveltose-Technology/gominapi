@@ -434,7 +434,7 @@ exports.sendotp = async (req, res) => {
     });
   });
   
-  requestmain.write("{\"OTP\":\"6786\"}");
+  //requestmain.write("{\"OTP\":\"6786\"}");
   requestmain.end();
   
   const finddetails = await Customer.findOneAndUpdate({
@@ -646,12 +646,14 @@ exports.emailSend = async (req, res) => {
 };
 
 exports.verifyotp = async (req, res) => {
-  const { customer_email, otp } = req.body;
+  const { email,mobile, otp } = req.body;
 
-  const findone = await Customer.findOne({
-    $and: [{ customer_email: customer_email }, { otp: otp }],
-  });
+  // const findone = await Customer.findOne({
+  //   $and: [{ customer_email: customer_email }, { otp: otp }],
+  // });
 
+  const findone = await Customer.findOne({ mobile: mobile }
+    );
   //.then((data)=>{
   //     res.status(200).json({
   //       //status: true,
@@ -669,6 +671,32 @@ exports.verifyotp = async (req, res) => {
   // }
 
   if (findone) {
+
+    const http = require("https");
+
+const options = {
+  "method": "GET",
+  "hostname": "api.msg91.com",
+  "port": null,
+  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+  "headers": {}
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+
     res.status(200).json({
       status: true,
       msg: "otp verified",
