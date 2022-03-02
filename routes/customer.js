@@ -36,7 +36,7 @@ router.get("/user/viewonecustomer/:id", viewonecustomer);
 router.get("/user/getonecustomer",verifytoken, getonecustomer);
 router.get("/user/getonecusByseller/:id",tokenverify, getonecusByseller);
 
-router.post("/user/editcustomer/:id",verifytoken, editcustomer);
+router.post("/user/editcustomer",verifytoken, editcustomer);
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
 router.get("/user/totalcustomer", totalcustomer);
