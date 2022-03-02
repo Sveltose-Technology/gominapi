@@ -321,7 +321,7 @@ exports.getonecusByseller = async (req, res) => {
 };
        
 exports.getonecustomer = async (req, res) => {
-  const findone = await Customer.findOne({ customer: req.userId });
+  const findone = await Customer.findOne({  _id: req.userId });
   if (findone) {
     res.status(200).json({
       status: true,
