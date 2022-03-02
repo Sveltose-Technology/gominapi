@@ -51,7 +51,10 @@ const newpurchaseorderSchema = new mongoose.Schema(
       type : String,
       default:"Pending"
       //Approve,Decline
-    }
+    },
+    upload_Invoice : {
+      type :String
+    },
   },
   { timestamps: true }
 );

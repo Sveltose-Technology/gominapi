@@ -17,7 +17,8 @@ exports.addnewpurchaseorder = async (req, res) => {
     transportation_cost,
     grand_total,
     instructions,
-    status
+    status,
+    upload_Invoice
   } = req.body;
 
   create_randomString(12);
@@ -78,8 +79,16 @@ exports.addnewpurchaseorder = async (req, res) => {
     transportation_cost: transportation_cost,
     grand_total : grand_total,
     instructions : instructions,
-    status : status
+    status : status,
+    upload_Invoice : upload_Invoice
   });
+
+  if (req.file) {
+    const resp = await cloudinary.uploader.upload(req.file.path);
+    // if (resp) {
+    newSeller.image = resp.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
   newpurchaseorder.save().then((data) => {
     res.status(200).json({
       status: true,
