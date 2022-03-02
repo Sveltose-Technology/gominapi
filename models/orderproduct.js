@@ -31,10 +31,11 @@ const OrdertableSchema = new mongoose.Schema(
       type: Number
     },
     status: {
-      type: String
+      type: String,
+      enum: ["Pending", "complete", "Cancel", "Delivery"] 
     },
     orderId: {
-      type: String
+      type: String   
     },
     cus_orderId: {
       type: String

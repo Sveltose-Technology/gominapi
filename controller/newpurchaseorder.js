@@ -16,7 +16,8 @@ exports.addnewpurchaseorder = async (req, res) => {
     amount,
     transportation_cost,
     grand_total,
-    instructions
+    instructions,
+    status
   } = req.body;
 
   create_randomString(12);
@@ -76,7 +77,8 @@ exports.addnewpurchaseorder = async (req, res) => {
     amount: amount,
     transportation_cost: transportation_cost,
     grand_total : grand_total,
-    instructions : instructions
+    instructions : instructions,
+    status : status
   });
   newpurchaseorder.save().then((data) => {
     res.status(200).json({

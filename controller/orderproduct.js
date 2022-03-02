@@ -283,21 +283,33 @@ exports.pending_order = async (req, res, next) => {
 };
 
 exports.updateOrderStatus = (req, res) => {
-  Order.update(
-    { _id: req.body.id },
+  Ordertable.findOneAndUpdate(
+    {_id: req.params.id},
+
     { $set: { status: req.body.status } },
-    (err, order) => {
-      if (err) {
-        return res.status(400).json({
-          error: errorHandler(err),
-        });
-      }
-      res.json(order);
-    }
-  );
+    { new: true }
+   
+  )
+
+  .then((result) => {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: result,
+    });
+  })
+  .catch((error) => {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: error,
+    });
+  });
 };
 
 
-exports.getStatusValues = (req, res) => {
-  res.json(Order.schema.path('status').enumValues);
-}; 
+// exports.getStatusValues = (req, res) => {
+//   res.json(Order.schema.path('status').enumValues);
+// }; 
+
+ 

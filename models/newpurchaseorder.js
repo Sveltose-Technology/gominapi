@@ -46,6 +46,11 @@ const newpurchaseorderSchema = new mongoose.Schema(
     },
     amount: {
       type: Number
+    },
+    status:{
+      type : String,
+      default:"Pending"
+      //Approve,Decline
     }
   },
   { timestamps: true }
