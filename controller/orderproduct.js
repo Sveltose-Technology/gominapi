@@ -282,9 +282,9 @@ exports.pending_order = async (req, res, next) => {
     });
 };
 
-exports.updateOrderStatus = (req, res) => {
+exports.updateOrderStatusbyseller = (req, res) => {
   Ordertable.findOneAndUpdate(
-    {_id: req.params.id},
+   { $and: [{ seller: req.sellerId }, { _id: req.params.id }]},
 
     { $set: { status: req.body.status } },
     { new: true }
