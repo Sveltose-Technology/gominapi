@@ -4,7 +4,7 @@ const { tokenverify } = require("../functions/tokenverify");
 const multer = require("multer");
 
 const {
-    addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder
+    addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder,getpurchaseorderbytoken
    
 } = require("../controller/newpurchaseorder");
 
@@ -40,9 +40,11 @@ const storage = multer.diskStorage({
 // PATHS
 
 router.post("/admin/addnewpurchaseorder",uploads.single("upload_Invoice"),tokenverify, addnewpurchaseorder);
-router.get("/admin/getpurchaseorder", getpurchaseorder);
+router.get("/admin/getpurchaseorder",tokenverify, getpurchaseorder);
+//router.get("/admin/getpurchaseorderbytoken",tokenverify, getpurchaseorderbytoken);
+
 router.post("/admin/editnewpurchaseorder/:id",tokenverify, editnewpurchaseorder);
-router.get("/admin/getonepurchaseorder",tokenverify, getonepurchaseorder);
+router.get("/admin/getonepurchaseorder/:id",tokenverify, getonepurchaseorder);
 router.get("/admin/delpurchaseorder/:id", delpurchaseorder);
 
 

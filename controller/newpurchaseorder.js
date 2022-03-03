@@ -153,7 +153,7 @@ exports.editnewpurchaseorder = async (req, res) => {
 
 
 exports.getonepurchaseorder = async (req, res) => {
-  const findone = await Purchaseorder.findOne({ seller: req.sellerId }).populate("product").populate("supplier")
+  const findone = await Purchaseorder.findOne({  $and: [{ seller: req.sellerId }, { _id: req.params.id }], }).populate("product").populate("supplier")
   if (findone) {
     res.status(200).json({
       status: true,
