@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
 const multer = require("multer");
+const fs = require("fs");
 
 const {
     addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder,getpurchaseorderbytoken
@@ -43,7 +44,7 @@ router.post("/admin/addnewpurchaseorder",uploads.single("upload_Invoice"),tokenv
 router.get("/admin/getpurchaseorder",tokenverify, getpurchaseorder);
 //router.get("/admin/getpurchaseorderbytoken",tokenverify, getpurchaseorderbytoken);
 
-router.post("/admin/editnewpurchaseorder/:id",tokenverify, editnewpurchaseorder);
+router.post("/admin/editnewpurchaseorder/:id",uploads.single("upload_Invoice"),tokenverify, editnewpurchaseorder);
 router.get("/admin/getonepurchaseorder/:id",tokenverify, getonepurchaseorder);
 router.get("/admin/delpurchaseorder/:id", delpurchaseorder);
 

@@ -1,7 +1,8 @@
 const Purchaseorder = require("../models/newpurchaseorder");
 const Seller = require("../models/seller");
-
-
+const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
+ 
 exports.addnewpurchaseorder = async (req, res) => {
   const {
     //seller,
@@ -17,8 +18,8 @@ exports.addnewpurchaseorder = async (req, res) => {
     transportation_cost,
     grand_total,
     instructions,
-    status,
-    upload_Invoice
+    //status,
+    //upload_Invoice
   } = req.body;
 
   create_randomString(12);
@@ -79,8 +80,8 @@ exports.addnewpurchaseorder = async (req, res) => {
     transportation_cost: transportation_cost,
     grand_total : grand_total,
     instructions : instructions,
-    status : status,
-    upload_Invoice : upload_Invoice
+   // status : status,
+   // upload_Invoice : upload_Invoice
   });
 
   if (req.file) {
@@ -128,6 +129,21 @@ exports.getpurchaseorder = async (req, res) => {
 
 
 exports.editnewpurchaseorder = async (req, res) => {
+  const { status,upload_Invoice } = req.body;
+
+  data = {};
+  if (status) {
+    data.status = status;
+  }
+  
+  //console.log(req.file);
+  if (req.file) {
+    const response = await cloudinary.uploader.upload(req.file.path);
+    data.upload_Invoice = response.secure_url;
+    fs.unlinkSync(req.file.path);
+  }
+  //console.log(data);
+  if (data) {
   const findandUpdateEntry = await Purchaseorder.findOneAndUpdate(
     {
       $and: [{ seller: req.sellerId }, { _id: req.params.id }],
@@ -149,7 +165,9 @@ exports.editnewpurchaseorder = async (req, res) => {
       error: "error",
     });
   }
-};
+}
+}
+
 
 
 exports.getonepurchaseorder = async (req, res) => {
