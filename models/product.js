@@ -6,7 +6,7 @@ const productSchema = new Schema(
     // store :{
     //    type : Schema.Types.ObjectId, ref: "store"
     // },
-    store: [{ type: Schema.Types.ObjectId, ref: "store" }],
+    // store: [{ type: Schema.Types.ObjectId, ref: "store" }],
     seller :{
       type : Schema.Types.ObjectId, ref: "seller"
    },

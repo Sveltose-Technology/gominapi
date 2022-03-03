@@ -16,7 +16,7 @@ cloudinary.config({
 
 exports.addproduct = async (req, res) => {
   const {
-    store,
+    
     discount_perc,
     product_name,
     sku_no,
@@ -45,7 +45,7 @@ exports.addproduct = async (req, res) => {
   } = req.body;
 
   const newProduct = new Product({
-    store: store,
+   // store: store,
     seller: req.sellerId,
     product_name: product_name,
     discount_perc: discount_perc,
