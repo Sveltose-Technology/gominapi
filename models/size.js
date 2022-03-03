@@ -7,10 +7,10 @@ const SizeSchema = new mongoose.Schema(
       type: String,
     },
 
-    // seller: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "seller",
-    //  },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+     },
   },
   { timestamps: true }
 );

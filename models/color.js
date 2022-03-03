@@ -6,6 +6,10 @@ const ColorSchema = new mongoose.Schema(
     colorName: {
       type: String,
     },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "seller",
+     },
   },
   { timestamps: true }
 );
