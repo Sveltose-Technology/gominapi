@@ -60,7 +60,7 @@ const fileFilter = (req, file, cb) => {
 
 let uploads = multer({ storage: storage });
 //Paths
-router.post("/admin/addproduct", uploads.array("product_img"), addproduct);
+router.post("/admin/addproduct", uploads.array("product_img"),tokenverify, addproduct);
 router.post(
   "/admin/editproduct/:id",
   uploads.array("product_img"),
