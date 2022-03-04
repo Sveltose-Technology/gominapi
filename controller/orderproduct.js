@@ -312,4 +312,49 @@ exports.updateOrderStatusbyseller = (req, res) => {
 //   res.json(Order.schema.path('status').enumValues);
 // }; 
 
- 
+ exports.salesbyseller = async (req, res) => {
+  const findall = await Orderproduct.find({
+    $and: [{ id: req.sellerId }, { status: "Complete" }],
+  })
+    .populate("customer")
+    .populate("product")
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+};
+
+
+
+
+exports.salesbyitem = async (req, res) => {
+  const findall = await Orderproduct.find({
+    $and: [{ id: req.sellerId }, { status: "Complete" }],
+  })
+    .populate("customer")
+    .populate("product")
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+};

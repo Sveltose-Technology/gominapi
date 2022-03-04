@@ -12,6 +12,11 @@ const newpurchaseorderSchema = new mongoose.Schema(
       ref: "supplier",
       required: true
     },
+    // product: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "product",
+      
+    // },
 
     product: [{
       type: Object
