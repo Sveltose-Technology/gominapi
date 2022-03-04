@@ -27,7 +27,8 @@ exports.addbrand = async (req, res) => {
     if (findexist) {
       await Brand.findOneAndUpdate(
         {
-          $and :[{seller: req.sellerId},{name :name}]
+          $and :[{seller: req.sellerId},{name :name}
+          ]
       },
       {new :true}
       )
@@ -55,9 +56,18 @@ exports.addbrand = async (req, res) => {
         });
       }
     }
-  } else {
-    const findexist = await Brand.findOne({ name: name });
+  } 
+  else {
+    const findexist = await Brand.findOne({  
+      $and:[{seller: req.sellerId},{name: name}]});
     if (findexist) {
+      await Brand.findOneAndUpdate(
+        {
+          $and :[{seller: req.sellerId},{name :name}
+          ]
+      },
+      {new :true}
+      )
       res.status(400).json({
         status: false,
         msg: "Already Exists",
