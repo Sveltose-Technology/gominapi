@@ -7,8 +7,18 @@ exports.addmaterial = async (req, res) => {
     seller :req.sellerId
   });
 
-  const findexist = await Material.findOne({ materialname: materialname });
+  const findexist = await Material.findOne({
+    $and:[{seller: req.sellerId},{materialname: materialname}]});
   if (findexist) {
+    await Material.findOneAndUpdate(
+      {
+        $and :[
+          { seller: req.sellerId },
+          {materialname: materialname}
+        ]
+      },
+      {new :true}
+      )
     res.status(400).json({
       status: false,
       msg: "Already Exist",
