@@ -39,6 +39,9 @@ const sellerSchema = new Schema(
     otp: {
       type: Number,
     },
+    subscribe: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

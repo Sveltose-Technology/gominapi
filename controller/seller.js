@@ -30,6 +30,7 @@ exports.signup = async (req, res) => {
     image,
     rolename,
     role,
+    subscribe
     //createdby,
   } = req.body;
 
@@ -47,6 +48,7 @@ exports.signup = async (req, res) => {
     cnfrm_password: hashpassword,
     image: image,
     rolename: rolename,
+    subscribe : subscribe
     //role: role,
     //createdby: createdby,
   });
