@@ -21,7 +21,7 @@ router.get("/admin/orderlist", orderlist);
 router.get("/admin/getorderbycustomer",verifytoken, getorderbycustomer);
 
  
-router.post("/admin/addordersample", addordersample);
+router.post("/admin/addordersample", verifytoken,addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
 router.get("/admin/orderbyseller",tokenverify,orderbyseller
 );
