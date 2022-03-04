@@ -89,10 +89,7 @@ const productSchema = new Schema(
     tag : {
       type : String
     },
-     sortorder: {
-
-      type: Number,
-    },
+     
     status: {
       type: String,
       default: "Active",

@@ -8,8 +8,15 @@ exports.addsize = async (req, res) => {
     seller: req.sellerId,
   });
 
-  const findexist = await Size.findOne({ sizeName: sizeName });
+  const findexist = await Size.findOne({ 
+    $and :[{seller: req.sellerId },{sizeName:sizeName}]});
   if (findexist) {
+    await Size.findOneAndUpdate(
+      {
+        $and : [{seller: req.sellerId},{sizeName : sizeName}]
+      },
+      {new : true}
+    )
     res.status(400).json({
       status: false,
       msg: "Already Exists",

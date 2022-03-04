@@ -40,7 +40,6 @@ exports.addproduct = async (req, res) => {
     gstrate,
     product_img,
     offer_aplicable,
-    sortorder,
     status,
   } = req.body;
 
@@ -70,7 +69,6 @@ exports.addproduct = async (req, res) => {
     gstrate: gstrate,
     product_img: product_img,
     offer_aplicable: offer_aplicable,
-    sortorder: sortorder,
     status: status,
   });
 
