@@ -358,3 +358,6 @@ exports.salesbyitem = async (req, res) => {
       });
     });
 };
+
+
+//console
