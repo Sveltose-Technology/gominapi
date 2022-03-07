@@ -178,7 +178,7 @@ exports.orderbyseller = async (req, res) => {
 };
 
 exports.orderlist = async (req, res) => {
-  const findall = await Ordertable.find().sort({ sortorder: 1 });
+  const findall = await Ordertable.find().sort({ sortorder: 1 }).populate("seller").populate("customer").populate("product")
   if (findall) {
     res.status(200).json({
       status: true,
@@ -359,5 +359,3 @@ exports.salesbyitem = async (req, res) => {
     });
 };
 
-
-//console
