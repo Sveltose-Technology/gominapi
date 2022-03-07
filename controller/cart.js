@@ -97,8 +97,11 @@ exports.addtocartproduct = async (req, res) => {
 };
 
 exports.getallcart = async (req, res) => {
+
+
   
   const findall = await Cart.find({ customer: req.userId })
+
     .sort({ sortorder: 1 })
     .populate("customer")
     .populate("product")
@@ -216,7 +219,18 @@ exports.cartbycustomer = async (req, res) => {
         path: "seller",
       },
     })
+
+
+
   if (findone) {
+
+    // for (let index = 0; index < findone.length; index++) {
+    //   const element_Price = findone[index].product_price;
+    //   let element_Qty = findone[i].product_qty;
+    //   gst_rate =gst_rate +
+    // }
+
+
     let sum = 0;
      for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;

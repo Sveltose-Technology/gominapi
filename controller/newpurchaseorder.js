@@ -176,7 +176,7 @@ exports.getonepurchaseorder = async (req, res) => {
     populate: {
       path: "productname",
     },
-  }) 
+  }).populate("seller")
   if (findone) {
     res.status(200).json({
       status: true,
