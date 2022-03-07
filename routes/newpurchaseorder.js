@@ -5,7 +5,7 @@ const multer = require("multer");
 const fs = require("fs");
 
 const {
-    addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder,getpurchaseorderbytoken
+    addnewpurchaseorder,getpurchaseorder,editnewpurchaseorder,getonepurchaseorder,delpurchaseorder,getpurchaseorderbytoken,pendingpurchaseorderlist
    
 } = require("../controller/newpurchaseorder");
 
@@ -48,10 +48,11 @@ router.post("/admin/editnewpurchaseorder/:id",uploads.single("upload_Invoice"),t
 router.get("/admin/getonepurchaseorder/:id",tokenverify, getonepurchaseorder);
 router.get("/admin/delpurchaseorder/:id", delpurchaseorder);
 
+router.get("/admin/pendingpurchaseorderlist",tokenverify, pendingpurchaseorderlist);
 
 
 
  
-
+ 
 
 module.exports = router;

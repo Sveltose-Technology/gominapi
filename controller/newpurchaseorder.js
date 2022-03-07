@@ -87,7 +87,7 @@ exports.addnewpurchaseorder = async (req, res) => {
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);
     // if (resp) {
-    newSeller.image = resp.secure_url;
+    newSeller.upload_Invoice = resp.secure_url;
     fs.unlinkSync(req.file.path);
   }
   newpurchaseorder.save().then((data) => {
@@ -209,5 +209,25 @@ exports.delpurchaseorder = async (req, res) => {
 };
 
  
+exports.pendingpurchaseorderlist = async (req, res) => {
+  const findall = await Purchaseorder.find({
+    $and: [{ id: req.sellerId }, { status: "Pending"}],
+  })
+       //{status : "Approve"}
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+};
 
 
