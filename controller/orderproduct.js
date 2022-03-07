@@ -284,35 +284,33 @@ exports.pending_order = async (req, res, next) => {
 
 exports.updateOrderStatusbyseller = (req, res) => {
   Ordertable.findOneAndUpdate(
-   { $and: [{ seller: req.sellerId }, { _id: req.params.id }]},
+    { $and: [{ seller: req.sellerId }, { _id: req.params.id }] },
 
     { $set: { status: req.body.status } },
     { new: true }
-   
   )
 
-  .then((result) => {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: result,
+    .then((result) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: result,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
     });
-  })
-  .catch((error) => {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: error,
-    });
-  });
 };
-
 
 // exports.getStatusValues = (req, res) => {
 //   res.json(Order.schema.path('status').enumValues);
-// }; 
+// };
 
- exports.salesbyseller = async (req, res) => {
+exports.salesbyseller = async (req, res) => {
   const findall = await Orderproduct.find({
     $and: [{ id: req.sellerId }, { status: "Complete" }],
   })
@@ -333,9 +331,6 @@ exports.updateOrderStatusbyseller = (req, res) => {
       });
     });
 };
-
-
-
 
 exports.salesbyitem = async (req, res) => {
   const findall = await Orderproduct.find({
@@ -358,4 +353,3 @@ exports.salesbyitem = async (req, res) => {
       });
     });
 };
-
