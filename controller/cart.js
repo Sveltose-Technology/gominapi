@@ -3,6 +3,7 @@ const { verifytoken } = require("../functions/verifytoken");
 const Store = require("../models/store");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
+const Gstrate = require("../models/gstrate");
 
 
 exports.addtocartproduct = async (req, res) => {
@@ -201,6 +202,7 @@ exports.clearCart = async (req, res) => {
 exports.cartbycustomer = async (req, res) => {
   const findone = await Cart.find({customer: req.userId })
     .populate("customer")
+
     .populate("product")
     .populate({
       path: "product",
@@ -218,17 +220,30 @@ exports.cartbycustomer = async (req, res) => {
       populate: {
         path: "seller",
       },
+    }) .populate({
+      path: "product",
+      populate: {
+        path: "gstrate",
+      },
     })
 
 
 
   if (findone) {
+    const gstrate = await Gstrate.find({_id :req.body.gstrate})
+  let total = 0
+  
+    for (let index = 0; index < findone.length; index++) {
+      const element_Price = findone[index].product_price;
+      let element_Qty = findone[index].product_qty;
+      total =total + element_Qty * element_Price;
+gst = element_Price;
+//let gstrate =0;
+      price = element_Price * element_Qty;
+      tol_price =(gstrate*element_Qty ) + price;
 
-    // for (let index = 0; index < findone.length; index++) {
-    //   const element_Price = findone[index].product_price;
-    //   let element_Qty = findone[i].product_qty;
-    //   gst_rate =gst_rate +
-    // }
+
+    }
 
 
     let sum = 0;
@@ -244,6 +259,7 @@ exports.cartbycustomer = async (req, res) => {
       msg: "success",
       data: findone,
         total: sum,
+        Totalgst : tol_price
     });
   } else {
     res.status(400).json({

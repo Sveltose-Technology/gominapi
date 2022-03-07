@@ -24,6 +24,10 @@ const CartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "store",
     },
+    gstrate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "gstrate",
+    },
     product_qty: {
       type: Number,
     },
