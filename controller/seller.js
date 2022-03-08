@@ -296,6 +296,7 @@ exports.sellerlogin = async (req, res) => {
     $or: [{ mobile: mobile }, { email: email }],
   });
   if (user) {
+    
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {
       const token = jwt.sign(
@@ -319,7 +320,8 @@ exports.sellerlogin = async (req, res) => {
         msg: "Incorrect Password",
         error: "error",
       });
-    }
+    } 
+  
   } else {
     res.status(400).json({
       status: false,

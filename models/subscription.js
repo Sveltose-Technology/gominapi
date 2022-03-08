@@ -24,6 +24,10 @@ const subscriptionSchema = new Schema(
     sortorder: {
       type: String,
     },
+    hasSubscribed:{
+      type : Boolean,
+      default :false
+    }
   },
   { timestamps: true }
 );

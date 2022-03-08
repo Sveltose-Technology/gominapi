@@ -230,7 +230,12 @@ exports.cartbycustomer = async (req, res) => {
 
 
   if (findone) {
-    const gstrate = await Gstrate.find({_id :req.body.gstrate})
+
+    const getproduct  = await Product.findOne({_id :req.body.product})
+    if (getproduct){
+           const getgst = await Gstrate.findOne({_id :getproduct.Gstrate })
+    }
+    
   let total = 0
   
     for (let index = 0; index < findone.length; index++) {
@@ -239,12 +244,20 @@ exports.cartbycustomer = async (req, res) => {
       total =total + element_Qty * element_Price;
 gst = element_Price;
 //let gstrate =0;
-      price = element_Price * element_Qty;
-      tol_price =(gstrate*element_Qty ) + price;
+tol_price =total
 
+const getproduct = await Product.findOne({_id : req.body.product})
+if(getproduct){
+  console.log(getproduct)
+  const getgstrate = await Gstrate.findOne({_id :getproduct.Gstrate })
+  console.log(getgstrate)
+  const getgst = await Gstrate.findOne({_id :getproduct.value})
+      price = element_Price * element_Qty;
+      tol_price =(getgstrate.value*element_Qty ) + price;
+    
 
     }
-
+  }
 
     let sum = 0;
      for (let i = 0; i < findone.length; i++) {
@@ -268,7 +281,8 @@ gst = element_Price;
       error: "error",
     });
   }
-};
+}
+
 
 
 exports.cartbycartId = async (req, res) => {

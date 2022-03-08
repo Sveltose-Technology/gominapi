@@ -1,7 +1,9 @@
 const Subscription = require("../models/subscription");
 
 exports.addSubscription = async (req, res) => {
-  const { seller,description, duration, sub_plan, status, sortorder } = req.body;
+ 
+
+  const { seller,description, duration, sub_plan, status, sortorder,hasSubscribed } = req.body;
 
   const newSubscription = new Subscription({
     seller : seller,
@@ -10,15 +12,20 @@ exports.addSubscription = async (req, res) => {
     sub_plan: sub_plan,
     status: status,
     sortorder: sortorder,
+    hasSubscribed : hasSubscribed
   });
   const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
+  // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
+
   if (findandexist) {
     res.status(400).json({
       status: false,
       msg: "Already Exist",
       data: {},
     });
-  } else {
+  } else {   
+    let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
+    
     newSubscription
       .save()
       .then((data) => {
@@ -57,6 +64,24 @@ exports.Getsubscription = async (req, res) => {
 
 exports.getoneSubscription = async (req, res) => {
   const findone = await Subscription.findOne({ _id: req.params.id }).populate("seller");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
+exports.getoneseller_sub = async (req, res) => {
+  const findone = await Subscription.findOne({ seller: req.sellerId }).populate("seller");
   if (findone) {
     res.status(200).json({
       status: true,
