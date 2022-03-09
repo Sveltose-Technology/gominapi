@@ -36,21 +36,24 @@ exports.addtocartproduct = async (req, res) => {
   //  console.log(gst_total)
   //          }
   // }
-  console.log();
-   const getproduct = await Product.findOne({ _id: req.body.product });
-  console.log(getproduct)
-  if (getproduct) {
-    const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
-    const value  =gstrate.value
-    let gsttotal =0
-    gsttotal = value + parseInt(product_price)
+
+
+  //comment
+  // console.log();
+  //  const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
+  //   const value  =gstrate.value
+  //   let gsttotal =0
+  //   gsttotal = value + parseInt(product_price)
 
 
 
   const addtoCart = new Cart({
     cartId : cartId,
     customer: req.userId,
-    gstrate: gstrate.value,
+    //gstrate: gstrate.value,
     product: product,
    // gstrate: getgst?.getgst,
     product_price: product_price,
@@ -89,7 +92,7 @@ exports.addtocartproduct = async (req, res) => {
           msg: "cart updated",
           data: data,
          gstrate: gstrate,
-         gst_total:gsttotal
+         //gst_total:gsttotal
         
         });
       })
@@ -123,7 +126,7 @@ exports.addtocartproduct = async (req, res) => {
   }
 //}
 }
-};
+//};
 
 exports.getallcart = async (req, res) => {
 
@@ -257,50 +260,15 @@ exports.cartbycustomer = async (req, res) => {
 
 
 
-  if (findone) {
-
-    const getproduct  = await Product.findOne({_id :req.body.product})
-    if (getproduct){
-           const getgst = await Gstrate.findOne({_id :getproduct.gstrate })
-           const value = getgst.value
-    }
-    
-  let total = 0
+   if (findone) {
   
-    for (let index = 0; index < findone.length; index++) {
-      const element_Price = findone[index].product_price;
-      let element_Qty = findone[index].product_qty;
-      total =total + element_Qty * element_Price;
-gst = element_Price;
-//let gstrate =0;
-tol_price =total
-
-// const getproduct = await Product.findOne({_id : req.body.product})
-// if(getproduct){
-//   console.log(getproduct)
-//   const getgstrate = await Gstrate.findOne({_id :getproduct.Gstrate })
-//   console.log(getgstrate)
-//   const getgst = await Gstrate.findOne({_id :getproduct.value})
-
-const getproduct = await Product.findOne({ _id: req.body.product});
-console.log(getproduct)
-if (getproduct){
-       const getgst = await Gstrate.findOne({_id :getproduct.gstrate })
-       const value = getgst.value
-//console.log(value)
-      price = element_Price * element_Qty;
-      tol_price =(getgstrate.value*element_Qty ) + price;
-    
-
-    }
-  }
 
     let sum = 0;
      for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
       sum = sum + element_price * element_qty;
-    }
+     }
    // console.log(sum);
     //console.log(findone)
     res.status(200).json({
@@ -308,7 +276,7 @@ if (getproduct){
       msg: "success",
       data: findone,
         total: sum,
-        Totalgst : tol_price
+       
     });
   } else {
     res.status(400).json({
@@ -318,7 +286,6 @@ if (getproduct){
     });
   }
 }
-
 
 
 exports.cartbycartId = async (req, res) => {
