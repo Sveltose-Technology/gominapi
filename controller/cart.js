@@ -92,7 +92,7 @@ exports.addtocartproduct = async (req, res) => {
           msg: "cart updated",
           data: data,
          gstrate: gstrate,
-         //gst_total:gsttotal
+         gst_total:gsttotal
         
         });
       })
@@ -126,7 +126,7 @@ exports.addtocartproduct = async (req, res) => {
   }
 }
 }
-//};
+
 
 exports.getallcart = async (req, res) => {
 
