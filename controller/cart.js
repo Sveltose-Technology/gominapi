@@ -55,7 +55,7 @@ exports.addtocartproduct = async (req, res) => {
     customer: req.userId,
     gstrate: gstrate.value,
     product: product,
-    gstrate: getgst?.getgst,
+    //gstrate: getgst?.getgst,
     product_price: product_price,
     product_qty: product_qty,
     color: color,
