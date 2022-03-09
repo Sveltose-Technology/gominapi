@@ -9,7 +9,8 @@ const {
   cartbycustomer,
   editcart,
   clearCart,
-  cartbycartId
+  cartbycartId,
+  verifygst
 } = require("../controller/cart");
  
 //path
@@ -20,6 +21,7 @@ router.get("/admin/cartbycustomer",verifytoken, cartbycustomer);
 router.post("/admin/editcart/:id", editcart);
 router.get("/admin/clearCart",verifytoken, clearCart);
 router.get("/admin/cartbycartId/:id",verifytoken, cartbycartId);
+router.get("/admin/verifygst",verifytoken, verifygst);
 
  
  

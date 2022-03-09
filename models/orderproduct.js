@@ -32,7 +32,8 @@ const OrdertableSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Pending", "complete", "Cancel", "Delivery"] 
+      default:"Order Placed",
+     // enum: ["Pending", "complete", "Cancel", "Delivery"] 
     },
     orderId: {
       type: String   
