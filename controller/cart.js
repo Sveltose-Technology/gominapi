@@ -39,23 +39,23 @@ exports.addtocartproduct = async (req, res) => {
 
 
   //comment
-  console.log();
-   const getproduct = await Product.findOne({ _id: req.body.product });
-  console.log(getproduct)
-  if (getproduct) {
-    const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
-    const value  =gstrate.value
-    let gsttotal =0
-    gsttotal = value + parseInt(product_price)
+  // console.log();
+  //  const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
+  //   const value  =gstrate.value
+  //   console.log(value)
+  //   let gsttotal =0
+  //   gsttotal = value + parseInt(product_price)
 
 
 
   const addtoCart = new Cart({
     cartId : cartId,
     customer: req.userId,
-    gstrate: gstrate.value,
+   // gstrate: gstrate.value,
     product: product,
-    //gstrate: getgst?.getgst,
     product_price: product_price,
     product_qty: product_qty,
     color: color,
@@ -125,7 +125,7 @@ exports.addtocartproduct = async (req, res) => {
     });
   }
 }
-}
+//}
 
 
 exports.getallcart = async (req, res) => {
