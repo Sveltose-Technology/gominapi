@@ -7,11 +7,7 @@ const Gstrate = require("../models/gstrate");
 
 
 exports.addtocartproduct = async (req, res) => {
-  // const carttoken = await Cart.findOne({ user: req.userId });
-  // const getproduct = await Product.findOne({ _id: req.body.product });
-  //console.log(getproduct)
-  // if (getproduct) {
-  //    const getstore = await Store.findOne({ _id: getproduct.store })
+
 
   const {cartId, product, product_price, product_qty, color, size } = req.body;
 
@@ -25,37 +21,24 @@ exports.addtocartproduct = async (req, res) => {
     total_amount =total_amount + product[i].product_price;
   //  sum = sum + total_amount * total_qty;
   }
-  //  const getproduct = await Product.findOne({_id :req.params.id})
-  //  if (getproduct){
-  //   console.log(getproduct)
-  //        const getgst = await Gstrate.findOne({_id :getproduct.gstrate })
-  //        const value = getgst.value
-  //          if (value){
-  //            console.log(value)
-  // gst_total =product_price + value;
-  //  console.log(gst_total)
-  //          }
-  // }
-
-
   //comment
   console.log();
    
-   const getproduct = await Product.findOne({ _id: req.body.product });
-  console.log(getproduct)
-  if (getproduct) {
-    const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
-    const value  =gstrate.value
-    console.log(value)
-    let gsttotal =0
-    gsttotal = value + parseInt(product_price)
+  //  const getproduct = await Product.findOne({ _id: req.body.product });
+  // console.log(getproduct)
+  // if (getproduct) {
+  //   const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
+  //   const value  =gstrate.value
+  //   console.log(value)
+  //   let gsttotal =0
+  //   gsttotal = value + parseInt(product_price)
  
     
   
   const addtoCart = new Cart({
     cartId : cartId,
     customer: req.userId,
-    gstrate: gstrate.value,
+   // gstrate: gstrate.value,
     product: product,
     product_price: product_price,
     product_qty: product_qty,
@@ -126,7 +109,7 @@ exports.addtocartproduct = async (req, res) => {
       }
     });
   }
-}
+//}
 }
 
 
@@ -234,45 +217,28 @@ exports.clearCart = async (req, res) => {
  
 
 exports.cartbycustomer = async (req, res) => {
-//   console.log();
-//   const getproduct = await Product.findOne({ _id: req.body.product });
-//  console.log(getproduct)
-//  if (getproduct) {
-//    const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
-//    const value  =gstrate.value
-//    console.log(value)
-//    let gsttotal =0
-//    gsttotal = value + parseInt(product_price)
-
-
-
-// const gstrate = await Gstrate.findOne({  _id: req.body.gstrate });
-
-// let gsttotal =0
-// const value  =gstrate.value
-// gsttotal = value + parseInt(product_price)
-
   const findone = await Cart.find({customer: req.userId })
-    .populate("customer")
+    // .populate("customer")
 
     .populate("product")
-    .populate({
-      path: "product",
-      populate: {
-        path: "color",
-      },
-    })
-    .populate({
-      path: "product",
-      populate: {
-        path: "size",
-      },
-    }).populate({
-      path: "product",
-      populate: {
-        path: "seller",
-      },
-    }) .populate({
+    // .populate({
+    //   path: "product",
+    //   populate: {
+    //     path: "color",
+    //   },
+    // })
+    // .populate({
+    //   path: "product",
+    //   populate: {
+    //     path: "size",
+    //   },
+    // }).populate({
+    //   path: "product",
+    //   populate: {
+    //     path: "seller",
+    //   },
+    //})
+     .populate({
       path: "product",
       populate: {
         path: "gstrate",
@@ -282,21 +248,56 @@ exports.cartbycustomer = async (req, res) => {
 
 
    if (findone) {
-  //      const getproduct = await Product.findOne({ _id: req.body.product });
-  //    console.log(getproduct)
-  //    if (getproduct) {
-  //      const gstrate = await Gstrate.findOne({ _id: getproduct.gstrate });
-  //      const value  =gstrate.value
-  //      console.log(value)
-  //      let gsttotal =0
-  //      gsttotal = value + parseInt(product_price)
+  //   const getproduct = await Product.find({ _id: req.body.product });
+  //  console.log(getproduct)
+  //    if(getproduct){
+  //      const gstrate = await Gstrate.find({ _id: getproduct.gstrate });
+  //        console.log(gstrate)
+  //   //const getvalue = await Gstrate.findOne({ _id: gstrate.value });
+  //    const getvalue = gstrate.value
+  //    console.log(getvalue)
+     
+
+  //  const getproduct = await Product.findOne({product : req.params.id})
+  // //  if(getstore){
+  // // const seller = getstore.seller
+  // //console.log(req.params.id)
+  // const getgst = await Gstrate.findOne({ _id: req.body.product});
+  // //console.log(getproduct)
+  // if (getproduct) {
+  //   //const seller = getstore.Seller;
+  //   const getstore = await Store.findOne({ _id: getproduct.store });
+
+  const findall = await Product.find({ product: req.params.id })
+  console.log(findall)
+  const value = findall.value
+    console.log(findall)
+    if (findall) {
+      const getgst = await Gstrate.findOne({ gstrate: findall.gstrate });
+     let value = getgst.value
+     console.log(getgst)
+console.log(value)
 
     let sum = 0;
+    //const value = 0
      for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
+      let element_gst = findone[i].getvalue;
+
       sum = sum + element_price * element_qty;
+
+        gsttotal = value + sum
+        console.log(gsttotal)
+
      }
+    // console.log(value)
+    //  let gsttotal = 0 
+    //  for (let i = 0; i < findone.length; i++) {
+    //   let element_price = findone[i].product_price;
+    //   let element_qty = findone[i].product_qty;
+    //   sum = sum + element_price * element_qty;
+    //  }
    // console.log(sum);
     //console.log(findone)
     res.status(200).json({
@@ -304,7 +305,7 @@ exports.cartbycustomer = async (req, res) => {
       msg: "success",
       data: findone,
         total: sum,
-      //  gst_total :gstrate?.gsttotal
+       gsttotalprice :gsttotal
        
     });
   } else {
@@ -314,7 +315,7 @@ exports.cartbycustomer = async (req, res) => {
       error: "error",
     });
   }
-//}
+}
  }
 
 
