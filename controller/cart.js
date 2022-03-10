@@ -4,6 +4,7 @@ const Store = require("../models/store");
 const Seller = require("../models/seller");
 const Product = require("../models/product");
 const Gstrate = require("../models/gstrate");
+const product = require("../models/product");
 
 
 exports.addtocartproduct = async (req, res) => {
@@ -248,25 +249,7 @@ exports.cartbycustomer = async (req, res) => {
 
 
    if (findone) {
-  //   const getproduct = await Product.find({ _id: req.body.product });
-  //  console.log(getproduct)
-  //    if(getproduct){
-  //      const gstrate = await Gstrate.find({ _id: getproduct.gstrate });
-  //        console.log(gstrate)
-  //   //const getvalue = await Gstrate.findOne({ _id: gstrate.value });
-  //    const getvalue = gstrate.value
-  //    console.log(getvalue)
-     
-
-  //  const getproduct = await Product.findOne({product : req.params.id})
-  // //  if(getstore){
-  // // const seller = getstore.seller
-  // //console.log(req.params.id)
-  // const getgst = await Gstrate.findOne({ _id: req.body.product});
-  // //console.log(getproduct)
-  // if (getproduct) {
-  //   //const seller = getstore.Seller;
-  //   const getstore = await Store.findOne({ _id: getproduct.store });
+   
 
   const findall = await Product.find({ product: req.params.id })
   console.log(findall)
@@ -283,29 +266,27 @@ console.log(value)
      for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
-      let element_gst = findone[i].getvalue;
+      let element_gst = findone[i].value;
 
-      sum = sum + element_price * element_qty;
+       
 
-        gsttotal = value + sum
+      //sum = sum + (element_price * element_qty);
+
+      sum = sum + (element_price * element_qty);
+      gsttotal = element_gst +(element_price*element_qty)
         console.log(gsttotal)
-
+        
      }
-    // console.log(value)
-    //  let gsttotal = 0 
-    //  for (let i = 0; i < findone.length; i++) {
-    //   let element_price = findone[i].product_price;
-    //   let element_qty = findone[i].product_qty;
-    //   sum = sum + element_price * element_qty;
-    //  }
-   // console.log(sum);
-    //console.log(findone)
     res.status(200).json({
       status: true,
       msg: "success",
+
       data: findone,
+
         total: sum,
-       gsttotalprice :gsttotal
+       gsttotalprice :findone?.gsttotal,
+       ttl :gsttotal
+       
        
     });
   } else {
