@@ -233,7 +233,7 @@ exports.editproduct = async (req, res) => {
   if (status) {
     data.status = status;
   }
-  //console.log(data);
+  console.log(data);
   if (req.file) {
     const response = await cloudinary.uploader.upload(req.file.path);
     data.product_img = response.secure_url;
@@ -243,7 +243,7 @@ exports.editproduct = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
       {
-        seller: req.sellerId,
+        seller: req.params.id,
       },
       { $set: data },
       { new: true }

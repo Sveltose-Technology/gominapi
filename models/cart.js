@@ -37,6 +37,9 @@ const CartSchema = new mongoose.Schema(
     size: {
       type: String,
     },
+    gsttotal:{
+      type: String,
+    }
   },
   { timestamps: true }
 );

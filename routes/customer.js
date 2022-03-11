@@ -49,7 +49,7 @@ router.post("/user/verifyotp", verifyotp);
 router.post("/user/resetpassword", resetpassword);
 router.get("/user/Customerbysellerbytoken",tokenverify, Customerbysellerbytoken);
 router.post("/user/changePassword", changePassword);
-//router.post("/user/changepass/:id", changepass);
+//router.post("/user/changepass",verifytoken, changepass);
 
 
 module.exports = router;
