@@ -711,7 +711,7 @@ req.end();
 };
 
 exports.changePassword = async (req,res) =>{
-  let data = await Customer.findOne({customer_email : req.body.customer_email,code : req.body.otpCode})
+  let data = await Customer.findOne({email : req.body.email,code : req.body.otp})
 const response = {}
 if(data) {
   let currentTime = new Date().getTime()
@@ -720,11 +720,12 @@ if(data) {
     response.message = "Token Expire",
     response.statusText ="errro"
   }else {
-    let customer = await Customer.findOne({customer_email:req.body.customer_email})
+    let customer = await Customer.findOne({email:req.body.email})
     customer.password = req.body.password
     customer.save()
     response.message = 'password change',
-    response.statusText = 'success'
+    response.statusText = 'success',
+    response.data = data
   }
 }else{
 response.message = 'password change',
@@ -759,3 +760,29 @@ exports.resetpassword = async (req, res) => {
     });
   }
 };
+
+
+// exports.changepass = async (req, res) => {
+//   const {password,} = req.body
+//   const salt = await bcrypt.genSalt(10);
+//   const hashPassword = await bcrypt.hash(password, salt);
+//   finddetails = await Customer.findOneAndUpdate(
+//     { _id: req.userId },
+//     $and: [{ password: hashPassword }, { cnfrmPassword :hashPassword }}],
+//   //  { $set: { password: hashPassword } },
+//     { new: true }
+//   )
+//   if (finddetails) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "Password Reset Successfull",
+//       data: finddetails,
+//     });
+//   } else {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: "error",
+//     });
+//   }
+// };
