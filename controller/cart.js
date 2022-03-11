@@ -77,7 +77,7 @@ exports.addtocartproduct = async (req, res) => {
           status: true,
           msg: "cart updated",
           data: data,
-         gstrate: gstrate,
+         //gstrate: gstrate,
          gst_total:gsttotal
         
         });
