@@ -273,7 +273,7 @@ console.log(value)
       //sum = sum + (element_price * element_qty);
 
       sum = sum + (element_price * element_qty);
-      gsttotal = element_gst +(element_price*element_qty)
+      gsttotal = value +(element_price*element_qty)
         console.log(gsttotal)
         
      }
