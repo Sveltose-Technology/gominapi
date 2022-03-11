@@ -273,7 +273,7 @@ exports.getoneseller = async (req, res) => {
 
 //admin
 exports.viewoneseller = async (req, res) => {
-  const findone = await Seller.findOne();
+  const findone = await Seller.findOne({_id: req.params.id } );
   //.populate("role");
   if (findone) {
     res.status(200).json({

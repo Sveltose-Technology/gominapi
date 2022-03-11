@@ -354,6 +354,25 @@ exports.viewonecustomer = async (req, res) => {
   }
 };
 
+exports.view_onecust = async (req, res) => {
+  const findone = await Customer.findOne({_id: req.params.id  });
+  //.populate("role");
+  if (findone) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findone,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+
 
 exports.delcustomer = async (req, res) => {
   try {
