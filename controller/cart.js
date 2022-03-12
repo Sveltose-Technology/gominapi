@@ -45,7 +45,7 @@ exports.addtocartproduct = async (req, res) => {
     product_qty: product_qty,
     color: color,
     size: size,
-    //gsttotal:gsttotal
+    gsttotal:gsttotal
   });
 
   const findexist = await Cart.findOne({
@@ -268,7 +268,8 @@ console.log(value)
      for (let i = 0; i < findone.length; i++) {
       let element_price = findone[i].product_price;
       let element_qty = findone[i].product_qty;
-      let element_gst = findone[i].value;
+       
+    //  let element_gst = findone[i].gsttotal;
 
        
 
@@ -288,7 +289,7 @@ console.log(value)
 
       data: findone,
 
-       // total: sum, 
+      //  gsttotal: gsttotal, 
       //  ttl :gsttotal
        
        
