@@ -19,8 +19,8 @@ exports.addtocartproduct = async (req, res) => {
    let sum = 0;
   let total_amount = 0;
   for (let i = 0; i < product.length; i++) {
-    total_amount =total_amount + product[i].product_price;
-  //  sum = sum + total_amount * total_qty;
+   // total_amount =total_amount + product[i].product_price;
+    //sum = sum + total_amount * total_qty;
   }
   //comment
   console.log();
@@ -45,7 +45,7 @@ exports.addtocartproduct = async (req, res) => {
     product_qty: product_qty,
     color: color,
     size: size,
-    gsttotal:gsttotal
+    //gsttotal:gsttotal
   });
 
   const findexist = await Cart.findOne({
@@ -77,8 +77,8 @@ exports.addtocartproduct = async (req, res) => {
           status: true,
           msg: "cart updated",
           data: data,
-         //gstrate: gstrate,
-         gst_total:gsttotal
+         //total: sum,
+        //  gst_total:gsttotal
         
         });
       })
@@ -105,7 +105,8 @@ exports.addtocartproduct = async (req, res) => {
           msg: "Product added to cart",
           data: data,
           total_qty: product_qty,
-           total_amt : product_price
+           //total_amt : product_price,
+           gst_total:gsttotal
 
         });
       }
