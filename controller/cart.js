@@ -33,7 +33,7 @@ exports.addtocartproduct = async (req, res) => {
     console.log(value)
     let gsttotal =0
     //gstttl = value + parseInt(product_price)
-    gsttotal = value +(product_price*product_qty)
+    gsttotal = (value*product_qty) +(product_price*product_qty)
     
   
   const addtoCart = new Cart({
