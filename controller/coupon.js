@@ -171,7 +171,7 @@ exports.getonecoupon = async (req, res) => {
 };
 
 exports.verifyvalidategetdiscount = async (req, res) => {
-  const findone = await Coupon.findOne({ $and : [{ offer_code: req.params.id },{seller:req.sellerId}]});
+  const findone = await Coupon.findOne({ offer_code: req.params.id });
   let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
   if (findone) {
     if (
