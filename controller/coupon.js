@@ -3,6 +3,7 @@ const Seller = require("../models/seller");
 
 exports.addcoupon = async (req, res) => {
   const {
+    product,
     offer_code,
     coupon_title,
     description,
@@ -26,6 +27,7 @@ exports.addcoupon = async (req, res) => {
   // }
 
   const newCoupon = new Coupon({
+    product:product,
     seller :req.sellerId,
     offer_code: offer_code,
     coupon_title: coupon_title,

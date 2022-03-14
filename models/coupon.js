@@ -6,6 +6,10 @@ const CouponSchema = new mongoose.Schema(
     offer_code: {
       type: String,
     },
+    product:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "product",
+    },
     coupon_title: {
       type: String,
     },
