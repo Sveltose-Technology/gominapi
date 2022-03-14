@@ -138,7 +138,7 @@ exports.getcoupon = async (req, res) => {
 };
 
 exports.getcouponbyseller = async (req, res) => {
-  const findall = await Coupon.find({ seller: req.sellerId })
+  const findall = await Coupon.find({ seller: req.sellerId }).populate("product")
     .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
