@@ -27,6 +27,9 @@ const subscriptionSchema = new Schema(
     hasSubscribed:{
       type : Boolean,
       default :false
+    },
+    payment_id:{
+      type :String
     }
   },
   { timestamps: true }
