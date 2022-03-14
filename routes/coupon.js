@@ -6,7 +6,7 @@ const {
   addcoupon,
   editcoupon,
   getcoupon,
-//   getcouponbyseller,
+  getcouponbyseller,
 getonecoupon,
   delcoupon,
   totalCoupon,
@@ -14,14 +14,17 @@ getonecoupon,
   gettotalcoupon,
 } = require("../controller/coupon");
 
-router.post("/admin/addcoupon",  addcoupon);
+router.post("/admin/addcoupon", tokenverify, addcoupon);
 router.post("/admin/editcoupon/:id",editcoupon);
 router.get("/admin/getonecoupon/:id", getonecoupon);
 router.get("/admin/getcoupon", getcoupon);
+router.get("/admin/getcouponbyseller",tokenverify, getcouponbyseller);
 
-router.get("/admin/verifyvalidategetdiscount/:id", verifyvalidategetdiscount);
+
+router.get("/admin/verifyvalidategetdiscount/:id",tokenverify,verifyvalidategetdiscount);
 router.get("/admin/delcoupon/:id", delcoupon);
 router.get("/admin/totalCoupon",totalCoupon);
 router.get("/admin/gettotalcoupon", gettotalcoupon);
 
 module.exports = router;
+ 

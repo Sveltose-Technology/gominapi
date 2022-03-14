@@ -26,6 +26,7 @@ exports.addcoupon = async (req, res) => {
   // }
 
   const newCoupon = new Coupon({
+    seller :req.sellerId,
     offer_code: offer_code,
     coupon_title: coupon_title,
     description: description,
@@ -34,23 +35,64 @@ exports.addcoupon = async (req, res) => {
     amount: amount,
     status: status,
   });
-  newCoupon
-    .save()
-    .then((data) => {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
-    })
-    .catch((error) => {
-      res.status(200).json({
-        status: false,
-        msg: "coupon created",
-        data: error,
-      });
+  const findexist = await Coupon.findOne({ 
+    $and:[{seller: req.sellerId},{coupon_title: coupon_title}]});
+
+  if (findexist) {
+    await Coupon.findOneAndUpdate(
+      {
+      $and :[
+        { seller: req.sellerId },
+        {coupon_title: coupon_title}
+      ]
+    },
+    {new :true}
+    )
+    res.status(400).json({
+      status: false,
+      msg: "Already Exists",
+      data: {},
     });
+  } else {
+    newCoupon
+      .save()
+      .then(
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: newCoupon,
+        })
+      )
+      .catch((error) => {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
+      });
+  }
 };
+
+
+
+
+//   newCoupon
+//     .save()
+//     .then((data) => {
+//       res.status(200).json({
+//         status: true,
+//         msg: "success",
+//         data: data,
+//       });
+//     })
+//     .catch((error) => {
+//       res.status(200).json({
+//         status: false,
+//         msg: "coupon created",
+//         data: error,
+//       });
+//     });
+// };
 
 exports.editcoupon = async (req, res) => {
   const findandupdate = await Coupon.findOneAndUpdate(
@@ -93,23 +135,23 @@ exports.getcoupon = async (req, res) => {
   }
 };
 
-// exports.getcouponbyseller = async (req, res) => {
-//   const findall = await Coupon.find({ seller: req.sellerId })
-//     .sort({ sortorder: 1 });
-//   if (findall) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
+exports.getcouponbyseller = async (req, res) => {
+  const findall = await Coupon.find({ seller: req.sellerId })
+    .sort({ sortorder: 1 });
+  if (findall) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
 
 exports.getonecoupon = async (req, res) => {
   const findone = await Coupon.findOne({ _id: req.params.id });
@@ -129,7 +171,7 @@ exports.getonecoupon = async (req, res) => {
 };
 
 exports.verifyvalidategetdiscount = async (req, res) => {
-  const findone = await Coupon.findOne({ offer_code: req.params.id });
+  const findone = await Coupon.findOne({ $and : [{ offer_code: req.params.id },{seller:req.sellerId}]});
   let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
   if (findone) {
     if (
