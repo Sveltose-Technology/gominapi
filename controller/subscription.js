@@ -6,19 +6,20 @@ exports.addSubscription = async (req, res) => {
   const { seller,description, duration, sub_plan, status, sortorder,hasSubscribed } = req.body;
 
   const newSubscription = new Subscription({
-
+    payment_id:payment_id,
     seller : seller,
     description: description,
     duration: duration,
     sub_plan: sub_plan,
     status: status,
     sortorder: sortorder,
-    hasSubscribed : hasSubscribed
+    hasSubscribed : hasSubscribed,
+    payment_id:payment_id
   });
   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
-  // if (findandexist) {
+  // if (payment_id == true ) {
   //   res.status(400).json({
   //     status: false,
   //     msg: "Already Exist",
