@@ -62,7 +62,7 @@ let uploads = multer({ storage: storage });
 //Paths
 router.post("/admin/addproduct", uploads.array("product_img"),tokenverify, addproduct);
 router.post(
-  "/admin/editproduct/:id",
+  "/admin/editproduct/:id",tokenverify,
   uploads.array("product_img"),
   editproduct
 );
