@@ -14,7 +14,7 @@ exports.addSubscription = async (req, res) => {
     status: status,
     sortorder: sortorder,
     hasSubscribed : hasSubscribed,
-    payment_id:payment_id
+   // payment_id:payment_id
   });
   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
