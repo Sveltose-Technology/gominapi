@@ -6,7 +6,7 @@ exports.addSubscription = async (req, res) => {
   const { description, duration, sub_plan, status, sortorder,hasSubscribed } = req.body;
 
   const newSubscription = new Subscription({
-    payment_id:payment_id,
+    //payment_id:payment_id,
     seller : req.sellerId,
     description: description,
     duration: duration,
