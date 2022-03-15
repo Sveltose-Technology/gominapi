@@ -353,3 +353,21 @@ exports.salesbyitem = async (req, res) => {
       });
     });
 };
+
+
+exports.totalorder = async (req, res) => {
+  await Orderproduct.countDocuments()
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};

@@ -11,7 +11,8 @@ const {
   addordersample,
   getorderbycustomer,
   getoneorderbyseller,
-  updateOrderStatusbyseller
+  updateOrderStatusbyseller,
+  totalorder
  } = require("../controller/orderproduct");
 
 // PATHS
@@ -27,6 +28,8 @@ router.get("/admin/orderbyseller",tokenverify,orderbyseller
 );
 router.get("/admin/getoneorderbyseller/:id",tokenverify, getoneorderbyseller);
 router.post("/admin/updateOrderStatusbyseller/:id",tokenverify, updateOrderStatusbyseller);
+router.get("/admin/totalorder",totalorder);
+
 
 
 
