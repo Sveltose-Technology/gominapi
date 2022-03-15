@@ -242,7 +242,7 @@ exports.editproduct = async (req, res) => {
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
       {
-        seller: req.sellerId,
+        $and: [{ seller: req.sellerId }, { _id: req.params.id }],
       },
       { $set: data },
       { new: true }

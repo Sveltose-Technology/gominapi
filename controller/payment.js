@@ -55,10 +55,14 @@ exports.fetchallpays = async (req, res) => {
 };
 
 exports.rapaysuccesscheck = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+  const { razorpay_order_id, payment_id, razorpay_signature } =
     req.body;
+    payment_id
 
-  let body = razorpay_order_id + "|" + razorpay_payment_id;
+    //razorpay_payment_id
+
+ // let body = razorpay_order_id + "|" + razorpay_payment_id;
+  let body = razorpay_order_id + "|" + payment_id;
 
   var crypto = require("crypto");
   var expectedSignature = crypto
