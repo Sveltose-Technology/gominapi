@@ -57,7 +57,7 @@ exports.fetchallpays = async (req, res) => {
 exports.rapaysuccesscheck = async (req, res) => {
   const { razorpay_order_id, payment_id, razorpay_signature } =
     req.body;
-    payment_id
+    //payment_id
 
     //razorpay_payment_id
 

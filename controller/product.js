@@ -245,6 +245,7 @@ exports.editproduct = async (req, res) => {
         $and: [{ seller: req.sellerId }, { _id: req.params.id }],
       },
       { $set: data },
+     // { $set: { product_img: response.secure_url } },
       { new: true }
     )
       .then((data) => {
