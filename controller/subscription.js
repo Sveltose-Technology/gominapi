@@ -6,6 +6,7 @@ exports.addSubscription = async (req, res) => {
   const { seller,description, duration, sub_plan, status, sortorder,hasSubscribed } = req.body;
 
   const newSubscription = new Subscription({
+
     seller : seller,
     description: description,
     duration: duration,
@@ -14,7 +15,7 @@ exports.addSubscription = async (req, res) => {
     sortorder: sortorder,
     hasSubscribed : hasSubscribed
   });
-  const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
+  //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
   if (findandexist) {
