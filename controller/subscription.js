@@ -18,13 +18,13 @@ exports.addSubscription = async (req, res) => {
   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
-  if (findandexist) {
-    res.status(400).json({
-      status: false,
-      msg: "Already Exist",
-      data: {},
-    });
-  } else {   
+  // if (findandexist) {
+  //   res.status(400).json({
+  //     status: false,
+  //     msg: "Already Exist",
+  //     data: {},
+  //   });
+  // } else {   
     let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
     
     newSubscription
@@ -44,7 +44,7 @@ exports.addSubscription = async (req, res) => {
         });
       });
   }
-};
+//};
 
 exports.Getsubscription = async (req, res) => {
   const findall = await Subscription.find().sort({ sortorder: 1 }).populate("seller");
