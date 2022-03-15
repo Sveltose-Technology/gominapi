@@ -333,7 +333,7 @@ exports.salesbyseller = async (req, res) => {
 };
 
 exports.salesbyitem = async (req, res) => {
-  const findall = await Orderproduct.find({
+  const findall = await Ordertable.find({
     $and: [{ id: req.sellerId }, { status: "Complete" }],
   })
     .populate("customer")
@@ -356,7 +356,7 @@ exports.salesbyitem = async (req, res) => {
 
 
 exports.totalorder = async (req, res) => {
-  await Orderproduct.countDocuments()
+  await Ordertable.countDocuments()
     .then((data) => {
       res.status(200).json({
         status: true,
