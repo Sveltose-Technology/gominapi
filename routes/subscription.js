@@ -12,7 +12,7 @@ const {
   getoneseller_sub
 } = require("../controller/subscription");
 
-router.post("/admin/addSubscription", addSubscription);
+router.post("/admin/addSubscription",tokenverify, addSubscription);
 router.get("/admin/Getsubscription", Getsubscription);
 router.get("/admin/getoneSubscription/:id", getoneSubscription);
 router.get("/admin/del_subscription/:id", del_subscription);
