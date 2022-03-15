@@ -1,5 +1,5 @@
 const Razorpay = require("razorpay");
-
+const Payment = require("../models/payment");
 var instance = new Razorpay({
   key_id: process.env.RAZARPAY_ID,
   key_secret: process.env.RAZARPAY_SECRET,
@@ -55,7 +55,7 @@ exports.fetchallpays = async (req, res) => {
 };
 
 exports.rapaysuccesscheck = async (req, res) => {
-  const { razorpay_order_id, payment_id, razorpay_signature } =
+  const { razorpay_order_id, payment_id, razorpay_signature,seller } =
     req.body;
     //payment_id
 
