@@ -50,7 +50,7 @@ const productSchema = new Schema(
       default : "UnAvailable"
     },
     qty: {
-      type: Number,
+      type: String,
     },
     // rating :{
     //   type : Number

@@ -18,7 +18,7 @@ const {
   verifyOtp,
   getemployecreatedbyseller,
   getoneempcreatedbyseller,
-  resetpassword,
+  forgetpassword,
   editempByseller,
   totalempbyseller,
   viewoneseller
@@ -95,6 +95,6 @@ router.get("/admin/totalempbyseller",tokenverify, totalempbyseller);
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
-router.post("/admin/resetpassword", resetpassword);
+router.post("/admin/forgetpassword", forgetpassword);
 
 module.exports = router;

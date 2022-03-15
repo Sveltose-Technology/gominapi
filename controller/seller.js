@@ -693,12 +693,31 @@ req.end();
   }
 };
 
-exports.resetpassword = async (req, res) => {
+exports.forgetpassword = async (req, res) => {
   const { password, cnfrm_password } = req.body;
 
-  const findone = await Seller.findOne({
+  const user = await Seller.findOneAndUpdate({
+
     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
   });
+  if(user){
+    
+
+    const validPass = await bcrypt.compare(password,user.cnfrm_password)
+    if(validPass){
+      res.status(400).json({
+        status :true,
+        msg : "Password  Changed Successfully",
+        
+      })
+    }else {
+      res.status(200).json({
+        status: false,
+        msg: "Password Not Matched",
+      });
+    }
+  };
+  }
 
   //.then((data)=>{
   //     res.status(200).json({
@@ -716,16 +735,20 @@ exports.resetpassword = async (req, res) => {
   //   })
   // }
 
-  if (findone) {
-    res.status(200).json({
-      status: true,
-      msg: "Password  Change Successfully",
-      data: findone,
-    });
-  } else {
-    res.status(200).json({
-      status: false,
-      msg: "Password Not Matched",
-    });
-  }
-};
+//   if (findone) {
+//     res.status(200).json({
+//       status: true,
+//       msg: "Password  Change Successfully",
+//       data: findone,
+//     });
+//   } else {
+//     res.status(200).json({
+//       status: false,
+//       msg: "Password Not Matched",
+//     });
+//   }
+// };
+
+
+
+ 
