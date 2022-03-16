@@ -25,7 +25,18 @@ exports.addSubscription = async (req, res) => {
   //   });
   // } else {   
     let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
+
+      // const hasSubscribed = await Subscription.find({razorpay_payment_id :razorpay_payment_id})
+      // const subs = await Seller.findOne({seller:razorpay_payment_id})
     
+    //   if (hasSubscribed == true){
+    //     res.status(200).json({
+    //         status: true,
+    //         hasSubscribed: true
+             
+
+    //    })
+    //  }
     newSubscription
       .save()
       .then((data) => {
