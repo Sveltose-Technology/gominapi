@@ -3,16 +3,14 @@ const Subscription = require("../models/subscription");
 exports.addSubscription = async (req, res) => {
  
 
-  const { description, duration, sub_plan, status, sortorder,hasSubscribed } = req.body;
+  const {payment_id, description, duration, sub_plan,hasSubscribed } = req.body;
 
   const newSubscription = new Subscription({
-    //payment_id:payment_id,
+    razorpay_payment_id:razorpay_payment_id,
     seller : req.sellerId,
     description: description,
     duration: duration,
     sub_plan: sub_plan,
-    status: status,
-    sortorder: sortorder,
     hasSubscribed : hasSubscribed,
    // payment_id:payment_id
   });
