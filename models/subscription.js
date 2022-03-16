@@ -28,7 +28,7 @@ const subscriptionSchema = new Schema(
       type : Boolean,
       default :false
     },
-    payment_id:{
+    razorpay_payment_id:{
       type :String
     }
   },
