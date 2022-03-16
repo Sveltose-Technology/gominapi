@@ -173,19 +173,20 @@ exports.getonecoupon = async (req, res) => {
 };
 
 exports.verifyvalidategetdiscount = async (req, res) => {
-  
-  const findone = await Coupon.findOne({offer_code: req.params.id });
-  console.log(findone)
+ // const {product}   = req.body
+  const findone = await Coupon.findOne({offer_code: req.params.id }).populate("product")
+ // console.log(findone)
   let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
   if (findone) {
     if (
       datetoday < findone.expireOn.split("-").reverse().join("/") &&
       datetoday > findone.startDate.split("-").reverse().join("/")
     ) {
-      console.log("coupon valid");
+     // console.log("coupon valid");
       res.status(200).json({
         status: true,
         msg: "coupon valid",
+        data:findone,
         discount_amount: findone?.amount,
       });
     } else {

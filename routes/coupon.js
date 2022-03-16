@@ -21,7 +21,7 @@ router.get("/admin/getcoupon", getcoupon);
 router.get("/admin/getcouponbyseller",tokenverify, getcouponbyseller);
 
 
-router.get("/admin/verifyvalidategetdiscount/:id",verifyvalidategetdiscount);
+router.post("/admin/verifyvalidategetdiscount/:id",verifyvalidategetdiscount);
 router.get("/admin/delcoupon/:id", delcoupon);
 router.get("/admin/totalCoupon",totalCoupon);
 router.get("/admin/gettotalcoupon", gettotalcoupon);
