@@ -708,6 +708,7 @@ exports.forgetpassword = async (req, res) => {
       res.status(400).json({
         status :true,
         msg : "Password  Changed Successfully",
+        user :user
         
       })
     }else {
@@ -751,15 +752,18 @@ exports.forgetpassword = async (req, res) => {
 
 
 
-exports.resetpassword = async (req, res) => {
-  const { Mobile, Password } = req.body;
+exports.sellerForgetPass = async (req, res) => {
+  const { password,ConfirmPassword } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(Password, salt);
+  // const salt = await bcrypt.genSalt(10);
+  // const hashPassword = await bcrypt.hash(Password, salt);
 
-  const finddetails = await UserDetails.findOneAndUpdate(
-    { Mobile: Mobile },
-    { $set: { ConfirmPassword: hashPassword } },
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt);
+
+  const finddetails = await Seller.findOneAndUpdate(
+    { added_by: req.sellerId },
+    { $set: { password: hashpassword } },
     { new: true }
   );
 
