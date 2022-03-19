@@ -1,4 +1,5 @@
 const Subscription = require("../models/subscription");
+const Seller = require("../models/seller");
 
 exports.addSubscription = async (req, res) => {
   const {
@@ -45,7 +46,7 @@ exports.addSubscription = async (req, res) => {
 
   //    })
   //  }
-  const getseller = await seller.findOne({ _id: req.params.hasSubscribed });
+  const getseller = await Seller.findOne({ _id: req.params.hasSubscribed });
   const finddetails = await Subscription.findOne({
     _id: req.params.razorpay_payment_id,
   });

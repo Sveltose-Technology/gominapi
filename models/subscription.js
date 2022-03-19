@@ -6,7 +6,7 @@ const subscriptionSchema = new Schema(
     description: {
       type: String,
     },
-    seller : {
+    seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "seller",
     },
@@ -24,13 +24,13 @@ const subscriptionSchema = new Schema(
     // sortorder: {
     //   type: String,
     // },
-    hasSubscribed:{
-      type : Boolean,
-      default :false
+    hasSubscribed: {
+      type: Boolean,
+      default: false,
     },
-    razorpay_payment_id:{
-      type :String
-    }
+    razorpay_payment_id: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
