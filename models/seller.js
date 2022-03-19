@@ -41,7 +41,7 @@ const sellerSchema = new Schema(
     },
     hasSubscribed: {
       type: Boolean,
-      default:true 
+      default: false,
     },
   },
   { timestamps: true }

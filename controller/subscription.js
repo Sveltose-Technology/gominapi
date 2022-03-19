@@ -1,18 +1,23 @@
 const Subscription = require("../models/subscription");
 
 exports.addSubscription = async (req, res) => {
- 
-
-  const {seller,razorpay_payment_id, description, duration, sub_plan,hasSubscribed } = req.body;
+  const {
+    seller,
+    razorpay_payment_id,
+    description,
+    duration,
+    sub_plan,
+    hasSubscribed,
+  } = req.body;
 
   const newSubscription = new Subscription({
-    razorpay_payment_id:razorpay_payment_id,
-     seller : req.sellerId,
+    razorpay_payment_id: razorpay_payment_id,
+    seller: req.sellerId,
     description: description,
     duration: duration,
     sub_plan: sub_plan,
-    hasSubscribed : hasSubscribed,
-   // payment_id:payment_id
+    hasSubscribed: hasSubscribed,
+    // payment_id:payment_id
   });
   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
@@ -23,41 +28,52 @@ exports.addSubscription = async (req, res) => {
   //     msg: "Already Exist",
   //     data: {},
   //   });
-  // } else {   
-    let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
+  // } else {
+  let datetoday = await new Date()
+    .toISOString()
+    .toString()
+    .split("T")[0]
+    .replace(/-/g, "/");
 
-      // const hasSubscribed = await Subscription.find({razorpay_payment_id :razorpay_payment_id})
-      // const subs = await Seller.findOne({seller:razorpay_payment_id})
-    
-    //   if (hasSubscribed == true){
-    //     res.status(200).json({
-    //         status: true,
-    //         hasSubscribed: true
-             
+  // const hasSubscribed = await Subscription.find({razorpay_payment_id :razorpay_payment_id})
+  // const subs = await Seller.findOne({seller:razorpay_payment_id})
 
-    //    })
-    //  }
-    newSubscription
-      .save()
-      .then((data) => {
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: data,
+  //   if (hasSubscribed == true){
+  //     res.status(200).json({
+  //         status: true,
+  //         hasSubscribed: true
+
+  //    })
+  //  }
+  const getseller = await seller.findOne({ _id: req.params.hasSubscribed });
+  const finddetails = await Subscription.findOne({
+    _id: req.params.razorpay_payment_id,
+  });
+  if (finddetails) {
+    if (getseller.hasSubscribed == true)
+      newSubscription
+        .save()
+        .then((data) => {
+          res.status(200).json({
+            status: true,
+            msg: "success",
+            data: data,
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            status: false,
+            msg: "error",
+            error: error,
+          });
         });
-      })
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
-      });
   }
-//};
+};
 
 exports.Getsubscription = async (req, res) => {
-  const findall = await Subscription.find().sort({ sortorder: 1 }).populate("seller");
+  const findall = await Subscription.find()
+    .sort({ sortorder: 1 })
+    .populate("seller");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -74,7 +90,9 @@ exports.Getsubscription = async (req, res) => {
 };
 
 exports.getoneSubscription = async (req, res) => {
-  const findone = await Subscription.findOne({ _id: req.params.id }).populate("seller");
+  const findone = await Subscription.findOne({ _id: req.params.id }).populate(
+    "seller"
+  );
   if (findone) {
     res.status(200).json({
       status: true,
@@ -90,9 +108,10 @@ exports.getoneSubscription = async (req, res) => {
   }
 };
 
-
 exports.getoneseller_sub = async (req, res) => {
-  const findone = await Subscription.findOne({ seller: req.sellerId }).populate("seller");
+  const findone = await Subscription.findOne({ seller: req.sellerId }).populate(
+    "seller"
+  );
   if (findone) {
     res.status(200).json({
       status: true,
@@ -143,13 +162,13 @@ exports.total_sub = async (req, res) => {
 };
 
 exports.subscribedplan = async (req, res) => {
-  const findall = await Subscription.find({ status: "Inactive" }).populate("seller")
+  const findall = await Subscription.find({ status: "Inactive" })
+    .populate("seller")
     .then((result) => {
       res.status(200).json({
         status: true,
         msg: "success",
         data: result,
-        
       });
     })
     .catch((error) => {
