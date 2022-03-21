@@ -29,7 +29,7 @@ exports.addOrder = async (req, res) => {
       const newOrdertable = new Ordertable({
         seller: getstore?.seller,
         customer: req.userId,
-        razorpay_payment_id: razorpay_payment_id,
+        razorpay_payment_id: cartitem.razorpay_payment_id,
         product: cartitem.product,
         product_qty: cartitem.product_qty,
         product_size: cartitem.size,
