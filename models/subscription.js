@@ -24,10 +24,10 @@ const subscriptionSchema = new Schema(
     // sortorder: {
     //   type: String,
     // },
-    hasSubscribed: {
-      type: Boolean,
-      default: false,
-    },
+    // hasSubscribed: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     razorpay_payment_id: {
       type: String,
     },
