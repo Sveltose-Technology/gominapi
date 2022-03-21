@@ -22,7 +22,7 @@ const {
   editempByseller,
   totalempbyseller,
   viewoneseller,
-  sellerForgetPass
+  sellerForgetPass,
 
   //storebyseller,
 } = require("../controller/seller");
@@ -66,7 +66,8 @@ router.post(
 router.get("/admin/getseller", getseller);
 router.get(
   "/admin/getemployecreatedbyseller",
-  tokenverify,uploads.single("image"),
+  tokenverify,
+  uploads.single("image"),
   getemployecreatedbyseller
 );
 router.get(
@@ -74,9 +75,14 @@ router.get(
   tokenverify,
   getoneempcreatedbyseller
 );
-router.post("/admin/editempByseller/:id",tokenverify,uploads.single("image"), editempByseller);
+router.post(
+  "/admin/editempByseller/:id",
+  tokenverify,
+  uploads.single("image"),
+  editempByseller
+);
 //router.post("/admin/Adminlogin", Adminlogin);
-router.post("/admin/sellerlogin", sellerlogin); 
+router.post("/admin/sellerlogin", sellerlogin);
 
 router.post(
   "/admin/editseller",
@@ -85,19 +91,18 @@ router.post(
   editseller
 );
 
-router.get("/admin/delSeller/:id", del_seller);
+router.get("/admin/  /:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller", tokenverify, getoneseller);
 router.get("/admin/viewoneseller/:id", viewoneseller);
 
 router.get("/admin/totalseller", totalseller);
-router.get("/admin/totalempbyseller",tokenverify, totalempbyseller);
+router.get("/admin/totalempbyseller", tokenverify, totalempbyseller);
 
 router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
 router.post("/admin/forgetpassword", forgetpassword);
-router.post("/admin/sellerForgetPass", tokenverify,sellerForgetPass);
+router.post("/admin/sellerForgetPass", tokenverify, sellerForgetPass);
 
 module.exports = router;
- 

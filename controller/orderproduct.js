@@ -17,6 +17,7 @@ exports.addOrder = async (req, res) => {
     cus_orderId,
     seller_orderId,
     cartID,
+    razorpay_payment_id,
   } = req.body;
 
   const cartitem = await Store.Cart({ _id: cartID });
@@ -28,6 +29,7 @@ exports.addOrder = async (req, res) => {
       const newOrdertable = new Ordertable({
         seller: getstore?.seller,
         customer: req.userId,
+        razorpay_payment_id: razorpay_payment_id,
         product: cartitem.product,
         product_qty: cartitem.product_qty,
         product_size: cartitem.size,
@@ -178,7 +180,11 @@ exports.orderbyseller = async (req, res) => {
 };
 
 exports.orderlist = async (req, res) => {
-  const findall = await Ordertable.find().sort({ sortorder: 1 }).populate("seller").populate("customer").populate("product")
+  const findall = await Ordertable.find()
+    .sort({ sortorder: 1 })
+    .populate("seller")
+    .populate("customer")
+    .populate("product");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -353,7 +359,6 @@ exports.salesbyitem = async (req, res) => {
       });
     });
 };
-
 
 exports.totalorder = async (req, res) => {
   await Ordertable.countDocuments()
