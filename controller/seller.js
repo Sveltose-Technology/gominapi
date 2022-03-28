@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
     image,
     rolename,
     role,
-    hasSubscribed
+    hasSubscribed,
     //createdby,
   } = req.body;
 
@@ -48,15 +48,16 @@ exports.signup = async (req, res) => {
     cnfrm_password: hashpassword,
     image: image,
     rolename: rolename,
-    hasSubscribed : hasSubscribed
+    hasSubscribed: hasSubscribed,
+    // razorpay_payment_id: razorpay_payment_id,
     //role: role,
     //createdby: createdby,
   });
 
   const newRole = new Role({
-    dashboard : true,
-    store : true,
-    contacts : true,
+    dashboard: true,
+    store: true,
+    contacts: true,
     inventory: true,
     stockControl: true,
     coupons: true,
@@ -66,12 +67,12 @@ exports.signup = async (req, res) => {
     purchase: true,
     reports: true,
     rolesPermission: true,
-    setting: true
+    setting: true,
   });
 
   //const makeroles = await Role.create(newRole)
   // console.log(makeroles)
-  // newSeller.role = makeroles._id 
+  // newSeller.role = makeroles._id
 
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);
@@ -92,10 +93,10 @@ exports.signup = async (req, res) => {
   } else {
     newSeller
       .save()
-      .then( async (result) => {
-        newRole.emp = result._id
-        const makeroles = await Role.create(newRole)
-        console.log(makeroles)
+      .then(async (result) => {
+        newRole.emp = result._id;
+        const makeroles = await Role.create(newRole);
+        console.log(makeroles);
 
         const token = jwt.sign(
           {
@@ -273,7 +274,7 @@ exports.getoneseller = async (req, res) => {
 
 //admin
 exports.viewoneseller = async (req, res) => {
-  const findone = await Seller.findOne({_id: req.params.id } );
+  const findone = await Seller.findOne({ _id: req.params.id });
   //.populate("role");
   if (findone) {
     res.status(200).json({
@@ -296,7 +297,6 @@ exports.sellerlogin = async (req, res) => {
     $or: [{ mobile: mobile }, { email: email }],
   });
   if (user) {
-    
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {
       const token = jwt.sign(
@@ -320,8 +320,7 @@ exports.sellerlogin = async (req, res) => {
         msg: "Incorrect Password",
         error: "error",
       });
-    } 
-  
+    }
   } else {
     res.status(400).json({
       status: false,
@@ -547,33 +546,32 @@ exports.sendOtp = async (req, res) => {
   //console.log(finddetails);
   //console.log(finddetails.email);
   if (finddetails) {
-
     const http = require("https");
 
-const options = {
-  "method": "GET",
-  "hostname": "api.msg91.com",
-  "port": null,
-  "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.OTPAUTH}`,
-  "headers": {
-    "Content-Type": "application/json"
-  }
-};
+    const options = {
+      method: "GET",
+      hostname: "api.msg91.com",
+      port: null,
+      path: `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.OTPAUTH}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-const req = http.request(options, function (res) {
-  const chunks = [];
+    const req = http.request(options, function (res) {
+      const chunks = [];
 
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
 
-  res.on("end", function () {
-    const body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
 
-req.end();
+    req.end();
     //   //const {to,text,} = req.body
     //   const subject = `Buynaa Email Verification`;
     //   const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
@@ -650,35 +648,33 @@ exports.emailsend = async (req, res) => {
 exports.verifyOtp = async (req, res) => {
   const { mobile, otp } = req.body;
 
-  const findone = await Seller.findOne({ mobile: mobile }
-  );
+  const findone = await Seller.findOne({ mobile: mobile });
 
   if (findone) {
-
     const http = require("https");
 
-const options = {
-  "method": "GET",
-  "hostname": "api.msg91.com",
-  "port": null,
-  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
-  "headers": {}
-};
+    const options = {
+      method: "GET",
+      hostname: "api.msg91.com",
+      port: null,
+      path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+      headers: {},
+    };
 
-const req = http.request(options, function (res) {
-  const chunks = [];
+    const req = http.request(options, function (res) {
+      const chunks = [];
 
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
 
-  res.on("end", function () {
-    const body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
 
-req.end();
+    req.end();
 
     res.status(200).json({
       status: true,
@@ -697,44 +693,40 @@ exports.forgetpassword = async (req, res) => {
   const { password, cnfrm_password } = req.body;
 
   const user = await Seller.findOneAndUpdate({
-
     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
   });
-  if(user){
-    
-
-    const validPass = await bcrypt.compare(password,user.cnfrm_password)
-    if(validPass){
+  if (user) {
+    const validPass = await bcrypt.compare(password, user.cnfrm_password);
+    if (validPass) {
       res.status(400).json({
-        status :true,
-        msg : "Password  Changed Successfully",
-        user :user
-        
-      })
-    }else {
+        status: true,
+        msg: "Password  Changed Successfully",
+        user: user,
+      });
+    } else {
       res.status(200).json({
         status: false,
         msg: "Password Not Matched",
       });
     }
-  };
   }
+};
 
-  //.then((data)=>{
-  //     res.status(200).json({
-  //       //status: true,
-  //       msg: "otp verified",
-  //       data: data,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     res.status(400).json({
-  //      // status: false,
-  //       msg: "Incorrect Otp",
-  //       error: error,
-  //     });
-  //   })
-  // }
+//.then((data)=>{
+//     res.status(200).json({
+//       //status: true,
+//       msg: "otp verified",
+//       data: data,
+//     });
+//   })
+//   .catch((error) => {
+//     res.status(400).json({
+//      // status: false,
+//       msg: "Incorrect Otp",
+//       error: error,
+//     });
+//   })
+// }
 
 //   if (findone) {
 //     res.status(200).json({
@@ -750,10 +742,8 @@ exports.forgetpassword = async (req, res) => {
 //   }
 // };
 
-
-
 exports.sellerForgetPass = async (req, res) => {
-  const { password,ConfirmPassword } = req.body;
+  const { password, ConfirmPassword } = req.body;
 
   // const salt = await bcrypt.genSalt(10);
   // const hashPassword = await bcrypt.hash(Password, salt);

@@ -95,7 +95,6 @@ exports.signup = async (req, res) => {
   }
 };
 
-
 exports.addcustomerbyseller = async (req, res) => {
   const {
     customerId,
@@ -127,18 +126,16 @@ exports.addcustomerbyseller = async (req, res) => {
 
   const newCustomer = new Customer({
     customerId: random_string,
-    seller :req.sellerId,
+    seller: req.sellerId,
     firstname: firstname,
     lastname: lastname,
     email: email,
     mobile: mobile,
     password: hashPassword,
-    cnfrmPassword :hashPassword,
+    cnfrmPassword: hashPassword,
     added_by: req.sellerId,
   });
 
-
-  
   const emailexist = await Customer.findOne({ email: email });
   const numberexist = await Customer.findOne({ mobile: mobile });
   if (emailexist) {
@@ -172,10 +169,6 @@ exports.addcustomerbyseller = async (req, res) => {
       });
   }
 };
-;
-
-
-
 exports.login = async (req, res) => {
   const { mobile, email, password } = req.body;
   const user = await Customer.findOne({
@@ -258,10 +251,9 @@ exports.allcustomer = async (req, res) => {
   }
 };
 
- 
 exports.Customerbysellerbytoken = async (req, res) => {
   const findall = await Customer.find({ added_by: req.sellerId })
-   // .populate("role")
+    // .populate("role")
     .populate("added_by")
     .sort({ sortorder: 1 });
   if (findall) {
@@ -302,9 +294,11 @@ exports.editcustomerbyseller = async (req, res) => {
     });
   }
 };
- 
+
 exports.getonecusByseller = async (req, res) => {
-  const findone = await Customer.findOne({ $and :[{added_by :req.sellerId},{_id: req.params.id }]});
+  const findone = await Customer.findOne({
+    $and: [{ added_by: req.sellerId }, { _id: req.params.id }],
+  });
   if (findone) {
     res.status(200).json({
       status: true,
@@ -319,9 +313,9 @@ exports.getonecusByseller = async (req, res) => {
     });
   }
 };
-       
+
 exports.getonecustomer = async (req, res) => {
-  const findone = await Customer.findOne({  _id: req.userId });
+  const findone = await Customer.findOne({ _id: req.userId });
   if (findone) {
     res.status(200).json({
       status: true,
@@ -338,7 +332,7 @@ exports.getonecustomer = async (req, res) => {
 };
 
 exports.viewonecustomer = async (req, res) => {
-  const findone = await Customer.findOne({_id: req.params.id });
+  const findone = await Customer.findOne({ _id: req.params.id });
   if (findone) {
     res.status(200).json({
       status: true,
@@ -355,7 +349,7 @@ exports.viewonecustomer = async (req, res) => {
 };
 
 exports.view_onecust = async (req, res) => {
-  const findone = await Customer.findOne({_id: req.params.id  });
+  const findone = await Customer.findOne({ _id: req.params.id });
   //.populate("role");
   if (findone) {
     res.status(200).json({
@@ -371,8 +365,6 @@ exports.view_onecust = async (req, res) => {
     });
   }
 };
-
-
 
 exports.delcustomer = async (req, res) => {
   try {
@@ -409,7 +401,7 @@ exports.totalcustomer = async (req, res) => {
 };
 
 exports.totalcustomerbyseller = async (req, res) => {
-  await Customer.countDocuments({added_by :req.sellerId})
+  await Customer.countDocuments({ added_by: req.sellerId })
     .then((data) => {
       res.status(200).json({
         status: true,
@@ -423,45 +415,47 @@ exports.totalcustomerbyseller = async (req, res) => {
         error: error,
       });
     });
-}
+};
 
 exports.sendotp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { email,mobile } = req.body;
+  const { email, mobile } = req.body;
   const http = require("https");
 
   const options = {
-    "method": "GET",
-    "hostname": "api.msg91.com",
-    "port": null,
-    "path": `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${mobile}&authkey=${process.env.OTPAUTH}`,
-    "headers": {
-      "Content-Type": "application/json"
-    }
+    method: "GET",
+    hostname: "api.msg91.com",
+    port: null,
+    path: `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${mobile}&authkey=${process.env.OTPAUTH}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
-  
+
   const requestmain = http.request(options, function (res) {
     const chunks = [];
-  
+
     res.on("data", function (chunk) {
       chunks.push(chunk);
     });
-  
+
     res.on("end", function () {
       const body = Buffer.concat(chunks);
       console.log(body.toString());
     });
   });
-  
+
   //requestmain.write("{\"OTP\":\"6786\"}");
   requestmain.end();
-  
-  const finddetails = await Customer.findOneAndUpdate({
-    $or: [{ mobile: mobile }, { email: email }]},
+
+  const finddetails = await Customer.findOneAndUpdate(
+    {
+      $or: [{ mobile: mobile }, { email: email }],
+    },
     { $set: { otp: defaultotp } },
     { new: true }
   );
- 
+
   //console.log(mobile_no.length);
   //console.log(finddetails);
   //console.log(finddetails.customer_email);
@@ -503,18 +497,16 @@ exports.sendotp = async (req, res) => {
       status: true,
       msg: "otp send successfully",
       email: email,
-      mobile:mobile,
+      mobile: mobile,
       otp: defaultotp,
     });
-  } 
-  else {
+  } else {
     res.status(400).json({
       status: false,
       msg: "error occured",
     });
   }
 };
-
 
 // exports.sendotponMobile = async (req,res) => {
 //   const {mobile} = req.body
@@ -557,7 +549,7 @@ exports.sendotp = async (req, res) => {
 //     { $set: { otp: defaultotp } },
 //     { new: true }
 //   );
- 
+
 //   //console.log(mobile_no.length);
 //   //console.log(finddetails);
 //   //console.log(finddetails.customer_email);
@@ -608,7 +600,6 @@ exports.sendotp = async (req, res) => {
 //     });
 //   }
 // };
-
 
 // // const mailer = (email,otp) =>{
 // // const nodemailer = require("nodemailer");
@@ -665,14 +656,13 @@ exports.emailSend = async (req, res) => {
 };
 
 exports.verifyotp = async (req, res) => {
-  const { email,mobile, otp } = req.body;
+  const { email, mobile, otp } = req.body;
 
   // const findone = await Customer.findOne({
   //   $and: [{ customer_email: customer_email }, { otp: otp }],
   // });
 
-  const findone = await Customer.findOne({ mobile: mobile }
-    );
+  const findone = await Customer.findOne({ mobile: mobile });
   //.then((data)=>{
   //     res.status(200).json({
   //       //status: true,
@@ -690,31 +680,30 @@ exports.verifyotp = async (req, res) => {
   // }
 
   if (findone) {
-
     const http = require("https");
 
-const options = {
-  "method": "GET",
-  "hostname": "api.msg91.com",
-  "port": null,
-  "path": `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
-  "headers": {}
-};
+    const options = {
+      method: "GET",
+      hostname: "api.msg91.com",
+      port: null,
+      path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+      headers: {},
+    };
 
-const req = http.request(options, function (res) {
-  const chunks = [];
+    const req = http.request(options, function (res) {
+      const chunks = [];
 
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
 
-  res.on("end", function () {
-    const body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
 
-req.end();
+    req.end();
 
     res.status(200).json({
       status: true,
@@ -729,39 +718,40 @@ req.end();
   }
 };
 
-exports.changePassword = async (req,res) =>{
-  let data = await Customer.findOne({email : req.body.email,code : req.body.otp})
-const response = {}
-if(data) {
-  let currentTime = new Date().getTime()
-  let diff = data.expireIn - currentTime
-  if(diff){
-    response.message = "Token Expire",
-    response.statusText ="errro"
-  }else {
-    let customer = await Customer.findOne({email:req.body.email})
-    customer.password = req.body.password
-    customer.save()
-    response.message = 'password change',
-    response.statusText = 'success',
-    response.data = data
+exports.changePassword = async (req, res) => {
+  let data = await Customer.findOne({
+    email: req.body.email,
+    code: req.body.otp,
+  });
+  const response = {};
+  if (data) {
+    let currentTime = new Date().getTime();
+    let diff = data.expireIn - currentTime;
+    if (diff) {
+      (response.message = "Token Expire"), (response.statusText = "errro");
+    } else {
+      let customer = await Customer.findOne({ email: req.body.email });
+      customer.password = req.body.password;
+      customer.save();
+      (response.message = "password change"),
+        (response.statusText = "success"),
+        (response.data = data);
+    }
+  } else {
+    (response.message = "password change"), (response.statusText = "success");
   }
-}else{
-response.message = 'password change',
-    response.statusText = 'success'
-}
-res.status(200).json(response)
-}
+  res.status(200).json(response);
+};
 
 exports.resetpassword = async (req, res) => {
-  const { otp, password } = req.body;
+  const { password } = req.body;
 
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
 
   const finddetails = await Customer.findOneAndUpdate(
-    { otp: otp },
-    { $set: { cnfrmPassword: hashPassword } },
+    { id: req.params.id },
+    { $set: { password: hashPassword } },
     { new: true }
   );
 
@@ -779,7 +769,6 @@ exports.resetpassword = async (req, res) => {
     });
   }
 };
-
 
 // exports.changepass = async (req, res) => {
 //   const {password,} = req.body
@@ -805,3 +794,31 @@ exports.resetpassword = async (req, res) => {
 //     });
 //   }
 // };
+
+exports.editcustomerrr = async (req, res) => {
+  const { password } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  const findandUpdateEntry = await Customer.findOneAndUpdate(
+    {
+      _id: req.userId,
+    },
+    { $set: { cnfrmPassword: hashPassword } },
+    { new: true }
+  );
+
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      status: "error",
+      error: "error",
+    });
+  }
+};

@@ -4,7 +4,6 @@ const seller = require("../models/seller");
 exports.add_role = async (req, res) => {};
 
 exports.addrole = async (req, res) => {
-  
   const {
     dashboard,
     emp,
@@ -21,17 +20,17 @@ exports.addrole = async (req, res) => {
     order,
     purcahse,
     reports,
-   // notification,
+    // notification,
     rolesPermission,
     setting,
   } = req.body;
 
   const newRole = await new Role({
     addemp: req.sellerId,
-    emp : emp,
-    dashboard : dashboard,
-    store : store,
-    contacts : contacts,
+    emp: emp,
+    dashboard: dashboard,
+    store: store,
+    contacts: contacts,
     inventory: inventory,
     stockControl: stockControl,
     offers: offers,
@@ -39,11 +38,10 @@ exports.addrole = async (req, res) => {
     subscription: subscription,
     billing: billing,
     order: order,
-    purchase: purchase,
+    purcahse: purcahse,
     reports: reports,
     rolesPermission: rolesPermission,
     setting: setting,
-      
   });
 
   // const findexist = await Role.findOne({ role_name: role_name });
@@ -74,7 +72,9 @@ exports.addrole = async (req, res) => {
 //};
 
 exports.allrole = async (req, res) => {
-  const findall = await Role.find({addemp: req.sellerId}).populate("addemp").populate("emp")
+  const findall = await Role.find({ addemp: req.sellerId })
+    .populate("addemp")
+    .populate("emp");
   if (findall) {
     res.status(200).json({
       status: true,
@@ -114,7 +114,9 @@ exports.edit_role = async (req, res) => {
 };
 
 exports.viewonerole = async (req, res) => {
-  const findone = await Role.findOne({ emp: req.sellerId }).populate("addemp").populate("emp")
+  const findone = await Role.findOne({ emp: req.sellerId })
+    .populate("addemp")
+    .populate("emp");
   if (findone) {
     res.status(200).json({
       status: true,

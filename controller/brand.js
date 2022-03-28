@@ -75,7 +75,7 @@ exports.addbrand = async (req, res) => {
       });
     } else {
       newBrand
-        .save()
+        .save() 
         .then(
           res.status(200).json({
             status: true,
@@ -85,7 +85,7 @@ exports.addbrand = async (req, res) => {
         )
         .catch((error) => {
           res.status(400).json({
-            status: false,
+            status: false, 
             msg: "error",
             error: error,
           });

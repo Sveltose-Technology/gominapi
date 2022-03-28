@@ -91,7 +91,7 @@ router.post(
   editseller
 );
 
-router.get("/admin/  /:id", del_seller);
+router.get("/admin/del_seller/:id", del_seller);
 //router.get("/admin/storebyseller/:id", storebyseller);
 router.get("/admin/getoneseller", tokenverify, getoneseller);
 router.get("/admin/viewoneseller/:id", viewoneseller);

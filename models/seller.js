@@ -43,6 +43,9 @@ const sellerSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    razorpay_payment_id: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

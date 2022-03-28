@@ -44,9 +44,9 @@ const OrdertableSchema = new mongoose.Schema(
     seller_orderId: {
       type: String,
     },
-    razorpay_payment_id: {
-      type: String,
-    },
+    // razorpay_payment_id: {
+    //   type: String,
+    // },
     shipping_address: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user_address",
