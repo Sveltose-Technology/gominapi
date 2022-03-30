@@ -608,6 +608,7 @@ exports.productbysellerbytoken = async (req, res) => {
     .populate("color")
     .populate("size")
     .populate("store")
+    .populate("gstrate")
     .populate("seller");
 
   if (findall) {
