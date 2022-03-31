@@ -156,7 +156,7 @@ exports.addordersample = async (req, res) => {
 };
 
 exports.orderbyseller = async (req, res) => {
-  const { orderId } = req.body;
+  //const { orderId } = req.body;
 
   //const getseller = await Seller.findOne({ _id: req.sellerId });
   const findone = await Ordertable.find({ seller: req.sellerId })
@@ -165,6 +165,7 @@ exports.orderbyseller = async (req, res) => {
     .populate("product")
     .populate("shipping_address");
   if (findone) {
+    console.log(findone)
     res.status(200).json({
       status: true,
       msg: "success",
@@ -288,33 +289,58 @@ exports.pending_order = async (req, res, next) => {
     });
 };
 
-exports.updateOrderStatusbyseller = (req, res) => {
-  Ordertable.findOneAndUpdate(
-    { $and: [{ seller: req.sellerId }, { _id: req.params.id }] },
+// exports.updateOrderStatusbyseller = (req, res) => {
 
-    { $set: { status: req.body.status } },
-    { new: true }
-  )
+//    const findandUpdateEntry =  Ordertable.findOneAndUpdate(
+//     { $and: [{ seller: req.sellerId }, { orderId: req.params.orderId }] },
 
-    .then((result) => {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: result,
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        status: false,
-        msg: "error",
-        error: error,
-      });
-    });
-};
+//     { $set: { status: req.body.status } },
+//     { new: true }
+//   )
+
+//     .then((findandUpdateEntry) => {
+//       res.status(200).json({
+//         status: true,
+//         msg: "success",
+//         data: findandUpdateEntry,
+//       });
+//     })
+//     .catch((error) => {
+//       res.status(400).json({
+//         status: false,
+//         msg: "error",
+//         error: error,
+//       });
+//     });
+// };
 
 // exports.getStatusValues = (req, res) => {
 //   res.json(Order.schema.path('status').enumValues);
 // };
+
+exports.updateOrderStatusbyseller = async (req, res) => {
+  const findandUpdateEntry = await Ordertable.findOneAndUpdate(
+    {
+      $or: [{ seller: req.sellerId }, { _id: req.params.id }],
+    },
+    { $set:{status :req.body.status} },
+    { new: true }
+  );
+  if (findandUpdateEntry) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: findandUpdateEntry,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
 
 exports.salesbyseller = async (req, res) => {
   const findall = await Orderproduct.find({

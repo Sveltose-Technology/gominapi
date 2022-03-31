@@ -85,6 +85,9 @@ exports.addnewpurchaseorder = async (req, res) => {
   });
 
   if (req.file) {
+    const findexist = await Purchaseorder.findOne({
+      seller:req.sellerId
+    })
     const resp = await cloudinary.uploader.upload(req.file.path);
     // if (resp) {
     newSeller.upload_Invoice = resp.secure_url;
@@ -108,7 +111,8 @@ exports.addnewpurchaseorder = async (req, res) => {
 };
 
 exports.getpurchaseorder = async (req, res) => {
-  const findall = await Purchaseorder.find({seller :req.sellerId}) 
+  const findall = await Purchaseorder.find({ $or: [{seller : req.sellerId}, { status: "Approve" },{status: "Decline"}],
+})
     .sort({ sortorder: 1 }).populate("product")
     .populate("supplier").then((data) => {
       res.status(200).json({
@@ -148,7 +152,7 @@ exports.editnewpurchaseorder = async (req, res) => {
     {
       $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
-    { $set: req.body },
+    { $set: data },
     { new: true }
   );
 
