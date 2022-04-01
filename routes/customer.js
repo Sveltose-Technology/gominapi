@@ -26,6 +26,7 @@ const {
   changepass,
   view_onecust,
   editcustomerrr,
+  forgetttt
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
@@ -46,6 +47,9 @@ router.get("/user/getonecusByseller/:id", tokenverify, getonecusByseller);
 
 router.post("/user/editcustomer", verifytoken, editcustomer);
 router.post("/user/editcustomerrr", verifytoken, editcustomerrr);
+router.post("/user/forgetttt", verifytoken, forgetttt);
+
+
 
 router.get("/user/delcustomer/:id", delcustomer);
 router.post("/user/login", login);
@@ -63,5 +67,7 @@ router.get(
 );
 router.post("/user/changePassword", changePassword);
 //router.post("/user/changepass",verifytoken, changepass);
+ 
 
 module.exports = router;
+ 

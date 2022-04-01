@@ -11,16 +11,25 @@ exports.addunits = async (req, res) => {
     status: status,
   });
 
-  const findexist = await Units.findOne({ units_title: units_title });
+  const findexist = await Units.findOne({$and:[{seller: req.sellerId},{units_title: units_title}]})
   if (findexist) {
+    await Units.findOneAndUpdate(
+      {
+        $and :[
+          {seller: req.sellerId},
+          {units_title :units_title}
+        ]
+    },
+    {new :true}
+    )
     res.status(400).json({
       status: false,
-      msg: "Already Exist",
+      msg: "Already Exists",
       data: {},
     });
   } else {
     newUnits
-      .save()
+      .save() 
       .then(
         res.status(200).json({
           status: true,
@@ -28,16 +37,16 @@ exports.addunits = async (req, res) => {
           data: newUnits,
         })
       )
-
       .catch((error) => {
         res.status(400).json({
-          status: false,
+          status: false, 
           msg: "error",
           error: error,
         });
       });
   }
-};
+}
+
 exports.viewoneunits = async (req, res) => {
   const findone = await Units.findOne({ $and : [{seller : req.sellerId},{_id: req.params.id}]}).populate("seller")
   if (findone) {

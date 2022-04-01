@@ -96,7 +96,7 @@ exports.signup = async (req, res) => {
       .then(async (result) => {
         newRole.emp = result._id;
         const makeroles = await Role.create(newRole);
-        console.log(makeroles);
+     //   console.log(makeroles);
 
         const token = jwt.sign(
           {
@@ -431,7 +431,7 @@ exports.editseller = async (req, res) => {
   if (rolename) {
     data.rolename = rolename;
   }
-  console.log(req.file);
+  //  console.log(req.file);
   if (req.file) {
     const response = await cloudinary.uploader.upload(req.file.path);
     data.image = response.secure_url;
