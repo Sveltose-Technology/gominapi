@@ -68,6 +68,21 @@ exports.addSubscription = async (req, res) => {
   newSubscription
     .save()
     .then((data) => {
+      if (
+        data.get("razorpay_payment_id") != undefined ||
+        data.get("razorpay_payment_id") != null ||
+        data.get("razorpay_payment_id").length <= 0
+      ) {
+        // let x = data.get("seller");
+        let y = Seller.findOneAndUpdate(
+          //Seller.findOneAndUpdate(
+          { seller: req.sellerId },
+          { $set: { hasSubscribed: true } },
+          { new: true }
+        );
+        console.log("true", y);
+      }
+
       res.status(200).json({
         status: true,
         msg: "success",
