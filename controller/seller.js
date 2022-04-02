@@ -692,25 +692,51 @@ exports.verifyOtp = async (req, res) => {
 exports.forgetpassword = async (req, res) => {
   const { password, cnfrm_password } = req.body;
 
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashpassword = bcrypt.hashSync(password, salt)
+
   const user = await Seller.findOneAndUpdate({
     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
   });
   if (user) {
     const validPass = await bcrypt.compare(password, user.cnfrm_password);
     if (validPass) {
-      res.status(400).json({
-        status: true,
-        msg: "Password  Changed Successfully",
-        user: user,
-      });
-    } else {
-      res.status(200).json({
-        status: false,
-        msg: "Password Not Matched",
-      });
-    }
-  }
-};
+const findandUpdateEntry = await Seller.findOneAndUpdate(
+  {
+    _id: req.sellerId,
+  },
+  // {$and: [{ password: validPass }, { cnfrmPassword :validPass }]},
+  { $set: { password: password } },
+        { new: true }
+)
+if(findandUpdateEntry){
+  console.log(findandUpdateEntry)
+  res.status(400).json({
+    status: true,
+    msg: "Password  Changed Successfully",
+    user: user,
+  });
+} else {
+  res.status(200).json({
+    status: false,
+    msg: "Password Not Matched",
+  });
+}
+    }}}
+// }
+//       res.status(400).json({
+//         status: true,
+//         msg: "Password  Changed Successfully",
+//         user: user,
+//       });
+//     } else {
+//       res.status(200).json({
+//         status: false,
+//         msg: "Password Not Matched",
+//       });
+//     }
+//   }
+// };
 
 //.then((data)=>{
 //     res.status(200).json({

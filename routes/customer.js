@@ -15,18 +15,17 @@ const {
   sendotp,
   emailSend,
   verifyotp,
-  forgotPassword,
-  resetpassword,
+//  forgotPassword,
+ // resetpassword,
   Customerbysellerbytoken,
-  changePassword,
   editcustomerbyseller,
   totalcustomerbyseller,
   getonecusByseller,
   viewonecustomer,
-  changepass,
   view_onecust,
-  editcustomerrr,
+  forgotPassword,
   forgetttt
+
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
@@ -46,7 +45,7 @@ router.get("/user/getonecustomer", verifytoken, getonecustomer);
 router.get("/user/getonecusByseller/:id", tokenverify, getonecusByseller);
 
 router.post("/user/editcustomer", verifytoken, editcustomer);
-router.post("/user/editcustomerrr", verifytoken, editcustomerrr);
+router.post("/user/forgotPassword", verifytoken, forgotPassword);
 router.post("/user/forgetttt", verifytoken, forgetttt);
 
 
@@ -59,13 +58,14 @@ router.get("/user/totalcustomerbyseller", tokenverify, totalcustomerbyseller);
 router.post("/user/sendotp", sendotp);
 router.post("/user/emailSend", emailSend);
 router.post("/user/verifyotp", verifyotp);
-router.post("/user/resetpassword/:id", resetpassword);
+//router.post("/user/resetpassword/:id", resetpassword);
 router.get(
   "/user/Customerbysellerbytoken",
   tokenverify,
   Customerbysellerbytoken
 );
-router.post("/user/changePassword", changePassword);
+// router.post("/user/changePassword", changePassword);
+
 //router.post("/user/changepass",verifytoken, changepass);
  
 

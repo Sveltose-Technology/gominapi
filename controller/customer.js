@@ -795,16 +795,22 @@ exports.resetpassword = async (req, res) => {
 //   }
 // };
 
-exports.editcustomerrr = async (req, res) => {
-  const { password } = req.body;
+exports.forgotPassword = async (req, res) => {
+  const { password,cnfrmPassword } = req.body;
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
 
   const findandUpdateEntry = await Customer.findOneAndUpdate(
-    {
-      _id: req.userId,
-    },
-    { $set: { password: hashpassword } },
+    // {
+    //   _id: req.userId,
+    // },
+   // { $set: { password: hashpassword } },
+
+   {
+     $and: [
+       {_id: req.userId},
+       { password: password }, 
+       { cnfrmPassword :cnfrmPassword }]},
     { new: true }
   );
 
@@ -828,13 +834,17 @@ exports.editcustomerrr = async (req, res) => {
 
 exports.forgetttt = async (req,res) =>{
   const {password} = req.body
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
+  // const salt = bcrypt.genSaltSync(saltRounds);
+  // const hashpassword = bcrypt.hashSync(password, salt);
 
-  const user = await Customer.findOne({ password: password })
-  if(user){
-    const validPass = await bcrypt.compare(password, user.cnfrmPassword);
+  // const user = await Customer.findOne({ $or: [{ userId: req.userId }, { password: password }], })
+  // if(user){
+   // console.log(user)
+     
+  let validPass = await bcrypt.compare(password,cnfrmPassword);
     if(validPass){
+      console.log(validPass)
+       
       const findandUpdateEntry = await Customer.findOneAndUpdate(
         {
           _id: req.userId,
@@ -858,5 +868,33 @@ exports.forgetttt = async (req,res) =>{
       }
     };
     }
-  }
-//}
+  
+    // exports.forgotPassword = async (req, res) => {
+    //   const { password,cnfrmPassword } = req.body;
+    //   const salt = bcrypt.genSaltSync(saltRounds);
+    //   const hashpassword = bcrypt.hashSync(password, salt);
+    
+
+    //   const findandUpdateEntry = await Customer.findOneAndUpdate(
+    //     {
+    //       _id: req.userId,
+    //     },
+    //     // {$and: [{ password: password }, { cnfrmPassword :cnfrmPassword }]},
+    //      { $set: { password: hashpassword } },
+    //     { new: true }
+    //   );
+    
+    //   if (findandUpdateEntry) {
+    //     res.status(200).json({
+    //       status: true,
+    //       msg: "success",
+    //       data: findandUpdateEntry,
+    //     });
+    //   } else {
+    //     res.status(400).json({
+    //       status: false,
+    //       status: "error",
+    //       error: "error",
+    //     });
+    //   }
+    // };
