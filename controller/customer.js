@@ -800,34 +800,50 @@ exports.forgotPassword = async (req, res) => {
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
 
-  const findandUpdateEntry = await Customer.findOneAndUpdate(
+  // const findandUpdateEntry = await Customer.findOneAndUpdate(
+
     // {
     //   _id: req.userId,
     // },
    // { $set: { password: hashpassword } },
 
-   {
-     $and: [
-       {_id: req.userId},
-       { password: password }, 
-       { cnfrmPassword :cnfrmPassword }]},
-    { new: true }
-  );
 
-  if (findandUpdateEntry) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findandUpdateEntry,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      status: "error",
-      error: "error",
-    });
-  }
-};
+  //  custom(async (cnfrmPassword, {req}) => {
+  //   const password = req.body.password
+
+    // If password and confirm password not same
+    // don't allow to sign up and throw error
+    // if(password !== confirmPassword){
+    //   throw new Error('Passwords must be same')
+    // }
+
+  //})
+  
+
+  //  {
+  //    $and: [
+  //      {_id: req.userId},
+  //      { password: password }, 
+  //      { cnfrmPassword :cnfrmPassword }]},
+  //   { new: true }
+  // );
+
+  // if (findandUpdateEntry) {
+  //   res.status(200).json({
+  //     status: true,
+  //     msg: "success",
+  //     data: findandUpdateEntry,
+  //   });
+  // } else {
+  //   res.status(400).json({
+  //     status: false,
+  //     status: "error",
+  //     error: "error",
+  //   });
+  
+}
+
+// }
 
 
 
