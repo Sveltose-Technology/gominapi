@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { tokenverify } = require("../functions/tokenverify");
+const { verifytoken } = require("../functions/tokenverify");
 
 const {
   addSubscription,
@@ -13,7 +14,7 @@ const {
   getoneseller_sub,
 } = require("../controller/subscription");
 
-router.post("/admin/addSubscription", tokenverify, addSubscription);
+//router.post("/admin/addSubscription", verifytoken , addSubscription);
 
 //router.post("/admin/addSubscriptions", tokenverify, addSubscriptions);
 router.get("/admin/Getsubscription", Getsubscription);

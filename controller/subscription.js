@@ -2,23 +2,29 @@ const Subscription = require("../models/subscription");
 const Seller = require("../models/seller");
 
 exports.addSubscription = async (req, res) => {
-  const { razorpay_payment_id, description, duration, sub_plan } = req.body;
+  const { razorpay_payment_id, description, duration, sub_plan ,seller} = req.body;
 
   const newSubscription = new Subscription({
     razorpay_payment_id: razorpay_payment_id,
-    seller: req.sellerId,
+    customer: customer,
     description: description,
     duration: duration,
     sub_plan: sub_plan,
   });
-  // //   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
-  // //   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
-  const getdetails = await Subscription.findOne({
-    razorpay_payment_id: razorpay_payment_id,
-  });
-  if (getdetails) {
-    console.log(getdetails);
+
+////////////////////////////////////////////////////////////////
+
+
+
+  //   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
+  //   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
+
+  // const getdetails = await Subscription.findOne({
+  //   razorpay_payment_id: razorpay_payment_id,
+  // });
+  // if (getdetails) {
+  //   console.log(getdetails);
     //  const getseller = await Seller.findOne({ id: req.params.seller });
     // if (getseller) {
     //   const getsub = await Seller.findOne({ id: req.getseller?.hasSubscribed });
@@ -26,39 +32,45 @@ exports.addSubscription = async (req, res) => {
     //   getseller.hasSubscribed == true;
     //   console.log();
     // }
-    if (getdetails.razorpay_payment_id == razorpay_payment_id) {
-      const getseller = await Seller.findOne({ id: req.params.seller });
-      const getsubscribed = await Seller.findOne({
-        id: req.getseller?.hasSubscribed,
-      });
-      console.log(getseller);
 
-      if (getseller.getsubscribed) {
-        await Seller.findOneAndUpdate(
-          {
-            $and: [{ seller: req.sellerId }, { hasSubscribed: true }],
-          },
-          { new: true }
-        );
-        res.status(400).json({
-          status: true,
-          msg: "success",
-          data: data,
-        });
-        console.log(getseller);
-        console.log(getsubscribed);
-      }
-      console.log(getsubscribed);
-      // }
-      // if (getsub) {
-      //   if (getdetails == true) console.log(getsub);
-      // }
 
-      console.log(getseller);
-    }
-    // console.log(getdetails);
-    console.log(getdetails);
-  }
+  //   if (getdetails.razorpay_payment_id == razorpay_payment_id) {
+  //     const getseller = await Seller.findOne({ id: req.params.seller });
+  //     const getsubscribed = await Seller.findOne({
+  //       id: req.getseller?.hasSubscribed,
+  //     });
+  //     console.log(getseller);
+
+  //     if (getseller.getsubscribed) {
+  //       await Seller.findOneAndUpdate(
+  //         {
+  //           $and: [{ seller: req.sellerId }, { hasSubscribed: true }],
+  //         },
+  //         { new: true }
+  //       );
+  //       res.status(400).json({
+  //         status: true,
+  //         msg: "success",
+  //         data: data,
+  //       });
+  //       console.log(getseller);
+  //       console.log(getsubscribed);
+  //     }
+  //     console.log(getsubscribed);
+  //     // }
+  //     // if (getsub) {
+  //     //   if (getdetails == true) console.log(getsub);
+  //     // }
+
+  //     console.log(getseller);
+  //   }
+  //   // console.log(getdetails);
+  //   console.log(getdetails);
+  // }
+
+  //////////////////////////////////////////////
+
+
   let datetoday = await new Date()
     .toISOString()
     .toString()
@@ -67,39 +79,188 @@ exports.addSubscription = async (req, res) => {
 
   newSubscription
     .save()
-    .then((data) => {
-      if (
-        data.get("razorpay_payment_id") != undefined ||
-        data.get("razorpay_payment_id") != null ||
-        data.get("razorpay_payment_id").length <= 0
-      ) {
-        // let x = data.get("seller");
-        let y = Seller.findOneAndUpdate(
-          //Seller.findOneAndUpdate(
-          { seller: req.sellerId },
-          { $set: { hasSubscribed: true } },
-          { new: true }
-        );
-        console.log("true", y);
-      }
+    .then(async(data)=>{
+      if(   data.get("razorpay_payment_id") != undefined ||
+          data.get("razorpay_payment_id") != null ||
+          data.get("razorpay_payment_id").length <= 0){
+// console.log(data)
+//let x = data.get
+let x = await Seller.findOne({customer: "firstname" }) ;
+// var newarr = x.map(function (value) {
+//   return value.hasSubscribed
+// })
+//let bb = x.map(hasSubscribed)
+// let z = x.hasSubscribed
+ //console.log("ABC",z)
 
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
+
+console.log("string",x)
+  if(x){
+    const y = await Subscription.findOneAndUpdate(
+            { id: req.body.id },
+            { $set: { hasSubscribed: true } },
+            { new: true }
+    )
+    // console.log("bunny",x)
+    // console.log(y)
+    // console.log("true", y);
+    res.status(200).json({
+      status: true,
+          msg: "success",
+          data: x,
     })
     .catch((error) => {
-      res.status(400).json({
-        status: false,
-        msg: "error",
-        error: error,
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: error,
+        });
       });
-    });
-  // }
-  // }
-};
+     //     console.log(y)
+    //     console.log("true", y);
+  } 
+      }
+    })
+    // res.status(200).json({
+    //   status: true,
+    //       msg: "success",
+    //       data: x,
+    // })
+    // .catch((error) => {
+    //     res.status(400).json({
+    //       status: false,
+    //       msg: "error",
+    //       error: error,
+    //     });
+    //   });
+    }
+    // .then(async (data) => {
 
+    //  if (
+     
+    //     data.get("razorpay_payment_id") != undefined ||
+    //     data.get("razorpay_payment_id") != null ||
+    //     data.get("razorpay_payment_id").length <= 0
+    //   ) { 
+    //       console.log("gggggg")
+
+    //      let x = data.get("seller");
+      
+    //  if(x){   
+      
+    //  }
+    
+    //   }
+    
+    
+    //  const y =    await Seller.findOneAndUpdate(
+    //       //Seller.findOneAndUpdate(
+    //       { seller: req.sellerId },
+    //       { $set: { hasSubscribed: true } },
+    //       { new: true }
+    //     );
+    //     console.log("bunny",x)
+    //     console.log(y)
+    //     console.log("true", y);
+    //   }
+
+    //   res.status(200).json({
+    //     status: true,
+    //     msg: "success",
+    //     data: data,
+    //   });
+    // })
+  
+    // .catch((error) => {
+    //   res.status(400).json({
+    //     status: false,
+    //     msg: "error",
+    //     error: error,
+    //   });
+    // });
+    
+  // }
+  // }
+
+
+
+// exports.addSubscription = async (req,res) =>{
+//   const {razorpay_payment_id,description,duration,sub_plan,seller} = req.body
+
+//   const newSubscription = new Subscription({
+//     razorpay_payment_id :razorpay_payment_id,
+//     description :description,
+//     seller : seller,
+//     duration :duration,
+//     sub_plan :sub_plan
+//   })
+
+  
+//   newSubscription
+//   .save()
+//   .then(async(data) => {
+//     if(data.get("razorpay_payment_id") != undefined || data.get("razorpay_payment_id") !=null || data.get("razorpay_payment_id") || data.get ("razorpay_payment_id").length <=0 )
+// var y =await Subscription.findOneAndUpdate(
+//   {id :req.params.id},
+//   {$set : {hasSubscribed
+//     : true}},
+//   {new : true}
+//   )
+// console.log(y)
+//     res.status(200).json({
+//       status: true,
+//       msg: "success",
+//       data: data,
+//     })
+//     console.log(data)
+//     console.log(seller)
+//   })
+//   // console.log(data)
+//   .catch((error) => {
+//     res.status(400).json({
+//       status: false,
+//       msg: "error",
+//       error: error,
+//     });
+//   });
+// }
+
+    // .then(async (data) => {
+    //        if (
+           
+    //           data.get("razorpay_payment_id") != undefined ||
+    //           data.get("razorpay_payment_id") != null ||
+    //           data.get("razorpay_payment_id").length <= 0
+    //         ) {   console.log("gggggg")
+    //           // let x = data.get("seller");
+    //        const y =    await Seller.findOneAndUpdate(
+    //             //Seller.findOneAndUpdate(
+    //             { id: req.params.id },
+    //             { $set: { hasSubscribed: true } },
+    //             { new: true }
+    //           );
+    //          // console.log(y)
+    //           console.log("true", y);
+    //         }
+      
+    //         res.status(200).json({
+    //           status: true,
+    //           msg: "success",
+    //           data: data,
+    //         });
+    //       })
+    //       .catch((error) => {
+    //         res.status(400).json({
+    //           status: false,
+    //           msg: "error",
+    //           error: error,
+    //         });
+    //       });
+    //     // }
+    //     // }
+    //   };
+      
+     
 exports.Getsubscription = async (req, res) => {
   const findall = await Subscription.find()
     .sort({ sortorder: 1 })
