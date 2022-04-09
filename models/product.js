@@ -43,11 +43,9 @@ const productSchema = new Schema(
     
     //user input
 
-    stock: {
+    sell_mode: {
       type: String,
-      // avalaible: "Available",
-      // unavailable: " UnAvailable",
-      default : "UnAvailable"
+      // Offline,Online,out of stock
     },
     qty: {
       type: Number,
