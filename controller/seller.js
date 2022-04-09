@@ -1,5 +1,6 @@
 const Seller = require("../models/seller");
 const Role = require("../models/role");
+const nodemailer = require("nodemailer");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -535,30 +536,30 @@ exports.totalempbyseller = async (req, res) => {
 
 exports.sendOtp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-  const { mobile } = req.body;
-  const finddetails = await Seller.findOneAndUpdate(
-    { mobile: mobile },
-    { $set: { otp: defaultotp } },
-    { new: true }
-  );
+  const { mobile,email } = req.body;
+  const http = require("https");
+  // const finddetails = await Seller.findOneAndUpdate(
+  //   { mobile: mobile },
+  //   { $set: { otp: defaultotp } },
+  //   { new: true }
+  // );
 
   //console.log(mobile_no.length);
   //console.log(finddetails);
   //console.log(finddetails.email);
-  if (finddetails) {
-    const http = require("https");
-
+  // if (finddetails) {
+ 
     const options = {
       method: "GET",
       hostname: "api.msg91.com",
       port: null,
-      path: `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${finddetails?.mobile}&authkey=${process.env.OTPAUTH}`,
+      path: `/api/v5/otp?template_id=620deb009f5d151055640942&mobile=91${mobile}&authkey=${process.env.OTPAUTH}`,
       headers: {
         "Content-Type": "application/json",
       },
     };
 
-    const req = http.request(options, function (res) {
+    const requestmain = http.request(options, function (res) {
       const chunks = [];
 
       res.on("data", function (chunk) {
@@ -571,7 +572,15 @@ exports.sendOtp = async (req, res) => {
       });
     });
 
-    req.end();
+    requestmain.end();
+    const finddetails = await Seller.findOneAndUpdate(
+      {
+        $or: [{ mobile: mobile }, { email: email }],
+      },
+      { $set: { otp: defaultotp } },
+      { new: true }
+    );
+           if(finddetails){
       //const {to,text,} = req.body
       const subject = `Buynaa Email Verification`;
       const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
@@ -587,14 +596,14 @@ exports.sendOtp = async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "support@brizebond.com", // generated ethereal user
-        pass: "Brize91123*", // generated ethereal password
+        pass: "Brize91123", // generated ethereal password
       },
     });
 
     // // send mail with defined transport object
     let info = await transporter.sendMail({
       from: '"Buynaa Support" <support@buynaa.com>', // sender address
-      to: finddetails.customer_email, // list of receivers
+      to: finddetails.email, // list of receivers
       subject: subject, // Subject line
       text: text, // plain text body
       html: `<b>${text}</b>`, // html body
@@ -604,11 +613,13 @@ exports.sendOtp = async (req, res) => {
     // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // // Preview only available when sending through an Ethereal account
-     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
+      email: email,
       mobile: mobile,
+      otp: defaultotp,
     });
   } else {
     res.status(400).json({
@@ -617,7 +628,6 @@ exports.sendOtp = async (req, res) => {
     });
   }
 };
-
 exports.emailsend = async (req, res) => {
   //console.log(req.body.customer_email);
   let data = await Seller.findOne({
