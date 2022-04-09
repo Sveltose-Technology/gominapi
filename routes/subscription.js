@@ -15,7 +15,6 @@ const {
 } = require("../controller/subscription");
 
 //router.post("/admin/addSubscription", verifytoken , addSubscription);
-
 //router.post("/admin/addSubscriptions", tokenverify, addSubscriptions);
 router.get("/admin/Getsubscription", Getsubscription);
 router.get("/admin/getoneSubscription/:id", getoneSubscription);
