@@ -87,11 +87,7 @@ const productSchema = new Schema(
     tag : {
       type : String
     },
-     
-    status: {
-      type: String,
-      default: "Active",
-    },
+   
   },
   { timestamps: true }
 );
