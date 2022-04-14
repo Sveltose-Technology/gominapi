@@ -133,12 +133,34 @@ exports.getpurchaseorder = async (req, res) => {
 
 
 exports.editnewpurchaseorder = async (req, res) => {
-  const { status,upload_Invoice } = req.body;
+  const { status,upload_Invoice,supplier,stock_due,gstIn,payment_due,invoice_date,amount ,transportation_cost,grand_total,instructions} = req.body;
 
   data = {};
   if (status) {
     data.status = status;
+  };
+  if(supplier){
+  data.supplier = supplier
+  };
+  if(stock_due){
+    data.stock_due = stock_due
+  };
+  if(gstIn){
+    data.gstIn = gstIn
+  };
+  if(payment_due){
+    data.payment_due = payment_due
+  };
+  if(invoice_date){
+    data.invoice_date = invoice_date
+  };
+  if(transportation_cost){
+    data.transportation_cost = transportation_cost
+  };
+  if(instructions){
+    data.instructions = instructions
   }
+
   
   //console.log(req.file);
   if (req.file) {
@@ -152,7 +174,7 @@ exports.editnewpurchaseorder = async (req, res) => {
     {
       $and: [{ seller: req.sellerId }, { _id: req.params.id }],
     },
-    { $set: data },
+    { $set: req.body },
     { new: true }
   );
 
@@ -171,7 +193,6 @@ exports.editnewpurchaseorder = async (req, res) => {
   }
 }
 }
-
 
 
 exports.getonepurchaseorder = async (req, res) => {
