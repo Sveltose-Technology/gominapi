@@ -1,6 +1,6 @@
 const Role = require("../models/role");
 const seller = require("../models/seller");
-
+//console
 exports.add_role = async (req, res) => { };
 
 exports.addrole = async (req, res) => {
