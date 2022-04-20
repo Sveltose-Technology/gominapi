@@ -779,26 +779,25 @@ if(findandUpdateEntry){
 //   }
 // };
 
-exports.sellerForgetPass = async (req, res) => {
-  const { password, ConfirmPassword } = req.body;
+exports.fogetpassword = async (req, res) => {
 
-  // const salt = await bcrypt.genSalt(10);
-  // const hashPassword = await bcrypt.hash(Password, salt);
+  const {password,cnfrm_password} = req.body
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
 
-  const finddetails = await Seller.findOneAndUpdate(
-    { added_by: req.sellerId },
-    { $set: { password: password } },
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+  const findandUpdateEntry = await Seller.findOneAndUpdate(
+    {
+  _id: req.userId
+    },
+    { $set: { password: hashPassword } },
     { new: true }
   );
-
-  if (finddetails) {
+  if (findandUpdateEntry) {
     res.status(200).json({
       status: true,
-      msg: "Password Reset Successfull",
-      data: finddetails,
+      msg: "success",
+      data: findandUpdateEntry,
     });
   } else {
     res.status(400).json({
@@ -810,6 +809,4 @@ exports.sellerForgetPass = async (req, res) => {
 };
 
 
-
-
-//console                        
+ 

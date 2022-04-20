@@ -46,7 +46,7 @@ router.get("/user/getonecustomer", verifytoken, getonecustomer);
 router.get("/user/getonecusByseller/:id", tokenverify, getonecusByseller);
 
 router.post("/user/editcustomer", verifytoken, editcustomer);
-router.post("/user/forgotPassword", verifytoken, forgotPassword);
+ 
 router.post("/user/forgetttt", verifytoken, forgetttt);
 
 

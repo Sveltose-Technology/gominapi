@@ -22,7 +22,7 @@ const {
   editempByseller,
   totalempbyseller,
   viewoneseller,
-  sellerForgetPass,
+  fogetpassword,
 
   //storebyseller,
 } = require("../controller/seller");
@@ -103,6 +103,6 @@ router.post("/admin/sendOtp", sendOtp);
 //router.post("/admin/emailsend", emailsend);
 router.post("/admin/verifyOtp", verifyOtp);
 router.post("/admin/forgetpassword", forgetpassword);
-router.post("/admin/sellerForgetPass", tokenverify, sellerForgetPass);
+router.post("/admin/fogetpassword", tokenverify, fogetpassword);
 
 module.exports = router;

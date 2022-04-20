@@ -770,80 +770,8 @@ exports.resetpassword = async (req, res) => {
   }
 };
 
-// exports.changepass = async (req, res) => {
-//   const {password,} = req.body
-//   const salt = await bcrypt.genSalt(10);
-//   const hashPassword = await bcrypt.hash(password, salt);
-//   finddetails = await Customer.findOneAndUpdate(
-//     { _id: req.userId },
-//     $and: [{ password: hashPassword }, { cnfrmPassword :hashPassword }}],
-//   //  { $set: { password: hashPassword } },
-//     { new: true }
-//   )
-//   if (finddetails) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "Password Reset Successfull",
-//       data: finddetails,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
 
-exports.forgotPassword = async (req, res) => {
-  const { password,cnfrmPassword } = req.body;
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
-
-  // const findandUpdateEntry = await Customer.findOneAndUpdate(
-
-    // {
-    //   _id: req.userId,
-    // },
-   // { $set: { password: hashpassword } },
-
-
-  //  custom(async (cnfrmPassword, {req}) => {
-  //   const password = req.body.password
-
-    // If password and confirm password not same
-    // don't allow to sign up and throw error
-    // if(password !== confirmPassword){
-    //   throw new Error('Passwords must be same')
-    // }
-
-  //})
-  
-
-  //  {
-  //    $and: [
-  //      {_id: req.userId},
-  //      { password: password }, 
-  //      { cnfrmPassword :cnfrmPassword }]},
-  //   { new: true }
-  // );
-
-  // if (findandUpdateEntry) {
-  //   res.status(200).json({
-  //     status: true,
-  //     msg: "success",
-  //     data: findandUpdateEntry,
-  //   });
-  // } else {
-  //   res.status(400).json({
-  //     status: false,
-  //     status: "error",
-  //     error: "error",
-  //   });
-  
-}
-
-// }
+ 
 
 
 
@@ -852,20 +780,22 @@ exports.forgetttt = async (req,res) =>{
   const {password,cnfrmPassword} = req.body
   const salt = bcrypt.genSaltSync(saltRounds);
   const hashpassword = bcrypt.hashSync(password, salt);
-
-  const user = await Customer.findOne({ $or: [{ userId: req.userId }, { cnfrmPassword: cnfrmPassword }], })
+   const user = await Customer.findOne({ userId: req.userId })
   if(user){
    console.log(user)
      
-  let validPass = await bcrypt.compare(password,user.cnfrmPassword);
-    if(validPass){
-      console.log(validPass)
+  let validPass = await bcrypt.compare(req.body.password,req.body.cnfrmPassword);
+  console.log("Result",validPass)
+    console.log(` ${password}  :  ${user.password}`);
+ console.log(` ${password}  :  ${user.cnfrmPassword}`);
+     if(validPass){
+       
        
       const findandUpdateEntry = await Customer.findOneAndUpdate(
         {
           _id: req.userId,
         },
-        { $set: { password: req.body } },
+        { $set: req.body },
         { new: true }
       
       )
@@ -883,8 +813,9 @@ exports.forgetttt = async (req,res) =>{
         });
       }
     }
+  }
     };
-    }
+    
   
     // exports.forgotPassword = async (req, res) => {
     //   const { password,cnfrmPassword } = req.body;
@@ -922,7 +853,7 @@ exports.forgetttt = async (req,res) =>{
 
     exports.fogetpassword = async (req, res) => {
 
-      const {password,cnfrm_password} = req.body
+      const {password,cnfrmPassword} = req.body
 
 
       const salt = await bcrypt.genSalt(10);
