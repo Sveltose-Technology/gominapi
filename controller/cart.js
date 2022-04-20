@@ -184,7 +184,7 @@ exports.editcart = async (req, res) => {
 
 exports.removecart = async (req, res) => {
   try {
-    const deleteentry = await Cart.deleteMany({ customer : req.userId,product:req.params.id });
+    const deleteentry = await Cart.deleteOne({ customer : req.userId,product:req.params.id });
     res.status(200).json({
       status: true,
       msg: "success",
@@ -201,8 +201,8 @@ exports.removecart = async (req, res) => {
 
 
 exports.clearCart = async (req, res) => {
-  try {
-    const deleteentry = await Cart.deleteOne({ customer : req.userId});
+  try {   
+    const deleteentry = await Cart.deleteMany({ customer : req.userId});
     res.status(200).json({
       status: true,
       msg: "success",

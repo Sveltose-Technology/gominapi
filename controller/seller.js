@@ -709,14 +709,15 @@ exports.forgetpassword = async (req, res) => {
     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
   });
   if (user) {
+    // console.log(user)
     const validPass = await bcrypt.compare(password, user.cnfrm_password);
     if (validPass) {
 const findandUpdateEntry = await Seller.findOneAndUpdate(
   {
     _id: req.sellerId,
   },
-  // {$and: [{ password: validPass }, { cnfrmPassword :validPass }]},
-  { $set: { password: password } },
+
+  { $set: { password: req.body } },
         { new: true }
 )
 if(findandUpdateEntry){
@@ -789,7 +790,7 @@ exports.sellerForgetPass = async (req, res) => {
 
   const finddetails = await Seller.findOneAndUpdate(
     { added_by: req.sellerId },
-    { $set: { password: hashpassword } },
+    { $set: { password: password } },
     { new: true }
   );
 

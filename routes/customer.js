@@ -24,8 +24,9 @@ const {
   viewonecustomer,
   view_onecust,
   forgotPassword,
-  forgetttt
-
+  forgetttt,
+  fogetpassword
+   
 } = require("../controller/customer");
 
 router.post("/user/signup", signup);
@@ -66,7 +67,8 @@ router.get(
 );
 // router.post("/user/changePassword", changePassword);
 
-//router.post("/user/changepass",verifytoken, changepass);
+router.post("/user/fogetpassword",verifytoken, fogetpassword);
+ 
  
 
 module.exports = router;
