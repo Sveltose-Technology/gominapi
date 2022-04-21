@@ -39,8 +39,8 @@ exports.rapay = async (req, res) => {
 exports.fetchallpays = async (req, res) => {
   instance.payments
     .all({
-      from: "2021-09-29",
-      to: "2021-10-01",
+      from: "2022-04-21",
+      to: "2022-04-21",
     })
     .then((response) => {
       res.json({

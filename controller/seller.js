@@ -58,22 +58,51 @@ exports.signup = async (req, res) => {
   const newRole = new Role({
     dashboard: true,
     store: true,
+    addMyStore: true,
+    storeList: true,
     contacts: true,
+    addEmployee: true,
+    employeeList: true,
+    addCustomer: true,
+    customerList: true,
+    addSupplier: true,
+    supplierList: true,
     inventory: true,
+    products: true,
+    AddMyProduct: true,
+    productsList: true,
     stockControl: true,
+    stockTransferRequest: true,
+    stockAdjustment: true,
     coupons: true,
     subscription: true,
+    choosePaymentOption: true,
+    subsList: true,
     billing: true,
     order: true,
     purchase: true,
+    newPurchaseOrder: true,
+    purchaseOrderList: true,
+    purchaseInvoiceList: true,
     reports: true,
     rolesPermission: true,
+    roleList: true,
+    addRole: true,
     setting: true,
+    brandList: true,
+    taxList: true,
+    unitList: true,
+    reasonList: true,
+    colourList: true,
+    sizeList: true,
+    productCategory: true,
+    material: true,
+    warehouseList: true,
   });
 
   //const makeroles = await Role.create(newRole)
-  // console.log(makeroles)
-  // newSeller.role = makeroles._id
+  //console.log("Roles",makeroles)
+  //newSeller.role = makeroles._id
 
   if (req.file) {
     const resp = await cloudinary.uploader.upload(req.file.path);
@@ -96,8 +125,8 @@ exports.signup = async (req, res) => {
       .save()
       .then(async (result) => {
         newRole.emp = result._id;
-        const makeroles = await Role.create(newRole);
-     //   console.log(makeroles);
+        let makeroles = await Role.create(newRole);
+        console.log(makeroles);
 
         const token = jwt.sign(
           {
@@ -113,6 +142,7 @@ exports.signup = async (req, res) => {
           token: token,
           msg: "success",
           user: result,
+          role :makeroles
           //designation: "seller",
         });
       })
@@ -136,6 +166,7 @@ exports.addemployee = async (req, res) => {
     image,
     rolename,
     added_by,
+    role
   } = req.body;
 
   //hashing password
@@ -150,6 +181,7 @@ exports.addemployee = async (req, res) => {
     cnfrm_password: hashPassword,
     image: image,
     rolename: rolename,
+    role : role,
     added_by: req.sellerId,
   });
 
@@ -198,6 +230,7 @@ exports.getemployecreatedbyseller = async (req, res) => {
   const findall = await Seller.find({ added_by: req.sellerId })
     // .populate("role")
     .populate("added_by")
+    .populate("role")
     .sort({ sortorder: 1 });
   if (findall) {
     res.status(200).json({
@@ -238,7 +271,9 @@ exports.getoneempcreatedbyseller = async (req, res) => {
     $and: [{ id: req.sellerId }, { _id: req.params.id }],
   })
     //.populate("role")
-    .populate("added_by");
+    .populate("added_by")
+    .populate("role");
+
   if (findone) {
     res.status(200).json({
       status: true,
@@ -296,7 +331,7 @@ exports.sellerlogin = async (req, res) => {
   const { mobile, email, password } = req.body;
   const user = await Seller.findOne({
     $or: [{ mobile: mobile }, { email: email }],
-  });
+  }).populate("role")
   if (user) {
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {

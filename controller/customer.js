@@ -655,6 +655,10 @@ exports.emailSend = async (req, res) => {
   res.status(200).json(responseType);
 };
 
+
+
+
+
 exports.verifyotp = async (req, res) => {
   const { email, mobile, otp } = req.body;
 
@@ -680,6 +684,8 @@ exports.verifyotp = async (req, res) => {
   // }
 
   if (findone) {
+    
+    
     const http = require("https");
 
     const options = {
@@ -703,13 +709,31 @@ exports.verifyotp = async (req, res) => {
       });
     });
 
-    req.end();
+    req.end()
 
+    .then((result) => {
+      const token = jwt.sign(
+        {
+          userId: result._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-token", token).status(200).json({
+        status: true,
+        token: token,
+        msg: "success",
+        user: result,
+      });
+    })
     res.status(200).json({
       status: true,
       msg: "otp verified",
       data: findone,
     });
+
   } else {
     res.status(200).json({
       status: false,
