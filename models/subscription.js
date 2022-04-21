@@ -29,8 +29,7 @@ const subscriptionSchema = new Schema(
     //   default: false,
     // },
     razorpay_payment_id: {
-      type : mongoose.Schema.Types.ObjectId,
-      ref : "payment"
+       type : String
     },
   },
   { timestamps: true }
