@@ -1,5 +1,6 @@
 const Subscription = require("../models/subscription");
 const Seller = require("../models/seller");
+const seller = require("../models/seller");
 
 exports.addSubscriptions = async (req, res) => {
   const {  razorpay_payment_id,description, duration, sub_plan} = req.body;
@@ -85,7 +86,7 @@ exports.addSubscriptions = async (req, res) => {
           data.get("razorpay_payment_id").length <= 0){
 // console.log(data)
 //let x = data.get
-let x = await Seller.findOne({customer: "firstname" }) ;
+let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
 console.log(x)
 // var newarr = x.map(function (value) {
 //   return value.hasSubscribed
@@ -97,8 +98,8 @@ console.log(x)
 
 console.log("string",x)
   if(x){
-    const y = await Subscription.findOneAndUpdate(
-            { id: req.body.id },
+    const y = await seller.findOneAndUpdate(
+            { _id:req.sellerId },
             { $set: { hasSubscribed: true } },
             { new: true }
     )
@@ -263,7 +264,7 @@ console.log("string",x)
       
      
 exports.Getsubscription = async (req, res) => {
-  const findall = await Subscription.find()
+  const findall = await Subscription.find().populate("seller")
     .sort({ sortorder: 1 })
     //.populate("seller");
   if (findall) {

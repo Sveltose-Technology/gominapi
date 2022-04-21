@@ -16,7 +16,10 @@ const subscriptionSchema = new Schema(
     duration: {
       type: String,
     },
-
+    seller : {
+      type : mongoose.Schema.Types.ObjectId,
+     ref : "seller"
+     },
     // status: {
     //   type: String,
     //   default: "Inactive",
