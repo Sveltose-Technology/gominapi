@@ -246,11 +246,24 @@ exports.getorderbycustomer = async (req, res) => {
 exports.getoneorderbyseller = async (req, res) => {
   //const getseller = await Seller.findOne({ _id: req.sellerId });
 
-  const findone = await Ordertable.findOne({ _id: req.params.id })
+  const findone = await Ordertable.findOne ({$and: [{ seller: req.sellerId }, {  _id: req.params.id }]})
+  //({ orderId: req.params.id })
     .populate("product")
     .populate("customer")
     .populate("shipping_address")
-    .populate("seller");
+    .populate("seller")
+    .populate({
+      path: "product",
+      populate: {
+        path: "gstrate",
+      },
+    })
+    .populate({
+      path: "product",
+      populate: {
+        path: "store",
+      },
+    })
   if (findone) {
     res.status(200).json({
       status: true,
