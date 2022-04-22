@@ -659,88 +659,89 @@ exports.emailSend = async (req, res) => {
 
 
 
-exports.verifyotp = async (req, res) => {
-  const { email, mobile, otp } = req.body;
+// exports.verifyotp = async (req, res) => {
+//   const { email, mobile, otp } = req.body;
 
-  // const findone = await Customer.findOne({
-  //   $and: [{ customer_email: customer_email }, { otp: otp }],
-  // });
+//   // const findone = await Customer.findOne({
+//   //   $and: [{ customer_email: customer_email }, { otp: otp }],
+//   // });
 
-  const findone = await Customer.findOne({ mobile: mobile });
-  //.then((data)=>{
-  //     res.status(200).json({
-  //       //status: true,
-  //       msg: "otp verified",
-  //       data: data,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     res.status(400).json({
-  //      // status: false,
-  //       msg: "Incorrect Otp",
-  //       error: error,
-  //     });
-  //   })
-  // }
+//   const findone = await Customer.findOne({ mobile: mobile });
+  
+//   //.then((data)=>{
+//   //     res.status(200).json({
+//   //       //status: true,
+//   //       msg: "otp verified",
+//   //       data: data,
+//   //     });
+//   //   })
+//   //   .catch((error) => {
+//   //     res.status(400).json({
+//   //      // status: false,
+//   //       msg: "Incorrect Otp",
+//   //       error: error,
+//   //     });
+//   //   })
+//   // }
 
-  if (findone) {
+//   if (findone) {
     
     
-    const http = require("https");
+//     const http = require("https");
 
-    const options = {
-      method: "GET",
-      hostname: "api.msg91.com",
-      port: null,
-      path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
-      headers: {},
-    };
+//     const options = {
+//       method: "GET",
+//       hostname: "api.msg91.com",
+//       port: null,
+//       path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+//       headers: {},
+//     };
 
-    const req = http.request(options, function (res) {
-      const chunks = [];
+//     const req = http.request(options, function (res) {
+//       const chunks = [];
 
-      res.on("data", function (chunk) {
-        chunks.push(chunk);
-      });
+//       res.on("data", function (chunk) {
+//         chunks.push(chunk);
+//       });
 
-      res.on("end", function () {
-        const body = Buffer.concat(chunks);
-        console.log(body.toString());
-      });
-    });
+//       res.on("end", function () {
+//         const body = Buffer.concat(chunks);
+//         console.log(body.toString());
+//       });
+//     });
 
-    req.end()
+//     req.end()
 
-    .then((result) => {
-      const token = jwt.sign(
-        {
-          userId: result._id,
-        },
-        process.env.TOKEN_SECRET,
-        {
-          expiresIn: 86400000,
-        }
-      );
-      res.header("auth-token", token).status(200).json({
-        status: true,
-        token: token,
-        msg: "success",
-        user: result,
-      });
-    })
-    res.status(200).json({
-      status: true,
-      msg: "otp verified",
-      data: findone,
-    });
+//     .then((result) => {
+//       const token = jwt.sign(
+//         {
+//           userId: result._id,
+//         },
+//         process.env.TOKEN_SECRET,
+//         {
+//           expiresIn: 86400000,
+//         }
+//       );
+//       res.header("auth-token", token).status(200).json({
+//         status: true,
+//         token: token,
+//         msg: "success",
+//         user: result,
+//       });
+//     })
+//     res.status(200).json({
+//       status: true,
+//       msg: "otp verified",
+//       data: findone,
+//     });
 
-  } else {
-    res.status(200).json({
-      status: false,
-      msg: "Incorrect Otp",
-    });
-  }
-};
+//   } else {
+//     res.status(200).json({
+//       status: false,
+//       msg: "Incorrect Otp",
+//     });
+//   }
+// };
 
 exports.changePassword = async (req, res) => {
   let data = await Customer.findOne({
@@ -879,14 +880,23 @@ exports.forgetttt = async (req,res) =>{
 
       const {password,cnfrmPassword} = req.body
 
+      //  const salt = await bcrypt.genSalt(10);
+      //  const hashPassword = await bcrypt.hash(password, salt);
+      //  const hashPassword1 = await bcrypt.hash(cnfrmPassword, salt)
 
+        // const validPass = String.compare(req.body.password, req.body.cnfrmPassword);
+        // console.log("Result",validPass)
+        if(password === cnfrmPassword){
+
+        
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
+
       const findandUpdateEntry = await Customer.findOneAndUpdate(
         {
       _id: req.userId
         },
-        { $set: { password: hashPassword } },
+        { $set: { password: hashPassword ,cnfrmPassword:hashPassword} },
         { new: true }
       );
       if (findandUpdateEntry) {
@@ -902,5 +912,95 @@ exports.forgetttt = async (req,res) =>{
           error: "error",
         });
       }
+    }else{
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "Password not matched",
+    })
+  }
     };
     
+
+    exports.verifyotp = async (req, res) => {
+      const { email, mobile, otp } = req.body;
+      
+       
+      
+    
+      const findone = await Customer.findOne({ mobile: mobile });
+      
+        
+    
+      if (findone) {
+        
+        const token = jwt.sign(
+          {
+            userId: findone._id,
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("auth-token", token).status(200).send({
+          status: true,
+          token: token,
+          msg: "success",
+          user: findone,
+        });
+        const http = require("https");
+    
+        const options = {
+          method: "GET",
+          hostname: "api.msg91.com",
+          port: null,
+          path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+          headers: {},
+        };
+    
+        const req = http.request(options, function (res) {
+          const chunks = [];
+    
+          res.on("data", function (chunk) {
+            chunks.push(chunk);
+          });
+    
+          res.on("end", function () {
+            const body = Buffer.concat(chunks);
+            console.log(body.toString());
+          });
+        });
+    
+        req.end()
+    
+        .then((result) => {
+          const token = jwt.sign(
+            {
+              userId: result._id,
+            },
+            process.env.TOKEN_SECRET,
+            {
+              expiresIn: 86400000,
+            }
+          );
+          res.header("auth-token", token).status(200).json({
+            status: true,
+            token: token,
+            msg: "success",
+            user: result,
+          });
+        })
+        res.status(200).json({
+          status: true,
+          msg: "otp verified",
+          data: findone,
+        });
+    
+      } else {
+        res.status(200).json({
+          status: false,
+          msg: "Incorrect Otp",
+        });
+      }
+    };
