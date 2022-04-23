@@ -105,12 +105,12 @@ console.log("string",x)
             { new: true }
     )
     // console.log("bunny",x)
-    // console.log(y)
+     console.log(y)
     // console.log("true", y);
     res.status(200).json({
       status: true,
           msg: "success",
-          data: x,
+          data: y,
     })
     .catch((error) => {
         res.status(400).json({
