@@ -83,8 +83,9 @@ exports.addSubscriptions = async (req, res) => {
     .then(async(data)=>{
       if(   data.get("razorpay_payment_id") != undefined ||
           data.get("razorpay_payment_id") != null ||
-          data.get("razorpay_payment_id").length <= 0){
-// console.log(data)
+          data.get("razorpay_payment_id").length 
+          == 0){
+//console.log(data)
 //let x = data.get
 let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
 console.log(x)
