@@ -111,7 +111,8 @@ console.log("string",x)
     res.status(200).json({
       status: true,
           msg: "success",
-          data: y,
+          data: data,
+          seller:y
     })
     .catch((error) => {
         res.status(400).json({
