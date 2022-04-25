@@ -13,6 +13,7 @@ const {
   total_sub,
   subscribedplan,
   getoneseller_sub,
+  Getsubbytoken
 } = require("../controller/subscription");
 
 //router.post("/admin/addSubscription", verifytoken , addSubscription);
@@ -26,5 +27,7 @@ router.get("/admin/del_subscription/:id", del_subscription);
 router.get("/admin/total_sub", total_sub);
 router.get("/admin/subscribedplan", subscribedplan);
 router.get("/admin/getoneseller_sub", tokenverify, getoneseller_sub);
+router.get("/admin/Getsubbytoken", tokenverify, Getsubbytoken);
 
 module.exports = router;
+ 

@@ -72,6 +72,15 @@ exports.addproduct = async (req, res) => {
     
   });
 
+  const getqty = await Product.findOne({id : req.body.product})
+  if(getqty){
+    oldqty = getqty.qty
+    console.log("Qty",oldqty)
+    currntqty = parseInt(oldqty) - parseInt(req.body.qty)
+    console.log("Result",currntqty)
+  }
+
+
   if (req.files) {
     const findexist = await Product.findOne({
       product_name: product_name,
@@ -1076,17 +1085,38 @@ exports.dispense = async (req, res) => {
   const { qty } = req.body;
   try {
     //console.log(req.body);
-    const getqty = await Product.findOne({id : req.body.product})
+//     const getqty = await Product.findOne({id : req.body.product})
 
-    //({ _id: req.params.id }, { $set: req.body }, { new: true });
-    const a=    getqty.qty
-    console.log(a)
-console.log("STRING",getqty)
-    //console.log(getqty.stock_qty);
-    const displayqty = Number(a) - Number(qty);
-     console.log("RESULT",displayqty);
-    // [{ $set: req.body }, { $set: req.body }, { new: true }];
+//     //({ _id: req.params.id }, { $set: req.body }, { new: true });
+//     const a=    getqty.qty
+//     console.log(a)
+// console.log("STRING",getqty)
+//     //console.log(getqty.stock_qty);
+//     const displayqty = Number(a) - Number(qty);
+//      console.log("RESULT",displayqty);
+//     // [{ $set: req.body }, { $set: req.body }, { new: true }];
 
+
+const getqty = await Product.findOne({id : req.body.product})
+if(getqty){
+  oldqty = getqty.qty
+  console.log(oldqty)
+  console.log("Qty",oldqty)
+  currntqty = parseInt(oldqty) - parseInt(req.body.qty)
+  console.log("Result",currntqty)
+}
+const findandUpdateEntry = await Product.findOneAndUpdate(
+  { Product: req.body.Product },
+  
+  {$set: {qty:currntqty}} ,
+  
+  
+     
+
+
+//{ $set: {status:"success"} },
+{ new: true }
+);
 
      res.status(200).json({
       status: true,
