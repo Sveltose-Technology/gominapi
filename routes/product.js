@@ -59,11 +59,20 @@ const fileFilter = (req, file, cb) => {
 };
 
 let uploads = multer({ storage: storage });
+let multipleUpload = uploads.fields([
+  { name: "product_img", maxCount: 1 },
+ 
+  //   { name: "storepan_img", maxCount: 5 },
+  //   { name: "tradelicence_img", maxCount: 5 },
+  //   { name: "companypan_img", maxCount: 5 },
+  //   { name: "address_proof_img", maxCount: 5 },
+]);
+
 //Paths
-router.post("/admin/addproduct", uploads.array("product_img"),tokenverify, addproduct);
+router.post("/admin/addproduct", multipleUpload,tokenverify, addproduct);
 router.post(
   "/admin/editproduct/:id",tokenverify,
-  uploads.array("product_img"),
+  multipleUpload,
   editproduct
 );
 router.get("/admin/getproduct", getproduct);

@@ -8,7 +8,7 @@ const brandSchema = new Schema(
       require: true,
     },
     brand_img: {
-      type: String,
+      type: Array,
       require: true,
     },
     // promoted_brand: {

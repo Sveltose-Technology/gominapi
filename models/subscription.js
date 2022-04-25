@@ -34,6 +34,9 @@ const subscriptionSchema = new Schema(
     razorpay_payment_id: {
        type : String
     },
+    date : {
+      type :String
+    }
   },
   { timestamps: true }
 );

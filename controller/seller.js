@@ -57,10 +57,10 @@ exports.signup = async (req, res) => {
 
   const newRole = new Role({
     dashboard: true,
-    store: true,
+    store: false,
     addMyStore: true,
     storeList: true,
-    contacts: true,
+    contacts: false,
     addEmployee: true,
     employeeList: true,
     addCustomer: true,

@@ -21,7 +21,7 @@ exports.addbrand = async (req, res) => {
     status: status,
   });
 
-  if (req.file) {
+  // if (req.file) {
     const findexist = await Brand.findOne({
       $and:[{seller: req.sellerId},{name: name}]});
     if (findexist) {
@@ -37,72 +37,128 @@ exports.addbrand = async (req, res) => {
         msg: "Already Exists",
         data: {},
       });
-    } else {
-      const resp = await cloudinary.uploader.upload(req.file.path);
-      if (resp) {
-        newBrand.brand_img = resp.secure_url;
-        fs.unlinkSync(req.file.path);
-        newBrand.save().then(
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: newBrand,
-          })
-        );
-      } else {
-        res.status(200).json({
-          status: false,
-          msg: "img not uploaded",
-        });
+    }else if (req.files) {
+      if (req.files.brand_img) {
+        alluploads = [];
+        for (let i = 0; i < req.files.brand_img.length; i++) {
+          const resp = await cloudinary.uploader.upload(
+            req.files.brand_img[i].path,
+            { use_filename: true, unique_filename: false }
+          );
+          fs.unlinkSync(req.files.brand_img[i].path);
+          alluploads.push(resp.secure_url);
+        }
+        newBrand.brand_img = alluploads;
       }
-    }
-  } 
-  else {
-    const findexist = await Brand.findOne({  
-      $and:[{seller: req.sellerId},{name: name}]});
-    if (findexist) {
-      await Brand.findOneAndUpdate(
-        {
-          $and :[{seller: req.sellerId},{name :name}
-          ]
-      },
-      {new :true}
-      )
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
-      });
-    } else {
+     
       newBrand
-        .save() 
-        .then(
+        .save()
+        .then((data) => {
           res.status(200).json({
             status: true,
             msg: "success",
-            data: newBrand,
-          })
-        )
+            data: data,
+          });
+        })
         .catch((error) => {
           res.status(400).json({
-            status: false, 
+            status: false,
             msg: "error",
             error: error,
           });
         });
-    }
+  
   }
-};
+  }
+  
+
+// exports.editbrand = async (req, res) => {
+//   const { name, brand_img, desc, sortorder, status } = req.body;
+
+//   data = {};
+//   if (name) {
+//     data.name = name;
+//   }
+//   if (desc) {
+//     data.desc = desc;
+//   }
+//   if (sortorder) {
+//     data.sortorder = sortorder;
+//   }
+//   if (status) {
+//     data.status = status;
+//   }
+//   //console.log(req.files);
+//   if (req.files) {
+//     if (req.files.brand_img) {
+//       alluploads = [];
+//       for (let i = 0; i < req.files.brand_img.length; i++) {
+//         // console.log(i);
+//         const resp = await cloudinary.uploader.upload(
+//           req.files.brand_img[i].path,
+//           { use_filename: true, unique_filename: false }
+//         );
+//         fs.unlinkSync(req.files.brand_img[i].path);
+//         alluploads.push(resp.secure_url);
+//       }
+//       // newStore.storeImg = alluploads;
+//       data.brand_img = alluploads;
+//     }
+//   }
+//   if (req.files) {
+//     console.log(req.files)
+//     if (req.files.brand_img) {
+//       alluploads = [];
+//       for (let i = 0; i < req.files.brand_img.length; i++) {
+//         // console.log(i);
+//         const resp = await cloudinary.uploader.upload(
+//           req.files.brand_img[i].path,
+//           { use_filename: true, unique_filename: false }
+//         );
+//         fs.unlinkSync(req.files.brand_img[i].path);
+//         alluploads.push(resp.secure_url);
+//       }
+//       // newStore.storeImg = alluploads;
+//       data.brand_img = alluploads;
+//     }
+//     if (data) {
+//       console.log(data)
+//       const findandUpdateEntry = await Creditcustomers.findOneAndUpdate(
+//         {
+//           $and: [{ id: req.sellerId }, { _id: req.params.id }],
+//         },
+//         { $set: data },
+//         { new: true }
+//       ) 
+
+//       if (findandUpdateEntry) {
+//         res.status(200).json({
+//           status: true,
+//           msg: "success",
+//           data: findandUpdateEntry,
+//         })
+//       } else {
+//         res.status(400).json({
+//           status: false,
+//           msg: "error",
+//           error: "error",
+//         });
+//       }
+//     }
+//   }
+// }
 
 exports.editbrand = async (req, res) => {
-  const { name, brand_img, desc, sortorder, status } = req.body;
-
+  const {
+    name,
+    brand_img,
+    sortorder,
+    status,
+    
+  } = req.body;
   data = {};
   if (name) {
     data.name = name;
-  }
-  if (desc) {
-    data.desc = desc;
   }
   if (sortorder) {
     data.sortorder = sortorder;
@@ -110,37 +166,50 @@ exports.editbrand = async (req, res) => {
   if (status) {
     data.status = status;
   }
-  console.log(req.file);
-  if (req.file) {
-    const response = await cloudinary.uploader.upload(req.file.path);
-    data.brand_img = response.secure_url;
-    fs.unlinkSync(req.file.path);
-  }
-  console.log(data);
-  if (data) {
-    const findandUpdateEntry = await Brand.findOneAndUpdate(
-      {
-        $and: [{ id: req.sellerId }, { _id: req.params.id }],
+  
+  if (req.files) {
+   // console.log(req.files)
+    if (req.files.brand_img) {
+      alluploads = [];
+      for (let i = 0; i < req.files.brand_img.length; i++) {
+        // console.log(i);
+        const resp = await cloudinary.uploader.upload(
+          req.files.brand_img[i].path,
+          { use_filename: true, unique_filename: false }
+        );
+        fs.unlinkSync(req.files.brand_img[i].path);
+        alluploads.push(resp.secure_url);
+      }
+       
+      data.brand_img = alluploads;
+    }
+    if (data) {
+      const findandUpdateEntry = await Brand.findOneAndUpdate(
+        {
+          $and: [{ id: req.sellerId }, { _id: req.params.id }],
+          
       },
-      { $set: data },
-      { new: true }
-    );
+        { $set: data },
+        { new: true }
+      ) 
 
-    if (findandUpdateEntry) {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: findandUpdateEntry,
-      });
-    } else {
-      res.status(400).json({
-        status: false,
-        msg: "error",
-        error: "error",
-      });
+      if (findandUpdateEntry) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findandUpdateEntry,
+        })
+      } else {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      }
     }
   }
-};
+}
+
 
 exports.viewonebrand = async (req, res) => {
   const findone = await Brand.findOne({ $and :[{seller : req.sellerId},{_id: req.params.id }]}).populate("seller")

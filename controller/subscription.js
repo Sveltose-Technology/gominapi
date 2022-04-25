@@ -1,7 +1,11 @@
 const Subscription = require("../models/subscription");
 const Seller = require("../models/seller");
 const seller = require("../models/seller");
-
+//  let datetoday = await new Date()
+//     .toISOString()
+//     .toString()
+//     .split("T")[0]
+//     .replace(/-/g, "/");
 exports.addSubscriptions = async (req, res) => {
   const {  razorpay_payment_id,description, duration, sub_plan} = req.body;
 
@@ -11,6 +15,7 @@ exports.addSubscriptions = async (req, res) => {
     description: description,
     duration: duration,
     sub_plan: sub_plan,
+    date :datetoday,
   });
 
 
@@ -72,11 +77,7 @@ exports.addSubscriptions = async (req, res) => {
   //////////////////////////////////////////////
 
 
-  let datetoday = await new Date()
-    .toISOString()
-    .toString()
-    .split("T")[0]
-    .replace(/-/g, "/");
+ 
 
   newSubscription
     .save()

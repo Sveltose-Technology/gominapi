@@ -44,10 +44,14 @@ const fileFilter = (req, file, cb) => {
 };
 
 let uploads = multer({ storage: storage });
+let multipleUpload = uploads.fields([
+  { name: "brand_img", maxCount: 5 },
+   
+]);
 
 //Paths
-router.post("/admin/addbrand",tokenverify, uploads.single("brand_img"), addbrand);
-router.post("/admin/editbrand/:id",tokenverify, uploads.single("brand_img"), editbrand);
+router.post("/admin/addbrand",tokenverify,multipleUpload, addbrand);
+router.post("/admin/editbrand/:id",tokenverify,multipleUpload, editbrand);
 router.get("/admin/viewonebrand/:id",tokenverify, viewonebrand);
 router.get("/admin/allbrand", allbrand);
 router.get("/admin/allbrandbyseller",tokenverify, allbrandbyseller);

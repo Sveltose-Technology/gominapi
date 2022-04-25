@@ -141,6 +141,289 @@ exports.addproduct = async (req, res) => {
   }
 };
 
+// exports.addproduct = async (req, res) => {
+//   const {  store,
+//         discount_perc,
+//         product_name,
+//         sku_no,
+//         hsn_sac_no,
+//         short_desc,
+//         long_desc,
+//         productcategory,
+//         productsubcategory,
+//         brand,
+//         tag,
+//         size,
+//         color,
+//         material,
+//         sell_mode,
+//         qty,
+//         //rating,
+//         reorder_level,
+//         unit,
+//         cost_price,
+//         sell_price,
+//         gstrate,
+//         product_img,
+//         offer_aplicable, } = req.body;
+
+//   const newProduct = new Product({
+//     store: store,
+//         seller: req.sellerId,
+//         product_name: product_name,
+//         discount_perc: discount_perc,
+//         sku_no: sku_no,
+//         hsn_sac_no: hsn_sac_no,
+//         short_desc: short_desc,
+//         long_desc: long_desc,
+//         productcategory: productcategory,
+//         productsubcategory: productsubcategory,
+//         brand: brand,
+//         tag: tag,
+//         size: size,
+//         color: color,
+//         material: material,
+//         sell_mode: sell_mode,
+//         qty: qty,
+//         //rating: rating,
+//         reorder_level: reorder_level,
+//         unit: unit,
+//         cost_price: cost_price,
+//         sell_price: sell_price,
+//         gstrate: gstrate,
+//         product_img: product_img,
+//         offer_aplicable: offer_aplicable,
+        
+//       });
+
+
+//   // if (req.file) {
+//     const findexist = await Product.findOne({
+//       $and:[{seller: req.sellerId},{product_name: product_name}]});
+//     if (findexist) {
+//       await Product.findOneAndUpdate(
+//         {
+//           $and :[{seller: req.sellerId},{product_name :product_name}
+//           ]
+//       },
+//       {new :true}
+//       )
+//       res.status(400).json({
+//         status: false,
+//         msg: "Already Exists",
+//         data: {},
+//       });
+//     }else if (req.files) {
+//       if (req.files.product_img) {
+//         alluploads = [];
+//         for (let i = 0; i < req.files.product_img.length; i++) {
+//           const resp = await cloudinary.uploader.upload(
+//             req.files.product_img[i].path,
+//             { use_filename: true, unique_filename: false }
+//           );
+//           fs.unlinkSync(req.files.product_img[i].path);
+//           alluploads.push(resp.secure_url);
+//         }
+//         newProduct.product_img = alluploads;
+//       }
+     
+//       newProduct
+//         .save()
+//         .then((data) => {
+//           res.status(200).json({
+//             status: true,
+//             msg: "success",
+//             data: data,
+//           });
+//         })
+//         .catch((error) => {
+//           res.status(400).json({
+//             status: false,
+//             msg: "error",
+//             error: error,
+//           });
+//         });
+  
+//   }
+//   }
+
+
+// exports.editproduct = async (req, res) => {
+//   const {
+//     discount_perc,
+//     product_name,
+//     sku_no,
+//     hsn_sac_no,
+//     short_desc,
+//     long_desc,
+//     productcategory,
+//     productsubcategory,
+//     brand,
+//     color,
+//     size,
+//     material,
+//     stock,
+//     qty,
+//     reorder_level,
+//     unit,
+//     cost_price,
+//     sell_price,
+//     gstrate,
+//     product_img,
+//     sortorder,
+//     status,
+//   } = req.body;
+
+//   data = {};
+//   if (discount_perc) {
+//     data.discount_perc = discount_perc;
+//   }
+//   if (product_name) {
+//     data.product_name = product_name;
+//   }
+//   if (sku_no) {
+//     data.sku_no = sku_no;
+//   }
+//   if (hsn_sac_no) {
+//     data.hsn_sac_no = hsn_sac_no;
+//   }
+//   if (short_desc) {
+//     data.short_desc = short_desc;
+//   }
+//   if (long_desc) {
+//     data.long_desc = long_desc;
+//   }
+//   if (productcategory) {
+//     data.productcategory = productcategory;
+//   }
+
+//   if (productsubcategory) {
+//     data.productsubcategory = productsubcategory;
+//   }
+//   if (brand) {
+//     data.brand = brand;
+//   }
+//   if (color) {
+//     data.color = color;
+//   }
+//   if (size) {
+//     data.size = size;
+//   }
+//   if (material) {
+//     data.material = material;
+//   }
+//   if (stock) {
+//     data.stock = stock;
+//   }
+//   if (qty) {
+//     data.qty = qty;
+//   }
+//   if (reorder_level) {
+//     data.reorder_level = reorder_level;
+//   }
+//   if (unit) {
+//     data.unit = unit;
+//   }
+//   if (cost_price) {
+//     data.cost_price = cost_price;
+//   }
+//   if (sell_price) {
+//     data.sell_price = sell_price;
+//   }
+//   if (gstrate) {
+//     data.gstrate = gstrate;
+//   }
+
+//   if (sortorder) {
+//     data.sortorder = sortorder;
+//   }
+//   if (status) {
+//     data.status = status;
+//   }
+
+// //   if (req.files) {
+// //     if (req.files.product_img) {
+// //       alluploads = [];
+// //       for (let i = 0; i < req.files.product_img.length; i++) {
+// //         // console.log(i);
+// //         const resp = await cloudinary.uploader.upload(
+// //           req.files.product_img[i].path,
+// //           { use_filename: true, unique_filename: false }
+// //         );
+// //         fs.unlinkSync(req.files.product_img[i].path);
+// //         alluploads.push(resp.secure_url);
+// //       }
+// //       // newStore.storeImg = alluploads;
+// //       data.product_img = alluploads;
+// //     }
+// //     if (data) {
+// //       const findandUpdateEntry = await Product.findOneAndUpdate(
+// //         {
+// //           $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+// //         },
+// //         { $set: data },
+// //         { new: true }
+// //       ) 
+
+// //       if (findandUpdateEntry) {
+// //         res.status(200).json({
+// //           status: true,
+// //           msg: "success",
+// //           data: findandUpdateEntry,
+// //         })
+// //       } else {
+// //         res.status(400).json({
+// //           status: false,
+// //           msg: "error",
+// //           error: "error",
+// //         });
+// //       }
+// //     }
+// //   }
+// // }
+
+//   if (req.file) {
+//     alluploads = [];
+//     for (let i = 0; i < req.files.length; i++) {
+//       const resp = await cloudinary.uploader.upload(req.files[i].path);
+//       data.product_img = resp.secure_url;
+//       fs.unlinkSync(req.files[i].path);
+
+//       alluploads.push(resp.secure_url);
+//     }
+//     // const response = await cloudinary.uploader.upload(req.file.path);
+//     // data.product_img = response.secure_url;
+//     // fs.unlinkSync(req.file.path);
+//   }
+
+//   if (data) {
+//     const findandUpdateEntry = await Product.findOneAndUpdate(
+//       {
+//         $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+//       },
+//       { $set: data },
+//      // { $set: { product_img: response.secure_url } },
+//       { new: true }
+//     )
+//       .then((data) => {
+//        console.log(data)
+//         res.status(200).json({
+//           status: true,
+//           msg: "success",
+//           data: findandUpdateEntry,
+//         });
+//       })
+//       .catch((error) => {
+//         res.status(400).json({
+//           status: false,
+//           msg: "error",
+//           error: error,
+//         });
+//       });
+//   }
+// };
+
+
 exports.editproduct = async (req, res) => {
   const {
     discount_perc,
@@ -234,11 +517,19 @@ exports.editproduct = async (req, res) => {
     data.status = status;
   }
   if (req.file) {
-    const response = await cloudinary.uploader.upload(req.file.path);
-    data.product_img = response.secure_url;
-    fs.unlinkSync(req.file.path);
-  }
+  //   const response = await cloudinary.uploader.upload(req.file.path);
+  //   data.product_img = response.secure_url;
+  //   fs.unlinkSync(req.file.path);
+  // }
 
+  alluploads = [];
+  for (let i = 0; i < req.files.length; i++) {
+    const resp = await cloudinary.uploader.upload(req.files[i].path);
+    fs.unlinkSync(req.files[i].path);
+
+    alluploads.push(resp.secure_url);
+  }
+  }
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
       {
@@ -252,7 +543,7 @@ exports.editproduct = async (req, res) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: data,
+          data: findandUpdateEntry,
         });
       })
       .catch((error) => {
@@ -264,6 +555,7 @@ exports.editproduct = async (req, res) => {
       });
   }
 };
+
 
 exports.getproduct = async (req, res) => {
   const findall = await Product.find()

@@ -75,9 +75,11 @@ const productSchema = new Schema(
     gstrate: 
       { type: Schema.Types.ObjectId, ref: "gstrate" },
   
-    product_img: {
-      type: Array,
-    }, //goods && service
+    // product_img: {
+    //   type: Array,
+    // },
+    product_img: { type: Array },
+    //goods && service
     offer_aplicable : {
        type : String,
        default: "Inactive"
