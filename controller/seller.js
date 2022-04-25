@@ -696,7 +696,23 @@ exports.verifyOtp = async (req, res) => {
   const findone = await Seller.findOne({ mobile: mobile });
 
   if (findone) {
+    const token = jwt.sign(
+      {
+        sellerId: findone._id,
+      },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: 86400000,
+      }
+    );
+    res.header("auth-adtoken", token).status(200).send({
+      status: true,
+      token: token,
+      msg: "success",
+      user: findone,
+    });
     const http = require("https");
+     
 
     const options = {
       method: "GET",
@@ -719,13 +735,31 @@ exports.verifyOtp = async (req, res) => {
       });
     });
 
-    req.end();
+    req.end()
 
+    .then((result) => {
+      const token = jwt.sign(
+        {
+          sellerId: result._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-adtoken", token).status(200).json({
+        status: true,
+        token: token,
+        msg: "success",
+        user: result,
+      });
+    })
     res.status(200).json({
       status: true,
       msg: "otp verified",
       data: findone,
     });
+
   } else {
     res.status(200).json({
       status: false,
@@ -734,42 +768,88 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
-exports.forgetpassword = async (req, res) => {
-  const { password, cnfrm_password } = req.body;
+// exports.forgetpassword = async (req, res) => {
+//   const { password, cnfrm_password } = req.body;
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt)
+//   const salt = bcrypt.genSaltSync(saltRounds);
+//   const hashpassword = bcrypt.hashSync(password, salt)
 
-  const user = await Seller.findOneAndUpdate({
-    $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
-  });
-  if (user) {
-    // console.log(user)
-    const validPass = await bcrypt.compare(password, user.cnfrm_password);
-    if (validPass) {
-const findandUpdateEntry = await Seller.findOneAndUpdate(
-  {
-    _id: req.sellerId,
-  },
+//   const user = await Seller.findOneAndUpdate({
+//     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
+//   });
+//   if (user) {
+//     // console.log(user)
+//     const validPass = await bcrypt.compare(password, user.cnfrm_password);
+//     if (validPass) {
+// const findandUpdateEntry = await Seller.findOneAndUpdate(
+//   {
+//     _id: req.sellerId,
+//   },
 
-  { $set: { password: req.body } },
-        { new: true }
-)
-if(findandUpdateEntry){
-  console.log(findandUpdateEntry)
-  res.status(400).json({
-    status: true,
-    msg: "Password  Changed Successfully",
-    user: user,
-  });
-} else {
-  res.status(200).json({
-    status: false,
-    msg: "Password Not Matched",
-  });
-}
-    }}}
+//   { $set: { password: req.body } },
+//         { new: true }
+// )
+// if(findandUpdateEntry){
+//   console.log(findandUpdateEntry)
+//   res.status(400).json({
+//     status: true,
+//     msg: "Password  Changed Successfully",
+//     user: user,
+//   });
+// } else {
+//   res.status(200).json({
+//     status: false,
+//     msg: "Password Not Matched",
+//   });
 // }
+//     }}}
+
+
+
+    exports.fogetpassword = async (req, res) => {
+
+      const {password,cnfrm_password} = req.body
+
+      //  const salt = await bcrypt.genSalt(10);
+      //  const hashPassword = await bcrypt.hash(password, salt);
+      //  const hashPassword1 = await bcrypt.hash(cnfrmPassword, salt)
+
+        // const validPass = String.compare(req.body.password, req.body.cnfrmPassword);
+        // console.log("Result",validPass)
+        if(password === cnfrm_password){
+
+        
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(password, salt);
+
+      const findandUpdateEntry = await Seller.findOneAndUpdate(
+        {
+      _id: req.sellerId
+        },
+        { $set: { password: hashPassword ,cnfrm_password:hashPassword} },
+        { new: true }
+      );
+      if (findandUpdateEntry) {
+        res.status(200).json({
+          status: true,
+          msg: "success",
+          data: findandUpdateEntry,
+        });
+      } else {
+        res.status(400).json({
+          status: false,
+          msg: "error",
+          error: "error",
+        });
+      }
+    }else{
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "Password not matched",
+    })
+  }
+    };
 //       res.status(400).json({
 //         status: true,
 //         msg: "Password  Changed Successfully",
@@ -813,35 +893,6 @@ if(findandUpdateEntry){
 //     });
 //   }
 // };
-
-exports.fogetpassword = async (req, res) => {
-
-  const {password,cnfrm_password} = req.body
-
-
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
-  const findandUpdateEntry = await Seller.findOneAndUpdate(
-    {
-  _id: req.userId
-    },
-    { $set: { password: hashPassword } },
-    { new: true }
-  );
-  if (findandUpdateEntry) {
-    res.status(200).json({
-      status: true,
-      msg: "success",
-      data: findandUpdateEntry,
-    });
-  } else {
-    res.status(400).json({
-      status: false,
-      msg: "error",
-      error: "error",
-    });
-  }
-};
-
+ 
 
  
