@@ -458,6 +458,9 @@ exports.editseller = async (req, res) => {
   if (mobile) {
     data.mobile = mobile;
   }
+  if (hasSubscribed) {
+    data.hasSubscribed = hasSubscribed;
+  }
   // if (password) {
   //   data.password = password;
   // }
