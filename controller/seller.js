@@ -446,7 +446,7 @@ exports.editempByseller = async (req, res) => {
 };
 
 exports.editseller = async (req, res) => {
-  const { name, email, mobile, rolename, image } = req.body;
+  const { name, email, mobile, rolename, image,hasSubscribed } = req.body;
 
   data = {};
   if (name) {
@@ -478,14 +478,14 @@ exports.editseller = async (req, res) => {
   }
   //console.log(data);
   if (data) {
-    const findandUpdateEntry = await Seller.findOneAndUpdate(
+     const findandUpdateEntry = await Seller.findOneAndUpdate(
       {
         _id: req.sellerId,
       },
       { $set: data },
       { new: true }
     );
-
+//console.log(findandUpdateEntry)
     if (findandUpdateEntry) {
       res.status(200).json({
         status: true,
