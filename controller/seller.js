@@ -332,6 +332,13 @@ exports.sellerlogin = async (req, res) => {
   const user = await Seller.findOne({
     $or: [{ mobile: mobile }, { email: email }],
   }).populate("role")
+  .populate({
+    path: "role",
+    populate: {
+      path: "addemp",
+    },
+  })
+  .populate("added_by")
   if (user) {
     const validPass = await bcrypt.compare(password, user.password);
     if (validPass) {
