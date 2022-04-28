@@ -260,11 +260,10 @@ exports.adminsendotp = async (req, res) => {
     // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+   // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
-      email: email,
       mobile: mobile,
       otp: defaultotp,
     });
