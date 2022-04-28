@@ -9,7 +9,7 @@ const {
   createadmin,
   editadmin,
   getoneadmin,
-  sendotp,
+  adminsendotp,
   adminverifyOtp
 } = require("../controller/adminlogin");
 
@@ -46,7 +46,7 @@ router.post("/admin/adminlogin", adminlogin);
 router.post("/admin/editadmin/:id", editadmin);
 router.get("/admin/getoneadmin/:id", getoneadmin);
  
-router.post("/admin/sendotp", sendotp);
+router.post("/admin/adminsendotp", adminsendotp);
 router.post("/admin/adminverifyOtp", adminverifyOtp);
 
 

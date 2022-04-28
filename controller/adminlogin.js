@@ -183,7 +183,7 @@ exports.getoneadmin = async (req, res) => {
 };
 
 
-exports.sendotp = async (req, res) => {
+exports.adminsendotp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { mobile } = req.body;
   const http = require("https");
