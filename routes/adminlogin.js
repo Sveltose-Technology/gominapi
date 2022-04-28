@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const { admintoken } = require("../functions/admintoken");
 
 const {
   adminlogin,
   createadmin,
   editadmin,
   getoneadmin,
-  sendotp
+  sendotp,
+  verifyOtp
 } = require("../controller/adminlogin");
 
 const storage = multer.diskStorage({
@@ -45,6 +47,8 @@ router.post("/admin/editadmin/:id", editadmin);
 router.get("/admin/getoneadmin/:id", getoneadmin);
  
 router.post("/admin/sendotp", sendotp);
+router.post("/admin/verifyOtp", verifyOtp);
+
 
 
 module.exports = router;

@@ -275,3 +275,82 @@ exports.sendotp = async (req, res) => {
     });
   }
 };
+
+
+exports.verifyOtp = async (req, res) => {
+  const { mobile, otp } = req.body;
+
+  const findone = await Adminlogin.findOne({ mobile: mobile });
+
+  if (findone) {
+    const token = jwt.sign(
+      {
+        adminId: findone._id,
+      },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: 86400000,
+      }
+    );
+    res.header("auth-adtoken", token).status(200).send({
+      status: true,
+      token: token,
+      msg: "success",
+      user: findone,
+    });
+    const http = require("https");
+     
+
+    const options = {
+      method: "GET",
+      hostname: "api.msg91.com",
+      port: null,
+      path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+      headers: {},
+    };
+
+    const req = http.request(options, function (res) {
+      const chunks = [];
+
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
+
+    req.end()
+
+    .then((result) => {
+      const token = jwt.sign(
+        {
+          adminId: result._id,
+        },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: 86400000,
+        }
+      );
+      res.header("auth-admintoken", token).status(200).json({
+        status: true,
+        token: token,
+        msg: "success",
+        user: result,
+      });
+    })
+    res.status(200).json({
+      status: true,
+      msg: "otp verified",
+      data: findone,
+    });
+
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "Incorrect Otp",
+    });
+  }
+};
