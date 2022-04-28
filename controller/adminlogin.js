@@ -222,7 +222,7 @@ exports.adminsendotp = async (req, res) => {
     });
 
     requestmain.end();
-    const finddetails = await Seller.findOneAndUpdate(
+    const finddetails = await Adminlogin.findOneAndUpdate(
       { mobile: mobile },
       { $set: { otp: defaultotp } },
       { new: true }
