@@ -23,12 +23,17 @@ const OrdertableSchema = new mongoose.Schema(
     },
     color: {
       type: String,
+
     },
     payment_type: {
       type: String,
     },
     product_price: {
       type: Number,
+    },
+
+    gsttotal:{
+type : String
     },
     status: {
       type: String,

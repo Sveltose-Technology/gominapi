@@ -166,13 +166,21 @@ exports.addemployee = async (req, res) => {
     image,
     rolename,
     added_by,
+    hasSubscribed,
     role
   } = req.body;
 
   //hashing password
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
-
+let Subscribed= false
+let sel= await Seller.findOne({sellerId:added_by})
+console.log(sel)
+if (sel)
+{
+   Subscribed = sel.hasSubscribed
+   console.log("seller",Subscribed)
+}
   const newSeller = new Seller({
     name: name,
     email: email,
@@ -183,6 +191,7 @@ exports.addemployee = async (req, res) => {
     rolename: rolename,
     role : role,
     added_by: req.sellerId,
+    hasSubscribed:Subscribed
   });
 
   if (req.file) {

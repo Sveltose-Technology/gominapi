@@ -111,7 +111,7 @@ exports.addnewpurchaseorder = async (req, res) => {
 };
 
 exports.getpurchaseorder = async (req, res) => {
-  const findall = await Purchaseorder.find({ $or: [{seller : req.sellerId}, { status: "Approve" },{status: "Decline"}],
+  const findall = await Purchaseorder.find({ $or: [{seller : req.sellerId}, { status: "Approve",status:"Decline"}],
 })
     .sort({ sortorder: 1 }).populate("product")
     .populate("supplier").then((data) => {
@@ -255,4 +255,7 @@ exports.pendingpurchaseorderlist = async (req, res) => {
     });
 };
 
-//console
+ 
+
+
+ 

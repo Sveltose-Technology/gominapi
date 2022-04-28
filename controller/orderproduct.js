@@ -111,9 +111,10 @@ exports.addordersample = async (req, res) => {
     element.product = cartitem[index]?.product;
     element.customer = cartitem[index].customer;
     element.product_price = cartitem[index].product_price;
+    element.gsttotal = cartitem[index].gsttotal;
     element.product_qty = cartitem[index].product_qty;
     total_qty = total_qty + cartitem[index].product_qty;
-    total_price = total_price + cartitem[index].product_price;
+    total_price = total_price + cartitem[index].gsttotal;
     element.color = cartitem[index].color;
     element.size = cartitem[index].size;
     element.payment_type = req.body.payment_type;
@@ -136,7 +137,14 @@ exports.addordersample = async (req, res) => {
 
     element.shipping_address = req.body.shipping_address;
     finalarray.push(element);
+    if (finalarray){
+      let pro= await Product.countDocuments()
+      console.log("product qut",pro)
+      element.product_qty = cartitem[index].product_qty-pro;
+    }
   }
+
+
 
   await Ordertable.insertMany(finalarray)
     .then((data) => {
@@ -147,11 +155,13 @@ exports.addordersample = async (req, res) => {
         orderId: cus_orderId,
         total_qty: total_qty,
         total_price: total_price,
+        
       });
     })
     .catch((error) => {
       res.json(error);
     });
+
   //}
 };
 
@@ -247,6 +257,7 @@ exports.getoneorderbyseller = async (req, res) => {
   //const getseller = await Seller.findOne({ _id: req.sellerId });
 
   const findone = await Ordertable.findOne ({$and: [{ seller: req.sellerId }, {  _id: req.params.id }]})
+  
   //({ orderId: req.params.id })
     .populate("product")
     .populate("customer")
@@ -264,6 +275,10 @@ exports.getoneorderbyseller = async (req, res) => {
         path: "store",
       },
     })
+    // let exp = await Ordertable.find({
+    //   $and: [{ dealer_Id: req.body.dealer_Id }, { datea: de }],
+    // });
+    
   if (findone) {
     res.status(200).json({
       status: true,
@@ -278,7 +293,7 @@ exports.getoneorderbyseller = async (req, res) => {
     });
   }
 };
-//}
+
 
 exports.pending_order = async (req, res, next) => {
   const finddetails = await Ordertable.find({
