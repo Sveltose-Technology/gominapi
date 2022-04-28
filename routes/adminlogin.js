@@ -10,7 +10,7 @@ const {
   editadmin,
   getoneadmin,
   sendotp,
-  verifyOtp
+  adminverifyOtp
 } = require("../controller/adminlogin");
 
 const storage = multer.diskStorage({
@@ -47,7 +47,7 @@ router.post("/admin/editadmin/:id", editadmin);
 router.get("/admin/getoneadmin/:id", getoneadmin);
  
 router.post("/admin/sendotp", sendotp);
-router.post("/admin/verifyOtp", verifyOtp);
+router.post("/admin/adminverifyOtp", adminverifyOtp);
 
 
 

@@ -277,7 +277,7 @@ exports.sendotp = async (req, res) => {
 };
 
 
-exports.verifyOtp = async (req, res) => {
+exports.adminverifyOtp = async (req, res) => {
   const { mobile, otp } = req.body;
 
   const findone = await Adminlogin.findOne({ mobile: mobile });
