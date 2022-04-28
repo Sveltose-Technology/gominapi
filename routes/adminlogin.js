@@ -50,7 +50,7 @@ router.get("/admin/getoneadmin/:id", getoneadmin);
 router.post("/admin/adminsendotp", adminsendotp);
 router.post("/admin/adminverifyOtp", adminverifyOtp);
 
-router.post("/admin/adminfogetpassword", adminfogetpassword);
+router.post("/admin/adminfogetpassword",admintoken, adminfogetpassword);
 
 
 module.exports = router;
