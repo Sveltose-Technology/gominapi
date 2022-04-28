@@ -1,13 +1,30 @@
 const Subscription = require("../models/subscription");
 const Seller = require("../models/seller");
 const seller = require("../models/seller");
-//  let datetoday = await new Date()
-//     .toISOString()
-//     .toString()
-//     .split("T")[0]
-//     .replace(/-/g, "/");
+
+// var today = new Date();
+// var day = today.getDate();
+// var month = today.getMonth();
+// var year = today.getFullYear();
+// today = year +"-"+ day +"-"+ month;
+// var duedate = new Date(today);
+// duedate.setDate(today.getDate() + 365);
+
+let getCurrentDate = function () {
+  const t = new Date();
+  const date = ("0" + t.getDate()).slice(-2);
+  const month = ("0" + (t.getMonth() + 1)).slice(-2);
+  const year = t.getFullYear();
+  return `${date}-${month}-${year}`;
+};
+
+
 exports.addSubscriptions = async (req, res) => {
   const {  razorpay_payment_id,description, duration,date, sub_plan} = req.body;
+  var d = new Date();
+let exod= getCurrentDate()  + 1;
+console.log(exod)
+
 
   const newSubscription = new Subscription({
     razorpay_payment_id: razorpay_payment_id,
@@ -15,14 +32,24 @@ exports.addSubscriptions = async (req, res) => {
     description: description,
     duration: duration,
     sub_plan: sub_plan,
-    date :date,
+    date :getCurrentDate(),
   });
 
 
 ////////////////////////////////////////////////////////////////
+if(getCurrentDate() === exod){
 
-
-
+console.log("exod",exod)
+let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
+console.log(x)
+if(x){
+  const y = await seller.findOneAndUpdate(
+          { _id:req.sellerId },
+          { $set: { hasSubscribed: false } },
+          { new: true }
+  )
+}
+}
   //   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   //   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
@@ -82,10 +109,9 @@ exports.addSubscriptions = async (req, res) => {
   newSubscription
     .save()
     .then(async(data)=>{
-      if(   data.get("razorpay_payment_id") != undefined ||
-          data.get("razorpay_payment_id") != null ||
-          data.get("razorpay_payment_id").length 
-          == 0){
+      if(data.get("razorpay_payment_id") != undefined || data.get("razorpay_payment_id") !=null || data.get("razorpay_payment_id") || data.get //("razorpay_payment_id").length <=0 )
+      )
+ {
 //console.log(data)
 //let x = data.get
 let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
@@ -456,61 +482,5 @@ exports.helthworker_status = (req, res) => {
   }
 };
 
-// exports.addSubscription = async (req, res) => {
-//   const { seller, razorpay_payment_id, description, duration, sub_plan } =
-//     req.body;
-
-//   const newSubscriptions = new Subscription({
-//     razorpay_payment_id: razorpay_payment_id,
-//     seller: req.sellerId,
-//     description: description,
-//     duration: duration,
-//     sub_plan: sub_plan,
-//   });
-
-//   const finddetails = await Subscription.findOne({
-//     razorpay_payment_id: razorpay_payment_id,
-//   });
-//   if (finddetails) {
-//     console.log(finddetails);
-//     const getseller = await Seller.findOne({ _id: req.params.seller });
-//     if (getseller) {
-//       console.log(getseller);
-//     }
-//     if (getseller.hasSubscribed == false) {
-//       Seller.findOneAndUpdate(
-//         { seller: req.sellerId },
-//         { $set: { hasSubscribed: true } },
-//         { new: true }
-//       );
-//     }
-//   }
-//   //   const getseller = await Seller.findOne({
-//   //     _id: req.params.seller,
-//   //   });
-//   //   if (getseller.hasSubscribed == false) {
-//   //     Seller.findOneAndUpdate(
-//   //       { seller: req.sellerId },
-//   //       { $set: { hasSubscribed: true } },
-//   //       { new: true }
-//   //     );
-
-//   newSubscriptions
-//     .save()
-//     .then((data) => {
-//       res.status(200).json({
-//         status: true,
-//         msg: "success",
-//         data: data,
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(400).json({
-//         status: false,
-//         msg: "error",
-//         error: error,
-//       });
-//     });
-// };
-//   }
-// };
+ 
+ 

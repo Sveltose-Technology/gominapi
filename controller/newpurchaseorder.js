@@ -110,6 +110,8 @@ exports.addnewpurchaseorder = async (req, res) => {
 
 };
 
+
+ 
 exports.getpurchaseorder = async (req, res) => {
   const findall = await Purchaseorder.find({ $or: [{seller : req.sellerId}, { status: "Approve",status:"Decline"}],
 })

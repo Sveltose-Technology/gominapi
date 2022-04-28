@@ -74,28 +74,6 @@ exports.addcoupon = async (req, res) => {
       });
   }
 };
-
-
-
-
-//   newCoupon
-//     .save()
-//     .then((data) => {
-//       res.status(200).json({
-//         status: true,
-//         msg: "success",
-//         data: data,
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(200).json({
-//         status: false,
-//         msg: "coupon created",
-//         data: error,
-//       });
-//     });
-// };
-
 exports.editcoupon = async (req, res) => {
   const findandupdate = await Coupon.findOneAndUpdate(
     { _id: req.params.id },
@@ -256,4 +234,4 @@ exports.gettotalcoupon = async (req, res) => {
 };
 
 
-// console
+ 
