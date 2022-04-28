@@ -8,6 +8,7 @@ const {
   createadmin,
   editadmin,
   getoneadmin,
+  sendotp
 } = require("../controller/adminlogin");
 
 const storage = multer.diskStorage({
@@ -42,5 +43,8 @@ router.post("/admin/createadmin", uploads.single("image"), createadmin);
 router.post("/admin/adminlogin", adminlogin);
 router.post("/admin/editadmin/:id", editadmin);
 router.get("/admin/getoneadmin/:id", getoneadmin);
+ 
+router.post("/admin/sendotp", sendotp);
+
 
 module.exports = router;

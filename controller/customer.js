@@ -475,7 +475,7 @@ exports.sendotp = async (req, res) => {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "support@brizebond.com", // generated ethereal user
-        pass: "Brize91123", // generated ethereal password
+        pass: "Buynaa@02771", // generated ethereal password
       },
     });
 
