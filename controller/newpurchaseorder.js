@@ -237,7 +237,7 @@ exports.delpurchaseorder = async (req, res) => {
 exports.pendingpurchaseorderlist = async (req, res) => {
   const findall = await Purchaseorder.find({
     $and: [{ id: req.sellerId }, { status: "Pending"}],
-  })
+  }).populate("supplier")
        //{status : "Approve"}
     .then((data) => {
       res.status(200).json({
