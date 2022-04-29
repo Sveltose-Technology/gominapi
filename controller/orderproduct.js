@@ -137,6 +137,7 @@ exports.addordersample = async (req, res) => {
 
     element.shipping_address = req.body.shipping_address;
     finalarray.push(element);
+    console.log("finalarray",finalarray)
     if (finalarray){
       let pro= await Product.countDocuments()
       console.log("product qut",pro)
@@ -161,6 +162,12 @@ exports.addordersample = async (req, res) => {
     .catch((error) => {
       res.json(error);
     });
+    // console.log("aa",value)
+    if (finalarray)
+    {
+   let aa= await Cart.deleteOne({ _id: req.body.cart });
+console.log("aa",aa)
+    }
 
   //}
 };
