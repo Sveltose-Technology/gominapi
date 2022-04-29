@@ -50,6 +50,7 @@ exports.signup = async (req, res) => {
     image: image,
     rolename: rolename,
     hasSubscribed: hasSubscribed,
+
     // razorpay_payment_id: razorpay_payment_id,
     //role: role,
     //createdby: createdby,
@@ -126,7 +127,11 @@ exports.signup = async (req, res) => {
       .then(async (result) => {
         newRole.emp = result._id;
         let makeroles = await Role.create(newRole);
-        console.log(makeroles);
+        console.log(makeroles._id);
+        if(makeroles._id){
+          console.log(makeroles._id);
+          let up= Seller.updateOne({sellerId:req.sellerId},{$set:{role:makeroles._id}}).populate("role")
+        }
 
         const token = jwt.sign(
           {
@@ -142,7 +147,7 @@ exports.signup = async (req, res) => {
           token: token,
           msg: "success",
           user: result,
-          role :makeroles
+          role :makeroles_.id
           //designation: "seller",
         });
       })
@@ -218,11 +223,24 @@ if (sel)
   } else {
     newSeller
       .save()
-      .then((data) => {
-        res.status(200).json({
+      .then(async(result) => {
+        let qq=await Seller.updateOne({_id:req.body._id},{$set:{_id:req.sellerId}})
+                 console.log("yy",qq)
+        const token = jwt.sign(
+          {
+            sellerId: result._id,
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: 86400000,
+          }
+        );
+        res.header("auth-adtoken", token).status(200).json({
           status: true,
+          token: token,
           msg: "success",
-          data: data,
+          data :result
+          
         });
       })
       .catch((error) => {
@@ -234,6 +252,40 @@ if (sel)
       });
   }
 };
+//     newSeller
+//       .save()
+//       .then(async (data) =>  {
+//         let qq=await Seller.updateOne({_id:req.body._id},{$set:{_id:req.sellerId}})
+//         console.log("yy",qq)
+//         const token = jwt.sign(
+//           {
+//             sellerId: result._id,
+//           },
+//           process.env.TOKEN_SECRET,
+//           {
+//             expiresIn: 86400000,
+//           }
+//         );
+//         res.header("auth-adtoken", token).status(200).json({
+//           status: true,
+//           token: token,
+//           msg: "success",
+//           user: data,
+//           token:token
+          
+//           //designation: "seller",
+//         });
+//       })
+//       .catch((error) => {
+//         res.status(400).json({
+//           status: false,
+//           msg: "error",
+//           error: error,
+//         });
+//       });
+//   }
+// };
+
 
 exports.getemployecreatedbyseller = async (req, res) => {
   const findall = await Seller.find({ added_by: req.sellerId })

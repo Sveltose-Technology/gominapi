@@ -81,74 +81,120 @@ exports.addproduct = async (req, res) => {
   }
 
 
-  if (req.files) {
-    const findexist = await Product.findOne({
-      product_name: product_name,
-    });
-    if (findexist) {
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
-      });
-    } else {
-      // console.log(req.files);
-      alluploads = [];
-      for (let i = 0; i < req.files.length; i++) {
-        const resp = await cloudinary.uploader.upload(req.files[i].path);
-        fs.unlinkSync(req.files[i].path);
+  // if (req.files) {
+  //   const findexist = await Product.findOne({
+  //     product_name: product_name,
+  //   });
+  //   if (findexist) {
+  //     res.status(400).json({
+  //       status: false,
+  //       msg: "Already Exists",
+  //       data: {},
+  //     });
+  //   } else {
+  //     // console.log(req.files);
+  //     alluploads = [];
+  //     for (let i = 0; i < req.files.length; i++) {
+  //       const resp = await cloudinary.uploader.upload(req.files[i].path);
+  //       fs.unlinkSync(req.files[i].path);
 
+  //       alluploads.push(resp.secure_url);
+  //     }
+  //     //console.log(alluploads);
+
+  //     if (alluploads.length !== 0) 
+  const findexist = await Product.findOne({ product_name: product_name });
+  if (findexist) {
+    res.status(400).json({
+      status: false,
+      msg: "Already Exist",
+      data: {},
+    });
+  } else if (req.files) {
+    if (req.files.product_img[0].path) {
+      alluploads = [];
+      for (let i = 0; i < req.files.product_img.length; i++) {
+        // console.log(i);
+        const resp = await cloudinary.uploader.upload(
+          req.files.product_img[i].path,
+          { use_filename: true, unique_filename: false }
+        );
+        fs.unlinkSync(req.files.product_img[i].path);
         alluploads.push(resp.secure_url);
       }
-      //console.log(alluploads);
-
-      if (alluploads.length !== 0) {
-        newProduct.product_img = alluploads;
-        newProduct.save().then((result) => {
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: result,
-          });
-        });
-      } else {
+      newProduct.product_img = alluploads;
+    }
+    newProduct
+      .save()
+      .then((result) => {
         res.status(200).json({
+          status: true,
+          msg: "success",
+          data: result,
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({
           status: false,
-          msg: "img not uploaded",
+          msg: "error",
+          error: error,
         });
-      }
-    }
-  } else {
-    // console.log("changed node");
-    const findexist = await Product.findOne({
-      product_name: product_name,
-    });
-    if (findexist) {
-      res.status(400).json({
-        status: false,
-        msg: "Already Exists",
-        data: {},
       });
-    } else {
-      newProduct
-        .save()
-        .then((data) => {
-          res.status(200).json({
-            status: true,
-            msg: "success",
-            data: data,
-          });
-        })
-        .catch((error) => {
-          res.status(400).json({
-            status: false,
-            msg: "error",
-            error: error,
-          });
-        });
-    }
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "img not uploaded",
+    });
   }
 };
+
+//       {
+//         newProduct.product_img = alluploads;
+//         newProduct.save().then((result) => {
+//           res.status(200).json({
+//             status: true,
+//             msg: "success",
+//             data: result,
+//           });
+//         });
+//       } else {
+//         res.status(200).json({
+//           status: false,
+//           msg: "img not uploaded",
+//         });
+//       }
+//     }
+//   } else {
+//     // console.log("changed node");
+//     const findexist = await Product.findOne({
+//       product_name: product_name,
+//     });
+//     if (findexist) {
+//       res.status(400).json({
+//         status: false,
+//         msg: "Already Exists",
+//         data: {},
+//       });
+//     } else {
+//       newProduct
+//         .save()
+//         .then((data) => {
+//           res.status(200).json({
+//             status: true,
+//             msg: "success",
+//             data: data,
+//           });
+//         })
+//         .catch((error) => {
+//           res.status(400).json({
+//             status: false,
+//             msg: "error",
+//             error: error,
+//           });
+//         });
+//     }
+//   }
+// };
 
 // exports.addproduct = async (req, res) => {
 //   const {  store,
@@ -525,34 +571,40 @@ exports.editproduct = async (req, res) => {
   if (status) {
     data.status = status;
   }
-  if (req.file) {
-  //   const response = await cloudinary.uploader.upload(req.file.path);
-  //   data.product_img = response.secure_url;
-  //   fs.unlinkSync(req.file.path);
-  // }
 
-  alluploads = [];
-  for (let i = 0; i < req.files.length; i++) {
-    const resp = await cloudinary.uploader.upload(req.files[i].path);
-    fs.unlinkSync(req.files[i].path);
 
-    alluploads.push(resp.secure_url);
+  if (req.files) {
+    if (req.files.product_img) {
+      alluploads = [];
+      for (let i = 0; i < req.files.product_img.length; i++) {
+        // console.log(i);
+        const resp = await cloudinary.uploader.upload(
+          req.files.product_img[i].path,
+          { use_filename: true, unique_filename: false }
+        );
+        fs.unlinkSync(req.files.product_img[i].path);
+        alluploads.push(resp.secure_url);
+      }
+      // newStore.storeImg = alluploads;
+      data.product_img = alluploads;
+    }
+ 
   }
-  }
+  //console.log(data);
   if (data) {
     const findandUpdateEntry = await Product.findOneAndUpdate(
-      {
-        $and: [{ seller: req.sellerId }, { _id: req.params.id }],
-      },
-      { $set: data },
-     // { $set: { product_img: response.secure_url } },
-      { new: true }
-    )
+            {
+              $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+            },
+            { $set: data },
+           // { $set: { product_img: response.secure_url } },
+            { new: true }
+          )
       .then((data) => {
         res.status(200).json({
           status: true,
           msg: "success",
-          data: findandUpdateEntry,
+          data: data,
         });
       })
       .catch((error) => {
@@ -564,6 +616,58 @@ exports.editproduct = async (req, res) => {
       });
   }
 };
+
+
+//   if (req.file) {
+//   //   const response = await cloudinary.uploader.upload(req.file.path);
+//   //   data.product_img = response.secure_url;
+//   //   fs.unlinkSync(req.file.path);
+//   // }
+
+//   if (req.files) {
+//     if (req.files.product_img) {
+//       alluploads = [];
+//       for (let i = 0; i < req.files.product_img.length; i++) {
+//         // console.log(i);
+//         const resp = await cloudinary.uploader.upload(
+//           req.files.product_img[i].path,
+//           { use_filename: true, unique_filename: false }
+//         );
+//         fs.unlinkSync(req.files.product_img[i].path);
+//         alluploads.push(resp.secure_url);
+//       }
+//       // newStore.storeImg = alluploads;
+//       data.product_img = alluploads;
+//     }
+//   }
+  
+//   if (data) {
+//     const findandUpdateEntry = await Product.findOneAndUpdate(
+//       {
+//         $and: [{ seller: req.sellerId }, { _id: req.params.id }],
+//       },
+//       { $set: data },
+//      // { $set: { product_img: response.secure_url } },
+//       { new: true }
+//     )
+//       .then((data) => {
+//         res.status(200).json({
+//           status: true,
+//           msg: "success",
+//           data: findandUpdateEntry,
+//         });
+//       })
+//       .catch((error) => {
+//         res.status(400).json({
+//           status: false,
+//           msg: "error",
+//           error: error,
+//         });
+//       });
+//   }
+// }
+//   }
+
 
 
 exports.getproduct = async (req, res) => {
