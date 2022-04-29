@@ -4,6 +4,7 @@ const Seller = require("../models/seller");
 const Product = require("../models/product");
 const Store = require("../models/store");
 const Cart = require("../models/cart");
+const { replaceOne } = require("../models/orderproduct");
 
 exports.addOrder = async (req, res) => {
   const {
@@ -134,42 +135,69 @@ exports.addordersample = async (req, res) => {
         element.seller_orderId = sellersorderidarray[0];
       }
     }
-
-    element.shipping_address = req.body.shipping_address;
-    finalarray.push(element);
-    console.log("finalarray",finalarray)
-    if (finalarray){
-      let pro= await Product.countDocuments()
-      console.log("product qut",pro)
-      element.product_qty = cartitem[index].product_qty-pro;
+    if (cartitem[index].product_qty){
+      let pro= await Product.findOne({_id:req.body.id})
+      console.log("pro",pro)
+      let qqe=productdetail.qty
+      console.log("product qut",qqe)
     }
+      if(cartitem[index].product_qty<=0){
+      element.product_qty = qqe-cartitem[index].product_qty;
+      element.shipping_address = req.body.shipping_address;
+      finalarray.push(element);
+      console.log("finalarray",finalarray)
+    
+    
+      await Ordertable.insertMany(finalarray)
+        .then((data) => {
+          res.json({
+            status: true,
+            msg: "Product added to Order",
+            data: data,
+            orderId: cus_orderId,
+            total_qty: total_qty,
+            total_price: total_price,
+            
+          });
+        })
+        .catch((error) => {
+          res.json(error);
+        });
+        // console.log("aa",value)
+        if (finalarray)
+        {
+       let aa= await Cart.deleteOne({ _id: req.body.cart });
+       console.log("aa",aa)
+        }
+    
+      //}
+           
+
+     }else{
+
+        console.log("out of stok")
+
+        res.status(400).json({
+          status: false,
+          msg: "out of stok  ",
+        });
+       
+      }
+   
+    // if (finalarray){
+    //   let pro= await Product.countDocuments()
+    //   console.log("product qut",pro)
+      
+    //   if(cartitem[index].product_qty<=0){
+    //   element.product_qty = pro-cartitem[index].product_qty;
+    //   }else{
+    //     console.log("out of stok")
+    //   }
+   
+    // }
   }
 
 
-
-  await Ordertable.insertMany(finalarray)
-    .then((data) => {
-      res.json({
-        status: true,
-        msg: "Product added to Order",
-        data: data,
-        orderId: cus_orderId,
-        total_qty: total_qty,
-        total_price: total_price,
-        
-      });
-    })
-    .catch((error) => {
-      res.json(error);
-    });
-    // console.log("aa",value)
-    if (finalarray)
-    {
-   let aa= await Cart.deleteOne({ _id: req.body.cart });
-console.log("aa",aa)
-    }
-
-  //}
 };
 
 exports.orderbyseller = async (req, res) => {
