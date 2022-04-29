@@ -31,7 +31,7 @@ router.get("/admin/getoneorderbyseller/:id",tokenverify, getoneorderbyseller);
 router.post("/admin/updateOrderStatusbyseller/:id",tokenverify, updateOrderStatusbyseller);
 router.get("/admin/totalorder",totalorder);
 router.get("/admin/deleteOrder/:id", deleteOrder);
-
+//console
 
  
 
