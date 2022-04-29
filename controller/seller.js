@@ -57,10 +57,10 @@ exports.signup = async (req, res) => {
 
   const newRole = new Role({
     dashboard: true,
-    store: false,
+    store: true,
     addMyStore: true,
     storeList: true,
-    contacts: false,
+    contacts: true,
     addEmployee: true,
     employeeList: true,
     addCustomer: true,
@@ -258,8 +258,8 @@ exports.getemployecreatedbyseller = async (req, res) => {
 
 exports.getseller = async (req, res) => {
   const findall = await Seller.find().sort({
-    sortorder: 1,
-  });
+    sortorder: -1,
+  }).populate("role");
   //.populate("role");
   if (findall) {
     res.status(200).json({
@@ -337,16 +337,16 @@ exports.viewoneseller = async (req, res) => {
 };
 
 exports.sellerlogin = async (req, res) => {
-  const { mobile, email, password } = req.body;
+  const { mobile, email, password,role } = req.body;
   const user = await Seller.findOne({
     $or: [{ mobile: mobile }, { email: email }],
   }).populate("role")
-  .populate({
-    path: "role",
-    populate: {
-      path: "addemp",
-    },
-  })
+  // .populate({
+  //   path: "role",
+  //   populate: {
+  //     path: "addemp",
+  //   },
+  // })
   .populate("added_by")
   if (user) {
     const validPass = await bcrypt.compare(password, user.password);
@@ -365,6 +365,7 @@ exports.sellerlogin = async (req, res) => {
         token: token,
         msg: "success",
         user: user,
+        role:role
       });
     } else {
       res.status(400).json({
@@ -907,7 +908,7 @@ exports.verifyOtp = async (req, res) => {
 //     });
 //   } else {
 //     res.status(200).json({
-//       status: false,
+//       status: false,get
 //       msg: "Password Not Matched",
 //     });
 //   }
