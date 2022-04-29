@@ -218,7 +218,7 @@ exports.clearCart = async (req, res) => {
  
 
 exports.cartbycustomer = async (req, res) => {
- // await Cart.remove()
+  //await Cart.remove()
   const findone = await Cart.find({customer: req.userId })
     // .populate("customer")
 

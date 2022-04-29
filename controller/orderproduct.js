@@ -136,8 +136,8 @@ exports.addordersample = async (req, res) => {
       }
     }
     if (cartitem[index].product_qty){
-      let pro= await Product.findOne({_id:req.body.id})
-      console.log("pro",pro)
+      // let pro= await Product.findOne({_id:req.body.id})
+      // console.log("pro",pro)
       let qqe=productdetail.qty
       console.log("product qut",qqe)
     }
