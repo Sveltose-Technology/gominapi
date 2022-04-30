@@ -171,18 +171,17 @@ exports.addordersample = async (req, res) => {
         }
     
       //}
-           
+     }
+     else{
 
-     }else{
-
-        console.log("out of stok")
-
-        res.status(400).json({
-          status: false,
-          msg: "out of stok  ",
-        });
-       
-      }
+      console.log("Out Of Stock")
+    
+      res.status(400).json({
+        status: false,
+        msg: "Out Of Stock ",
+      });
+     
+    }
    
     // if (finalarray){
     //   let pro= await Product.countDocuments()
@@ -406,7 +405,7 @@ exports.updateOrderStatusbyseller = async (req, res) => {
 
 
 exports.salesbyseller = async (req, res) => {
-  const findall = await Orderproduct.find({
+  const findall = await Ordertable.find({
     $and: [{ id: req.sellerId }, { status: "Complete" }],
   })
     .populate("customer")
