@@ -39,7 +39,7 @@ exports.addproduct = async (req, res) => {
     sell_price,
     gstrate,
     product_img,
-    offer_aplicable,
+     
     
   } = req.body;
 
@@ -485,6 +485,7 @@ exports.editproduct = async (req, res) => {
     product_name,
     sku_no,
     hsn_sac_no,
+    store,
     short_desc,
     long_desc,
     productcategory,
@@ -500,9 +501,10 @@ exports.editproduct = async (req, res) => {
     cost_price,
     sell_price,
     gstrate,
+    tag,
+    sell_mode,
     //product_img,
-    sortorder,
-    status,
+
   } = req.body;
 
   data = {};
@@ -517,6 +519,9 @@ exports.editproduct = async (req, res) => {
   }
   if (hsn_sac_no) {
     data.hsn_sac_no = hsn_sac_no;
+  }
+  if(store){
+    data.store = store
   }
   if (short_desc) {
     data.short_desc = short_desc;
@@ -565,11 +570,11 @@ exports.editproduct = async (req, res) => {
     data.gstrate = gstrate;
   }
 
-  if (sortorder) {
-    data.sortorder = sortorder;
+  if (tag) {
+    data.tag = tag;
   }
-  if (status) {
-    data.status = status;
+  if (sell_mode) {
+    data.sell_mode = sell_mode;
   }
 
 
