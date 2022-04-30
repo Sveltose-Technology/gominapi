@@ -465,6 +465,22 @@ exports.totalorder = async (req, res) => {
     });
 };
 
+exports.totalorderbySeller = async (req, res) => {
+  await Ordertable.countDocuments({ seller: req.sellerId })
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: error,
+      });
+    });
+};
 
 exports.deleteOrder = async (req, res) => {
     try {
