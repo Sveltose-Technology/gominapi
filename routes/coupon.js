@@ -23,7 +23,7 @@ router.get("/admin/getcouponbyseller",tokenverify, getcouponbyseller);
 
 router.post("/admin/verifyvalidategetdiscount/:id",verifyvalidategetdiscount);
 router.get("/admin/delcoupon/:id", delcoupon);
-router.get("/admin/totalCoupon",totalCoupon);
+router.get("/admin/totalCoupon",tokenverify,totalCoupon);
 router.get("/admin/gettotalcoupon", gettotalcoupon);
 
 module.exports = router;
