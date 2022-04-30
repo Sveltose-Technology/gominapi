@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const Productcategory = require("../models/productcategory");
 const Brand = require("../models/brand");
 const Store = require("../models/store");
+const Seller = require("../models/seller");
 
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -1026,6 +1027,37 @@ exports.productbysellerbytoken = async (req, res) => {
       status: true,
       msg: "success",
       data: findall,
+    });
+  } else {
+    res.status(400).json({
+      status: false,
+      msg: "error",
+      error: "error",
+    });
+  }
+};
+
+exports.productbyemployee = async (req, res) => {
+  const findall = await Seller.findOne({_id: req.sellerId }).populate("added_by")
+let sellerId= findall.added_by._id
+console.log(sellerId)
+let productemp=await Product.find({seller:sellerId})
+    .sort({ sortorder: -1 })
+    .populate("productcategory")
+    .populate("productsubcategory")
+    .populate("unit")
+    .populate("brand")
+    .populate("color")
+    .populate("size")
+    .populate("store")
+    .populate("gstrate")
+    .populate("seller");
+
+  if (productemp) {
+    res.status(200).json({
+      status: true,
+      msg: "success",
+      data: productemp,
     });
   } else {
     res.status(400).json({
