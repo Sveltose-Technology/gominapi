@@ -15,7 +15,7 @@ exports.sendmail = async (req,res) =>{
     secure: false, // true for 465, false for other ports
     auth: {
       user: "support@buynaa.com", // generated ethereal user
-      pass: "Buynaa330*", // generated ethereal password
+      pass: "Buynaa@02771", // generated ethereal password
     },
   });
 

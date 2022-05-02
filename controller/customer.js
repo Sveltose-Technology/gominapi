@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const nodemailer = require("nodemailer");
 const { sendmail } = require("./mail");
+// const fs = require("fs");
+//const filecontent = fs.readFileSync('customer.html')
 
 const router = require("../routes/mail");
 
@@ -66,9 +68,10 @@ exports.signup = async (req, res) => {
       data: {},
     });
   } else {
+
     newCustomer
       .save()
-      .then((result) => {
+      .then(async(result) => {
         const token = jwt.sign(
           {
             userId: result._id,
@@ -77,23 +80,78 @@ exports.signup = async (req, res) => {
           {
             expiresIn: 86400000,
           }
-        );
-        res.header("auth-token", token).status(200).json({
-          status: true,
-          token: token,
-          msg: "success",
-          user: result,
+        )
+
+        const subject = `Buynaa Email Verification`;
+        // let text = `<h4>Your verfication code is ${defaultotp}</h4>`;
+        // let text = customer.html
+        const fs = require("fs");
+       // const text = fs.readFileSync('./customer.html');
+        // Read HTML Template
+var text = fs.readFileSync("customer.html", "utf8");
+        let testAccount = await nodemailer.createTestAccount();
+        let transporter = nodemailer.createTransport({
+          host: "smtpout.secureserver.net",
+          port: 587,
+          secure: false, // true for 465, false for other ports
+          auth: {
+            user: "support@brizebond.com", // generated ethereal user
+            pass: "Buynaa@02771", // generated ethereal password
+          },
+        });
+        let info = await transporter.sendMail({
+          from: '"Buynaa Support" <support@buynaa.com>', // sender address
+          to: result.email , // list of receivers
+          subject: subject, // Subject line
+          text:  `<b>${text}</b>`, // plain text body
+       //  html: `<b>${text}</b>`, // html body
+        })
+        console.log("Message sent: %s", info);
+        transporter.sendMail(info, function (err, data) {
+          if (err) {
+            console.log(err)
+            console.log('Error Occurs');
+          } 
+          else {
+            console.log('Email sent successfully');
+            res.send("You invited your friend")
+          }
         });
       })
-      .catch((error) => {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: error,
-        });
-      });
-  }
-};
+      // .catch((err) => {
+      //   console.log(err)
+      //   res.send(err)
+      // })
+  } 
+}
+//  else {
+//     res.send("you are note login")
+//   };
+
+//}
+
+
+
+  // else {
+  //   res.send("you are note login")
+  // };
+
+//         res.header("auth-token", token).status(200).json({
+//           status: true,
+//           token: token,
+//           msg: "success",
+//           user: result,
+//         });
+//       })
+//       .catch((error) => {
+//         res.status(400).json({
+//           status: false,
+//           msg: "error",
+//           error: error,
+//         });
+//       });
+//   }
+// };
 
 exports.addcustomerbyseller = async (req, res) => {
   const {
