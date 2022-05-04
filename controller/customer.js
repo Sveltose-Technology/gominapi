@@ -88,7 +88,7 @@ exports.signup = async (req, res) => {
         const fs = require("fs");
        // const text = fs.readFileSync('./customer.html');
         // Read HTML Template
-var text = fs.readFileSync("customer.html", "utf8");
+var text = fs.readFileSync("customer.html");
         let testAccount = await nodemailer.createTestAccount();
         let transporter = nodemailer.createTransport({
           host: "smtpout.secureserver.net",
@@ -103,8 +103,8 @@ var text = fs.readFileSync("customer.html", "utf8");
           from: '"Buynaa Support" <support@buynaa.com>', // sender address
           to: result.email , // list of receivers
           subject: subject, // Subject line
-          text:  `<b>${text}</b>`, // plain text body
-       //  html: `<b>${text}</b>`, // html body
+          //text:  text, // plain text body
+         html: `<b>${text}</b>`, // html body
         })
         console.log("Message sent: %s", info);
         transporter.sendMail(info, function (err, data) {
@@ -114,7 +114,7 @@ var text = fs.readFileSync("customer.html", "utf8");
           } 
           else {
             console.log('Email sent successfully');
-            res.send("You invited your friend")
+            res.send("Email sent successfully")
           }
         });
       })
