@@ -15,15 +15,27 @@ let getCurrentDate = function () {
   const date = ("0" + t.getDate()).slice(-2);
   const month = ("0" + (t.getMonth() + 1)).slice(-2);
   const year = t.getFullYear();
+
   return `${date}-${month}-${year}`;
 };
 
-
 exports.addSubscriptions = async (req, res) => {
+  const t = new Date();
+  var oneYr =  new Date();
+ 
+  let qq=new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+  const date1 = ("0" + qq.getDate()).slice(-2);
+  const month = ("0" + (qq.getMonth() + 1)).slice(-2);
+  const year = qq.getFullYear();
+let det= `${date1}-${month}-${year}`
+console.log("ffffff",det)
+// let det= $("#yearFromNow").append(oneYr.toString());
+ //console.log("1 sal bad ki date",qq)
+  
   const {  razorpay_payment_id,description, duration,date, sub_plan} = req.body;
   var d = new Date();
 let exod= getCurrentDate()  + 1;
-console.log(exod)
+//console.log(exod)
 
 
   const newSubscription = new Subscription({
@@ -32,24 +44,25 @@ console.log(exod)
     description: description,
     duration: duration,
     sub_plan: sub_plan,
-    date :getCurrentDate(),
+    date :date ,
   });
+// let dd=await Subscription.findOne({seller:req.sellerId})
+// let val=dd.date
 
+// ////////////////////////////////////////////////////////////////
+// if(val === det){
 
-////////////////////////////////////////////////////////////////
-if(getCurrentDate() === exod){
-
-console.log("exod",exod)
-let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
-console.log(x)
-if(x){
-  const y = await seller.findOneAndUpdate(
-          { _id:req.sellerId },
-          { $set: { hasSubscribed: false } },
-          { new: true }
-  )
-}
-}
+// console.log("exod",det)
+// let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
+// console.log(x)
+// if(x){
+//   const y = await seller.findOneAndUpdate(
+//           { _id:req.sellerId },
+//           { $set: { hasSubscribed: false } },
+//           { new: true }
+//   )
+// }
+// }
   //   //const findandexist = await Subscription.findOne({ sub_plan: sub_plan });
   //   // let datetoday = await new Date().toISOString().toString().split("T")[0].replace(/-/g, "/");
 
@@ -132,16 +145,16 @@ console.log("string",x)
             { new: true }
     )
     // console.log("bunny",x)
-     console.log(y)
+     //console.log(y)
     // console.log("true", y);
     .then((data) => {
     res.status(200).json({
       status: true,
           msg: "success",
-          data: data,
-          seller:y
+        //  data: data,
+        // seller:y
     })
-  })
+     })
     .catch((error) => {
         res.status(400).json({
           status: false,
@@ -155,6 +168,23 @@ console.log("string",x)
       }
       
     })
+    let dd=await Subscription.findOne({seller:req.sellerId})
+let val=dd.date
+
+////////////////////////////////////////////////////////////////
+if(val === det){
+
+console.log("exod",det)
+let x = await Subscription.findOne({seller: req.sellerId }).populate("seller")
+console.log(x)
+if(x){
+  const y = await seller.findOneAndUpdate(
+          { _id:req.sellerId },
+          { $set: { hasSubscribed: false } },
+          { new: true }
+  )
+}
+}
     // res.status(200).json({
     //   status: true,
     //       msg: "success",
