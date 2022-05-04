@@ -134,14 +134,16 @@ exports.addordersample = async (req, res) => {
       } else {
         element.seller_orderId = sellersorderidarray[0];
       }
+   
     }
+    let qqe=0
     if (cartitem[index].product_qty){
       // let pro= await Product.findOne({_id:req.body.id})
       // console.log("pro",pro)
-      let qqe=productdetail.qty
+       qqe=productdetail.qty
       console.log("product qut",qqe)
     }
-      if(cartitem[index].product_qty<=0){
+      if(cartitem[index].product_qty>=0){
       element.product_qty = qqe-cartitem[index].product_qty;
       element.shipping_address = req.body.shipping_address;
       finalarray.push(element);
@@ -208,6 +210,7 @@ exports.orderbyseller = async (req, res) => {
     .populate("seller")
     .populate("product")
     .populate("shipping_address");
+
   if (findone) {
     console.log(findone)
     res.status(200).json({
@@ -427,25 +430,39 @@ exports.salesbyseller = async (req, res) => {
 };
 
 exports.salesbyitem = async (req, res) => {
-  const findall = await Ordertable.find({
-    $and: [{ id: req.sellerId }, { status: "Complete" }],
-  })
-    .populate("customer")
-    .populate("product")
-    .then((data) => {
-      res.status(200).json({
-        status: true,
-        msg: "success",
-        data: data,
-      });
-    })
-    .catch((error) => {
-      res.status(400).json({
-        status: false,
-        error: "error",
-        error: error,
-      });
-    });
+  const {product_name,status} = req.body
+
+  const cartitem = await Product.find();
+  console.log(cartitem)
+  for (const iterator of cartitem) {
+    pro=iterator._id
+    if(pro==req.body.product_name){
+      const findall = await Ordertable.countDocuments({
+        $and: [{ id: req.sellerId },{product: req.body.product_name }, { status: "Complete" }],
+      })
+        .populate("customer")
+        .populate("product")
+        .then((data) => {
+          res.status(200).json({
+            status: true,
+            msg: "success",
+            data: data,
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({
+            status: false,
+            error: "error",
+            error: error,
+          });
+        });
+    }
+  }
+  var newarr = cartitem.map(function (value) {
+    return value.product_name;
+  });
+if(newarr){}
+  
 };
 
 exports.totalorder = async (req, res) => {

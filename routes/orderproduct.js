@@ -15,7 +15,8 @@ const {
   totalorder,
   deleteOrder,
   salesbyseller,
-  totalorderbySeller
+  totalorderbySeller,
+  salesbyitem
  } = require("../controller/orderproduct");
 
 // PATHS
@@ -29,6 +30,7 @@ router.post("/admin/addordersample", verifytoken,addordersample);
 router.get("/admin/pending_order",tokenverify, pending_order);
 router.get("/admin/orderbyseller",tokenverify,orderbyseller);
 router.get("/admin/salesbyseller",tokenverify,salesbyseller);
+router.post("/admin/salesbyitem",tokenverify,salesbyitem);
 
 router.get("/admin/getoneorderbyseller/:id",tokenverify, getoneorderbyseller);
 router.post("/admin/updateOrderStatusbyseller/:id",tokenverify, updateOrderStatusbyseller);
