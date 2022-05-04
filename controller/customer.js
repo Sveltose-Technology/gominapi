@@ -103,8 +103,8 @@ var text = fs.readFileSync("customer.html", "utf8");
           from: '"Buynaa Support" <support@buynaa.com>', // sender address
           to: result.email , // list of receivers
           subject: subject, // Subject line
-          text:  text, // plain text body
-         html: `<b>${text}</b>`, // html body
+          text:  `<b>${text}</b>`, // plain text body
+       //  html: `<b>${text}</b>`, // html body
         })
         console.log("Message sent: %s", info);
         transporter.sendMail(info, function (err, data) {
