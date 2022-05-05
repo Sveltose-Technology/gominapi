@@ -5,6 +5,16 @@ const Product = require("../models/product");
 const Store = require("../models/store");
 const Cart = require("../models/cart");
 const { replaceOne } = require("../models/orderproduct");
+const _ = require("lodash");
+
+let getCurrentDate = function () {
+  const t = new Date();
+  const date = ("0" + t.getDate()).slice(-2);
+  const month = ("0" + (t.getMonth() + 1)).slice(-2);
+  const year = t.getFullYear();
+
+  return `${date}-${month}-${year}`;
+};
 
 exports.addOrder = async (req, res) => {
   const {
@@ -99,8 +109,12 @@ exports.addOrder = async (req, res) => {
 };
 
 exports.addordersample = async (req, res) => {
+  //let date = new Date().toJSON().slice(0, 10);
+
+  // console.log(dtt)
   const cartitem = await Cart.find({ _id: req.body.cart });
   const finalarray = [];
+  //let date = dtt;
   let total_qty = 0;
   let total_price = 0;
   const cus_orderId = "ORDC" + Date.now();
@@ -120,6 +134,7 @@ exports.addordersample = async (req, res) => {
     element.size = cartitem[index].size;
     element.payment_type = req.body.payment_type;
     element.status = req.body.status;
+    element.date = req.body.date;
     element.cus_orderId = cus_orderId;
     const productdetail = await Product.findOne({
       _id: cartitem[index]?.product,
@@ -159,6 +174,7 @@ exports.addordersample = async (req, res) => {
             orderId: cus_orderId,
             total_qty: total_qty,
             total_price: total_price,
+           
             
           });
         })
@@ -229,7 +245,7 @@ exports.orderbyseller = async (req, res) => {
 
 exports.orderlist = async (req, res) => {
   const findall = await Ordertable.find()
-    .sort({ sortorder: 1 })
+    .sort({ sortorder: -1 })
     .populate("seller")
     .populate("customer")
     .populate("product");
@@ -438,7 +454,7 @@ exports.salesbyitem = async (req, res) => {
     pro=iterator._id
     if(pro==req.body.product_name){
       const findall = await Ordertable.countDocuments({
-        $and: [{ id: req.sellerId },{product: req.body.product_name }, { status: "Complete" }],
+        $and: [{ id: req.sellerId },{product: req.body.product_name }, { status: "Complete" },{date:Date.now}],
       })
         .populate("customer")
         .populate("product")
@@ -515,4 +531,39 @@ exports.deleteOrder = async (req, res) => {
       });
     }
   };
+  
+
+  exports.sellerinvoice_icm = async(req,res) =>{
+     
+ 
+     const findall = await Ordertable.find({
+      $and: [{ seller: req.sellerId }, { date: getCurrentDate() },{status: "Complete"}],
+    }).populate("customer")
+    .populate("product")
+    
+    var newarr = findall.map(function (value) {
+      return value.gsttotal;
+    })
+
+    console.log('GSTTOTSL',newarr)
+    let total = _.sum([...newarr])
+    console.log("total",total)
+
+      if(findall){
+        res.status(200).json({
+          status:true,
+          msg : "success",
+          data : findall,
+          Totalincome : total
+        })
+       } else {
+          res.status(400).json({
+            status: false,
+            msg: "error",
+            error: "error",
+          });
+        }
+    
+  };
+  
   

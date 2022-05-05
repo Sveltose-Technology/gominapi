@@ -151,6 +151,8 @@ console.log("string",x)
     res.status(200).json({
       status: true,
           msg: "success",
+          date : det
+         // date : 
         //  data: data,
         // seller:y
     })
@@ -327,7 +329,7 @@ if(x){
      
 exports.Getsubscription = async (req, res) => {
   const findall = await Subscription.find().populate("seller")
-    .sort({ sortorder: 1 })
+    .sort({ sortorder: -1 })
     //.populate("seller");
   if (findall) {
     res.status(200).json({

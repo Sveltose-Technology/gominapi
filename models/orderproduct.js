@@ -33,7 +33,7 @@ const OrdertableSchema = new mongoose.Schema(
     },
 
     gsttotal:{
-type : String
+type : Number
     },
     status: {
       type: String,
@@ -55,6 +55,9 @@ type : String
     shipping_address: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user_address",
+    },
+    date : {
+      type :String
     },
   },
   { timestamps: true }

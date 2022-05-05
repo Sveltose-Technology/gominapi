@@ -16,7 +16,9 @@ const {
   deleteOrder,
   salesbyseller,
   totalorderbySeller,
-  salesbyitem
+  salesbyitem,
+  sellerinvoice_icm
+
  } = require("../controller/orderproduct");
 
 // PATHS
@@ -37,6 +39,7 @@ router.post("/admin/updateOrderStatusbyseller/:id",tokenverify, updateOrderStatu
 router.get("/admin/totalorder",totalorder);
 router.get("/admin/deleteOrder/:id", deleteOrder);
 router.get("/admin/totalorderbySeller",tokenverify, totalorderbySeller);
+router.get("/admin/sellerinvoice_icm",tokenverify, sellerinvoice_icm);
 
  
 
