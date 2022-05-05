@@ -40,7 +40,7 @@ exports.fetchallpays = async (req, res) => {
   instance.payments
     .all({
       from: "2022-04-21",
-      to: "2022-04-21",
+      to: "2022-05-22",
     })
     .then((response) => {
       res.json({
