@@ -17,9 +17,8 @@ const {
   salesbyseller,
   totalorderbySeller,
   salesbyitem,
-  sellerinvoice_icm
-
- } = require("../controller/orderproduct");
+  sellerinvoice_icm,
+  } = require("../controller/orderproduct");
 
 // PATHS
 
@@ -40,7 +39,7 @@ router.get("/admin/totalorder",totalorder);
 router.get("/admin/deleteOrder/:id", deleteOrder);
 router.get("/admin/totalorderbySeller",tokenverify, totalorderbySeller);
 router.get("/admin/sellerinvoice_icm",tokenverify, sellerinvoice_icm);
-
+ 
  
 
 module.exports = router;

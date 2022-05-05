@@ -260,4 +260,23 @@ exports.pendingpurchaseorderlist = async (req, res) => {
  
 
 
- 
+exports.purchaseHistory = async (req, res) => {
+  const findall = await Purchaseorder.find({
+    $and: [{ id: req.sellerId }, { status: "Approve" }],
+  })
+     
+    .then((data) => {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        status: false,
+        error: "error",
+        error: error,
+      });
+    });
+}
