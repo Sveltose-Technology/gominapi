@@ -42,8 +42,7 @@ const storage = multer.diskStorage({
 
 router.post("/admin/addnewpurchaseorder",uploads.single("upload_Invoice"),tokenverify, addnewpurchaseorder);
 router.get("/admin/getpurchaseorder",tokenverify, getpurchaseorder);
-//router.get("/admin/getpurchaseorderbytoken",tokenverify, getpurchaseorderbytoken);
-
+ 
 router.post("/admin/editnewpurchaseorder/:id",uploads.single("upload_Invoice"),tokenverify, editnewpurchaseorder);
 router.get("/admin/getonepurchaseorder/:id",tokenverify, getonepurchaseorder);
 router.get("/admin/delpurchaseorder/:id", delpurchaseorder);

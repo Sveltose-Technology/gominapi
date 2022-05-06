@@ -12,20 +12,6 @@ exports.addcoupon = async (req, res) => {
     amount,
     status,
   } = req.body;
-
-  // create_random_string(6);
-  // function create_random_string(string_length) {
-  //   (random_string = ""),
-  //     (characters =
-  //       "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz");
-  //   for (var i, i = 0; i < string_length; i++) {
-  //     random_string += characters.charAt(
-  //       Math.floor(Math.random() * characters.length)
-  //     );
-  //   }
-  //   return random_string;
-  // }
-
   const newCoupon = new Coupon({
     product:product,
     seller :req.sellerId,

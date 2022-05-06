@@ -246,12 +246,7 @@ exports.cartbycustomer = async (req, res) => {
         path: "gstrate",
       },
     })
-
-
-
    if (findone) {
-   
-
   const findall = await Product.find({ product: req.params.id })
   console.log(findall)
   const value = findall.value
@@ -269,29 +264,18 @@ console.log(value)
       let element_qty = findone[i].product_qty;
        
     //  let element_gst = findone[i].gsttotal;
-
-       
-
        sum =(element_price * element_qty);
       // let sum = 0;
       // sum =  (element_price * element_qty);
       //  gsttotal = value +(element_price*element_qty)
       //   console.log(gsttotal)
-      
-        
-      
-
      }
     res.status(200).json({
       status: true,
       msg: "success",
-
       data: findone,
-
-      //  gsttotal: gsttotal, 
-      //  ttl :gsttotal
-       
-       
+    //  gsttotal: gsttotal, 
+  //  ttl :gsttotal    
     });
   } else {
     res.status(400).json({

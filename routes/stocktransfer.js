@@ -18,6 +18,6 @@ router.get("/admin/getonestocktransfer/:id", tokenverify, getonestocktransfer);
 
 router.get("/admin/editstocktranfer/:id", editstocktranfer);
 
-//router.post("/admin/Adminlogin", Adminlogin);
+
 
 module.exports = router;

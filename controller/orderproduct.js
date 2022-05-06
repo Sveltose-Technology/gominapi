@@ -16,97 +16,97 @@ let getCurrentDate = function () {
   return `${date}-${month}-${year}`;
 };
 
-exports.addOrder = async (req, res) => {
-  const {
-    product,
-    product_qty,
-    product_size,
-    product_color,
-    payment_type,
-    status,
-    orderId,
-    cus_orderId,
-    seller_orderId,
-    cartID,
-    //razorpay_payment_id,
-  } = req.body;
+// exports.addOrder = async (req, res) => {
+//   const {
+//     product,
+//     product_qty,
+//     product_size,
+//     product_color,
+//     payment_type,
+//     status,
+//     orderId,
+//     cus_orderId,
+//     seller_orderId,
+//     cartID,
+//     //razorpay_payment_id,
+//   } = req.body;
 
-  const cartitem = await Store.Cart({ _id: cartID });
-  const getstore = await Store.findOne({ product: req.params.id });
-  if (getstore && cartitem) {
-    const getproduct = await Product.findOne({ _id: req.body.product });
-    if (getproduct) {
-      const getstore = await Store.findOne({ _id: getproduct.store });
-      const newOrdertable = new Ordertable({
-        seller: getstore?.seller,
-        customer: req.userId,
-        //    razorpay_payment_id: cartitem.razorpay_payment_id,
-        product: cartitem.product,
-        product_qty: cartitem.product_qty,
-        product_size: cartitem.size,
-        product_color: cartitem.color,
-        payment_type: payment_type,
-        status: "Pending",
-        orderId: uuidv4(),
-        cus_orderId: "#ORDC" + Date.now(),
-        seller_orderId: "#ORDS" + Date.now(),
-      });
-      const findexist = await Ordertable.findOne({
-        $and: [
-          { customer: req.userId },
-          { seller: getstore?.seller },
-          { product: product },
-          { product_qty: product_qty },
-          { product_size: product_size },
-          { product_color: product_color },
-        ],
-      });
-      if (findexist) {
-        await Orderproduct.findOneAndUpdate({
-          $and: [
-            { customer: req.userId },
-            { seller: getstore?.seller },
-            { product: product },
-            { product_qty: product_qty },
-            { product_size: product_size },
-            { product_color: product_color },
-            { new: true },
-          ],
-        })
-          .then((data) => {
-            res.status(200).json({
-              status: true,
-              msg: "success",
-              data: data,
-            });
-          })
-          .catch((error) => {
-            res.status(200).json({
-              status: false,
-              msg: "error",
-              error: error,
-            });
-          });
-      } else {
-        newOrdertable.save(function (err, data) {
-          if (err) {
-            res.status(400).json({
-              status: false,
-              msg: "Error Occured",
-              error: err,
-            });
-          } else {
-            res.status(200).json({
-              status: true,
-              msg: "Product added to Order",
-              data: data,
-            });
-          }
-        });
-      }
-    }
-  }
-};
+//   const cartitem = await Store.Cart({ _id: cartID });
+//   const getstore = await Store.findOne({ product: req.params.id });
+//   if (getstore && cartitem) {
+//     const getproduct = await Product.findOne({ _id: req.body.product });
+//     if (getproduct) {
+//       const getstore = await Store.findOne({ _id: getproduct.store });
+//       const newOrdertable = new Ordertable({
+//         seller: getstore?.seller,
+//         customer: req.userId,
+//         //    razorpay_payment_id: cartitem.razorpay_payment_id,
+//         product: cartitem.product,
+//         product_qty: cartitem.product_qty,
+//         product_size: cartitem.size,
+//         product_color: cartitem.color,
+//         payment_type: payment_type,
+//         status: "Pending",
+//         orderId: uuidv4(),
+//         cus_orderId: "#ORDC" + Date.now(),
+//         seller_orderId: "#ORDS" + Date.now(),
+//       });
+//       const findexist = await Ordertable.findOne({
+//         $and: [
+//           { customer: req.userId },
+//           { seller: getstore?.seller },
+//           { product: product },
+//           { product_qty: product_qty },
+//           { product_size: product_size },
+//           { product_color: product_color },
+//         ],
+//       });
+//       if (findexist) {
+//         await Orderproduct.findOneAndUpdate({
+//           $and: [
+//             { customer: req.userId },
+//             { seller: getstore?.seller },
+//             { product: product },
+//             { product_qty: product_qty },
+//             { product_size: product_size },
+//             { product_color: product_color },
+//             { new: true },
+//           ],
+//         })
+//           .then((data) => {
+//             res.status(200).json({
+//               status: true,
+//               msg: "success",
+//               data: data,
+//             });
+//           })
+//           .catch((error) => {
+//             res.status(200).json({
+//               status: false,
+//               msg: "error",
+//               error: error,
+//             });
+//           });
+//       } else {
+//         newOrdertable.save(function (err, data) {
+//           if (err) {
+//             res.status(400).json({
+//               status: false,
+//               msg: "Error Occured",
+//               error: err,
+//             });
+//           } else {
+//             res.status(200).json({
+//               status: true,
+//               msg: "Product added to Order",
+//               data: data,
+//             });
+//           }
+//         });
+//       }
+//     }
+//   }
+// };
 
 exports.addordersample = async (req, res) => {
   //let date = new Date().toJSON().slice(0, 10);

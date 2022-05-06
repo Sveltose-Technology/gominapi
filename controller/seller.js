@@ -435,30 +435,7 @@ exports.sellerlogin = async (req, res) => {
   }
 };
 
-// exports.editseller = async (req, res) => {
-//   const findandUpdateEntry = await Seller.findOneAndUpdate(
-//     {
-//       _id: req.sellerId,
-//     },
-//     { $set: req.body },
-//     { new: true }
-//   );
-
-//   if (findandUpdateEntry) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findandUpdateEntry,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       status: "error",
-//       error: "error",
-//     });
-//   }
-// };
-
+ 
 exports.editempByseller = async (req, res) => {
   const { name, email, mobile, rolename } = req.body;
 
@@ -587,25 +564,6 @@ exports.del_seller = async (req, res) => {
     });
   }
 };
-
-// exports.storebyseller = async (req, res) => {
-//   const findone = await Seller.find({ store: req.params.id }).sort({
-//     sortorder: 1,
-//   });
-//   if (findone) {
-//     res.status(200).json({
-//       status: true,
-//       msg: " success",
-//       data: findone,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: " error",
-//     });
-//   }
-// };
 
 exports.totalseller = async (req, res) => {
   await Seller.countDocuments()
@@ -840,44 +798,6 @@ exports.verifyOtp = async (req, res) => {
   }
 };
 
-// exports.forgetpassword = async (req, res) => {
-//   const { password, cnfrm_password } = req.body;
-
-//   const salt = bcrypt.genSaltSync(saltRounds);
-//   const hashpassword = bcrypt.hashSync(password, salt)
-
-//   const user = await Seller.findOneAndUpdate({
-//     $and: [{ password: password }, { cnfrm_password: cnfrm_password }],
-//   });
-//   if (user) {
-//     // console.log(user)
-//     const validPass = await bcrypt.compare(password, user.cnfrm_password);
-//     if (validPass) {
-// const findandUpdateEntry = await Seller.findOneAndUpdate(
-//   {
-//     _id: req.sellerId,
-//   },
-
-//   { $set: { password: req.body } },
-//         { new: true }
-// )
-// if(findandUpdateEntry){
-//   console.log(findandUpdateEntry)
-//   res.status(400).json({
-//     status: true,
-//     msg: "Password  Changed Successfully",
-//     user: user,
-//   });
-// } else {
-//   res.status(200).json({
-//     status: false,
-//     msg: "Password Not Matched",
-//   });
-// }
-//     }}}
-
-
-
     exports.fogetpassword = async (req, res) => {
 
       const {password,cnfrm_password} = req.body
@@ -888,10 +808,8 @@ exports.verifyOtp = async (req, res) => {
 
         // const validPass = String.compare(req.body.password, req.body.cnfrmPassword);
         // console.log("Result",validPass)
-        if(password === cnfrm_password){
-
-        
-      const salt = await bcrypt.genSalt(10);
+    if(password === cnfrm_password){
+       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(password, salt);
 
       const findandUpdateEntry = await Seller.findOneAndUpdate(
@@ -922,49 +840,8 @@ exports.verifyOtp = async (req, res) => {
     })
   }
     };
-//       res.status(400).json({
-//         status: true,
-//         msg: "Password  Changed Successfully",
-//         user: user,
-//       });
-//     } else {
-//       res.status(200).json({
-//         status: false,
-//         msg: "Password Not Matched",
-//       });
-//     }
-//   }
-// };
-
-//.then((data)=>{
-//     res.status(200).json({
-//       //status: true,
-//       msg: "otp verified",
-//       data: data,
-//     });
-//   })
-//   .catch((error) => {
-//     res.status(400).json({
-//      // status: false,
-//       msg: "Incorrect Otp",
-//       error: error,
-//     });
-//   })
-// }
-
-//   if (findone) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "Password  Change Successfully",
-//       data: findone,
-//     });
-//   } else {
-//     res.status(200).json({
-//       status: false,get
-//       msg: "Password Not Matched",
-//     });
-//   }
-// };
+ 
+ 
  
 
  

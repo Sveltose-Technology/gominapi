@@ -13,7 +13,7 @@ const {
   getone_productcategory,
   editproductcategory,
   del_productcategory,
-  //   getsubcategory,
+
 } = require("../controller/productcategory");
 
 const storage = multer.diskStorage({
@@ -46,25 +46,22 @@ let uploads = multer({ storage: storage });
 
 //Paths
 router.post(
-  "/admin/addproductcategory",tokenverify,
+  "/admin/addproductcategory", tokenverify,
   uploads.single("product_img"),
   addproductcategory
 );
 router.get("/admin/getproductCategory", getproductCategory);
-router.get("/admin/allcatByseller",tokenverify, allcatByseller);
+router.get("/admin/allcatByseller", tokenverify, allcatByseller);
 
-router.get("/admin/getone_productcategory/:id",tokenverify, getone_productcategory);
-// router.get("/admin/allproductsubcategory", allproductsubcategory);
+router.get("/admin/getone_productcategory/:id", tokenverify, getone_productcategory);
 router.get("/admin/del_productcategory/:id", del_productcategory);
 router.post(
-  "/admin/editproductcategory/:id",tokenverify,
+  "/admin/editproductcategory/:id", tokenverify,
   uploads.single("product_img"),
   editproductcategory
 );
 
 
 
-// //get subcategories of passed category
-// router.get("/admin/getsubcategory/:id", getsubcategory);
 
 module.exports = router;

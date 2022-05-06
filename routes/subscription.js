@@ -4,9 +4,7 @@ const { tokenverify } = require("../functions/tokenverify");
 const { verifytoken } = require("../functions/tokenverify");
 
 const {
-  //addSubscriptions,
-     addSubscriptions,
-     addsub,
+  addSubscriptions,
   Getsubscription,
   getoneSubscription,
   del_subscription,
@@ -16,10 +14,8 @@ const {
   Getsubbytoken
 } = require("../controller/subscription");
 
-//router.post("/admin/addSubscription", verifytoken , addSubscription);
-
-//router.post("/admin/addSubscriptions", tokenverify, addSubscriptions);
-
+ 
+ 
 router.post("/admin/addSubscriptions",tokenverify,addSubscriptions)
 router.get("/admin/Getsubscription", Getsubscription);
 router.get("/admin/getoneSubscription",tokenverify, getoneSubscription);

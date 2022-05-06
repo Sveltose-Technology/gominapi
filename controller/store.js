@@ -290,24 +290,6 @@ exports.getstore = async (req, res) => {
   }
 };
 
-// exports.getstorebytoken = async (req, res) => {
-//   //const getseller = await Seller.findOne({ _id: req.sellerId });
-//   const findall = await Store.find({ seller: req.sellerId }).sort({ sortorder: 1 }).populate("seller");
-//   if (findall) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findall,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
-
 exports.getonestore = async (req, res) => {
   const findone = await Store.findOne( { _id: req.params.id  }).populate(
     "seller"

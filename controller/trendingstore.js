@@ -49,29 +49,7 @@ exports.addtrendingstore= async (req, res) => {
     }
   }  
 }
-// exports.edit_trendingstore = async (req, res) => {
-//   const findandUpdateEntry = await Promotedbrand.findOneAndUpdate(
-//     {
-//       _id: req.params.id,
-//     },
-//     { $set: req.body },
-//     { new: true }
-//   );
-//   //.populate("product");
-//   if (findandUpdateEntry) {
-//     res.status(200).json({
-//       status: true,
-//       msg: "success",
-//       data: findandUpdateEntry,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error",
-//       error: "error",
-//     });
-//   }
-// };
+ 
 
 exports.gettrendingstore = async (req, res) => {
   const findall = await TrendingStore.find().sort({ sortorder: 1 });
@@ -128,8 +106,4 @@ exports.viewonetrendingstore = async (req, res) => {
   }
 };
 
-// exports.edit = async(req,res)=>{
-//   const findoneupdate   = await TrendingStore.findOne({
-
-//   }) 
-// }
+ 

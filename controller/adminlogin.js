@@ -68,39 +68,7 @@ exports.createadmin = async (req, res) => {
       });
     });
 };
-// exports.adminlogin = async (req, res) => {
-//     const {mobile,password } = req.body;
-
-//     // Find user with requested phone no.
-//     Adminlogin.findOne(
-//       {mobile : mobile},
-//       function (err, user) {
-//         if (user === null) {
-//           return res.status(400).send({
-//             message: "User not Exist.",
-//           });
-//         }else {
-//           // console.log(process.env.TOKEN_SECRET);
-//           if (validatePassword(password, user.password)) {
-//             const token = jwt.sign({ userId: user._id }, process.env.TOKEN_SECRET, {
-//               expiresIn: "365d",
-//             });
-//           }
-
-//         else if(true) {
-//             res.status(201).send({
-//               message: "User Logged In",
-//               user: user,
-//              // usertype : "Admin"
-//             });
-//           } else {
-//             return res.status(400).send({
-//               message: "Wrong Password",
-//             });
-//           }
-//         }
-//     );
-//   };
+ 
 exports.adminlogin = async (req, res) => {
   const { mobile, email, password } = req.body;
   const admin = await Adminlogin.findOne({
@@ -139,8 +107,6 @@ exports.adminlogin = async (req, res) => {
     });
   }
 };
-
-
  
 exports.editadmin = async (req, res) => {
   const findandUpdateEntry = await Adminlogin.findOneAndUpdate(
@@ -187,17 +153,7 @@ exports.adminsendotp = async (req, res) => {
   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
   const { mobile } = req.body;
   const http = require("https");
-  // const finddetails = await Seller.findOneAndUpdate(
-  //   { mobile: mobile },
-  //   { $set: { otp: defaultotp } },
-  //   { new: true }
-  // );
-
-  //console.log(mobile_no.length);
-  //console.log(finddetails);
-  //console.log(finddetails.email);
-  // if (finddetails) {
- 
+  
     const options = {
       method: "GET",
       hostname: "api.msg91.com",

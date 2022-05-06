@@ -4,8 +4,7 @@ const { verifytoken } = require("../functions/verifytoken");
 const { tokenverify } = require("../functions/tokenverify");
 
 const {
-  addOrder,
-  orderlist,
+   orderlist,
   pending_order,
   orderbyseller,
   addordersample,
@@ -22,8 +21,7 @@ const {
 
 // PATHS
 
-router.post("/admin/addOrder",verifytoken, addOrder);
-router.get("/admin/orderlist", orderlist);
+ router.get("/admin/orderlist", orderlist);
 router.get("/admin/getorderbycustomer",verifytoken, getorderbycustomer);
 
  

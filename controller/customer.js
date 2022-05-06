@@ -71,7 +71,7 @@ exports.signup = async (req, res) => {
 
     newCustomer
       .save()
-      .then(async(result) => {
+      .then(async (result) => {
         const token = jwt.sign(
           {
             userId: result._id,
@@ -103,28 +103,28 @@ exports.signup = async (req, res) => {
         const text = fs.readFileSync('./customer.html');
         let info = await transporter.sendMail({
           from: '"Buynaa Support" <support@buynaa.com>', // sender address
-          to: result.email , // list of receivers
+          to: result.email, // list of receivers
           subject: subject, // Subject line
           //text:  `<b>${text}</b>`, // plain text body
-        html: `<b>${text}</b>`, // html body
+          html: `<b>${text}</b>`, // html body
         })
         console.log("Message sent: %s", info);
         transporter.sendMail(info, function (err, data) {
           if (err) {
             console.log(err)
             console.log('Error Occurs');
-          } 
+          }
           else {
             console.log('Email sent successfully');
             res.send("Email sent successfully")
           }
         });
       })
-      // .catch((err) => {
-      //   console.log(err)
-      //   res.send(err)
-      // })
-  } 
+    // .catch((err) => {
+    //   console.log(err)
+    //   res.send(err)
+    // })
+  }
 }
 //  else {
 //     res.send("you are note login")
@@ -134,9 +134,9 @@ exports.signup = async (req, res) => {
 
 
 
-  // else {
-  //   res.send("you are note login")
-  // };
+// else {
+//   res.send("you are note login")
+// };
 
 //         res.header("auth-token", token).status(200).json({
 //           status: true,
@@ -520,9 +520,9 @@ exports.sendotp = async (req, res) => {
   //console.log(finddetails);
   //console.log(finddetails.customer_email);
   if (finddetails) {
-      //const {to,text,} = req.body
-      const subject = `Buynaa Email Verification`;
-      const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
+    //const {to,text,} = req.body
+    const subject = `Buynaa Email Verification`;
+    const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
 
     //Generate test SMTP service account from ethereal.email
     //Only needed if you don't have a real mail account for testing
@@ -548,11 +548,11 @@ exports.sendotp = async (req, res) => {
       html: `<b>${text}</b>`, // html body
     })
 
-     console.log("Message sent: %s", info);
+    console.log("Message sent: %s", info);
     // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // // Preview only available when sending through an Ethereal account
-     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     res.status(200).json({
       status: true,
       msg: "otp send successfully",
@@ -567,126 +567,6 @@ exports.sendotp = async (req, res) => {
     });
   }
 };
-
-// exports.sendotponMobile = async (req,res) => {
-//   const {mobile} = req.body
-//   const finddetails = await Customer.findOne({mobile : mobile})
-
-//   const http = require("https");
-
-// const options = {
-//   "method": "GET",
-//   "hostname": "api.msg91.com",
-//   "port": null,
-//   "path": "/api/v5/otp?template_id=&mobile=7489651191&authkey=371235Ahasx34S61cc2688P1",
-//   "headers": {
-//     "Content-Type": "application/json"
-//   }
-// };
-
-// const req = http.request(options, function (res) {
-//   const chunks = [];
-
-//   res.on("data", function (chunk) {
-//     chunks.push(chunk);
-//   });
-
-//   res.on("end", function () {
-//     const body = Buffer.concat(chunks);
-//     console.log(body.toString());
-//   });
-// });
-
-// req.write("{\"Value1\":\"Param1\",\"Value2\":\"Param2\",\"Value3\":\"Param3\"}");
-// req.end();
-// }
-
-// exports.sendotpandmail = async (req, res) => {
-//   const defaultotp = Math.ceil(100000 + Math.random() * 900000);
-//   const { customer_email,mobile } = req.body;
-//   const finddetails = await Customer.findOneAndUpdate(
-//     { $or: [{ mobile: mobile }, { email: email }]},
-//     { $set: { otp: defaultotp } },
-//     { new: true }
-//   );
-
-//   //console.log(mobile_no.length);
-//   //console.log(finddetails);
-//   //console.log(finddetails.customer_email);
-//   if (finddetails) {
-//     //   //const {to,text,} = req.body
-//     //   const subject = `Buynaa Email Verification`;
-//     //   const text = `<h4>Your verfication code is ${defaultotp}</h4>`;
-
-//     // Generate test SMTP service account from ethereal.email
-//     // Only needed if you don't have a real mail account for testing
-//     // let testAccount = await nodemailer.createTestAccount();
-
-//     // // create reusable transporter object using the default SMTP transport
-//     // let transporter = nodemailer.createTransport({
-//     //   host: "smtpout.secureserver.net",
-//     //   port: 587,
-//     //   secure: false, // true for 465, false for other ports
-//     //   auth: {
-//     //     user: "support@buynaa.com", // generated ethereal user
-//     //     pass: "Buynaa330*", // generated ethereal password
-//     //   },
-//     // });
-
-//     // // send mail with defined transport object
-//     // let info = await transporter.sendMail({
-//     //   from: '"Buynaa Support" <support@buynaa.com>', // sender address
-//     //   to: finddetails.customer_email, // list of receivers
-//     //   subject: subject, // Subject line
-//     //   text: text, // plain text body
-//     //   html: `<b>${text}</b>`, // html body
-//     // })
-
-//     // console.log("Message sent: %s", info);
-//     // // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-//     // // Preview only available when sending through an Ethereal account
-//     // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-//     res.status(200).json({
-//       status: true,
-//       msg: "otp send successfully",
-//       email: customer_email,
-//       otp: defaultotp,
-//     });
-//   } else {
-//     res.status(400).json({
-//       status: false,
-//       msg: "error occured",
-//     });
-//   }
-// };
-
-// // const mailer = (email,otp) =>{
-// // const nodemailer = require("nodemailer");
-// // var smtptransporter = nodemailer.createTransport({
-// //   service: "gmail",
-
-// //   auth: {
-// //     user: "98710priya@gmail.com",
-// //     pass: "INSTAFB00123",
-// //   },
-// // });
-// // var mailOptions = {
-// //   from: "98710priya@gmail.com",
-// //   to: "guptapratima98710@gmail.com",
-// //   subject: "Sending mail using node js",
-// //   text: "hii",
-// // };
-
-// smtptransporter.sendMail(mailOptions, function (error, info) {
-//   if (error) {
-//     //console.log(error);
-//   } else {
-//     // console.log("Email.sent" + info.response);
-//   }
-//   smtptransporter.close();
-// });
-// }
 
 exports.emailSend = async (req, res) => {
   //console.log(req.body.customer_email);
@@ -715,352 +595,127 @@ exports.emailSend = async (req, res) => {
   res.status(200).json(responseType);
 };
 
+exports.fogetpassword = async (req, res) => {
+
+  const { password, cnfrmPassword } = req.body
+
+  //  const salt = await bcrypt.genSalt(10);
+  //  const hashPassword = await bcrypt.hash(password, salt);
+  //  const hashPassword1 = await bcrypt.hash(cnfrmPassword, salt)
+
+  // const validPass = String.compare(req.body.password, req.body.cnfrmPassword);
+  // console.log("Result",validPass)
+  if (password === cnfrmPassword) {
 
 
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-
-// exports.verifyotp = async (req, res) => {
-//   const { email, mobile, otp } = req.body;
-
-//   // const findone = await Customer.findOne({
-//   //   $and: [{ customer_email: customer_email }, { otp: otp }],
-//   // });
-
-//   const findone = await Customer.findOne({ mobile: mobile });
-  
-//   //.then((data)=>{
-//   //     res.status(200).json({
-//   //       //status: true,
-//   //       msg: "otp verified",
-//   //       data: data,
-//   //     });
-//   //   })
-//   //   .catch((error) => {
-//   //     res.status(400).json({
-//   //      // status: false,
-//   //       msg: "Incorrect Otp",
-//   //       error: error,
-//   //     });
-//   //   })
-//   // }
-
-//   if (findone) {
-    
-    
-//     const http = require("https");
-
-//     const options = {
-//       method: "GET",
-//       hostname: "api.msg91.com",
-//       port: null,
-//       path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
-//       headers: {},
-//     };
-
-//     const req = http.request(options, function (res) {
-//       const chunks = [];
-
-//       res.on("data", function (chunk) {
-//         chunks.push(chunk);
-//       });
-
-//       res.on("end", function () {
-//         const body = Buffer.concat(chunks);
-//         console.log(body.toString());
-//       });
-//     });
-
-//     req.end()
-
-//     .then((result) => {
-//       const token = jwt.sign(
-//         {
-//           userId: result._id,
-//         },
-//         process.env.TOKEN_SECRET,
-//         {
-//           expiresIn: 86400000,
-//         }
-//       );
-//       res.header("auth-token", token).status(200).json({
-//         status: true,
-//         token: token,
-//         msg: "success",
-//         user: result,
-//       });
-//     })
-//     res.status(200).json({
-//       status: true,
-//       msg: "otp verified",
-//       data: findone,
-//     });
-
-//   } else {
-//     res.status(200).json({
-//       status: false,
-//       msg: "Incorrect Otp",
-//     });
-//   }
-// };
-
-exports.changePassword = async (req, res) => {
-  let data = await Customer.findOne({
-    email: req.body.email,
-    code: req.body.otp,
-  });
-  const response = {};
-  if (data) {
-    let currentTime = new Date().getTime();
-    let diff = data.expireIn - currentTime;
-    if (diff) {
-      (response.message = "Token Expire"), (response.statusText = "errro");
+    const findandUpdateEntry = await Customer.findOneAndUpdate(
+      {
+        _id: req.userId
+      },
+      { $set: { password: hashPassword, cnfrmPassword: hashPassword } },
+      { new: true }
+    );
+    if (findandUpdateEntry) {
+      res.status(200).json({
+        status: true,
+        msg: "success",
+        data: findandUpdateEntry,
+      });
     } else {
-      let customer = await Customer.findOne({ email: req.body.email });
-      customer.password = req.body.password;
-      customer.save();
-      (response.message = "password change"),
-        (response.statusText = "success"),
-        (response.data = data);
+      res.status(400).json({
+        status: false,
+        msg: "error",
+        error: "error",
+      });
     }
-  } else {
-    (response.message = "password change"), (response.statusText = "success");
-  }
-  res.status(200).json(response);
-};
-
-exports.resetpassword = async (req, res) => {
-  const { password } = req.body;
-
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
-
-  const finddetails = await Customer.findOneAndUpdate(
-    { id: req.params.id },
-    { $set: { password: hashPassword } },
-    { new: true }
-  );
-
-  if (finddetails) {
-    res.status(200).json({
-      status: true,
-      msg: "Password Reset Successfull",
-      data: finddetails,
-    });
   } else {
     res.status(400).json({
       status: false,
       msg: "error",
-      error: "error",
-    });
+      error: "Password not matched",
+    })
   }
 };
 
 
- 
+exports.verifyotp = async (req, res) => {
+  const { email, mobile, otp } = req.body;
+  const findone = await Customer.findOne({ mobile: mobile });
 
 
 
+  if (findone) {
 
-exports.forgetttt = async (req,res) =>{
-  const {password,cnfrmPassword} = req.body
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const hashpassword = bcrypt.hashSync(password, salt);
-   const user = await Customer.findOne({ userId: req.userId })
-  if(user){
-   console.log(user)
-     
-  let validPass = await bcrypt.compare(req.body.password,req.body.cnfrmPassword);
-  console.log("Result",validPass)
-    console.log(` ${password}  :  ${user.password}`);
- console.log(` ${password}  :  ${user.cnfrmPassword}`);
-     if(validPass){
-       
-       
-      const findandUpdateEntry = await Customer.findOneAndUpdate(
-        {
-          _id: req.userId,
-        },
-        { $set: req.body },
-        { new: true }
-      
-      )
-      if (findandUpdateEntry) {
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: findandUpdateEntry,
-        });
-      } else {
-        res.status(400).json({
-          status: false,
-          status: "error",
-          error: "error",
-        });
+    const token = jwt.sign(
+      {
+        userId: findone._id,
+      },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: 86400000,
       }
-    }
-  }
+    );
+    res.header("auth-token", token).status(200).send({
+      status: true,
+      token: token,
+      msg: "success",
+      user: findone,
+    });
+    const http = require("https");
+
+    const options = {
+      method: "GET",
+      hostname: "api.msg91.com",
+      port: null,
+      path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
+      headers: {},
     };
-    
-  
-    // exports.forgotPassword = async (req, res) => {
-    //   const { password,cnfrmPassword } = req.body;
-    //   const salt = bcrypt.genSaltSync(saltRounds);
-    //   const hashpassword = bcrypt.hashSync(password, salt);
-    
 
-    //   const findandUpdateEntry = await Customer.findOneAndUpdate(
-    //     {
-    //       _id: req.userId,
-    //     },
-    //     // {$and: [{ password: password }, { cnfrmPassword :cnfrmPassword }]},
-    //      { $set: { password: hashpassword } },
-    //     { new: true }
-    //   );
-    
-    //   if (findandUpdateEntry) {
-    //     res.status(200).json({
-    //       status: true,
-    //       msg: "success",
-    //       data: findandUpdateEntry,
-    //     });
-    //   } else {
-    //     res.status(400).json({
-    //       status: false,
-    //       status: "error",
-    //       error: "error",
-    //     });
-    //   }
-    // };
-    //CONSOLE
+    const req = http.request(options, function (res) {
+      const chunks = [];
 
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
 
+      res.on("end", function () {
+        const body = Buffer.concat(chunks);
+        console.log(body.toString());
+      });
+    });
 
+    req.end()
 
-    exports.fogetpassword = async (req, res) => {
-
-      const {password,cnfrmPassword} = req.body
-
-      //  const salt = await bcrypt.genSalt(10);
-      //  const hashPassword = await bcrypt.hash(password, salt);
-      //  const hashPassword1 = await bcrypt.hash(cnfrmPassword, salt)
-
-        // const validPass = String.compare(req.body.password, req.body.cnfrmPassword);
-        // console.log("Result",validPass)
-        if(password === cnfrmPassword){
-
-        
-      const salt = await bcrypt.genSalt(10);
-      const hashPassword = await bcrypt.hash(password, salt);
-
-      const findandUpdateEntry = await Customer.findOneAndUpdate(
-        {
-      _id: req.userId
-        },
-        { $set: { password: hashPassword ,cnfrmPassword:hashPassword} },
-        { new: true }
-      );
-      if (findandUpdateEntry) {
-        res.status(200).json({
-          status: true,
-          msg: "success",
-          data: findandUpdateEntry,
-        });
-      } else {
-        res.status(400).json({
-          status: false,
-          msg: "error",
-          error: "error",
-        });
-      }
-    }else{
-      res.status(400).json({
-        status: false,
-        msg: "error",
-        error: "Password not matched",
-    })
-  }
-    };
-    
-
-    exports.verifyotp = async (req, res) => {
-      const { email, mobile, otp } = req.body;
-      
-       
-      
-    
-      const findone = await Customer.findOne({ mobile: mobile });
-      
-        
-    
-      if (findone) {
-        
+      .then((result) => {
         const token = jwt.sign(
           {
-            userId: findone._id,
+            userId: result._id,
           },
           process.env.TOKEN_SECRET,
           {
             expiresIn: 86400000,
           }
         );
-        res.header("auth-token", token).status(200).send({
+        res.header("auth-token", token).status(200).json({
           status: true,
           token: token,
           msg: "success",
-          user: findone,
+          user: result,
         });
-        const http = require("https");
-    
-        const options = {
-          method: "GET",
-          hostname: "api.msg91.com",
-          port: null,
-          path: `/api/v5/otp/verify?authkey=${process.env.OTPAUTH}&mobile=${mobile}&otp=${otp}`,
-          headers: {},
-        };
-    
-        const req = http.request(options, function (res) {
-          const chunks = [];
-    
-          res.on("data", function (chunk) {
-            chunks.push(chunk);
-          });
-    
-          res.on("end", function () {
-            const body = Buffer.concat(chunks);
-            console.log(body.toString());
-          });
-        });
-    
-        req.end()
-    
-        .then((result) => {
-          const token = jwt.sign(
-            {
-              userId: result._id,
-            },
-            process.env.TOKEN_SECRET,
-            {
-              expiresIn: 86400000,
-            }
-          );
-          res.header("auth-token", token).status(200).json({
-            status: true,
-            token: token,
-            msg: "success",
-            user: result,
-          });
-        })
-        res.status(200).json({
-          status: true,
-          msg: "otp verified",
-          data: findone,
-        });
-    
-      } else {
-        res.status(200).json({
-          status: false,
-          msg: "Incorrect Otp",
-        });
-      }
-    };
+      })
+    res.status(200).json({
+      status: true,
+      msg: "otp verified",
+      data: findone,
+    });
+
+  } else {
+    res.status(200).json({
+      status: false,
+      msg: "Incorrect Otp",
+    });
+  }
+};
