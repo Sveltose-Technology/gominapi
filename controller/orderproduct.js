@@ -134,7 +134,7 @@ exports.addordersample = async (req, res) => {
     element.size = cartitem[index].size;
     element.payment_type = req.body.payment_type;
     element.status = req.body.status;
-    element.date = req.body.date;
+    element.date = getCurrentDate();
     element.cus_orderId = cus_orderId;
     const productdetail = await Product.findOne({
       _id: cartitem[index]?.product,
