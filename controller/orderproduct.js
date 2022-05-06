@@ -328,9 +328,7 @@ exports.getoneorderbyseller = async (req, res) => {
         path: "store",
       },
     })
-    // let exp = await Ordertable.find({
-    //   $and: [{ dealer_Id: req.body.dealer_Id }, { datea: de }],
-    // });
+   
     
   if (findone) {
     res.status(200).json({
